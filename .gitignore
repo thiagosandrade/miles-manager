@@ -1,0 +1,25 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.rsuser
+TestResults/
+.vs/
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+coverage/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Secrets
+appsettings.*.json
+!.gitignore
+

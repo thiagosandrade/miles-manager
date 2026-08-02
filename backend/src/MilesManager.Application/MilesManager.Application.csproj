@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>MilesManager.Application</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MilesManager.Domain\MilesManager.Domain.csproj" />
+    <PackageReference Include="MediatR" Version="14.2.0" />
+  </ItemGroup>
+</Project>
