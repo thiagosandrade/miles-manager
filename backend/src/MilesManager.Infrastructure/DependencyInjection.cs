@@ -1,8 +1,11 @@
+using MilesManager.Application.Features.Trips.Abstractions;
+using MilesManager.Application.Features.Users.Abstractions;
 using MilesManager.Infrastructure.Persistence;
+using MilesManager.Infrastructure.Persistence.Repositories;
+using MilesManager.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MilesManager.Application.Features.Trips.Abstractions;
 
 namespace MilesManager.Infrastructure;
 
@@ -16,8 +19,12 @@ public static class DependencyInjection
         services.AddDbContext<MilesManagerDbContext>(options =>
             options.UseNpgsql(connectionString));
 
-        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<MilesManagerDbContext>());
         services.AddScoped<ITripRepository, TripRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<MilesManagerDbContext>());
+        services.AddScoped<IUserUnitOfWork>(sp => sp.GetRequiredService<MilesManagerDbContext>());
+        services.AddScoped<IPasswordHasher, Pbkdf2PasswordHasher>();
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
 
         return services;
     }

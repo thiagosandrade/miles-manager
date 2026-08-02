@@ -1,0 +1,33 @@
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand-block">
+      <div class="brand-mark">MM</div>
+      <div>
+        <p class="brand-kicker">Miles Manager</p>
+        <h1>Admin</h1>
+      </div>
+    </div>
+
+    <nav class="nav-list" aria-label="Main">
+      <a
+        *ngFor="let item of navItems"
+        class="nav-item"
+        routerLinkActive="active"
+        [routerLink]="item.path"
+      >
+        <span class="nav-label">{{ item.label }}</span>
+        <span class="nav-hint">{{ item.hint }}</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-card">
+      <p class="sidebar-title">Workspace</p>
+      <strong>Users, mileage, and reports</strong>
+      <span>Clean enterprise layout with lazy-loaded sections.</span>
+    </div>
+  </aside>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>

@@ -1,0 +1,161 @@
+<section class="user-page">
+  <ng-container *ngIf="!session; else authenticatedState">
+    <section class="login-panel">
+      <div class="login-card">
+        <div class="card-heading">
+          <p class="eyebrow">Sign in</p>
+          <h2>Access the Miles Manager admin workspace</h2>
+          <p>Use your backend account if the API is available, or the seeded local demo account while the user endpoints are still being wired up.</p>
+        </div>
+
+        <form class="auth-form" (ngSubmit)="login()">
+          <label>
+            Email
+            <input name="loginEmail" type="email" [(ngModel)]="loginForm.email" autocomplete="email" required />
+          </label>
+
+          <label>
+            Password
+            <input name="loginPassword" type="password" [(ngModel)]="loginForm.password" autocomplete="current-password" required />
+          </label>
+
+          <button class="primary-button" type="submit" [disabled]="loading">Login</button>
+        </form>
+
+        <div class="helper-row">
+          <span>Demo credentials</span>
+          <code>admin@milesmanager.local / Password123!</code>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <p class="eyebrow">Visual language</p>
+        <h3>Clean enterprise dashboard</h3>
+        <ul>
+          <li>Left navigation drawer</li>
+          <li>Rounded white cards</li>
+          <li>Blue primary actions</li>
+          <li>Whitespace-first layout</li>
+        </ul>
+      </div>
+    </section>
+  </ng-container>
+
+  <ng-template #authenticatedState>
+    <section class="dashboard">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">Enterprise access</p>
+          <h2>User management</h2>
+          <p class="subtitle">Login, logout, create, delete, and review users in one focused workspace.</p>
+        </div>
+
+        <div class="session-chip">
+          <div>
+            <strong>{{ session!.user.fullName }}</strong>
+            <span>{{ session!.user.email }}</span>
+          </div>
+          <button class="secondary-button" type="button" (click)="logout()" [disabled]="loading">Logout</button>
+        </div>
+      </header>
+
+      <div class="metric-grid">
+        <article class="metric-card">
+          <span>Total users</span>
+          <strong>{{ totalUsers }}</strong>
+        </article>
+
+        <article class="metric-card">
+          <span>Active users</span>
+          <strong>{{ activeUsers }}</strong>
+        </article>
+
+        <article class="metric-card">
+          <span>Last sync</span>
+          <strong>{{ lastSyncedAt || 'Waiting' }}</strong>
+        </article>
+      </div>
+
+      <div class="workspace-grid">
+        <section class="panel create-panel">
+          <div class="card-heading compact">
+            <p class="eyebrow">Create user</p>
+            <h3>Invite a new Miles Manager user</h3>
+          </div>
+
+          <form class="create-form" (ngSubmit)="createUser()">
+            <label>
+              Full name
+              <input name="fullName" type="text" [(ngModel)]="createForm.fullName" required placeholder="Avery Johnson" />
+            </label>
+
+            <label>
+              Email
+              <input name="email" type="email" [(ngModel)]="createForm.email" required placeholder="avery@company.com" />
+            </label>
+
+            <label>
+              Temporary password
+              <input name="password" type="password" [(ngModel)]="createForm.password" required placeholder="Strong password" />
+            </label>
+
+            <button class="primary-button" type="submit" [disabled]="loading">Create user</button>
+          </form>
+        </section>
+
+        <section class="panel list-panel">
+          <div class="card-heading compact">
+            <div>
+              <p class="eyebrow">Users</p>
+              <h3>Directory</h3>
+            </div>
+            <span class="mode-pill" [class.local]="connectionMode === 'local'">{{ localModeLabel }}</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th>Created</th>
+                  <th class="actions-col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users; trackBy: trackByUserId">
+                  <td>
+                    <div class="user-cell">
+                      <strong>{{ user.fullName }}</strong>
+                      <span>{{ user.id }}</span>
+                    </div>
+                  </td>
+                  <td>{{ user.email }}</td>
+                  <td><span class="status-pill" [class.inactive]="!user.isActive">{{ user.isActive ? 'Active' : 'Inactive' }}</span></td>
+                  <td>{{ formatDate(user.createdAtUtc) }}</td>
+                  <td class="actions-col">
+                    <button class="danger-button" type="button" (click)="deleteUser(user)" [disabled]="loading">Delete</button>
+                  </td>
+                </tr>
+                <tr *ngIf="users.length === 0">
+                  <td colspan="5" class="empty-state">No users yet. Create the first one to get started.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </section>
+  </ng-template>
+
+  <div class="feedback" *ngIf="error">
+    <strong>Error</strong>
+    <span>{{ error }}</span>
+  </div>
+
+  <div class="feedback success" *ngIf="notice">
+    <strong>Update</strong>
+    <span>{{ notice }}</span>
+  </div>
+</section>
