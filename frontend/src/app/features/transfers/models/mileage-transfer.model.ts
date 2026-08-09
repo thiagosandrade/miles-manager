@@ -3,6 +3,18 @@ import { Program } from '../../programs/models/program.model';
 export interface MileageTransfer {
   id: string;
   userId: string;
+  originProgram: string;
+  destinationProgram: string;
+  milesSent: number;
+  bonusPercentage: number;
+  milesReceived: number;
+  costPerThousandOrigin: number;
+  costPerThousandDestination: number;
+  transferDate: string;
+}
+
+export interface TransferCreateRequest {
+  userId: string;
   originProgramId: string;
   destinationProgramId: string;
   milesSent: number;
@@ -10,36 +22,27 @@ export interface MileageTransfer {
   milesReceived: number;
   costPerThousandOrigin: number;
   costPerThousandDestination: number;
-  transferDate: string; // ISO string date
+  transferDate: string;
   originProgram?: Program;
   destinationProgram?: Program;
 }
 
-export interface Transfer {
-  id: string;
-  fromProgramId: string;
-  toProgramId: string;
-  amount: number;
-  transferDate: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface TransferCreateRequest {
-  fromProgramId: string;
-  toProgramId: string;
-  amount: number;
-  transferDate: string;
-}
-
 export interface TransferUpdateRequest {
-  fromProgramId: string;
-  toProgramId: string;
-  amount: number;
+  id: string;
+  userId: string;
+  originProgramId: string;
+  destinationProgramId: string;
+  milesSent: number;
+  bonusPercentage: number;
+  milesReceived: number;
+  costPerThousandOrigin: number;
+  costPerThousandDestination: number;
   transferDate: string;
+  originProgram?: Program;
+  destinationProgram?: Program;
 }
 
 export interface TransferListResponse {
-  transfers: Transfer[];
+  transfers: MileageTransfer[];
   totalCount: number;
 }

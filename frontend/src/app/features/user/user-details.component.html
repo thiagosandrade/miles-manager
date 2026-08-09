@@ -1,12 +1,18 @@
 <section class="page">
 
+  <!-- Header -->
+
   <header class="page-header">
 
     <div>
 
-      <p class="eyebrow">Account</p>
+      <p class="eyebrow">
+        Account
+      </p>
 
-      <h1>User Details</h1>
+      <h1>
+        User Details
+      </h1>
 
       <p class="subtitle">
         View detailed information about this Miles Manager user.
@@ -21,92 +27,245 @@
   </app-loading-spinner>
 
   <div
-    *ngIf="error"
-    class="error">
+    class="feedback"
+    *ngIf="error">
 
     <strong>Error</strong>
-    <span>{{ error }}</span>
+
+    <span>
+
+      {{ error }}
+
+    </span>
 
   </div>
 
-  <section
-    *ngIf="!loading && user"
-    class="content-card">
+  <ng-container *ngIf="!loading && user">
 
-    <div class="profile-header">
+    <!-- Metrics -->
 
-      <div class="avatar">
+    <section class="metrics">
 
-        {{ user.fullName.charAt(0) }}
+      <article class="metric-card">
 
-      </div>
+        <div class="metric-icon">
 
-      <div>
+          <mat-icon>person</mat-icon>
 
-        <h2>{{ user.fullName }}</h2>
+        </div>
 
-        <p>{{ user.email }}</p>
+        <div>
 
-      </div>
+          <span>Status</span>
 
-      <span
-        class="status-pill"
-        [class.inactive]="!user.isActive">
+          <strong>
 
-        {{ user.isActive ? 'Active' : 'Inactive' }}
+            {{ user.isActive ? 'Active' : 'Inactive' }}
 
-      </span>
+          </strong>
 
-    </div>
+        </div>
 
-    <div class="details-grid">
+      </article>
 
-      <div class="detail-card">
+      <article class="metric-card">
 
-        <span>Full Name</span>
+        <div class="metric-icon">
 
-        <strong>{{ user.fullName }}</strong>
+          <mat-icon>calendar_today</mat-icon>
 
-      </div>
+        </div>
 
-      <div class="detail-card">
+        <div>
 
-        <span>Email</span>
+          <span>Created</span>
 
-        <strong>{{ user.email }}</strong>
+          <strong>
 
-      </div>
+            {{ user.createdAtUtc | date:'mediumDate' }}
 
-      <div class="detail-card">
+          </strong>
 
-        <span>Created</span>
+        </div>
 
-        <strong>{{ user.createdAtUtc | date:'medium' }}</strong>
+      </article>
 
-      </div>
-
-      <div
-        class="detail-card"
-        *ngIf="user.updatedAtUtc">
-
-        <span>Last Updated</span>
-
-        <strong>{{ user.updatedAtUtc | date:'medium' }}</strong>
-
-      </div>
-
-      <div
-        class="detail-card"
+      <article
+        class="metric-card"
         *ngIf="user.lastLoginAtUtc">
 
-        <span>Last Login</span>
+        <div class="metric-icon success">
 
-        <strong>{{ user.lastLoginAtUtc | date:'medium' }}</strong>
+          <mat-icon>login</mat-icon>
 
-      </div>
+        </div>
 
-    </div>
+        <div>
 
-  </section>
+          <span>Last Login</span>
+
+          <strong>
+
+            {{ user.lastLoginAtUtc | date:'mediumDate' }}
+
+          </strong>
+
+        </div>
+
+      </article>
+
+    </section>
+
+    <!-- Cards -->
+
+    <section class="dashboard-grid">
+
+      <!-- Profile -->
+
+      <mat-card>
+
+        <mat-card-content>
+
+          <div class="profile-header">
+
+            <div class="avatar">
+
+              {{ user.fullName.charAt(0) | uppercase }}
+
+            </div>
+
+            <div>
+
+              <h2>
+
+                {{ user.fullName }}
+
+              </h2>
+
+              <p>
+
+                {{ user.email }}
+
+              </p>
+
+              <span
+                class="status-pill"
+                [class.inactive]="!user.isActive">
+
+                {{ user.isActive ? 'Active' : 'Inactive' }}
+
+              </span>
+
+            </div>
+
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+      <!-- Details -->
+
+      <mat-card>
+
+        <mat-card-header>
+
+          <mat-card-title>
+
+            Account Information
+
+          </mat-card-title>
+
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <div class="details-grid">
+
+            <div class="detail-item">
+
+              <span>Full Name</span>
+
+              <strong>
+
+                {{ user.fullName }}
+
+              </strong>
+
+            </div>
+
+            <div class="detail-item">
+
+              <span>Email</span>
+
+              <strong>
+
+                {{ user.email }}
+
+              </strong>
+
+            </div>
+
+            <div class="detail-item">
+
+              <span>User ID</span>
+
+              <strong>
+
+                {{ user.id }}
+
+              </strong>
+
+            </div>
+
+            <div class="detail-item">
+
+              <span>Created</span>
+
+              <strong>
+
+                {{ user.createdAtUtc | date:'medium' }}
+
+              </strong>
+
+            </div>
+
+            <div
+              class="detail-item"
+              *ngIf="user.updatedAtUtc">
+
+              <span>Last Updated</span>
+
+              <strong>
+
+                {{ user.updatedAtUtc | date:'medium' }}
+
+              </strong>
+
+            </div>
+
+            <div
+              class="detail-item"
+              *ngIf="user.lastLoginAtUtc">
+
+              <span>Last Login</span>
+
+              <strong>
+
+                {{ user.lastLoginAtUtc | date:'medium' }}
+
+              </strong>
+
+            </div>
+
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </section>
+
+  </ng-container>
 
 </section>

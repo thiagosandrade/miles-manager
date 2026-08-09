@@ -29,17 +29,12 @@
     <article class="metric-card">
 
       <div class="metric-icon">
-
         <mat-icon>account_balance_wallet</mat-icon>
-
       </div>
 
       <div>
-
         <span>Total Programs</span>
-
         <strong>{{ balances().length }}</strong>
-
       </div>
 
     </article>
@@ -47,17 +42,14 @@
     <article class="metric-card">
 
       <div class="metric-icon">
-
         <mat-icon>flight</mat-icon>
-
       </div>
 
       <div>
-
         <span>Total Miles</span>
-
-        <strong>1.5M</strong>
-
+        <strong>
+          {{ balances().reduce((sum, b) => sum + b.balance, 0) | number:'1.0-0' }}
+        </strong>
       </div>
 
     </article>
@@ -65,17 +57,19 @@
     <article class="metric-card">
 
       <div class="metric-icon">
-
         <mat-icon>analytics</mat-icon>
-
       </div>
 
       <div>
-
         <span>Average Balance</span>
-
-        <strong>250K</strong>
-
+        <strong>
+          {{
+            balances().length
+              ? (balances().reduce((sum, b) => sum + b.balance, 0) / balances().length)
+              : 0
+              | number:'1.0-0'
+          }}
+        </strong>
       </div>
 
     </article>
@@ -85,97 +79,83 @@
   <!-- Table -->
 
   <app-table
-
     title="Balances"
     subtitle="Programs"
-
     [loading]="loading()"
-
     [dataSource]="balances()"
-
     [length]="balances().length"
-
     [showPaginator]="false"
-
     emptyIcon="account_balance_wallet"
-
     emptyTitle="No balances found"
-
     emptyDescription="Your loyalty program balances will appear here.">
 
-    <!-- Program -->
+    <table
+      mat-table
+      [dataSource]="balances()">
 
-    <ng-container matColumnDef="program">
+      <!-- Program -->
 
-      <th mat-header-cell *matHeaderCellDef>
+      <ng-container matColumnDef="program">
 
-        Program
+        <th mat-header-cell *matHeaderCellDef>
+          Program
+        </th>
 
-      </th>
+        <td mat-cell *matCellDef="let balance">
 
-      <td mat-cell *matCellDef="let balance">
+          <div class="user-info">
 
-        <div class="user-info">
+            <div class="avatar">
+              {{ balance.programName.charAt(0) | uppercase }}
+            </div>
 
-          <div class="avatar">
+            <div class="user-details">
 
-            {{ balance.program.charAt(0) | uppercase }}
+              <strong>
+                {{ balance.programName }}
+              </strong>
 
-          </div>
+              <span>
+                Loyalty Program
+              </span>
 
-          <div class="user-details">
-
-            <strong>
-
-              {{ balance.program }}
-
-            </strong>
-
-            <span>
-
-              Loyalty Program
-
-            </span>
+            </div>
 
           </div>
 
-        </div>
+        </td>
 
-      </td>
+      </ng-container>
 
-    </ng-container>
+      <!-- Balance -->
 
-    <!-- Balance -->
+      <ng-container matColumnDef="balance">
 
-    <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef>
+          Balance
+        </th>
 
-      <th mat-header-cell *matHeaderCellDef>
+        <td mat-cell *matCellDef="let balance">
 
-        Balance
+          <strong>
+            {{ balance.balance | number:'1.0-0' }}
+          </strong>
 
-      </th>
+        </td>
 
-      <td mat-cell *matCellDef="let balance">
+      </ng-container>
 
-        <strong>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
 
-          {{ balance.balance | number }}
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </tr>
 
-        </strong>
-
-      </td>
-
-    </ng-container>
-
-    <tr
-      mat-header-row
-      *matHeaderRowDef="displayedColumns">
-    </tr>
-
-    <tr
-      mat-row
-      *matRowDef="let row; columns: displayedColumns;">
-    </tr>
+    </table>
 
   </app-table>
 

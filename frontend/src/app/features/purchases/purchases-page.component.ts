@@ -36,13 +36,15 @@ export class PurchasesPageComponent implements OnInit {
   isRateLimitReached = signal(false);
   dialog = inject(MatDialog);
   storageService = inject(TokenStorageService);
-
+  readonly PurchaseStatus = PurchaseStatus; 
+  
   displayedColumns = [
-    'programId',
-    'amount',
+    'programName',
+    'amountPaid',
+    'milesPurchased',
+    'bonusPercentage',
     'purchaseDate',
-    'createdAt',
-    'updatedAt',
+    'purchaseStatus',
     'actions'
   ];
 
@@ -120,4 +122,23 @@ export class PurchasesPageComponent implements OnInit {
 
   }
 
+  getPurchaseStatus(status: PurchaseStatus): string {
+
+    switch (status) {
+
+      case PurchaseStatus.Pending:
+        return 'Pending';
+
+      case PurchaseStatus.Completed:
+        return 'Completed';
+
+      case PurchaseStatus.Cancelled:
+        return 'Cancelled';
+
+      default:
+        return 'Unknown';
+
+    }
+
+  }
 }

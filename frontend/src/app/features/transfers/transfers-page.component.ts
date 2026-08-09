@@ -13,9 +13,10 @@ import { TransfersApiService } from './transfers-api.service';
 import { of, Subject } from 'rxjs';
 import { catchError, startWith } from 'rxjs/operators';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Transfer, TransferCreateRequest } from './models/mileage-transfer.model';
+import { MileageTransfer, TransferCreateRequest } from './models/mileage-transfer.model';
 import { AppTableComponent } from "../../shared/components/app-table/app-table.component";
 import { CreateTransferDialogComponent } from './create-transfer-dialog.component';
+import { TokenStorageService } from '../../core/services/token-storage.service';
 
 @Component({
   standalone: true,
@@ -42,9 +43,19 @@ export class TransfersPageComponent implements OnInit {
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
   private cd = inject(ChangeDetectorRef);
+  private storageService = inject(TokenStorageService);
 
-  displayedColumns: string[] = ['fromProgramId', 'toProgramId', 'amount', 'transferDate', 'actions'];
-  data: Transfer[] | undefined; 
+  displayedColumns = [
+    'originProgram',
+    'destinationProgram',
+    'milesSent',
+    'milesReceived',
+    'bonusPercentage',
+    'transferDate',
+    'actions'
+  ];
+
+  data: MileageTransfer[] | undefined; 
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -80,8 +91,8 @@ export class TransfersPageComponent implements OnInit {
       )
       .subscribe((result) => {
         if (result) {
-          this.data = result.transfers;
-          this.resultsLength = result.totalCount;
+          this.data = result;
+          this.resultsLength = result.length;
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
           this.cd.detectChanges();
@@ -90,11 +101,14 @@ export class TransfersPageComponent implements OnInit {
   }
 
   get totalPrograms(): number {
-    const transfers = this.data ?? [];
 
     return new Set(
-      transfers.flatMap(t => [t.fromProgramId, t.toProgramId])
+      (this.data ?? []).flatMap(t => [
+        t.originProgram,
+        t.destinationProgram
+      ])
     ).size;
+
   }
 
   applyFilter(filterValue: string) {
@@ -115,10 +129,15 @@ export class TransfersPageComponent implements OnInit {
       }
 
       const request: TransferCreateRequest = {
-        fromProgramId: result.fromProgramId,
-        toProgramId: result.toProgramId,
-        amount: Number(result.amount),
-        transferDate: result.transferDate
+        userId: this.storageService.getUser().id,
+        originProgramId: result.originProgramId,
+        destinationProgramId: result.destinationProgramId,
+        milesSent: Number(result.milesSent),
+        bonusPercentage: Number(result.bonusPercentage),
+        milesReceived: Number(result.milesReceived),
+        transferDate: result.transferDate.toISOString().split('T')[0],
+        costPerThousandOrigin: Number(result.costPerThousandOrigin),
+        costPerThousandDestination: Number(result.costPerThousandDestination)
       };
 
       this.api.createTransfer(request).subscribe(() => {

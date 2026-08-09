@@ -18,12 +18,6 @@ public sealed class CreateTransferHandler(IApplicationDbContext context) : IRequ
             return Result<Guid>.NotFound();
         }
 
-        var route = await _context.TransferRoutes.AsNoTracking().FirstOrDefaultAsync(r => r.OriginProgramId == request.OriginProgramId && r.DestinationProgramId == request.DestinationProgramId && r.IsActive, cancellationToken);
-        if (route is null)
-        {
-            return Result<Guid>.ValidationFailed("Transfer route not found or inactive.");
-        }
-
         var originBalance = await _context.ProgramBalances.FirstOrDefaultAsync(pb => pb.UserId == request.UserId && pb.ProgramId == request.OriginProgramId, cancellationToken);
         if (originBalance is null || originBalance.Balance < request.MilesSent)
         {

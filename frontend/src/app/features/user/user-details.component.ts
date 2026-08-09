@@ -6,13 +6,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserDetails } from './models/user.models';
 import { AppLoadingSpinnerComponent } from "../../shared/components/app-loading-spinner/app-loading-spinner.component";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   standalone: true,
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.scss'],
-  imports: [CommonModule, MatCardModule, MatProgressSpinnerModule, AppLoadingSpinnerComponent]
+  imports: [CommonModule, MatCardModule, MatProgressSpinnerModule, AppLoadingSpinnerComponent, MatIconModule]
 })
 export class UserDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);

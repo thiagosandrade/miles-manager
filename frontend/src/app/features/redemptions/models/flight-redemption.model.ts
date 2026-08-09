@@ -2,10 +2,9 @@ import { Program } from "../../programs/models/program.model";
 
 export interface FlightRedemption {
   id: string;
-  userId: string;
-  programId: string;
-  OriginAirport: string;
-  DestinationAirport: string;
+  program: string;
+  originAirport: string;
+  destinationAirport: string;
   flightDate: string;
   cabinClass: number;
   passengers: number;
@@ -13,8 +12,6 @@ export interface FlightRedemption {
   taxes: number;
   cashPrice: number;
   effectiveCostPerThousand: number;
-  createdAt: string;
-  updatedAt: string;
 }
 
   export interface FlightRedemptionCreateRequest {

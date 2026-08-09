@@ -1,10 +1,10 @@
-import { Program } from "../../programs/models/program.model";
-
 export interface ProgramBalance {
   id: string;
   userId: string;
   programId: string;
+  programName: string;
+  referencePricePerThousand: number;
   balance: number;
-  program?: Program;
+  currentValue: number;
 }
 

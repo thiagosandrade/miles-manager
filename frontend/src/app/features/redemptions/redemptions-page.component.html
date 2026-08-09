@@ -81,10 +81,15 @@
     <!-- Empty State -->
 
     <button
+      empty-action
       class="primary-button"
       type="button"
-      (click)="openCreateRedemptionDialog()"
-      > 
+      (click)="openCreateRedemptionDialog()">
+
+      <mat-icon>add</mat-icon>
+
+      <span>New Redemption</span>
+
     </button>
 
     <!-- Material Table -->
@@ -93,23 +98,175 @@
       mat-table
       [dataSource]="redemptions()">
 
-      <ng-container
-        *ngFor="let column of displayedColumns"
-        [matColumnDef]="column">
+      <!-- Program -->
 
-        <th
-          mat-header-cell
-          *matHeaderCellDef>
+      <ng-container matColumnDef="program">
 
-          {{ column | titlecase }}
-
+        <th mat-header-cell *matHeaderCellDef>
+          Program
         </th>
 
-        <td
-          mat-cell
-          *matCellDef="let redemption">
+        <td mat-cell *matCellDef="let redemption">
 
-          {{ redemption[column] }}
+          <div class="user-info">
+
+            <div class="avatar">
+              {{ redemption.program.charAt(0) | uppercase }}
+            </div>
+
+            <div class="user-details">
+
+              <strong>{{ redemption.program }}</strong>
+
+              <span>Loyalty Program</span>
+
+            </div>
+
+          </div>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Origin -->
+
+      <ng-container matColumnDef="originAirport">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Origin
+        </th>
+
+        <td mat-cell *matCellDef="let redemption">
+
+          {{ redemption.originAirport || '-' }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Destination -->
+
+      <ng-container matColumnDef="destinationAirport">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Destination
+        </th>
+
+        <td mat-cell *matCellDef="let redemption">
+
+          {{ redemption.destinationAirport || '-' }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Flight Date -->
+
+      <ng-container matColumnDef="flightDate">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Flight Date
+        </th>
+
+        <td mat-cell *matCellDef="let redemption">
+
+          {{ redemption.flightDate | date:'mediumDate' }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Cabin -->
+
+      <ng-container matColumnDef="cabinClass">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Cabin
+        </th>
+
+        <td mat-cell *matCellDef="let redemption">
+
+          {{ getCabinClass(redemption.cabinClass) }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Passengers -->
+
+      <ng-container matColumnDef="passengers">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Passengers
+        </th>
+
+        <td mat-cell *matCellDef="let redemption">
+
+          {{ redemption.passengers }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Miles -->
+
+      <ng-container matColumnDef="milesUsed">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Miles Used
+        </th>
+
+        <td mat-cell *matCellDef="let redemption">
+
+          {{ redemption.milesUsed | number }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Taxes -->
+
+      <ng-container matColumnDef="taxes">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Taxes
+        </th>
+
+        <td mat-cell *matCellDef="let redemption">
+
+          {{ redemption.taxes | currency }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Cash Price -->
+
+      <ng-container matColumnDef="cashPrice">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Cash Price
+        </th>
+
+        <td mat-cell *matCellDef="let redemption">
+
+          {{ redemption.cashPrice | currency }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- CPM -->
+
+      <ng-container matColumnDef="effectiveCostPerThousand">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Cost / 1,000 Miles
+        </th>
+
+        <td mat-cell *matCellDef="let redemption">
+
+          {{ redemption.effectiveCostPerThousand | number:'1.2-2' }}
 
         </td>
 

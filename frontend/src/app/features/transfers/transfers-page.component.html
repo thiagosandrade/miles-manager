@@ -21,8 +21,8 @@
     </div>
 
     <button
-      empty-action
       class="primary-button"
+      type="button"
       (click)="openCreateTransferDialog()">
 
       <mat-icon>add</mat-icon>
@@ -59,17 +59,17 @@
 
       <div class="metric-icon success">
 
-        <mat-icon>paid</mat-icon>
+        <mat-icon>flight_takeoff</mat-icon>
 
       </div>
 
       <div>
 
-        <span>Total Miles</span>
+        <span>Total Miles Sent</span>
 
         <strong>
 
-          {{ data?.reduce((sum, t) => sum + t.amount, 0) ?? 0 | number }}
+          {{ data?.reduce((sum, t) => sum + t.milesSent, 0) ?? 0 | number }}
 
         </strong>
 
@@ -130,7 +130,7 @@
 
         <input
           matInput
-          placeholder="Search by Program IDs..."
+          placeholder="Search transfers..."
           (input)="applyFilter($any($event.target).value)">
 
       </mat-form-field>
@@ -141,7 +141,9 @@
 
     <button
       empty-action
-      class="primary-button">
+      class="primary-button"
+      type="button"
+      (click)="openCreateTransferDialog()">
 
       <mat-icon>add</mat-icon>
 
@@ -155,13 +157,13 @@
       mat-table
       [dataSource]="data ?? []">
 
-      <!-- From Program -->
+      <!-- Origin Program -->
 
-      <ng-container matColumnDef="fromProgramId">
+      <ng-container matColumnDef="originProgram">
 
         <th mat-header-cell *matHeaderCellDef>
 
-          From Program
+          Origin
 
         </th>
 
@@ -171,7 +173,7 @@
 
             <div class="avatar">
 
-              {{ transfer.fromProgramId }}
+              {{ transfer.originProgram?.charAt(0) | uppercase }}
 
             </div>
 
@@ -179,7 +181,7 @@
 
               <strong>
 
-                {{ transfer.fromProgramId }}
+                {{ transfer.originProgram }}
 
               </strong>
 
@@ -197,9 +199,9 @@
 
       </ng-container>
 
-      <!-- Destination -->
+      <!-- Destination Program -->
 
-      <ng-container matColumnDef="toProgramId">
+      <ng-container matColumnDef="destinationProgram">
 
         <th mat-header-cell *matHeaderCellDef>
 
@@ -213,7 +215,7 @@
 
             <div class="avatar">
 
-              {{ transfer.toProgramId }}
+              {{ transfer.destinationProgram?.charAt(0) | uppercase }}
 
             </div>
 
@@ -221,7 +223,7 @@
 
               <strong>
 
-                {{ transfer.toProgramId }}
+                {{ transfer.destinationProgram }}
 
               </strong>
 
@@ -239,35 +241,67 @@
 
       </ng-container>
 
-      <!-- Amount -->
+      <!-- Miles Sent -->
 
-      <ng-container matColumnDef="amount">
+      <ng-container matColumnDef="milesSent">
 
         <th mat-header-cell *matHeaderCellDef>
 
-          Miles
+          Miles Sent
 
         </th>
 
         <td mat-cell *matCellDef="let transfer">
 
-          <strong>
-
-            {{ transfer.amount | number }}
-
-          </strong>
+          {{ transfer.milesSent | number }}
 
         </td>
 
       </ng-container>
 
-      <!-- Date -->
+      <!-- Miles Received -->
+
+      <ng-container matColumnDef="milesReceived">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Miles Received
+
+        </th>
+
+        <td mat-cell *matCellDef="let transfer">
+
+          {{ transfer.milesReceived | number }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Bonus -->
+
+      <ng-container matColumnDef="bonusPercentage">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Bonus
+
+        </th>
+
+        <td mat-cell *matCellDef="let transfer">
+
+          {{ transfer.bonusPercentage }}%
+
+        </td>
+
+      </ng-container>
+
+      <!-- Transfer Date -->
 
       <ng-container matColumnDef="transferDate">
 
         <th mat-header-cell *matHeaderCellDef>
 
-          Date
+          Transfer Date
 
         </th>
 

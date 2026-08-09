@@ -1,5 +1,5 @@
 export enum PurchaseStatus {
-  Pending = 0,
-  Completed = 1,
-  Cancelled = 2
+  Pending = 1,
+  Completed = 2,
+  Cancelled = 3
 }

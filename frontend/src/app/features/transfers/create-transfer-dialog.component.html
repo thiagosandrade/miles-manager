@@ -8,11 +8,13 @@
     class="dialog-form"
     [formGroup]="form">
 
+    <!-- Origin -->
+
     <mat-form-field appearance="outline">
 
-      <mat-label>From Program</mat-label>
+      <mat-label>Origin Program</mat-label>
 
-      <mat-select formControlName="fromProgramId">
+      <mat-select formControlName="originProgramId">
 
         <mat-option
           *ngFor="let program of programs"
@@ -26,11 +28,13 @@
 
     </mat-form-field>
 
+    <!-- Destination -->
+
     <mat-form-field appearance="outline">
 
-      <mat-label>To Program</mat-label>
+      <mat-label>Destination Program</mat-label>
 
-      <mat-select formControlName="toProgramId">
+      <mat-select formControlName="destinationProgramId">
 
         <mat-option
           *ngFor="let program of programs"
@@ -44,16 +48,46 @@
 
     </mat-form-field>
 
+    <!-- Miles Sent -->
+
     <mat-form-field appearance="outline">
 
-      <mat-label>Miles</mat-label>
+      <mat-label>Miles Sent</mat-label>
 
       <input
         matInput
         type="number"
-        formControlName="amount">
+        formControlName="milesSent">
 
     </mat-form-field>
+
+    <!-- Bonus Percentage -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Bonus Percentage</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="bonusPercentage">
+
+    </mat-form-field>
+
+    <!-- Miles Received -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Miles Received</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="milesReceived">
+
+    </mat-form-field>
+
+    <!-- Transfer Date -->
 
     <mat-form-field appearance="outline">
 
@@ -70,6 +104,32 @@
       </mat-datepicker-toggle>
 
       <mat-datepicker #picker></mat-datepicker>
+
+    </mat-form-field>
+
+    <!-- Cost Per Thousand Origin -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Cost Per Thousand (Origin)</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="costPerThousandOrigin">
+
+    </mat-form-field>
+
+    <!-- Cost Per Thousand Destination -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Cost Per Thousand (Destination)</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="costPerThousandDestination">
 
     </mat-form-field>
 
@@ -95,7 +155,7 @@
     (click)="save()"
     [disabled]="form.invalid">
 
-    Create
+    Create Transfer
 
   </button>
 

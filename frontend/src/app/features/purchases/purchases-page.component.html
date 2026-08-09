@@ -166,12 +166,10 @@
 
       <!-- Program -->
 
-      <ng-container matColumnDef="programId">
+      <ng-container matColumnDef="programName">
 
         <th mat-header-cell *matHeaderCellDef>
-
           Program
-
         </th>
 
         <td mat-cell *matCellDef="let purchase">
@@ -179,16 +177,14 @@
           <div class="user-info">
 
             <div class="avatar">
-
-              {{ purchase.programId.charAt(0) | uppercase }}
-
+              {{ purchase.programName.charAt(0) | uppercase }}
             </div>
 
             <div class="user-details">
 
-              <strong>{{ purchase.programId }}</strong>
+              <strong>{{ purchase.programName }}</strong>
 
-              <span>Loyalty Program</span>
+              <span>{{ purchase.partner || 'Direct Purchase' }}</span>
 
             </div>
 
@@ -198,19 +194,49 @@
 
       </ng-container>
 
-      <!-- Amount -->
+      <!-- Amount Paid -->
 
-      <ng-container matColumnDef="amount">
+      <ng-container matColumnDef="amountPaid">
 
         <th mat-header-cell *matHeaderCellDef>
-
-          Amount
-
+          Amount Paid
         </th>
 
         <td mat-cell *matCellDef="let purchase">
 
-          <strong>{{ purchase.amountPaid | number:'1.0-0' }}</strong>
+          {{ purchase.amountPaid | currency }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Miles Purchased -->
+
+      <ng-container matColumnDef="milesPurchased">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Miles Purchased
+        </th>
+
+        <td mat-cell *matCellDef="let purchase">
+
+          {{ purchase.milesPurchased | number }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Bonus Percentage -->
+
+      <ng-container matColumnDef="bonusPercentage">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Bonus
+        </th>
+
+        <td mat-cell *matCellDef="let purchase">
+
+          {{ purchase.bonusPercentage }}%
 
         </td>
 
@@ -221,9 +247,7 @@
       <ng-container matColumnDef="purchaseDate">
 
         <th mat-header-cell *matHeaderCellDef>
-
           Purchase Date
-
         </th>
 
         <td mat-cell *matCellDef="let purchase">
@@ -234,37 +258,25 @@
 
       </ng-container>
 
-      <!-- Created -->
+      <!-- Status -->
 
-      <ng-container matColumnDef="createdAt">
+      <ng-container matColumnDef="purchaseStatus">
 
         <th mat-header-cell *matHeaderCellDef>
-
-          Created
-
+          Status
         </th>
 
         <td mat-cell *matCellDef="let purchase">
 
-          {{ purchase.createdAt | date:'mediumDate' }}
+          <span
+            class="status-pill"
+            [class.inactive]="purchase.purchaseStatus !== PurchaseStatus.Completed">
 
-        </td>
+            <span class="status-dot"></span>
 
-      </ng-container>
+            {{ getPurchaseStatus(purchase.purchaseStatus) }}
 
-      <!-- Updated -->
-
-      <ng-container matColumnDef="updatedAt">
-
-        <th mat-header-cell *matHeaderCellDef>
-
-          Updated
-
-        </th>
-
-        <td mat-cell *matCellDef="let purchase">
-
-          {{ purchase.updatedAt | date:'mediumDate' }}
+          </span>
 
         </td>
 
@@ -278,7 +290,6 @@
           mat-header-cell
           *matHeaderCellDef
           class="actions-column">
-
         </th>
 
         <td

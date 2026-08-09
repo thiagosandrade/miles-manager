@@ -1,9 +1,6 @@
-import { Program } from "../../programs/models/program.model";
-
 export interface MileagePurchase {
   id: string;
-  userId: string;
-  programId: string;
+  programName: string;
   partner?: string;
   description?: string;
   amountPaid: number;

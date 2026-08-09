@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+
 import { ProgramsApiService } from '../programs/programs-api.service';
 import { Program } from '../programs/models/program.model';
 
@@ -46,10 +47,53 @@ export class CreateTransferDialogComponent implements OnInit {
   programs: Program[] = [];
 
   readonly form = this.fb.group({
-    fromProgramId: ['', Validators.required],
-    toProgramId: ['', Validators.required],
-    amount: [0, [Validators.required, Validators.min(1)]],
-    transferDate: [new Date(), Validators.required]
+    originProgramId: ['', Validators.required],
+    destinationProgramId: ['', Validators.required],
+
+    milesSent: [
+      0,
+      [
+        Validators.required,
+        Validators.min(1)
+      ]
+    ],
+
+    bonusPercentage: [
+      0,
+      [
+        Validators.required,
+        Validators.min(0)
+      ]
+    ],
+
+    milesReceived: [
+      0,
+      [
+        Validators.required,
+        Validators.min(1)
+      ]
+    ],
+
+    transferDate: [
+      new Date(),
+      Validators.required
+    ],
+
+    costPerThousandOrigin: [
+      0,
+      [
+        Validators.required,
+        Validators.min(1)
+      ]
+    ],
+
+    costPerThousandDestination: [
+      0,
+      [
+        Validators.required,
+        Validators.min(1)
+      ]
+    ],
   });
 
   ngOnInit(): void {
@@ -68,8 +112,10 @@ export class CreateTransferDialogComponent implements OnInit {
   save(): void {
 
     if (this.form.invalid) {
+
       this.form.markAllAsTouched();
       return;
+
     }
 
     this.dialogRef.close(this.form.getRawValue());
@@ -77,7 +123,9 @@ export class CreateTransferDialogComponent implements OnInit {
   }
 
   cancel(): void {
+
     this.dialogRef.close();
+
   }
 
 }
