@@ -1,0 +1,119 @@
+<h2 mat-dialog-title>
+  New Program
+</h2>
+
+<form
+  [formGroup]="form"
+  (ngSubmit)="save()">
+
+  <mat-dialog-content>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Code</mat-label>
+
+      <input
+        matInput
+        formControlName="code">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Name</mat-label>
+
+      <input
+        matInput
+        formControlName="name">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Program Type</mat-label>
+
+      <mat-select formControlName="programType">
+
+        <mat-option [value]="0">
+          Airline
+        </mat-option>
+
+        <mat-option [value]="1">
+          Hotel
+        </mat-option>
+
+        <mat-option [value]="2">
+          Bank
+        </mat-option>
+
+        <mat-option [value]="3">
+          Credit Card
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Website</mat-label>
+
+      <input
+        matInput
+        formControlName="website">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Logo URL</mat-label>
+
+      <input
+        matInput
+        formControlName="logo">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Reference Price per 1,000 Miles</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="referencePricePerThousand">
+
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isActive">
+
+      Active
+
+    </mat-checkbox>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+
+    <button
+      mat-button
+      type="button"
+      (click)="close()">
+
+      Cancel
+
+    </button>
+
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid || loading">
+
+      Create
+
+    </button>
+
+  </mat-dialog-actions>
+
+</form>

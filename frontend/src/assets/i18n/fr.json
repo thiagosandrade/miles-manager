@@ -1,0 +1,19 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Annuler",
+    "close": "Fermer"
+  },
+  "toolbar": {
+    "title": "Gestion des Milles"
+  },
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "programs": "Programmes",
+    "balances": "Soldes",
+    "purchases": "Achats",
+    "transfers": "Transferts",
+    "redemptions": "Échanges",
+    "settings": "Paramètres"
+  }
+}

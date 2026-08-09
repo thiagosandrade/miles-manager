@@ -1,0 +1,13 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav [opened]="opened" mode="side" class="app-sidenav" (closedStart)="onClose()" [fixedInViewport]="true">
+    <mat-nav-list role="navigation" aria-label="Primary Navigation">
+      <a mat-list-item *ngFor="let item of navigation" [routerLink]="item.path" routerLinkActive="active-link" (click)="onClose()" tabindex="0">
+        <mat-icon mat-list-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+        <span mat-line>{{ item.label }}</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

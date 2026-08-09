@@ -1,0 +1,181 @@
+<h2 mat-dialog-title>
+  New Redemption
+</h2>
+
+<mat-dialog-content>
+
+  <form
+    class="dialog-form"
+    [formGroup]="form">
+
+    <!-- Program -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Program</mat-label>
+
+      <mat-select formControlName="programId">
+
+        <mat-option
+          *ngFor="let program of programs"
+          [value]="program.id">
+
+          {{ program.name }}
+
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+    <!-- Origin -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Origin Airport</mat-label>
+
+      <input
+        matInput
+        formControlName="OriginAirport">
+
+    </mat-form-field>
+
+    <!-- Destination -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Destination Airport</mat-label>
+
+      <input
+        matInput
+        formControlName="DestinationAirport">
+
+    </mat-form-field>
+
+    <!-- Flight Date -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Flight Date</mat-label>
+
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="flightDate">
+
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker">
+      </mat-datepicker-toggle>
+
+      <mat-datepicker #picker></mat-datepicker>
+
+    </mat-form-field>
+
+    <!-- Cabin -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Cabin Class</mat-label>
+
+      <mat-select formControlName="cabinClass">
+
+        <mat-option [value]="0">Economy</mat-option>
+
+        <mat-option [value]="1">Premium Economy</mat-option>
+
+        <mat-option [value]="2">Business</mat-option>
+
+        <mat-option [value]="3">First</mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+    <!-- Passengers -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Passengers</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="passengers">
+
+    </mat-form-field>
+
+    <!-- Miles -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Miles Used</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="milesUsed">
+
+    </mat-form-field>
+
+    <!-- Taxes -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Taxes</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="taxes">
+
+    </mat-form-field>
+
+    <!-- Cash Price -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Cash Price</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="cashPrice">
+
+    </mat-form-field>
+
+    <!-- Round Trip -->
+
+    <mat-checkbox formControlName="isRoundTrip">
+
+      Round Trip
+
+    </mat-checkbox>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button
+    mat-button
+    type="button"
+    (click)="cancel()">
+
+    Cancel
+
+  </button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="button"
+    (click)="save()"
+    [disabled]="form.invalid">
+
+    Create
+
+  </button>
+
+</mat-dialog-actions>

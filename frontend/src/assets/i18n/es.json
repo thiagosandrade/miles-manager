@@ -1,0 +1,19 @@
+{
+  "common": {
+    "ok": "Aceptar",
+    "cancel": "Cancelar",
+    "close": "Cerrar"
+  },
+  "toolbar": {
+    "title": "Gestión de Millas"
+  },
+  "sidebar": {
+    "dashboard": "Tablero",
+    "programs": "Programas",
+    "balances": "Saldos",
+    "purchases": "Compras",
+    "transfers": "Transferencias",
+    "redemptions": "Redenciones",
+    "settings": "Configuraciones"
+  }
+}

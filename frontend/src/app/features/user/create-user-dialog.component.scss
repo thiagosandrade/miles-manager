@@ -1,0 +1,106 @@
+:host {
+  display: block;
+}
+
+.dialog-header {
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  margin-bottom: 20px;
+
+}
+
+.dialog-header h2 {
+
+  margin: 0;
+
+  font-size: 1.5rem;
+
+  font-weight: 700;
+
+  color: var(--ink);
+
+}
+
+.dialog-header p {
+
+  margin-top: 6px;
+
+  color: var(--muted);
+
+}
+
+.dialog-icon {
+
+  width: 58px;
+  height: 58px;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+      135deg,
+      var(--mm-primary),
+      var(--mm-secondary));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+}
+
+.dialog-icon mat-icon {
+
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+
+}
+
+.full-width {
+
+  width: 100%;
+
+}
+
+mat-dialog-content {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  padding-top: 10px;
+
+}
+
+mat-form-field {
+
+  width: 100%;
+
+}
+
+mat-dialog-actions {
+
+  margin-top: 24px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid rgba(0,0,0,.06);
+
+}
+
+button[mat-flat-button] {
+
+  min-width: 150px;
+
+}
+
+button mat-icon {
+
+  margin-right: 6px;
+
+}

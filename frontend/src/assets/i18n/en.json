@@ -1,0 +1,19 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "close": "Close"
+  },
+  "toolbar": {
+    "title": "Mileage Management"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "programs": "Programs",
+    "balances": "Balances",
+    "purchases": "Purchases",
+    "transfers": "Transfers",
+    "redemptions": "Redemptions",
+    "settings": "Settings"
+  }
+}

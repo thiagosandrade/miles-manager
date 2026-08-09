@@ -1,6 +1,5 @@
 #nullable enable
 using MilesManager.Domain.Common;
-using System;
 
 namespace MilesManager.Domain.Transfers;
 
@@ -11,6 +10,6 @@ public class TransferRoute : Entity
     public decimal TransferFactor { get; set; }
     public bool IsActive { get; set; } = true;
 
-    public virtual MilesManager.Domain.Programs.Program OriginProgram { get; set; } = null!;
-    public virtual MilesManager.Domain.Programs.Program DestinationProgram { get; set; } = null!;
+    public virtual MilesManager.Domain.Programs.LoyaltyProgram OriginProgram { get; set; } = null!;
+    public virtual MilesManager.Domain.Programs.LoyaltyProgram DestinationProgram { get; set; } = null!;
 }

@@ -1,0 +1,19 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Abbrechen",
+    "close": "Schließen"
+  },
+  "toolbar": {
+    "title": "Meilenverwaltung"
+  },
+  "sidebar": {
+    "dashboard": "Instrumententafel",
+    "programs": "Programme",
+    "balances": "Kontostände",
+    "purchases": "Einkäufe",
+    "transfers": "Überweisungen",
+    "redemptions": "Einlösungen",
+    "settings": "Einstellungen"
+  }
+}

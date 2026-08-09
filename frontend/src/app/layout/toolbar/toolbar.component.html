@@ -1,0 +1,88 @@
+<mat-toolbar class="app-toolbar" role="banner">
+
+  <div class="toolbar-left">
+
+    <img
+      src="assets/logo-icon.png"
+      alt="Miles Manager"
+      class="logo" />
+
+  </div>
+
+  <span class="spacer"></span>
+
+  <button
+    mat-icon-button
+    class="menu-button"
+    [matMenuTriggerFor]="menu"
+    aria-label="Application Menu">
+
+    <mat-icon>menu</mat-icon>
+
+  </button>
+
+</mat-toolbar>
+
+<mat-menu
+  #menu="matMenu"
+  panelClass="toolbar-menu">
+
+  <div class="menu-user">
+
+    <mat-icon class="user-avatar">account_circle</mat-icon>
+
+    <div class="menu-user-info">
+
+      <div class="menu-user-name">
+        {{ userName() }}
+      </div>
+
+      <div class="menu-user-email">
+        {{ userEmail() }}
+      </div>
+
+    </div>
+
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <button mat-menu-item
+    (click)="userDetails()">
+    <mat-icon>person</mat-icon>
+    <span>Profile</span>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button mat-menu-item>
+    <mat-icon>language</mat-icon>
+    <span>Language</span>
+
+    <span class="menu-spacer"></span>
+
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+
+  <button mat-menu-item
+    (click)="switchTheme()">
+    <mat-icon>dark_mode</mat-icon>
+    <span>Theme</span>
+
+    <span class="menu-spacer"></span>
+
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    (click)="logout()">
+
+    <mat-icon>logout</mat-icon>
+    <span>Logout</span>
+
+  </button>
+
+</mat-menu>

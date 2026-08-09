@@ -1,0 +1,91 @@
+.panel {
+  background: var(--panel);
+  border-radius: 22px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  padding: 28px;
+
+  border-bottom: 1px solid rgba(0, 0, 0, .06);
+}
+
+.panel-header h2 {
+  margin: 4px 0 0;
+}
+
+.eyebrow {
+  margin: 0;
+
+  color: var(--mm-primary);
+
+  text-transform: uppercase;
+  letter-spacing: .15em;
+
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.table-toolbar {
+  padding: 20px 28px;
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.empty-state {
+  padding: 72px 32px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+}
+
+.empty-icon {
+  width: 72px;
+  height: 72px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(21, 101, 192, .08);
+
+  margin-bottom: 20px;
+}
+
+.empty-icon mat-icon {
+  font-size: 38px;
+  width: 38px;
+  height: 38px;
+
+  color: var(--mm-primary);
+}
+
+.empty-state h3 {
+  margin: 0 0 10px;
+}
+
+.empty-state p {
+  margin: 0 0 24px;
+
+  color: var(--muted);
+
+  max-width: 420px;
+}
+
+mat-paginator {
+  border-top: 1px solid rgba(0, 0, 0, .06);
+}

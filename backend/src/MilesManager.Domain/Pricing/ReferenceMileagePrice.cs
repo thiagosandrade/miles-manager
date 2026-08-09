@@ -1,6 +1,5 @@
 #nullable enable
 using MilesManager.Domain.Common;
-using System;
 
 namespace MilesManager.Domain.Pricing;
 
@@ -10,5 +9,5 @@ public class ReferenceMileagePrice : Entity
     public decimal PricePerThousand { get; set; }
     public DateOnly EffectiveDate { get; set; }
 
-    public virtual MilesManager.Domain.Programs.Program Program { get; set; } = null!;
+    public virtual MilesManager.Domain.Programs.LoyaltyProgram Program { get; set; } = null!;
 }

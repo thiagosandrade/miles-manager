@@ -1,0 +1,83 @@
+<section class="panel">
+
+  <!-- Header -->
+
+  <div
+    class="panel-header"
+    *ngIf="title || subtitle">
+
+    <div>
+
+      <p
+        class="eyebrow"
+        *ngIf="subtitle">
+
+        {{ subtitle }}
+
+      </p>
+
+      <h2 *ngIf="title">
+
+        {{ title }}
+
+      </h2>
+
+    </div>
+
+    <ng-content select="[table-actions]"></ng-content>
+
+  </div>
+
+  <!-- Toolbar -->
+
+  <div
+    class="table-toolbar"
+    *ngIf="showToolbar">
+
+    <ng-content select="[table-toolbar]"></ng-content>
+
+  </div>
+
+  <!-- Loading -->
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <!-- Empty -->
+
+  <div
+    class="empty-state"
+    *ngIf="!loading && dataSource.length === 0">
+
+    <div class="empty-icon">
+      <mat-icon>{{ emptyIcon }}</mat-icon>
+    </div>
+
+    <h3>{{ emptyTitle }}</h3>
+
+    <p>{{ emptyDescription }}</p>
+
+    <ng-content select="[empty-action]"></ng-content>
+
+  </div>
+
+  <!-- Table -->
+
+  <div
+    class="table-wrap"
+    *ngIf="!loading && dataSource.length > 0">
+
+    <ng-content></ng-content>
+
+  </div>
+
+  <!-- Paginator -->
+
+  <mat-paginator
+    *ngIf="showPaginator && dataSource.length > 0"
+    [length]="length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+
+</section>

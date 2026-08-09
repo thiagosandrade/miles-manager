@@ -1,0 +1,122 @@
+import { CommonModule } from "@angular/common";
+import { Component, OnInit, inject } from "@angular/core";
+import { ReactiveFormsModule, FormBuilder, Validators } from "@angular/forms";
+
+import { MatButtonModule } from "@angular/material/button";
+import { MatNativeDateModule } from "@angular/material/core";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatSelectModule } from "@angular/material/select";
+import { ProgramsApiService } from "../programs/programs-api.service";
+import { Program } from "../programs/models/program.model";
+import { PurchaseStatus } from "../../core/enums/purchase-status.enum";
+
+@Component({
+  selector: 'app-create-purchase-dialog',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule
+  ],
+  templateUrl: './create-purchase-dialog.component.html',
+  styleUrls: ['./create-purchase-dialog.component.scss']
+})
+export class CreatePurchaseDialogComponent implements OnInit {
+
+  private fb = inject(FormBuilder);
+  private dialogRef = inject(MatDialogRef<CreatePurchaseDialogComponent>);
+  private programsApi = inject(ProgramsApiService);
+
+  programs: Program[] = [];
+
+  form = this.fb.group({
+    programId: ['', Validators.required],
+    partner: [''],
+    description: [''],
+    amountPaid: [0, [Validators.required, Validators.min(0)]],
+    milesPurchased: [0, [Validators.required, Validators.min(1)]],
+    bonusPercentage: [0, [Validators.required, Validators.min(0)]],
+    purchaseDate: [new Date(), Validators.required],
+    purchaseStatus: [PurchaseStatus.Completed, Validators.required]
+  });
+
+  purchaseStatuses = [
+    { value: PurchaseStatus.Pending, label: 'Pending' },
+    { value: PurchaseStatus.Completed, label: 'Completed' },
+    { value: PurchaseStatus.Cancelled, label: 'Cancelled' }
+  ];
+
+  ngOnInit(): void {
+
+    this.programsApi.listPrograms({
+      page: 1,
+      pageSize: 1000
+    }).then(result => {
+      this.programs = result.programs.filter(p => p.isActive);
+    });
+
+  }
+
+  save(): void {
+
+    if (this.form.invalid) {
+      return;
+    }
+
+    this.dialogRef.close(this.form.getRawValue());
+
+  }
+
+  cancel(): void {
+    this.dialogRef.close();
+  }
+
+  getPurchaseStatusName(status: PurchaseStatus): string {
+
+    switch (status) {
+
+      case PurchaseStatus.Pending:
+        return 'Pending';
+
+      case PurchaseStatus.Completed:
+        return 'Completed';
+
+      case PurchaseStatus.Cancelled:
+        return 'Cancelled';
+
+      default:
+        return 'Unknown';
+
+    }
+
+  }
+
+  getPurchaseStatusClass(status: PurchaseStatus): string {
+
+    switch (status) {
+
+      case PurchaseStatus.Completed:
+        return 'success';
+
+      case PurchaseStatus.Pending:
+        return 'warning';
+
+      case PurchaseStatus.Cancelled:
+        return 'danger';
+
+      default:
+        return '';
+
+    }
+
+  }
+}

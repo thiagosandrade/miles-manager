@@ -1,6 +1,7 @@
 using MilesManager.Application.Features.Users.Abstractions;
 using MilesManager.Domain.Users;
 using Microsoft.EntityFrameworkCore;
+using MilesManager.Application.Abstractions;
 
 namespace MilesManager.Infrastructure.Persistence.Repositories;
 
@@ -8,7 +9,7 @@ public sealed class UserRepository(MilesManagerDbContext dbContext) : IUserRepos
 {
     private readonly MilesManagerDbContext _dbContext = dbContext;
 
-    public IUserUnitOfWork UnitOfWork => _dbContext;
+    public IUnitOfWork UnitOfWork => _dbContext;
 
     public async Task AddAsync(AppUser user, CancellationToken cancellationToken)
     {

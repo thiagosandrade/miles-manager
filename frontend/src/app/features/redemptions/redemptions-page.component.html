@@ -1,0 +1,132 @@
+<section class="page">
+
+  <!-- Header -->
+
+  <header class="page-header">
+
+    <div>
+
+      <p class="eyebrow">
+        Rewards
+      </p>
+
+      <h1>
+        Redemptions
+      </h1>
+
+      <p class="subtitle">
+        View and manage mileage redemptions.
+      </p>
+
+    </div>
+
+    <button
+      empty-action
+      class="primary-button"
+      type="button"
+      (click)="openCreateRedemptionDialog()">
+
+        <mat-icon>add</mat-icon>
+
+        <span>New Redemption</span>
+    </button>
+
+  </header>
+
+  <!-- Metrics -->
+
+  <section class="metrics">
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+
+        <mat-icon>redeem</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Total Redemptions</span>
+
+        <strong>{{ redemptions().length }}</strong>
+
+      </div>
+
+    </article>
+
+  </section>
+
+  <!-- Table -->
+
+  <app-table
+
+    title="Redemptions"
+    subtitle="History"
+
+    [loading]="loading()"
+
+    [dataSource]="redemptions()"
+
+    [length]="redemptions().length"
+
+    [showPaginator]="false"
+
+    emptyIcon="redeem"
+
+    emptyTitle="No redemptions found"
+
+    emptyDescription="Create your first redemption.">
+
+    <!-- Empty State -->
+
+    <button
+      class="primary-button"
+      type="button"
+      (click)="openCreateRedemptionDialog()"
+      > 
+    </button>
+
+    <!-- Material Table -->
+
+    <table
+      mat-table
+      [dataSource]="redemptions()">
+
+      <ng-container
+        *ngFor="let column of displayedColumns"
+        [matColumnDef]="column">
+
+        <th
+          mat-header-cell
+          *matHeaderCellDef>
+
+          {{ column | titlecase }}
+
+        </th>
+
+        <td
+          mat-cell
+          *matCellDef="let redemption">
+
+          {{ redemption[column] }}
+
+        </td>
+
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+
+    </table>
+
+  </app-table>
+
+</section>

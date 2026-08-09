@@ -1,21 +1,22 @@
 using MediatR;
+using MilesManager.Application.Common;
 using MilesManager.Application.Features.Users.Abstractions;
 using MilesManager.Application.Features.Users.Models;
 using MilesManager.Domain.Users;
 
 namespace MilesManager.Application.Features.Users.Commands.UpdateUser;
 
-public sealed class UpdateUserHandler(IUserRepository userRepository, IPasswordHasher passwordHasher) : IRequestHandler<UpdateUserCommand, OperationResult<UserDetails>>
+public sealed class UpdateUserHandler(IUserRepository userRepository, IPasswordHasher passwordHasher) : IRequestHandler<UpdateUserCommand, Result<UserDetails>>
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IPasswordHasher _passwordHasher = passwordHasher;
 
-    public async Task<OperationResult<UserDetails>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<UserDetails>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
         if (user is null)
         {
-            return OperationResult<UserDetails>.NotFound();
+            return Result<UserDetails>.NotFound();
         }
 
         var normalizedEmail = request.Email.Trim().ToLowerInvariant();
@@ -25,7 +26,7 @@ public sealed class UpdateUserHandler(IUserRepository userRepository, IPasswordH
             var duplicate = await _userRepository.GetByEmailAsync(normalizedEmail, cancellationToken);
             if (duplicate is not null && duplicate.Id != user.Id)
             {
-                return OperationResult<UserDetails>.Conflict();
+                return Result<UserDetails>.Conflict();
             }
             user.Email = normalizedEmail;
         }
@@ -57,7 +58,7 @@ public sealed class UpdateUserHandler(IUserRepository userRepository, IPasswordH
         user.UpdatedAtUtc = DateTimeOffset.UtcNow;
 
         await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-        return OperationResult<UserDetails>.Success(ToDetails(user));
+        return Result<UserDetails>.Success(ToDetails(user));
     }
 
     private static UserDetails ToDetails(AppUser user)

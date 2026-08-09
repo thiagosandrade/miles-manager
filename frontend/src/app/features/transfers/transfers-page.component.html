@@ -1,0 +1,348 @@
+<section class="page">
+
+  <!-- Header -->
+
+  <header class="page-header">
+
+    <div>
+
+      <p class="eyebrow">
+        Loyalty
+      </p>
+
+      <h1>
+        Transfers
+      </h1>
+
+      <p class="subtitle">
+        Manage mileage transfers between loyalty programs.
+      </p>
+
+    </div>
+
+    <button
+      empty-action
+      class="primary-button"
+      (click)="openCreateTransferDialog()">
+
+      <mat-icon>add</mat-icon>
+
+      <span>New Transfer</span>
+
+    </button>
+
+  </header>
+
+  <!-- Metrics -->
+
+  <section class="metrics">
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+
+        <mat-icon>swap_horiz</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Total Transfers</span>
+
+        <strong>{{ data?.length ?? 0 }}</strong>
+
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon success">
+
+        <mat-icon>paid</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Total Miles</span>
+
+        <strong>
+
+          {{ data?.reduce((sum, t) => sum + t.amount, 0) ?? 0 | number }}
+
+        </strong>
+
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+
+        <mat-icon>hub</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Programs</span>
+
+        <strong>{{ totalPrograms }}</strong>
+
+      </div>
+
+    </article>
+
+  </section>
+
+  <!-- Table -->
+
+  <app-table
+
+    title="Transfers"
+    subtitle="History"
+
+    [loading]="isLoadingResults"
+
+    [dataSource]="data ?? []"
+
+    [length]="data?.length ?? 0"
+
+    [showPaginator]="false"
+
+    [showToolbar]="true"
+
+    emptyIcon="swap_horiz"
+
+    emptyTitle="No transfers found"
+
+    emptyDescription="Create your first mileage transfer.">
+
+    <!-- Toolbar -->
+
+    <div table-toolbar>
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Search Transfers</mat-label>
+
+        <input
+          matInput
+          placeholder="Search by Program IDs..."
+          (input)="applyFilter($any($event.target).value)">
+
+      </mat-form-field>
+
+    </div>
+
+    <!-- Empty State -->
+
+    <button
+      empty-action
+      class="primary-button">
+
+      <mat-icon>add</mat-icon>
+
+      <span>New Transfer</span>
+
+    </button>
+
+    <!-- Material Table -->
+
+    <table
+      mat-table
+      [dataSource]="data ?? []">
+
+      <!-- From Program -->
+
+      <ng-container matColumnDef="fromProgramId">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          From Program
+
+        </th>
+
+        <td mat-cell *matCellDef="let transfer">
+
+          <div class="user-info">
+
+            <div class="avatar">
+
+              {{ transfer.fromProgramId }}
+
+            </div>
+
+            <div class="user-details">
+
+              <strong>
+
+                {{ transfer.fromProgramId }}
+
+              </strong>
+
+              <span>
+
+                Source Program
+
+              </span>
+
+            </div>
+
+          </div>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Destination -->
+
+      <ng-container matColumnDef="toProgramId">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Destination
+
+        </th>
+
+        <td mat-cell *matCellDef="let transfer">
+
+          <div class="user-info">
+
+            <div class="avatar">
+
+              {{ transfer.toProgramId }}
+
+            </div>
+
+            <div class="user-details">
+
+              <strong>
+
+                {{ transfer.toProgramId }}
+
+              </strong>
+
+              <span>
+
+                Destination Program
+
+              </span>
+
+            </div>
+
+          </div>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Amount -->
+
+      <ng-container matColumnDef="amount">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Miles
+
+        </th>
+
+        <td mat-cell *matCellDef="let transfer">
+
+          <strong>
+
+            {{ transfer.amount | number }}
+
+          </strong>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Date -->
+
+      <ng-container matColumnDef="transferDate">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Date
+
+        </th>
+
+        <td mat-cell *matCellDef="let transfer">
+
+          {{ transfer.transferDate | date:'mediumDate' }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Actions -->
+
+      <ng-container matColumnDef="actions">
+
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="actions-column">
+
+        </th>
+
+        <td
+          mat-cell
+          *matCellDef="let transfer"
+          class="actions-column">
+
+          <button
+            class="icon-button"
+            aria-label="Edit transfer">
+
+            <mat-icon>edit</mat-icon>
+
+          </button>
+
+          <button
+            class="icon-button danger"
+            aria-label="Delete transfer">
+
+            <mat-icon>delete</mat-icon>
+
+          </button>
+
+        </td>
+
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+
+    </table>
+
+  </app-table>
+
+  <!-- Error -->
+
+  <div
+    class="feedback"
+    *ngIf="isRateLimitReached">
+
+    <strong>Error</strong>
+
+    <span>
+
+      Could not load transfers. Please try again later.
+
+    </span>
+
+  </div>
+
+</section>

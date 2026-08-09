@@ -1,0 +1,257 @@
+<section class="page">
+
+  <!-- Header -->
+
+  <header class="page-header">
+
+    <div>
+
+      <p class="eyebrow">
+        Dashboard
+      </p>
+
+      <h1>
+        Overview
+      </h1>
+
+      <p class="subtitle">
+        Overview of your airline miles portfolio.
+      </p>
+
+    </div>
+
+  </header>
+
+  <!-- Metrics -->
+
+  <section class="metrics">
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+        <mat-icon>flight</mat-icon>
+      </div>
+
+      <div>
+        <span>Total Miles</span>
+        <strong>{{ stats?.totalMiles | number }}</strong>
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+        <mat-icon>payments</mat-icon>
+      </div>
+
+      <div>
+        <span>Investment</span>
+        <strong>{{ stats?.totalInvestment | currency }}</strong>
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+        <mat-icon>price_check</mat-icon>
+      </div>
+
+      <div>
+        <span>Cost / 1,000 Miles</span>
+        <strong>{{ stats?.averageCostPerThousand | currency }}</strong>
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+        <mat-icon>trending_up</mat-icon>
+      </div>
+
+      <div>
+        <span>Market Value</span>
+        <strong>{{ stats?.currentMarketValue | currency }}</strong>
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon success">
+        <mat-icon>arrow_upward</mat-icon>
+      </div>
+
+      <div>
+        <span>Profit</span>
+        <strong>{{ stats?.currentProfit | currency }}</strong>
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon danger">
+        <mat-icon>arrow_downward</mat-icon>
+      </div>
+
+      <div>
+        <span>Loss</span>
+        <strong>{{ stats?.currentLoss | currency }}</strong>
+      </div>
+
+    </article>
+
+  </section>
+
+  <!-- Dashboard -->
+
+  <section class="dashboard-grid">
+
+    <!-- Programs -->
+
+    <article class="dashboard-card">
+
+      <header class="dashboard-card-header">
+
+        <h2>Programs</h2>
+
+      </header>
+
+      <div class="dashboard-card-content">
+
+        <div class="program-list">
+
+          <ng-container *ngFor="let program of stats?.programs">
+
+            <div
+              class="program-pill"
+              *ngIf="program">
+
+              {{ program.name }}
+
+            </div>
+
+          </ng-container>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- Purchases -->
+
+    <article class="dashboard-card">
+
+      <header class="dashboard-card-header">
+
+        <h2>Recent Purchases</h2>
+
+      </header>
+
+      <div class="dashboard-card-content">
+
+        <div class="dashboard-list">
+
+          <ng-container *ngFor="let purchase of stats?.recentPurchases">
+
+            <div
+              class="dashboard-list-item"
+              *ngIf="purchase">
+
+              {{ purchase.date }}
+
+            </div>
+
+          </ng-container>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- Transfers -->
+
+    <article class="dashboard-card">
+
+      <header class="dashboard-card-header">
+
+        <h2>Recent Transfers</h2>
+
+      </header>
+
+      <div class="dashboard-card-content">
+
+        <div class="dashboard-list">
+
+          <ng-container *ngFor="let transfer of stats?.recentTransfers">
+
+            <div
+              class="dashboard-list-item"
+              *ngIf="transfer">
+
+              {{ transfer.date }}
+
+            </div>
+
+          </ng-container>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- Redemptions -->
+
+    <article class="dashboard-card">
+
+      <header class="dashboard-card-header">
+
+        <h2>Recent Redemptions</h2>
+
+      </header>
+
+      <div class="dashboard-card-content">
+
+        <div class="dashboard-list">
+
+          <ng-container *ngFor="let redemption of stats?.recentRedemptions">
+
+            <div
+              class="dashboard-list-item"
+              *ngIf="redemption">
+
+              {{ redemption.date }}
+
+            </div>
+
+          </ng-container>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  </section>
+
+  <!-- Error -->
+
+  <div
+    class="feedback"
+    *ngIf="error">
+
+    <strong>Error</strong>
+
+    <span>{{ error }}</span>
+
+  </div>
+
+</section>
+
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>

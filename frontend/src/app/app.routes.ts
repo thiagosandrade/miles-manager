@@ -1,39 +1,76 @@
 import { Routes } from '@angular/router';
+import { LayoutComponent } from './layout/layout.component';
 
 export const routes: Routes = [
   {
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth/auth.routes').then(
+        (m) => m.AUTH_ROUTES),
+  },
+  {
     path: '',
-    loadComponent: () => import('./shell/app-shell.component').then((m) => m.AppShellComponent),
+    loadComponent: () =>      
+      import('./layout/layout.component').then(
+        (m) => m.LayoutComponent),
     children: [
       {
         path: '',
+        redirectTo: 'dashboard',
         pathMatch: 'full',
-        redirectTo: 'dashboard'
       },
       {
         path: 'dashboard',
-        loadChildren: () => import('./dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES)
+        loadChildren: () =>
+          import('./features/dashboard/dashboard.routes').then(
+            (m) => m.DASHBOARD_ROUTES
+          ),
       },
       {
         path: 'users',
-        loadChildren: () => import('./user/user.routes').then((m) => m.USER_ROUTES)
+        loadChildren: () =>
+          import('./features/user/user.routes').then(
+            (m) => m.USER_ROUTES),
       },
       {
         path: 'programs',
-        loadChildren: () => import('./programs/programs.routes').then((m) => m.PROGRAMS_ROUTES)
+        loadChildren: () =>
+          import('./features/programs/programs.routes').then(
+            (m) => m.PROGRAMS_ROUTES
+          ),
       },
       {
-        path: 'reports',
-        loadChildren: () => import('./reports/reports.routes').then((m) => m.REPORTS_ROUTES)
+        path: 'program-balances',
+        loadChildren: () =>
+          import('./features/program-balances/program-balances.routes').then(
+            (m) => m.PROGRAM_BALANCES_ROUTES
+          ),
       },
       {
-        path: 'settings',
-        loadChildren: () => import('./settings/settings.routes').then((m) => m.SETTINGS_ROUTES)
+        path: 'purchases',
+        loadChildren: () =>
+          import('./features/purchases/purchases.routes').then(
+            (m) => m.PURCHASES_ROUTES
+          ),
+      },
+      {
+        path: 'transfers',
+        loadChildren: () =>
+          import('./features/transfers/transfers.routes').then(
+            (m) => m.TRANSFERS_ROUTES
+          ),
+      },
+      {
+        path: 'redemptions',
+        loadChildren: () =>
+          import('./features/redemptions/redemptions.routes').then(
+            (m) => m.REDEMPTIONS_ROUTES
+          ),
       }
-    ]
+    ],
   },
   {
     path: '**',
-    redirectTo: 'dashboard'
-  }
+    redirectTo: '',
+  },
 ];

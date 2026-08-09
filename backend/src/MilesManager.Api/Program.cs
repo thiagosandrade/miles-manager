@@ -1,21 +1,17 @@
-using MediatR;
-using MilesManager.Api.Features.Auth;
-using MilesManager.Api.Features.Health;
-using MilesManager.Api.Features.Trips;
-using MilesManager.Api.Features.Users;
-using MilesManager.Application;
-using MilesManager.Application.Features.Users.Abstractions;
-using MilesManager.Infrastructure;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.OpenApi.Models;
+using MilesManager.Api.Middleware;
+using MilesManager.Api.Presentation;
+using MilesManager.Api.Data;
+using MilesManager.Application;
+using MilesManager.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddPresentation();
 
 var jwtSection = builder.Configuration.GetSection("Jwt");
 var issuer = jwtSection["Issuer"] ?? throw new InvalidOperationException("Missing JWT issuer.");
@@ -37,66 +33,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero
         };
-
-        options.Events = new JwtBearerEvents
-        {
-            OnTokenValidated = async context =>
-            {
-                var userRepository = context.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
-                var principal = context.Principal;
-                var subject = principal?.FindFirstValue("sub");
-                var tokenVersionText = principal?.FindFirstValue("tv");
-
-                if (!Guid.TryParse(subject, out var userId) || !int.TryParse(tokenVersionText, out var tokenVersion))
-                {
-                    context.Fail("Invalid token claims.");
-                    return;
-                }
-
-                var user = await userRepository.GetByIdAsync(userId, context.HttpContext.RequestAborted);
-                if (user is null || !user.IsActive || user.TokenVersion != tokenVersion)
-                {
-                    context.Fail("Token is no longer valid.");
-                }
-            }
-        };
     });
 
 builder.Services.AddAuthorization();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "MilesManager API", Version = "v1" });
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Enter 'Bearer' followed by a space and your JWT token."
-    });
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
-
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{typeof(Program).Assembly.GetName().Name}.xml");
-    if (File.Exists(xmlPath))
-    {
-        options.IncludeXmlComments(xmlPath);
-    }
-});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("frontend", policy =>
@@ -105,15 +44,19 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.UseSwagger();
 app.UseSwaggerUI();
+
 app.UseCors("frontend");
+app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHealthEndpoints();
-app.MapTripEndpoints();
-app.MapAuthEndpoints();
-app.MapUserEndpoints();
+app.MapControllers();
+
+await SeedData.InitializeAsync(app.Services, CancellationToken.None);
 
 app.Run();

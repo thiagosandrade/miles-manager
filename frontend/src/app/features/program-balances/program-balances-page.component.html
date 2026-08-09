@@ -1,0 +1,182 @@
+<section class="page">
+
+  <!-- Header -->
+
+  <header class="page-header">
+
+    <div>
+
+      <p class="eyebrow">
+        Programs
+      </p>
+
+      <h1>
+        Program Balances
+      </h1>
+
+      <p class="subtitle">
+        View balances across all your loyalty programs.
+      </p>
+
+    </div>
+
+  </header>
+
+  <!-- Metrics -->
+
+  <section class="metrics">
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+
+        <mat-icon>account_balance_wallet</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Total Programs</span>
+
+        <strong>{{ balances().length }}</strong>
+
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+
+        <mat-icon>flight</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Total Miles</span>
+
+        <strong>1.5M</strong>
+
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+
+        <mat-icon>analytics</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Average Balance</span>
+
+        <strong>250K</strong>
+
+      </div>
+
+    </article>
+
+  </section>
+
+  <!-- Table -->
+
+  <app-table
+
+    title="Balances"
+    subtitle="Programs"
+
+    [loading]="loading()"
+
+    [dataSource]="balances()"
+
+    [length]="balances().length"
+
+    [showPaginator]="false"
+
+    emptyIcon="account_balance_wallet"
+
+    emptyTitle="No balances found"
+
+    emptyDescription="Your loyalty program balances will appear here.">
+
+    <!-- Program -->
+
+    <ng-container matColumnDef="program">
+
+      <th mat-header-cell *matHeaderCellDef>
+
+        Program
+
+      </th>
+
+      <td mat-cell *matCellDef="let balance">
+
+        <div class="user-info">
+
+          <div class="avatar">
+
+            {{ balance.program.charAt(0) | uppercase }}
+
+          </div>
+
+          <div class="user-details">
+
+            <strong>
+
+              {{ balance.program }}
+
+            </strong>
+
+            <span>
+
+              Loyalty Program
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </td>
+
+    </ng-container>
+
+    <!-- Balance -->
+
+    <ng-container matColumnDef="balance">
+
+      <th mat-header-cell *matHeaderCellDef>
+
+        Balance
+
+      </th>
+
+      <td mat-cell *matCellDef="let balance">
+
+        <strong>
+
+          {{ balance.balance | number }}
+
+        </strong>
+
+      </td>
+
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns">
+    </tr>
+
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+
+  </app-table>
+
+</section>

@@ -1,6 +1,5 @@
 #nullable enable
 using MilesManager.Domain.Common;
-using System;
 
 namespace MilesManager.Domain.Transfers;
 
@@ -16,6 +15,6 @@ public class MileageTransfer : Entity
     public decimal CostPerThousandDestination { get; set; }
     public DateOnly TransferDate { get; set; }
 
-    public virtual MilesManager.Domain.Programs.Program OriginProgram { get; set; } = null!;
-    public virtual MilesManager.Domain.Programs.Program DestinationProgram { get; set; } = null!;
+    public virtual MilesManager.Domain.Programs.LoyaltyProgram OriginProgram { get; set; } = null!;
+    public virtual MilesManager.Domain.Programs.LoyaltyProgram DestinationProgram { get; set; } = null!;
 }

@@ -1,7 +1,6 @@
 #nullable enable
 using MilesManager.Domain.Common;
 using MilesManager.Domain.Common.Enums;
-using System;
 
 namespace MilesManager.Domain.Redemptions;
 
@@ -20,5 +19,5 @@ public class FlightRedemption : Entity
     public decimal CashPrice { get; set; }
     public decimal EffectiveCostPerThousand { get; set; }
 
-    public virtual MilesManager.Domain.Programs.Program Program { get; set; } = null!;
+    public virtual MilesManager.Domain.Programs.LoyaltyProgram LoyaltyProgram { get; set; } = null!;
 }

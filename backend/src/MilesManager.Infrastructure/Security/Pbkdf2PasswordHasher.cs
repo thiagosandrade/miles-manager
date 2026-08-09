@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-using System.Text;
 using MilesManager.Application.Features.Users.Abstractions;
 
 namespace MilesManager.Infrastructure.Security;

@@ -1,0 +1,339 @@
+<section class="page">
+
+  <!-- Header -->
+
+  <header class="page-header">
+
+    <div>
+
+      <p class="eyebrow">
+        Transactions
+      </p>
+
+      <h1>
+        Purchases
+      </h1>
+
+      <p class="subtitle">
+        View and manage mileage purchases.
+      </p>
+
+    </div>
+
+    <button
+      class="primary-button"
+      type="button"
+      (click)="openCreatePurchaseDialog()">
+
+      <mat-icon>add</mat-icon>
+
+      <span>New Purchase</span>
+
+    </button>
+
+  </header>
+
+  <!-- Metrics -->
+
+  <section class="metrics">
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+
+        <mat-icon>shopping_cart</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Total Purchases</span>
+
+        <strong>{{ data().length }}</strong>
+
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon success">
+
+        <mat-icon>payments</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Total Amount</span>
+
+        <strong>
+
+          {{ data().reduce((sum, p) => sum + p.amountPaid, 0) | number:'1.0-0' }}
+
+        </strong>
+
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+
+        <mat-icon>analytics</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Average Purchase</span>
+
+        <strong>
+
+          {{
+            data().length
+              ? (data().reduce((sum, p) => sum + p.amountPaid, 0) / data().length)
+              : 0
+              | number:'1.0-0'
+          }}
+
+        </strong>
+
+      </div>
+
+    </article>
+
+  </section>
+
+  <!-- Table -->
+
+  <app-table
+
+    title="Purchases"
+    subtitle="History"
+
+    [loading]="loading()"
+
+    [dataSource]="data()"
+
+    [length]="data().length"
+
+    [showPaginator]="false"
+
+    emptyIcon="shopping_cart"
+
+    emptyTitle="No purchases found"
+
+    emptyDescription="Create your first mileage purchase.">
+
+    <!-- Toolbar -->
+
+    <div table-toolbar>
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Search Purchases</mat-label>
+
+        <input
+          matInput
+          placeholder="Search purchases..."
+          (input)="applyFilter($any($event.target).value)">
+
+      </mat-form-field>
+
+    </div>
+
+    <!-- Empty State -->
+
+    <button
+      empty-action
+      class="primary-button"
+      type="button"
+      (click)="openCreatePurchaseDialog()">
+
+      <mat-icon>add</mat-icon>
+
+      <span>New Purchase</span>
+
+    </button>
+
+    <!-- Material Table -->
+
+    <table
+      mat-table
+      [dataSource]="data()">
+
+      <!-- Program -->
+
+      <ng-container matColumnDef="programId">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Program
+
+        </th>
+
+        <td mat-cell *matCellDef="let purchase">
+
+          <div class="user-info">
+
+            <div class="avatar">
+
+              {{ purchase.programId.charAt(0) | uppercase }}
+
+            </div>
+
+            <div class="user-details">
+
+              <strong>{{ purchase.programId }}</strong>
+
+              <span>Loyalty Program</span>
+
+            </div>
+
+          </div>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Amount -->
+
+      <ng-container matColumnDef="amount">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Amount
+
+        </th>
+
+        <td mat-cell *matCellDef="let purchase">
+
+          <strong>{{ purchase.amountPaid | number:'1.0-0' }}</strong>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Purchase Date -->
+
+      <ng-container matColumnDef="purchaseDate">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Purchase Date
+
+        </th>
+
+        <td mat-cell *matCellDef="let purchase">
+
+          {{ purchase.purchaseDate | date:'mediumDate' }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Created -->
+
+      <ng-container matColumnDef="createdAt">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Created
+
+        </th>
+
+        <td mat-cell *matCellDef="let purchase">
+
+          {{ purchase.createdAt | date:'mediumDate' }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Updated -->
+
+      <ng-container matColumnDef="updatedAt">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Updated
+
+        </th>
+
+        <td mat-cell *matCellDef="let purchase">
+
+          {{ purchase.updatedAt | date:'mediumDate' }}
+
+        </td>
+
+      </ng-container>
+
+      <!-- Actions -->
+
+      <ng-container matColumnDef="actions">
+
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="actions-column">
+
+        </th>
+
+        <td
+          mat-cell
+          *matCellDef="let purchase"
+          class="actions-column">
+
+          <button
+            class="icon-button"
+            aria-label="Edit purchase">
+
+            <mat-icon>edit</mat-icon>
+
+          </button>
+
+          <button
+            class="icon-button danger"
+            aria-label="Delete purchase">
+
+            <mat-icon>delete</mat-icon>
+
+          </button>
+
+        </td>
+
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+
+    </table>
+
+  </app-table>
+
+  <!-- Error -->
+
+  <div
+    class="feedback"
+    *ngIf="isRateLimitReached()">
+
+    <strong>Error</strong>
+
+    <span>
+
+      Could not load purchases. Please try again later.
+
+    </span>
+
+  </div>
+
+</section>

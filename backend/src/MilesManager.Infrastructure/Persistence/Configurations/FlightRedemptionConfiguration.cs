@@ -17,7 +17,7 @@ internal sealed class FlightRedemptionConfiguration : IEntityTypeConfiguration<F
         builder.Property(x => x.Taxes).HasPrecision(18, 2);
         builder.Property(x => x.CashPrice).HasPrecision(18, 2);
         builder.Property(x => x.EffectiveCostPerThousand).HasPrecision(18, 4);
-        builder.HasOne(x => x.Program)
+        builder.HasOne(x => x.LoyaltyProgram)
             .WithMany(p => p.FlightRedemptions)
             .HasForeignKey(x => x.ProgramId)
             .OnDelete(DeleteBehavior.Cascade);

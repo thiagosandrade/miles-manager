@@ -1,0 +1,46 @@
+/* Color Palette */
+:root {
+  /* Primary colors */
+  --color-primary: #1565C0;
+  --color-primary-light: #5e92f3;
+  --color-primary-dark: #003c8f;
+
+  /* Secondary Colors - Light Blue Accents */
+  --color-secondary-light: #bbdefb;
+  --color-secondary: #90caf9;
+  --color-secondary-dark: #64b5f6;
+
+  /* Success - Green */
+  --color-success: #388e3c;
+  --color-success-light: #81c784;
+
+  /* Warning - Orange */
+  --color-warning: #f57c00;
+  --color-warning-light: #ffb74d;
+
+  /* Danger - Red */
+  --color-danger: #d32f2f;
+  --color-danger-light: #e57373;
+
+  /* Backgrounds and cards */
+  --color-background: #f5f6f8;
+  --color-card-bg: #ffffff;
+  --color-border: #e0e0e0; /* Very subtle light gray border */
+
+  /* Text colors */
+  --color-text-primary: #333333;
+  --color-text-secondary: #666666;
+
+  /* Border Radius */
+  --border-radius-card: 12px;
+  --border-radius-button: 8px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  /* Typography Sizes */
+  --font-size-base: 16px;
+  --font-size-large: 24px;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+}

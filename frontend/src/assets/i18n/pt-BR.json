@@ -1,0 +1,19 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancelar",
+    "close": "Fechar"
+  },
+  "toolbar": {
+    "title": "Gestão de Quilometragem"
+  },
+  "sidebar": {
+    "dashboard": "Painel",
+    "programs": "Programas",
+    "balances": "Saldos",
+    "purchases": "Compras",
+    "transfers": "Transferências",
+    "redemptions": "Resgates",
+    "settings": "Configurações"
+  }
+}

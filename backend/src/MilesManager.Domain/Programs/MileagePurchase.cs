@@ -1,7 +1,6 @@
 #nullable enable
 using MilesManager.Domain.Common;
 using MilesManager.Domain.Common.Enums;
-using System;
 
 namespace MilesManager.Domain.Programs;
 
@@ -17,5 +16,5 @@ public class MileagePurchase : Entity
     public DateOnly PurchaseDate { get; set; }
     public PurchaseStatus PurchaseStatus { get; set; }
 
-    public virtual Program Program { get; set; } = null!;
+    public virtual LoyaltyProgram Program { get; set; } = null!;
 }

@@ -1,0 +1,112 @@
+<section class="page">
+
+  <header class="page-header">
+
+    <div>
+
+      <p class="eyebrow">Account</p>
+
+      <h1>User Details</h1>
+
+      <p class="subtitle">
+        View detailed information about this Miles Manager user.
+      </p>
+
+    </div>
+
+  </header>
+
+  <app-loading-spinner
+    *ngIf="loading">
+  </app-loading-spinner>
+
+  <div
+    *ngIf="error"
+    class="error">
+
+    <strong>Error</strong>
+    <span>{{ error }}</span>
+
+  </div>
+
+  <section
+    *ngIf="!loading && user"
+    class="content-card">
+
+    <div class="profile-header">
+
+      <div class="avatar">
+
+        {{ user.fullName.charAt(0) }}
+
+      </div>
+
+      <div>
+
+        <h2>{{ user.fullName }}</h2>
+
+        <p>{{ user.email }}</p>
+
+      </div>
+
+      <span
+        class="status-pill"
+        [class.inactive]="!user.isActive">
+
+        {{ user.isActive ? 'Active' : 'Inactive' }}
+
+      </span>
+
+    </div>
+
+    <div class="details-grid">
+
+      <div class="detail-card">
+
+        <span>Full Name</span>
+
+        <strong>{{ user.fullName }}</strong>
+
+      </div>
+
+      <div class="detail-card">
+
+        <span>Email</span>
+
+        <strong>{{ user.email }}</strong>
+
+      </div>
+
+      <div class="detail-card">
+
+        <span>Created</span>
+
+        <strong>{{ user.createdAtUtc | date:'medium' }}</strong>
+
+      </div>
+
+      <div
+        class="detail-card"
+        *ngIf="user.updatedAtUtc">
+
+        <span>Last Updated</span>
+
+        <strong>{{ user.updatedAtUtc | date:'medium' }}</strong>
+
+      </div>
+
+      <div
+        class="detail-card"
+        *ngIf="user.lastLoginAtUtc">
+
+        <span>Last Login</span>
+
+        <strong>{{ user.lastLoginAtUtc | date:'medium' }}</strong>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>

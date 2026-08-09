@@ -1,0 +1,120 @@
+<h2 mat-dialog-title>
+
+  <div class="dialog-header">
+
+    <div class="dialog-icon">
+
+      <mat-icon>person_add</mat-icon>
+
+    </div>
+
+    <div>
+
+      <h2>Create User</h2>
+
+      <p>
+        Add a new Miles Manager user.
+      </p>
+
+    </div>
+
+  </div>
+
+</h2>
+
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()">
+
+  <div mat-dialog-content>
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width">
+
+      <mat-label>Full Name</mat-label>
+
+      <mat-icon matPrefix>badge</mat-icon>
+
+      <input
+        matInput
+        formControlName="fullName"
+        placeholder="John Doe">
+
+      <mat-error *ngIf="form.get('fullName')?.hasError('required')">
+        Full name is required
+      </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width">
+
+      <mat-label>Email</mat-label>
+
+      <mat-icon matPrefix>mail</mat-icon>
+
+      <input
+        matInput
+        formControlName="email"
+        placeholder="john@email.com">
+
+      <mat-error *ngIf="form.get('email')?.hasError('required')">
+        Email is required
+      </mat-error>
+
+      <mat-error *ngIf="form.get('email')?.hasError('email')">
+        Invalid email
+      </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width">
+
+      <mat-label>Password</mat-label>
+
+      <mat-icon matPrefix>lock</mat-icon>
+
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        placeholder="Password">
+
+      <mat-error *ngIf="form.get('password')?.hasError('required')">
+        Password is required
+      </mat-error>
+
+    </mat-form-field>
+
+  </div>
+
+  <mat-dialog-actions align="end">
+
+    <button
+      mat-stroked-button
+      type="button"
+      (click)="onCancel()">
+
+      Cancel
+
+    </button>
+
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid">
+
+      <mat-icon>check</mat-icon>
+
+      Create User
+
+    </button>
+
+  </mat-dialog-actions>
+
+</form>

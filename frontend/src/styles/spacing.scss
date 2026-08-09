@@ -1,0 +1,17 @@
+$spacing-scale: (
+  1: 4px,
+  2: 8px,
+  3: 12px,
+  4: 16px,
+  5: 24px,
+  6: 32px,
+  7: 48px,
+  8: 64px
+);
+
+@mixin spacing($top: 0, $right: 0, $bottom: 0, $left: 0) {
+  margin-top: map-get($spacing-scale, $top);
+  margin-right: map-get($spacing-scale, $right);
+  margin-bottom: map-get($spacing-scale, $bottom);
+  margin-left: map-get($spacing-scale, $left);
+}

@@ -1,0 +1,101 @@
+<div class="login-page">
+
+  <mat-card class="login-card">
+
+    <div class="login-header">
+
+      <img
+        src="assets/logo-icon.png"
+        alt="Miles Manager"
+        class="logo">
+
+      <h1>Welcome back</h1>
+
+      <p>
+        Sign in to continue managing your airline programs,
+        miles and rewards.
+      </p>
+
+    </div>
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      class="login-form">
+
+      <mat-form-field
+        appearance="outline">
+
+        <mat-label>Email</mat-label>
+
+        <input
+          matInput
+          type="email"
+          placeholder="john.doe@email.com"
+          formControlName="email">
+
+        <mat-icon matPrefix>mail</mat-icon>
+
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+
+        <mat-error *ngIf="form.get('email')?.hasError('email')">
+          Invalid email
+        </mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline">
+
+        <mat-label>Password</mat-label>
+
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password">
+
+        <mat-icon matPrefix>lock</mat-icon>
+
+        <mat-error *ngIf="form.get('password')?.hasError('required')">
+          Password is required
+        </mat-error>
+
+      </mat-form-field>
+
+      <button
+        class="login-button"
+        type="submit"
+        [disabled]="loading || form.invalid">
+
+        <span *ngIf="!loading">
+
+          Sign In
+
+        </span>
+
+        <span *ngIf="loading">
+
+          Signing in...
+
+        </span>
+
+      </button>
+
+    </form>
+
+    <div class="login-footer">
+
+      Miles Manager
+
+      <span>•</span>
+
+      Version 1.0
+
+    </div>
+
+  </mat-card>
+
+</div>

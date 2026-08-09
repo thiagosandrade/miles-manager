@@ -1,0 +1,288 @@
+<section class="page">
+
+  <!-- Header -->
+
+  <header class="page-header">
+
+    <div>
+
+      <p class="eyebrow">
+        Administration
+      </p>
+
+      <h1>
+        Programs
+      </h1>
+
+      <p class="subtitle">
+        Manage airline and hotel loyalty programs.
+      </p>
+
+    </div>
+
+    <button
+      class="primary-button"
+      (click)="openCreateDialog()">
+
+      <mat-icon>add</mat-icon>
+
+      <span>New Program</span>
+
+    </button>
+
+  </header>
+
+  <!-- Metrics -->
+
+  <section class="metrics">
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+
+        <mat-icon>flight</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Total Programs</span>
+
+        <strong>{{ data().length }}</strong>
+
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon success">
+
+        <mat-icon>check_circle</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Active</span>
+
+        <strong>{{ data().filter(p => p.isActive).length }}</strong>
+
+      </div>
+
+    </article>
+
+    <article class="metric-card">
+
+      <div class="metric-icon">
+
+        <mat-icon>pause_circle</mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>Inactive</span>
+
+        <strong>{{ data().filter(p => !p.isActive).length }}</strong>
+
+      </div>
+
+    </article>
+
+  </section>
+
+  <!-- Table -->
+
+  <app-table
+
+    title="Programs"
+    subtitle="Directory"
+
+    [loading]="loading()"
+
+    [dataSource]="data()"
+
+    [length]="data().length"
+
+    [showPaginator]="false"
+
+    [showToolbar]="true"
+
+    emptyIcon="flight"
+
+    emptyTitle="No programs found"
+
+    emptyDescription="Create your first loyalty program.">
+
+    <!-- Toolbar -->
+
+    <div table-toolbar>
+
+      <div class="search-box">
+
+        <mat-icon>search</mat-icon>
+
+        <input
+          type="text"
+          placeholder="Search programs..."
+          (input)="applyFilter($any($event.target).value)">
+
+      </div>
+
+    </div>
+
+    <!-- Empty State -->
+
+    <button
+      empty-action
+      class="primary-button"
+      (click)="openCreateDialog()">
+
+      <mat-icon>add</mat-icon>
+
+      <span>New Program</span>
+
+    </button>
+
+    <!-- Material Table -->
+
+    <table
+      mat-table
+      [dataSource]="data()">
+
+      <!-- Program -->
+
+      <ng-container matColumnDef="name">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Program
+
+        </th>
+
+        <td mat-cell *matCellDef="let program">
+
+          <div class="user-info">
+
+            <div class="avatar">
+
+              {{ program.name.charAt(0) | uppercase }}
+
+            </div>
+
+            <div class="user-details">
+
+              <strong>
+
+                {{ program.name }}
+
+              </strong>
+
+              <span>
+
+                Loyalty Program
+
+              </span>
+
+            </div>
+
+          </div>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Status -->
+
+      <ng-container matColumnDef="isActive">
+
+        <th mat-header-cell *matHeaderCellDef>
+
+          Status
+
+        </th>
+
+        <td mat-cell *matCellDef="let program">
+
+          <span
+            class="status-pill"
+            [class.inactive]="!program.isActive">
+
+            <span class="status-dot"></span>
+
+            {{ program.isActive ? 'Active' : 'Inactive' }}
+
+          </span>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Actions -->
+
+      <ng-container matColumnDef="actions">
+
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="actions-column">
+
+        </th>
+
+        <td
+          mat-cell
+          *matCellDef="let program"
+          class="actions-column">
+
+          <button
+            class="icon-button"
+            aria-label="Edit program">
+
+            <mat-icon>edit</mat-icon>
+
+          </button>
+
+          <button
+            class="icon-button danger"
+            aria-label="Delete program">
+
+            <mat-icon>delete</mat-icon>
+
+          </button>
+
+        </td>
+
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+
+    </table>
+
+  </app-table>
+
+  <!-- Error -->
+
+  <div
+    class="feedback"
+    *ngIf="isRateLimitReached()">
+
+    <strong>Error</strong>
+
+    <span>
+
+      Could not load programs. Please try again later.
+
+    </span>
+
+  </div>
+
+</section>

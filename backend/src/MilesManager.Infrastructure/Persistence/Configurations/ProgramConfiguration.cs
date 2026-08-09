@@ -1,12 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MilesManager.Domain.Programs;
 
 namespace MilesManager.Infrastructure.Persistence.Configurations;
 
-internal sealed class ProgramConfiguration : IEntityTypeConfiguration<Program>
+internal sealed class ProgramConfiguration : IEntityTypeConfiguration<MilesManager.Domain.Programs.LoyaltyProgram>
 {
-    public void Configure(EntityTypeBuilder<Program> builder)
+    public void Configure(EntityTypeBuilder<MilesManager.Domain.Programs.LoyaltyProgram> builder)
     {
         builder.ToTable("programs");
         builder.HasKey(x => x.Id);

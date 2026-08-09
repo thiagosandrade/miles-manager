@@ -1,6 +1,0 @@
-:host { display:block; min-width:0; }
-.simple-page { display:grid; gap:22px; }
-.simple-card { background:rgba(255,255,255,.96); border:1px solid rgba(16,32,51,.08); box-shadow:0 18px 42px rgba(16,32,51,.06); border-radius:24px; padding:28px; min-width:0; }
-.simple-card h2, .simple-card p { overflow-wrap:anywhere; }
-.simple-card p { color:var(--muted); line-height:1.6; }
-.eyebrow { margin:0; text-transform:uppercase; letter-spacing:.16em; font-size:.72rem; color:#2d6cff; font-weight:700; }

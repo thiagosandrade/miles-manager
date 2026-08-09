@@ -1,0 +1,102 @@
+<h2 mat-dialog-title>
+  New Transfer
+</h2>
+
+<mat-dialog-content>
+
+  <form
+    class="dialog-form"
+    [formGroup]="form">
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>From Program</mat-label>
+
+      <mat-select formControlName="fromProgramId">
+
+        <mat-option
+          *ngFor="let program of programs"
+          [value]="program.id">
+
+          {{ program.name }}
+
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>To Program</mat-label>
+
+      <mat-select formControlName="toProgramId">
+
+        <mat-option
+          *ngFor="let program of programs"
+          [value]="program.id">
+
+          {{ program.name }}
+
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Miles</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="amount">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Transfer Date</mat-label>
+
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="transferDate">
+
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker">
+      </mat-datepicker-toggle>
+
+      <mat-datepicker #picker></mat-datepicker>
+
+    </mat-form-field>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button
+    mat-button
+    type="button"
+    (click)="cancel()">
+
+    Cancel
+
+  </button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="button"
+    (click)="save()"
+    [disabled]="form.invalid">
+
+    Create
+
+  </button>
+
+</mat-dialog-actions>
