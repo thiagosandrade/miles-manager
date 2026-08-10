@@ -13,7 +13,7 @@ import { TransfersApiService } from './transfers-api.service';
 import { of, Subject } from 'rxjs';
 import { catchError, startWith } from 'rxjs/operators';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MileageTransfer, TransferCreateRequest } from './models/mileage-transfer.model';
+import { MileageTransfer, TransferCreateRequest, TransferUpdateRequest } from './models/mileage-transfer.model';
 import { AppTableComponent } from "../../shared/components/app-table/app-table.component";
 import { CreateTransferDialogComponent } from './create-transfer-dialog.component';
 import { TokenStorageService } from '../../core/services/token-storage.service';
@@ -116,10 +116,50 @@ export class TransfersPageComponent implements OnInit {
     this.loadTransfers();
   }
 
+  openEditTransferDialog(transfer: MileageTransfer): void {
+
+    const dialogRef = this.dialog.open(CreateTransferDialogComponent, {
+      width: '600px',
+      data: {
+        operation: 'update',
+        transferId: transfer.id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (!result) {
+        return;
+      }
+
+      const request: TransferUpdateRequest = {
+        id: result.id,
+        userId: this.storageService.getUser().id,
+        originProgramId: result.originProgramId,
+        destinationProgramId: result.destinationProgramId,
+        milesSent: Number(result.milesSent),
+        bonusPercentage: Number(result.bonusPercentage),
+        milesReceived: Number(result.milesReceived),
+        transferDate: result.transferDate.toISOString().split('T')[0],
+        costPerThousandOrigin: Number(result.costPerThousandOrigin),
+        costPerThousandDestination: Number(result.costPerThousandDestination)
+      };
+
+      this.api.updateTransfer(result.id, request).subscribe(() => {
+        this.loadTransfers();
+      });
+
+    });
+
+  }
+
   openCreateTransferDialog(): void {
 
     const dialogRef = this.dialog.open(CreateTransferDialogComponent, {
-      width: '600px'
+      width: '600px',
+      data: {
+        operation: 'create'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

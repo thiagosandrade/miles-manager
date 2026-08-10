@@ -9,7 +9,7 @@ internal sealed class ProgramConfiguration : IEntityTypeConfiguration<MilesManag
     {
         builder.ToTable("programs");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Code).HasMaxLength(50).IsRequired();
+        builder.Property(x => x.ProgramCode).HasMaxLength(50).IsRequired();
         builder.Property(x => x.Name).HasMaxLength(200).IsRequired();
         builder.Property(x => x.ProgramType).IsRequired();
         builder.Property(x => x.Website).HasMaxLength(512);

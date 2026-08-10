@@ -59,7 +59,7 @@ public sealed class ProgramsController(ISender sender) : ApiController(sender)
         var updated = new UpdateProgramCommand
         {
             Id = id,
-            Code = command.Code,
+            ProgramCode = command.ProgramCode,
             Name = command.Name,
             ProgramType = command.ProgramType,
             Website = command.Website,

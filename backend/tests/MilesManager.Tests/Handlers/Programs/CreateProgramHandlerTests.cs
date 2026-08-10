@@ -19,7 +19,7 @@ public class CreateProgramHandlerTests
 
         var handler = new CreateProgramHandler(context);
 
-        var command = new CreateProgramCommand { Code = "TST", Name = "Test Program" };
+        var command = new CreateProgramCommand { ProgramCode = "TST", Name = "Test Program" };
 
         var result = await handler.Handle(command, CancellationToken.None);
 

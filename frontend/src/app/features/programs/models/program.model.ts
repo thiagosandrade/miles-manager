@@ -1,6 +1,5 @@
 export interface Program {
   id: string;
-  code: string;
   name: string;
   website?: string;
   logo?: string;
@@ -16,7 +15,7 @@ export interface Program {
 }
 
 export interface ProgramCreateRequest {
-  code: string;
+  programCode: string;
   name: string;
   programType: number;
   website?: string | null;
@@ -27,7 +26,7 @@ export interface ProgramCreateRequest {
 
 export interface ProgramUpdateRequest {
   id: string;
-  code: string;
+  programCode: string;
   name: string;
   programType: number;
   website?: string | null;

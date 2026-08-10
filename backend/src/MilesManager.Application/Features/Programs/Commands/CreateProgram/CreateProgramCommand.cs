@@ -7,7 +7,7 @@ namespace MilesManager.Application.Features.Programs.Commands.CreateProgram;
 
 public sealed class CreateProgramCommand : IRequest<Result<Guid>>
 {
-    public string Code { get; init; } = string.Empty;
+    public string ProgramCode { get; init; } = string.Empty;
     public string Name { get; init; } = string.Empty;
     public ProgramType ProgramType { get; init; }
     public string? Website { get; init; }

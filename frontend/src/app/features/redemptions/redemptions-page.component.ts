@@ -3,7 +3,7 @@ import { AppTableComponent } from '../../shared/components/app-table/app-table.c
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { FlightRedemptionService } from './flight-redemption.service';
-import { FlightRedemption, FlightRedemptionCreateRequest } from './models/flight-redemption.model';
+import { FlightRedemption, FlightRedemptionCreateRequest, FlightRedemptionUpdateRequest } from './models/flight-redemption.model';
 import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from '@angular/material/table';
 import { CreateRedemptionDialogComponent } from './create-redemption-dialog.component';
@@ -24,15 +24,16 @@ export class RedemptionsPageComponent implements OnInit {
   
   displayedColumns = [
     'program',
-    'originAirport',
-    'destinationAirport',
+    'originAirportCode',
+    'destinationAirportCode',
     'flightDate',
     'cabinClass',
     'passengers',
     'milesUsed',
     'taxes',
     'cashPrice',
-    'effectiveCostPerThousand'
+    'effectiveCostPerThousand',
+    'actions'
   ];
   
   constructor(private redemptionService: FlightRedemptionService) {}
@@ -67,7 +68,10 @@ export class RedemptionsPageComponent implements OnInit {
   openCreateRedemptionDialog(): void {
 
     const dialogRef = this.dialog.open(CreateRedemptionDialogComponent, {
-      width: '700px'
+      width: '700px',
+      data: {
+        operation: 'create'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -79,8 +83,8 @@ export class RedemptionsPageComponent implements OnInit {
       const request: FlightRedemptionCreateRequest = {
         userId: result.userId,
         programId: result.programId,
-        OriginAirport: result.originAirportCode,
-        DestinationAirport: result.destinationAirportCode,
+        originAirportCode: result.originAirportCode,
+        destinationAirportCode: result.destinationAirportCode,
         flightDate: result.flightDate.toISOString().split('T')[0],
         cabinClass: Number(result.cabinClass),
         passengers: Number(result.passengers),
@@ -103,6 +107,69 @@ export class RedemptionsPageComponent implements OnInit {
     });
 
   }
+
+  openEditRedemptionDialog(redemption: FlightRedemption): void {
+
+    const dialogRef = this.dialog.open(CreateRedemptionDialogComponent, {
+      width: '700px',
+      data: {
+        operation: 'update',
+        redemptionId: redemption.id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (!result) {
+        return;
+      }
+
+      const request : FlightRedemptionUpdateRequest = {
+        id: redemption.id,
+        userId: result.userId,
+        programId: result.programId,
+        originAirportCode: result.originAirportCode,
+        destinationAirportCode: result.destinationAirportCode,
+        flightDate: result.flightDate.toISOString().split('T')[0],
+        cabinClass: Number(result.cabinClass),
+        passengers: Number(result.passengers),
+        isRoundTrip: result.isRoundTrip,
+        milesUsed: Number(result.milesUsed),
+        taxes: Number(result.taxes),
+        cashPrice: Number(result.cashPrice)
+      };
+
+      this.loading.set(true);
+
+      this.redemptionService.updateFlightRedemption(request).subscribe({
+
+        next: () => this.loadRedemptions(),
+
+        error: () => this.loading.set(false)
+
+      });
+
+    });
+
+  }
+
+  deleteRedemption(redemption: FlightRedemption): void {
+
+    if (!confirm('Are you sure you want to delete this redemption?')) {
+      return;
+    }
+
+    this.loading.set(true);
+
+    this.redemptionService.deleteFlightRedemption(redemption.id).subscribe({
+
+      next: () => this.loadRedemptions(),
+
+      error: () => this.loading.set(false)
+
+    });
+
+  } 
 
   getCabinClass(value: number): string {
 

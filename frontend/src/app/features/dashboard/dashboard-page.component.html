@@ -109,14 +109,11 @@
   <!-- Dashboard -->
 
   <section class="dashboard-grid">
-
-    <!-- Programs -->
-
-    <article class="dashboard-card">
+        <article class="dashboard-card">
 
       <header class="dashboard-card-header">
 
-        <h2>Programs</h2>
+        <h2>Recent Programs</h2>
 
       </header>
 
@@ -130,7 +127,7 @@
               class="program-pill"
               *ngIf="program">
 
-              {{ program.name }}
+              {{ program.programName }}
 
             </div>
 
@@ -141,6 +138,12 @@
       </div>
 
     </article>
+  </section>
+  <section class="dashboard-grid">
+
+    <!-- Programs -->
+
+
 
     <!-- Purchases -->
 
@@ -162,7 +165,7 @@
               class="dashboard-list-item"
               *ngIf="purchase">
 
-              {{ purchase.date }}
+              {{ purchase.purchaseDate }} - {{ purchase.programName }} - {{ purchase.amountPaid | currency }}
 
             </div>
 
@@ -194,7 +197,7 @@
               class="dashboard-list-item"
               *ngIf="transfer">
 
-              {{ transfer.date }}
+              {{ transfer.transferDate }} - {{ transfer.originProgram }} to {{ transfer.destinationProgram }}
 
             </div>
 
@@ -226,7 +229,7 @@
               class="dashboard-list-item"
               *ngIf="redemption">
 
-              {{ redemption.date }}
+              {{ redemption.flightDate }} - {{ redemption.program }} - {{ redemption.milesUsed }} miles
 
             </div>
 

@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 
 import {
+  MAT_DIALOG_DATA,
   MatDialogModule,
   MatDialogRef
 } from '@angular/material/dialog';
@@ -20,6 +21,12 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { ProgramsApiService } from '../programs/programs-api.service';
 import { Program } from '../programs/models/program.model';
+import { TransfersApiService } from './transfers-api.service';
+
+interface TransferDialogData {
+  operation: 'create' | 'update';
+  transferId?: string;
+}
 
 @Component({
   selector: 'app-create-transfer-dialog',
@@ -43,10 +50,14 @@ export class CreateTransferDialogComponent implements OnInit {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<CreateTransferDialogComponent>);
   private programsApi = inject(ProgramsApiService);
+  private transfersApi = inject(TransfersApiService);
+
+  data = inject<TransferDialogData>(MAT_DIALOG_DATA);
 
   programs: Program[] = [];
 
   readonly form = this.fb.group({
+    id: [''],
     originProgramId: ['', Validators.required],
     destinationProgramId: ['', Validators.required],
 
@@ -97,7 +108,6 @@ export class CreateTransferDialogComponent implements OnInit {
   });
 
   ngOnInit(): void {
-
     this.programsApi.listPrograms({
       page: 1,
       pageSize: 1000
@@ -107,6 +117,26 @@ export class CreateTransferDialogComponent implements OnInit {
 
     });
 
+    if (this.data?.operation === 'update' && this.data?.transferId) {
+        this.transfersApi.getTransfer(this.data.transferId).subscribe({
+            next: transfer => {
+                this.form.patchValue({
+                    id: transfer.id,
+                    originProgramId: this.programs.find(p => p.name === transfer.originProgram)?.id,
+                    destinationProgramId: this.programs.find(p => p.name === transfer.destinationProgram)?.id ,
+                    milesSent: transfer.milesSent,
+                    bonusPercentage: transfer.bonusPercentage,
+                    milesReceived: transfer.milesReceived,
+                    transferDate: new Date(transfer.transferDate),
+                    costPerThousandOrigin: transfer.costPerThousandOrigin,
+                    costPerThousandDestination: transfer.costPerThousandDestination
+                });
+            }
+        });
+    }
+    else {
+        this.form.reset();
+    }
   }
 
   save(): void {

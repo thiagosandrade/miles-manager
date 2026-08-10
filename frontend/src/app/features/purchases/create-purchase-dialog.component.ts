@@ -5,13 +5,19 @@ import { ReactiveFormsModule, FormBuilder, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { ProgramsApiService } from "../programs/programs-api.service";
 import { Program } from "../programs/models/program.model";
 import { PurchaseStatus } from "../../core/enums/purchase-status.enum";
+import { PurchasesApiService } from "./purchases-api.service";
+
+interface PurchaseDialogData {
+  operation: 'create' | 'update';
+  purchaseId?: string;
+}
 
 @Component({
   selector: 'app-create-purchase-dialog',
@@ -35,10 +41,12 @@ export class CreatePurchaseDialogComponent implements OnInit {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<CreatePurchaseDialogComponent>);
   private programsApi = inject(ProgramsApiService);
-
+  private purchasesApi = inject(PurchasesApiService);
+  readonly data = inject<PurchaseDialogData>(MAT_DIALOG_DATA);
   programs: Program[] = [];
 
   form = this.fb.group({
+    id: [''],
     programId: ['', Validators.required],
     partner: [''],
     description: [''],
@@ -61,7 +69,33 @@ export class CreatePurchaseDialogComponent implements OnInit {
       page: 1,
       pageSize: 1000
     }).then(result => {
+
       this.programs = result.programs.filter(p => p.isActive);
+
+      if (this.data.operation === 'update' && this.data.purchaseId) {
+
+        this.purchasesApi.getPurchase(this.data.purchaseId).subscribe({
+
+          next: purchase => {
+
+            this.form.patchValue({
+              id: purchase.id,
+              programId: this.programs.find(p => p.name === purchase.programName)?.id,
+              partner: purchase.partner,
+              description: purchase.description,
+              amountPaid: purchase.amountPaid,
+              milesPurchased: purchase.milesPurchased,
+              bonusPercentage: purchase.bonusPercentage,
+              purchaseStatus: purchase.purchaseStatus,
+              purchaseDate: new Date(purchase.purchaseDate)
+            });
+
+          }
+
+        });
+
+      }
+
     });
 
   }

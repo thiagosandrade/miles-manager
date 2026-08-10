@@ -91,10 +91,33 @@ export class ProgramsPageComponent implements OnInit {
 
   }
 
+  openUpdateDialog(program: Program): void {
+    console.log('Opening update dialog for program:', program);
+    const dialogRef = this.dialog.open(CreateProgramDialogComponent, {
+      width: '500px',
+      data: {
+        operation: 'update',
+        programId: program.id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(updated => {
+
+      if (updated) {
+        this.loadPrograms();
+      }
+
+    });
+    
+  }
+
   openCreateDialog(): void {
 
     const dialogRef = this.dialog.open(CreateProgramDialogComponent, {
-      width: '500px'
+      width: '500px',
+      data: {
+        operation: 'create'
+      }
     });
 
     dialogRef.afterClosed().subscribe(created => {

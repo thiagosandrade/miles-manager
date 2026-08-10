@@ -9,7 +9,7 @@ public sealed class CreateProgramCommandValidator : AbstractValidator<CreateProg
     public CreateProgramCommandValidator()
     {
         RuleFor(x => x.Name).NotEmpty().WithMessage("Program name is required.");
-        RuleFor(x => x.Code).NotEmpty().WithMessage("Program code is required.");
+        RuleFor(x => x.ProgramCode).NotEmpty().WithMessage("Program code is required.");
         RuleFor(x => x.ReferencePricePerThousand).GreaterThanOrEqualTo(0);
     }
 }

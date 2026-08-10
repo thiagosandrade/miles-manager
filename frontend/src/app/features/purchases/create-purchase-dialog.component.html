@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>
 
-  New Purchase
+     {{ data.operation === 'create' ? 'New Purchase' : 'Update Purchase' }}
 
 </h2>
 
@@ -157,7 +157,7 @@
     (click)="save()"
     [disabled]="form.invalid">
 
-    Create Purchase
+    {{ data.operation === 'create' ? 'Create Purchase' : 'Update Purchase' }}
 
   </button>
 

@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>
-  New Program
+  {{ data.operation === 'create' ? 'New Program' : 'Update Program' }}
 </h2>
 
 <form
@@ -10,11 +10,11 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Code</mat-label>
+      <mat-label>Program Code</mat-label>
 
       <input
         matInput
-        formControlName="code">
+        formControlName="programCode">
 
     </mat-form-field>
 
@@ -110,7 +110,7 @@
       type="submit"
       [disabled]="form.invalid || loading">
 
-      Create
+      {{ data.operation === 'create' ? 'Create' : 'Update' }}
 
     </button>
 

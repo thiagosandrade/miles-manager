@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 
 import {
+  MAT_DIALOG_DATA,
   MatDialogModule,
   MatDialogRef
 } from '@angular/material/dialog';
@@ -20,6 +21,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Program } from '../programs/models/program.model';
 import { ProgramsApiService } from '../programs/programs-api.service';
+import { FlightRedemptionService } from './flight-redemption.service';
+import { AirportsDTO, LookupService } from '../../core/services/dataapp-api.service';
+
+export interface RedemptionDialogData {
+  operation: 'create' | 'update';
+  redemptionId?: string;
+}
 
 @Component({
   selector: 'app-create-redemption-dialog',
@@ -43,6 +51,11 @@ export class CreateRedemptionDialogComponent {
 
   private fb = inject(FormBuilder);
   private programsApi = inject(ProgramsApiService);
+  private redemptionService = inject(FlightRedemptionService);
+  private dataAppService = inject(LookupService);
+
+  readonly data = inject<RedemptionDialogData>(MAT_DIALOG_DATA);
+  airports : AirportsDTO[] = [];
 
   private dialogRef =
     inject(MatDialogRef<CreateRedemptionDialogComponent>);
@@ -50,23 +63,18 @@ export class CreateRedemptionDialogComponent {
   programs: Program[] = [];
 
   readonly form = this.fb.group({
-
+    id: [''],
     programId: ['', Validators.required],
-
-    OriginAirport: ['', Validators.required],
-
-    DestinationAirport: ['', Validators.required],
-
+    originAirportCode: ['', Validators.required],
+    destinationAirportCode: ['', Validators.required],
     flightDate: [
       new Date(),
       Validators.required
     ],
-
     cabinClass: [
       0,
       Validators.required
     ],
-
     passengers: [
       1,
       [
@@ -74,9 +82,7 @@ export class CreateRedemptionDialogComponent {
         Validators.min(1)
       ]
     ],
-
     isRoundTrip: false,
-
     milesUsed: [
       0,
       [
@@ -84,7 +90,6 @@ export class CreateRedemptionDialogComponent {
         Validators.min(1)
       ]
     ],
-
     taxes: [
       0,
       [
@@ -92,7 +97,6 @@ export class CreateRedemptionDialogComponent {
         Validators.min(0)
       ]
     ],
-
     cashPrice: [
       0,
       [
@@ -100,16 +104,40 @@ export class CreateRedemptionDialogComponent {
         Validators.min(0)
       ]
     ]
-
   });
 
   ngOnInit(): void {
+
+    this.dataAppService.getAirports().then(result => {
+      this.airports = result;
+    });
 
     this.programsApi.listPrograms({
       page: 1,
       pageSize: 1000
     }).then(result => {
       this.programs = result.programs.filter(p => p.isActive);
+
+      if (this.data.operation === 'update' && this.data.redemptionId) {
+
+        this.redemptionService.getFlightRedemption(this.data.redemptionId).subscribe({
+          next: (redemption) => {
+            this.form.patchValue({
+              id: redemption.id,
+              programId: this.programs.find(p => p.name === redemption.program)?.id,
+              originAirportCode: redemption.originAirportCode,
+              destinationAirportCode: redemption.destinationAirportCode,
+              flightDate: new Date(redemption.flightDate),
+              cabinClass: redemption.cabinClass,
+              passengers: redemption.passengers,
+              isRoundTrip: redemption.isRoundTrip,
+              milesUsed: redemption.milesUsed,
+              taxes: redemption.taxes,
+              cashPrice: redemption.cashPrice
+            });
+          }
+        });
+      }   
     });
 
   }

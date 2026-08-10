@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>
-  New Redemption
+    {{ data.operation === 'create' ? 'New Redemption' : 'Update Redemption' }}
 </h2>
 
 <mat-dialog-content>
@@ -34,9 +34,17 @@
 
       <mat-label>Origin Airport</mat-label>
 
-      <input
-        matInput
-        formControlName="OriginAirport">
+      <mat-select formControlName="originAirportCode">
+
+        <mat-option
+          *ngFor="let airport of airports"
+          [value]="airport.iataCode">
+
+          {{ airport.name }} ({{ airport.iataCode }})
+
+        </mat-option>
+
+      </mat-select>
 
     </mat-form-field>
 
@@ -46,9 +54,17 @@
 
       <mat-label>Destination Airport</mat-label>
 
-      <input
-        matInput
-        formControlName="DestinationAirport">
+      <mat-select formControlName="destinationAirportCode">
+
+        <mat-option
+          *ngFor="let airport of airports"
+          [value]="airport.iataCode">
+
+          {{ airport.name }} ({{ airport.iataCode }})
+
+        </mat-option>
+
+      </mat-select>
 
     </mat-form-field>
 
@@ -174,7 +190,7 @@
     (click)="save()"
     [disabled]="form.invalid">
 
-    Create
+    {{ data.operation === 'create' ? 'Create' : 'Update' }}
 
   </button>
 

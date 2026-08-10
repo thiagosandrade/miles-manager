@@ -8,7 +8,6 @@ namespace MilesManager.Domain.Programs;
 
 public class LoyaltyProgram : Entity
 {
-    public string Code { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public string? Website { get; set; }
     public string? Logo { get; set; }

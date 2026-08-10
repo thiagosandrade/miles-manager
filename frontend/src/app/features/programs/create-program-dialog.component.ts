@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -8,7 +8,8 @@ import {
 
 import {
   MatDialogRef,
-  MatDialogModule
+  MatDialogModule,
+  MAT_DIALOG_DATA
 } from '@angular/material/dialog';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,9 +17,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ProgramsApiService } from './programs-api.service';
-import { ProgramCreateRequest } from './models/program.model';
+import { ProgramCreateRequest, ProgramUpdateRequest } from './models/program.model';
 import { MatSelectModule } from "@angular/material/select";
 
+interface ProgramDialogData {
+  operation: 'create' | 'update';
+  programId?: string;
+}
 
 @Component({
   selector: 'app-create-program-dialog',
@@ -37,34 +42,41 @@ import { MatSelectModule } from "@angular/material/select";
   styleUrls: ['./create-program-dialog.component.scss']
 })
 
-export class CreateProgramDialogComponent {
+export class CreateProgramDialogComponent implements OnInit {
 
     fb = inject(FormBuilder);
     api = inject(ProgramsApiService); 
     dialogRef = inject(MatDialogRef<CreateProgramDialogComponent>);
     loading = false;
-
+    data = inject<ProgramDialogData>(MAT_DIALOG_DATA);
+    
     form = this.fb.group({
-
-        code: ['', Validators.required],
-
+        id: [''],
+        programCode: ['', Validators.required],
         name: ['', Validators.required],
-
         programType: [0, Validators.required],
-
         website: [''],
-
         logo: [''],
-
         referencePricePerThousand: [
             0,
             [Validators.required, Validators.min(0)]
         ],
-
         isActive: [true]
-
     });
 
+    ngOnInit(): void {
+        console.log('operation:', this.data?.operation);
+        if (this.data?.operation === 'update' && this.data?.programId) {
+            this.api.getProgram(this.data.programId).subscribe({
+                next: program => {
+                    this.form.patchValue(program);
+                }
+            });
+        }
+        else {
+            this.form.reset();
+        }
+    }
 
     save(): void {
 
@@ -74,28 +86,56 @@ export class CreateProgramDialogComponent {
 
         this.loading = true;
 
-        const request: ProgramCreateRequest = {
-            code: this.form.value.code!,
-            name: this.form.value.name!,
-            programType: Number(this.form.value.programType),
-            website: this.form.value.website ?? null,
-            logo: this.form.value.logo ?? null,
-            referencePricePerThousand: Number(this.form.value.referencePricePerThousand),
-            isActive: this.form.value.isActive ?? true
-        };
+        if(this.data?.operation === 'update' && this.data?.programId) {
+            const request: ProgramUpdateRequest = {
+                id: this.data.programId!,
+                programCode: this.form.value.programCode!,
+                name: this.form.value.name!,
+                programType: Number(this.form.value.programType),
+                website: this.form.value.website ?? null,
+                logo: this.form.value.logo ?? null,
+                referencePricePerThousand: Number(this.form.value.referencePricePerThousand),
+                isActive: this.form.value.isActive ?? true
+            };
 
-        this.api.createProgram(request).subscribe({
+            this.api.updateProgram(this.data.programId!, request).subscribe({
 
-            next: () => {
-            this.loading = false;
-            this.dialogRef.close(true);
-            },
+                next: () => {
+                this.loading = false;
+                this.dialogRef.close(true);
+                },
 
-            error: () => {
-            this.loading = false;
-            }
+                error: () => {
+                this.loading = false;
+                }
 
-        });
+            });
+        }
+        else {
+            const request: ProgramCreateRequest = {
+                programCode: this.form.value.programCode!,
+                name: this.form.value.name!,
+                programType: Number(this.form.value.programType),
+                website: this.form.value.website ?? null,
+                logo: this.form.value.logo ?? null,
+                referencePricePerThousand: Number(this.form.value.referencePricePerThousand),
+                isActive: this.form.value.isActive ?? true
+            };
+
+            this.api.createProgram(request).subscribe({
+
+                next: () => {
+                this.loading = false;
+                this.dialogRef.close(true);
+                },
+
+                error: () => {
+                this.loading = false;
+                }
+
+            });
+        }
+        
 
     }
 

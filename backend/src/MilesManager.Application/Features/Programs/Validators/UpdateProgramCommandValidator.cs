@@ -10,7 +10,7 @@ public sealed class UpdateProgramCommandValidator : AbstractValidator<UpdateProg
     {
         RuleFor(x => x.Id).NotEmpty();
         RuleFor(x => x.Name).NotEmpty().WithMessage("Program name is required.");
-        RuleFor(x => x.Code).NotEmpty().WithMessage("Program code is required.");
+        RuleFor(x => x.ProgramCode).NotEmpty().WithMessage("Program code is required.");
         RuleFor(x => x.ReferencePricePerThousand).GreaterThanOrEqualTo(0);
     }
 }

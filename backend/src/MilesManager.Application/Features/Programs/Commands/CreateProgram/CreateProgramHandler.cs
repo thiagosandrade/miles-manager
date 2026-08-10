@@ -11,7 +11,7 @@ public sealed class CreateProgramHandler(IApplicationDbContext context) : IReque
 
     public async Task<Result<Guid>> Handle(CreateProgramCommand request, CancellationToken cancellationToken)
     {
-        var exists = await _context.Programs.AsNoTracking().FirstOrDefaultAsync(p => p.ProgramCode == request.Code, cancellationToken);
+        var exists = await _context.Programs.AsNoTracking().FirstOrDefaultAsync(p => p.ProgramCode == request.ProgramCode, cancellationToken);
         if (exists is not null)
         {
             return Result<Guid>.Conflict("Program code already exists.");
@@ -20,7 +20,11 @@ public sealed class CreateProgramHandler(IApplicationDbContext context) : IReque
         var program = new MilesManager.Domain.Programs.LoyaltyProgram
         {
             Name = request.Name?.Trim() ?? string.Empty,
-            ProgramCode = request.Code?.Trim() ?? string.Empty
+            ProgramCode = request.ProgramCode?.Trim() ?? string.Empty,
+            ProgramType = request.ProgramType,
+            Website = request.Website,
+            Logo = request.Logo,
+            ReferencePricePerThousand = request.ReferencePricePerThousand
         };
 
         await _context.Programs.AddAsync(program, cancellationToken);

@@ -10,8 +10,6 @@ internal sealed class RedemptionProfile : Profile
     public RedemptionProfile()
     {
         CreateMap<FlightRedemption, FlightRedemptionDto>()
-            .ForMember(dest => dest.Program, opt => opt.MapFrom(src => src.LoyaltyProgram.Name))
-            .ForMember(dest => dest.OriginAirport, opt => opt.MapFrom(src => src.OriginAirportCode))
-            .ForMember(dest => dest.DestinationAirport, opt => opt.MapFrom(src => src.DestinationAirportCode));
+            .ForMember(dest => dest.Program, opt => opt.MapFrom(src => src.LoyaltyProgram.Name));
     }
 }

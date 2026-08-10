@@ -58,5 +58,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 await SeedData.InitializeAsync(app.Services, CancellationToken.None);
+await SeedDataAirports.InitializeAsync(app.Services, CancellationToken.None);
 
 app.Run();
