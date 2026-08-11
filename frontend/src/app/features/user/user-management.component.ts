@@ -1,28 +1,43 @@
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AuthSession, CreateUserRequest, UserSummary } from './models/user.models';
-import { UserApiService } from './user-api.service';
-import { MatDialog } from '@angular/material/dialog';
-import { CreateUserDialogComponent } from './create-user-dialog.component';
-import { MatCardModule } from "@angular/material/card";
-import { MatIconModule } from "@angular/material/icon";
-import { AppTableComponent } from "../../shared/components/app-table/app-table.component";
+
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+import { AppTableComponent } from '../../shared/components/app-table/app-table.component';
+
+import { UserApiService } from './user-api.service';
+import { UserSummary, CreateUserRequest } from './models/user.models';
+import { CreateUserDialogComponent } from './create-user-dialog.component';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatCardModule, MatIconModule, AppTableComponent, MatTableModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    AppTableComponent
+  ],
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css']
 })
 export class UserManagementComponent implements OnInit {
-  public createForm: CreateUserRequest = {
-    email: '',
-    fullName: '',
-    password: ''
-  };
+
+  private api = inject(UserApiService);
+  private dialog = inject(MatDialog);
+  private snackbarService = inject(SnackbarService);
+  private cd = inject(ChangeDetectorRef);
 
   displayedColumns = [
     'user',
@@ -32,100 +47,109 @@ export class UserManagementComponent implements OnInit {
     'actions'
   ];
 
-  public users: UserSummary[] = [];
-  public session: AuthSession | null = null;
-  public loading = false;
-  public error = '';
-  public notice = '';
+  data: UserSummary[] = [];
 
-  private dialog = inject(MatDialog);
-  private cd = inject(ChangeDetectorRef);
-  constructor(private readonly userApi: UserApiService) {}
+  isLoadingResults = true;
+  isRateLimitReached = false;
 
-  async ngOnInit(): Promise<void> {
-    await this.loadUsers();
+  ngOnInit(): void {
+    this.loadUsers();
   }
 
-  protected get totalUsers(): number {
-    return this.users.length;
+  get totalUsers(): number {
+    return this.data.length;
   }
 
-  protected get activeUsers(): number {
-    return this.users.filter((user) => user.isActive).length;
+  get activeUsers(): number {
+    return this.data.filter(x => x.isActive).length;
   }
 
-  async openCreateUserDialog(): Promise<void> {
+  loadUsers(): void {
+
+    this.isLoadingResults = true;
+
+    this.api
+      .listUsers()
+      .pipe(
+        catchError(() => {
+
+          this.isLoadingResults = false;
+          this.isRateLimitReached = true;
+
+          this.snackbarService.error('Could not load users', 3000);
+
+
+          return of([]);
+
+        })
+      )
+      .subscribe(users => {
+
+        this.data = users;
+
+        this.isLoadingResults = false;
+        this.isRateLimitReached = false;
+
+        this.cd.detectChanges();
+
+      });
+
+  }
+
+  openCreateUserDialog(): void {
+
     const dialogRef = this.dialog.open(CreateUserDialogComponent, {
-      width: '400px'
+      width: '450px'
     });
 
-    const result = await dialogRef.afterClosed().toPromise();
-    if (result) {
-      this.error = '';
-      this.notice = '';
-      this.loading = true;
-      try {
-        await this.userApi.createUser(result);
-        await this.loadUsers();
-        this.notice = 'User created successfully.';
-      } catch (error) {
-        this.error = this.extractMessage(error, 'Could not create the user.');
-      } finally {
-        this.loading = false;
-      }
-    }
-  }
+    dialogRef.afterClosed().subscribe((result: CreateUserRequest | undefined) => {
 
-  async deleteUser(user: UserSummary): Promise<void> {
-    const approved = window.confirm(`Delete ${user.fullName}? This cannot be undone.`);
-    if (!approved) {
-      return;
-    }
-
-    this.error = '';
-    this.notice = '';
-    this.loading = true;
-
-    try {
-      if (this.session?.user.id !== user.id) {
-        await this.userApi.deleteUser(user.id);
-        this.notice = 'User deleted successfully.';
+      if (!result) {
+        return;
       }
 
-      await this.loadUsers();
-    } catch (error) {
-      this.error = this.extractMessage(error, 'Could not delete the user.');
-    } finally {
-      this.loading = false;
-    }
+      this.api.createUser(result).subscribe({
+
+        next: () => {
+          this.snackbarService.error('User created succesfully.', 3000);
+          this.loadUsers();
+        },
+
+        error: () => {
+          this.snackbarService.error('Could not create user.', 3000);
+        }
+
+      });
+
+    });
+
   }
 
-  protected trackByUserId(_: number, user: UserSummary): string {
-    return user.id;
+  deleteUser(user: UserSummary): void {
+
+    this.api.deleteUser(user.id).subscribe({
+
+      next: () => {
+        this.snackbarService.error('User deleted succesfully.', 3000);
+        this.loadUsers();
+      },
+
+      error: () => {
+        this.snackbarService.error('Could not delete user.', 3000);
+      }
+    });
+
   }
 
-  protected formatDate(value: string): string {
+  formatDate(value: string): string {
+
     return new Date(value).toLocaleString(undefined, {
+
       dateStyle: 'medium',
       timeStyle: 'short'
+
     });
+
   }
 
-  private async loadUsers(): Promise<void> {
-    try {
-      const response = await this.userApi.listUsers();
-      this.users = response;
-      this.cd.detectChanges();
-    } catch (error) {
-      this.error = this.extractMessage(error, 'Could not load users.');
-    }
-  }
-
-  private extractMessage(error: unknown, fallback: string): string {
-    if (error instanceof Error && error.message.trim()) {
-      return error.message;
-    }
-
-    return fallback;
-  }
 }

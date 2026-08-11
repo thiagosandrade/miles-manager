@@ -3,7 +3,7 @@
 /* ==========================================================================
    Angular Material Theme
    ========================================================================== */
-
+   
 html {
   color-scheme: light;
 
@@ -46,6 +46,7 @@ html.dark-theme {
 
   /* Background */
 
+  --bg-top: #F7F9FD;
   --bg: #EEF3F9;
   --panel: #FFFFFF;
 
@@ -83,18 +84,28 @@ html.dark-theme {
 
 html.dark-theme {
 
-  --bg: #121826;
-  --panel: #1E293B;
+  --bg-top: #0F172A;
 
-  --ink: #F5F7FA;
-  --muted: #94A3B8;
+  --bg: #111827;
 
-  --border: #334155;
+  --panel: #1F2937;
+
+  --ink: #F9FAFB;
+
+  --muted: #9CA3AF;
+
+  --border: #374151;
 
   --mat-sys-surface: var(--panel);
   --mat-sys-surface-container: var(--panel);
 
   --mat-menu-container-color: var(--panel);
+
+  --mat-toolbar-container-background-color: #0F172A;
+
+  --mm-primary: #3B82F6;
+
+  --mm-primary-hover: #60A5FA;
 }
 
 /* ==========================================================================
@@ -104,6 +115,8 @@ html.dark-theme {
 html,
 body {
   height: 100%;
+  margin: 0;
+  overflow: hidden;
 }
 
 body {
@@ -128,10 +141,14 @@ body {
       transparent 26%),
     linear-gradient(
       180deg,
-      #F7F9FD 0%,
+      var(--bg-top) 0%,
       var(--bg) 100%);
 
   color: var(--ink);
+
+  transition:
+    background .25s ease,
+    color .25s ease;
 }
 
 *,
@@ -462,4 +479,36 @@ select {
   background: rgba(21,101,192,.10);
 
   color: var(--mm-primary);
+}
+
+
+/* ==========================================================================
+   Snackbar
+   ========================================================================== */
+
+.success-snackbar .mat-mdc-snackbar-surface {
+  background: #16a34a !important;
+  color: white !important;
+}
+
+.error-snackbar .mat-mdc-snackbar-surface {
+  background: #dc2626 !important;
+  color: white !important;
+}
+
+.warning-snackbar .mat-mdc-snackbar-surface {
+  background: #d97706 !important;
+  color: white !important;
+}
+
+.info-snackbar .mat-mdc-snackbar-surface {
+  background: #1565c0 !important;
+  color: white !important;
+}
+
+.success-snackbar .mat-mdc-snack-bar-label,
+.error-snackbar .mat-mdc-snack-bar-label,
+.warning-snackbar .mat-mdc-snack-bar-label,
+.info-snackbar .mat-mdc-snack-bar-label {
+  color: white !important;
 }

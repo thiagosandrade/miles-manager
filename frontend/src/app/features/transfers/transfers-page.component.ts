@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -17,6 +17,7 @@ import { MileageTransfer, TransferCreateRequest, TransferUpdateRequest } from '.
 import { AppTableComponent } from "../../shared/components/app-table/app-table.component";
 import { CreateTransferDialogComponent } from './create-transfer-dialog.component';
 import { TokenStorageService } from '../../core/services/token-storage.service';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   standalone: true,
@@ -41,7 +42,7 @@ import { TokenStorageService } from '../../core/services/token-storage.service';
 export class TransfersPageComponent implements OnInit {
   private api = inject(TransfersApiService);
   private dialog = inject(MatDialog);
-  private snackBar = inject(MatSnackBar);
+  private snackbarService = inject(SnackbarService);
   private cd = inject(ChangeDetectorRef);
   private storageService = inject(TokenStorageService);
 
@@ -55,9 +56,9 @@ export class TransfersPageComponent implements OnInit {
     'actions'
   ];
 
+  loading = signal<boolean>(false);
   data: MileageTransfer[] | undefined; 
   resultsLength = 0;
-  isLoadingResults = true;
   isRateLimitReached = false;
 
   filter: string = '';
@@ -72,7 +73,7 @@ export class TransfersPageComponent implements OnInit {
   }
 
   loadTransfers(pageIndex: number = 0, pageSize: number = 10, sortField: string = '', sortDirection: string = '') {
-    this.isLoadingResults = true;
+    this.loading.set(true);
 
     this.api
       .listTransfers({
@@ -83,9 +84,10 @@ export class TransfersPageComponent implements OnInit {
       })
       .pipe(
         catchError(() => {
-          this.isLoadingResults = false;
+          this.loading.set(false);
+
           this.isRateLimitReached = true;
-          this.snackBar.open('Could not load transfers', 'Close', { duration: 3000 });
+          this.snackbarService.error('Could not load transfers', 3000);
           return of(null);
         })
       )
@@ -93,7 +95,7 @@ export class TransfersPageComponent implements OnInit {
         if (result) {
           this.data = result;
           this.resultsLength = result.length;
-          this.isLoadingResults = false;
+          this.loading.set(false);
           this.isRateLimitReached = false;
           this.cd.detectChanges();
         }
@@ -145,9 +147,17 @@ export class TransfersPageComponent implements OnInit {
         costPerThousandDestination: Number(result.costPerThousandDestination)
       };
 
-      this.api.updateTransfer(result.id, request).subscribe(() => {
-        this.loadTransfers();
-      });
+      this.api.updateTransfer(result.id, request).subscribe({
+          next: () => {
+            this.snackbarService.success('Transfer updated succesfully.', 3000);
+            this.loadTransfers();
+            this.loading.set(false)
+          },
+          error: () => {
+            this.snackbarService.error('Could not create transfer.', 3000);
+            this.loading.set(false)
+          } 
+        });
 
     });
 
@@ -180,11 +190,35 @@ export class TransfersPageComponent implements OnInit {
         costPerThousandDestination: Number(result.costPerThousandDestination)
       };
 
-      this.api.createTransfer(request).subscribe(() => {
-        this.loadTransfers();
-      });
+      this.api.createTransfer(request).subscribe({
+          next: () => {
+            this.snackbarService.success('Transfer updated succesfully.', 3000);
+            this.loadTransfers();
+            this.loading.set(false)
+          },
+          error: () => {
+            this.snackbarService.error('Could not create transfer.', 3000);
+            this.loading.set(false)
+          } 
+        });
 
     });
 
+  }
+
+  deleteTransfer(transfer: MileageTransfer): void {
+    
+    this.api.deleteTransfer(transfer.id).subscribe({
+      next: () => {
+        this.snackbarService.success('Transfer updated succesfully.', 3000);
+        this.loadTransfers();
+        this.loading.set(false)
+      },
+      error: () => {
+        this.snackbarService.error('Could not create transfer.', 3000);
+        this.loading.set(false)
+      } 
+    });
+    
   }
 }

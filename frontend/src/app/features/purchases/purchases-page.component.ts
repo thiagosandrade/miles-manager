@@ -14,6 +14,7 @@
   import { CreatePurchaseDialogComponent } from './create-purchase-dialog.component';
   import { TokenStorageService } from '../../core/services/token-storage.service';
   import { PurchaseStatus } from '../../core/enums/purchase-status.enum';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
   @Component({
     selector: 'app-purchases-page',
@@ -36,6 +37,8 @@
     isRateLimitReached = signal(false);
     dialog = inject(MatDialog);
     storageService = inject(TokenStorageService);
+    snackbarService = inject(SnackbarService);
+
     readonly PurchaseStatus = PurchaseStatus; 
     
     displayedColumns = [
@@ -64,11 +67,8 @@
       this.purchasesService.listPurchases().subscribe({
 
         next: purchases => {
-
-          console.log('Purchases loaded:', purchases);
           this.data.set(purchases);
           this.loading.set(false);
-
         },
 
         error: () => {
@@ -80,6 +80,14 @@
 
       });
 
+    }
+
+    get averagePurchase(): number {
+      if (!this.data().length) {
+        return 0;
+      }
+
+      return this.data().reduce((sum, p) => sum + p.amountPaid, 0) / this.data().length;
     }
 
     applyFilter(filter: string): void {
@@ -119,8 +127,18 @@
           purchaseDate: result.purchaseDate.toISOString().split('T')[0]
         };
 
-        this.purchasesService.updatePurchase(result.id, request).subscribe(() => {
-          this.loadPurchases();
+        this.loading.set(true);
+
+        this.purchasesService.updatePurchase(result.id, request).subscribe({
+          next: () => {
+            this.snackbarService.success('Purchase updated succesfully.', 3000);
+            this.loadPurchases();
+            this.loading.set(false)
+          },
+          error: () => {
+            this.snackbarService.error('Could not create purchase.', 3000);
+            this.loading.set(false)
+          } 
         });
 
       });
@@ -154,8 +172,16 @@
           purchaseDate: result.purchaseDate.toISOString().split('T')[0]
         };
 
-        this.purchasesService.createPurchase(request).subscribe(() => {
-          this.loadPurchases();
+        this.purchasesService.createPurchase(request).subscribe({
+          next: () => {
+            this.snackbarService.success('Purchase created succesfully.', 3000);
+            this.loadPurchases();
+            this.loading.set(false)
+          },
+          error: () => {
+            this.snackbarService.error('Could not create purchase.', 3000);
+            this.loading.set(false)
+          } 
         });
 
       });
@@ -180,5 +206,20 @@
 
       }
 
+    }
+
+    deletePurchase(purchase: MileagePurchase): void {
+      
+      this.purchasesService.deletePurchase(purchase.id).subscribe({
+        next: () => {
+          this.snackbarService.success('Purchase deleted succesfully.', 3000);
+          this.loadPurchases();
+          this.loading.set(false)
+        },
+        error: () => {
+          this.snackbarService.error('Could not delete purchase.', 3000);
+          this.loading.set(false)
+        } 
+      });
     }
   }

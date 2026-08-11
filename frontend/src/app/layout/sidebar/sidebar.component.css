@@ -1,46 +1,50 @@
 .sidenav-container {
-  height: 100vh;
-  border-right: 1px solid #eee; /* very subtle light gray border */
+  height: 100%;
+  background: transparent;
 }
 
 .app-sidenav {
-  width: 280px;
+
   margin-top: 64px;
+
   height: calc(100vh - 64px);
-  background-color: #fff; /* White card background */
-  box-shadow: 2px 0 5px rgba(0,0,0,0.05); /* soft shadow */
-  border-radius: 0 16px 16px 0;
 }
 
-mat-nav-list {
-  padding-top: 24px;
+.mat-mdc-nav-list {
+  padding: 16px 12px;
 }
 
-a.mat-list-item {
-  border-radius: 10px;
-  margin: 4px 12px;
-  padding: 10px 16px;
+.mat-mdc-list-item {
+
+  margin-bottom: 6px;
+
+  border-radius: 12px;
+
+  color: var(--ink);
+
+  transition: all .2s ease;
+}
+
+.mat-mdc-list-item:hover {
+
+  background: rgba(21,101,192,.08);
+}
+
+.mat-mdc-list-item mat-icon {
+
+  color: var(--muted);
+}
+
+.active-link {
+
+  background: rgba(21,101,192,.12);
+
+  color: var(--mm-primary);
+
   font-weight: 600;
-  color: #333;
-  font-size: 1rem;
-  line-height: 1.5;
-  transition: background-color 0.3s ease;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
 }
 
-a.mat-list-item:hover,
-a.mat-list-item.cdk-focused,
-a.mat-list-item.cdk-mouse-focused,
-a.mat-list-item.active-link {
-  background-color: #e3f2fd; /* Light blue highlight */
-  color: #1565C0;
-}
+.active-link mat-icon {
 
-mat-icon.mat-list-icon {
-  color: #1565C0; /* Deep blue icons */
-  margin-right: 16px;
+  color: var(--mm-primary);
 }

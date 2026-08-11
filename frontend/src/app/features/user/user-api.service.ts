@@ -13,35 +13,19 @@ export class UserApiService {
 
   constructor(private readonly http: HttpClient) {}
 
-  async listUsers(): Promise<UserSummary[]> {
-    try {
-      return await firstValueFrom(this.http.get<UserSummary[]>(`${this.apiBaseUrl}`));
-    } catch (error) {
-      throw error;
-    }
+  listUsers(): Observable<UserSummary[]> {
+    return this.http.get<UserSummary[]>(`${this.apiBaseUrl}`);
   }
 
-  async getUser(id: string): Promise<UserDetails> {
-    try {
-      return await firstValueFrom(this.http.get<UserDetails>(`${this.apiBaseUrl}/${id}`));
-    } catch (error) {
-      throw error;
-    }
+  getUser(id: string): Observable<UserDetails> {
+    return this.http.get<UserDetails>(`${this.apiBaseUrl}/${id}`);
   }
 
-  async createUser(request: CreateUserRequest): Promise<UserDetails> {
-    try {
-      return await firstValueFrom(this.http.post<UserDetails>(`${this.apiBaseUrl}`, request));
-    } catch (error) {
-      throw error;
-    }
+  createUser(request: CreateUserRequest): Observable<UserDetails> {
+    return this.http.post<UserDetails>(`${this.apiBaseUrl}`, request);
   }
 
-  async deleteUser(id: string): Promise<void> {
-    try {
-      await firstValueFrom(this.http.delete<void>(`${this.apiBaseUrl}/${id}`));
-    } catch (error) {
-      throw error;
-    }
+  deleteUser(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiBaseUrl}/${id}`);
   }
 }

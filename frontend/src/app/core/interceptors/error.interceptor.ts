@@ -1,32 +1,34 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { SnackbarService } from '../services/snackbar.service';
-import { AuthApiService } from '../../features/auth/auth-api.service';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse } from "@angular/common/http";
+import { Injectable, inject } from "@angular/core";
+import { Router } from "@angular/router";
+import { catchError, throwError } from "rxjs";
+import { TokenStorageService } from "../services/token-storage.service";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  private snackbarService = inject(SnackbarService);
-  private authenticationService = inject(AuthApiService);
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  private router = inject(Router);
+  private storage = inject(TokenStorageService);
+
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+
     return next.handle(req).pipe(
+
       catchError((error: HttpErrorResponse) => {
-        let errorMsg = '';
-        if (error.status === 401) {
-          // Auto logout if 401 response returned from api
-          this.authenticationService.logout();
-          location.reload();
+
+        if (error.status === 401 || error.status === 403) {
+
+          this.storage.logoutToken();
+
+          this.router.navigate(['/auth']);
+
+          return throwError(() => error);
         }
-        if (error.error && error.error.message) {
-          errorMsg = error.error.message;
-        } else {
-          errorMsg = error.message || 'An error occurred';
-        }
-        this.snackbarService.show(errorMsg, 'Error', 5000);
+
         return throwError(() => error);
+
       })
+
     );
   }
 }

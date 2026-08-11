@@ -39,7 +39,9 @@ builder.Services.AddAuthorization();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("frontend", policy =>
-        policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
+        policy
+        .WithOrigins("http://localhost:4200", "https://9cnmnz5x-4200.euw.devtunnels.ms")
+        .AllowAnyHeader().AllowAnyMethod());
 });
 
 var app = builder.Build();

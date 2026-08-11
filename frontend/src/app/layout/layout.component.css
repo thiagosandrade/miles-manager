@@ -1,40 +1,64 @@
-/* General full viewport layout */
+/* ==========================================================================
+   Main Layout
+   ========================================================================== */
+
 .layout-container {
+
   display: flex;
-  height: calc(100vh - 64px); /* Subtract toolbar height */
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 0 24px;
+
+  height: calc(100vh - 64px);
 }
 
-/* Main content area with padding and footer spacing */
+/* ==========================================================================
+   Main Content
+   ========================================================================== */
+
 .main-content {
-  flex-grow: 1;
-  padding: 24px 0;
-  position: relative;
-  min-height: 0;
+
+  flex: 1;
+
   display: flex;
   flex-direction: column;
+
+  height: calc(100vh - 64px);
+
+  overflow: hidden;
 }
+
+/* ==========================================================================
+   Routed Pages
+   ========================================================================== */
 
 .content-wrapper {
-  max-width: 1400px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 10px;
+
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 24px;
+
+  min-height: 0;
 }
 
-app-footer {
-  margin-top: auto;
-}
 
-/* Responsive behaviors can be enhanced later for smaller screen */
-@media (max-width: 599px) {
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 768px) {
+
   .layout-container {
-    flex-direction: column;
+
     padding: 0 16px;
   }
-  app-sidebar {
-    flex-grow: 0;
+
+  .main-content {
+
+    padding: 16px 0;
+  }
+
+  .content-wrapper {
+
+    padding: 0 0 24px;
   }
 }

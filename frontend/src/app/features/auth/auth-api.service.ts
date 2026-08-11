@@ -1,17 +1,20 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { finalize, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoginRequest, LoginResponse, AuthSession } from './models/authentication.model';
+import { TokenStorageService } from '../../core/services/token-storage.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthApiService {
 
+  private readonly tokenStorageService = inject(TokenStorageService);
   private readonly apiBaseUrl = `${environment.apiBaseUrl}/auth`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiBaseUrl}/login`, request);
@@ -22,7 +25,16 @@ export class AuthApiService {
   }
 
   logout(): Observable<void> {
-    return this.http.post<void>(`${this.apiBaseUrl}/logout`, {});
+    return this.http
+      .post<void>(`${this.apiBaseUrl}/logout`, {})
+      .pipe(
+        finalize(() => this.logoutLocal())
+      );
+  }
+
+  logoutLocal(): void {
+    this.tokenStorageService.logoutToken();
+    this.router.navigate(['/auth']);
   }
 
   getSession(): Observable<AuthSession> {

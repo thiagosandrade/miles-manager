@@ -284,13 +284,13 @@
 
         <td
           mat-cell
-          *matCellDef="let purchase"
+          *matCellDef="let redemption"
           class="actions-column">
 
           <button
             class="icon-button"
             aria-label="Edit purchase"
-            (click)="openEditRedemptionDialog(purchase)">
+            (click)="openEditRedemptionDialog(redemption)">
 
             <mat-icon>edit</mat-icon>
 
@@ -298,7 +298,8 @@
 
           <button
             class="icon-button danger"
-            aria-label="Delete purchase">
+            aria-label="Delete purchase"
+            (click)="deleteRedemption(redemption)">
 
             <mat-icon>delete</mat-icon>
 

@@ -11,6 +11,7 @@ import { ProgramsApiService } from './programs-api.service';
 import { Program } from './models/program.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateProgramDialogComponent } from './create-program-dialog.component';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-programs-page',
@@ -27,6 +28,7 @@ import { CreateProgramDialogComponent } from './create-program-dialog.component'
 })
 export class ProgramsPageComponent implements OnInit {
   dialog = inject(MatDialog);
+  snackbarService = inject(SnackbarService);
 
   data = signal<Program[]>([]);
   loading = signal(false);
@@ -60,20 +62,21 @@ export class ProgramsPageComponent implements OnInit {
 
     try {
 
-      const result = await this.programsService.listPrograms({
+      await this.programsService.listPrograms({
         page: pageIndex + 1,
         pageSize,
         sort: sortField
           ? `${sortDirection === 'asc' ? '' : '-'}${sortField}`
           : undefined,
         filter: this.filter
+      }).then(result => {
+        this.data.set(result.programs);
       });
-
-      this.data.set(result.programs);
 
     } catch {
 
       this.isRateLimitReached.set(true);
+      this.snackbarService.error('Could not load programs.', 3000);
 
     } finally {
 
@@ -92,7 +95,6 @@ export class ProgramsPageComponent implements OnInit {
   }
 
   openUpdateDialog(program: Program): void {
-    console.log('Opening update dialog for program:', program);
     const dialogRef = this.dialog.open(CreateProgramDialogComponent, {
       width: '500px',
       data: {
@@ -104,6 +106,7 @@ export class ProgramsPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(updated => {
 
       if (updated) {
+        this.snackbarService.error('Program updated succesfully.', 3000);
         this.loadPrograms();
       }
 
@@ -123,10 +126,26 @@ export class ProgramsPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(created => {
 
       if (created) {
+        this.snackbarService.error('Program created succesfully.', 3000);
         this.loadPrograms();
       }
-
     });
 
   }
+
+  deleteProgram(program: Program): void {
+  
+      this.programsService.deleteProgram(program.id).subscribe({
+          next: () => {
+            this.snackbarService.success('Program updated succesfully.', 3000);
+            this.loadPrograms();
+            this.loading.set(false)
+          },
+          error: () => {
+            this.snackbarService.error('Could not create program.', 3000);
+            this.loading.set(false)
+          } 
+        });
+  
+    }
 }

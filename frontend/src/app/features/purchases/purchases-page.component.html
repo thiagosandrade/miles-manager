@@ -89,16 +89,7 @@
 
         <span>Average Purchase</span>
 
-        <strong>
-
-          {{
-            data().length
-              ? (data().reduce((sum, p) => sum + p.amountPaid, 0) / data().length)
-              : 0
-              | number:'1.0-0'
-          }}
-
-        </strong>
+        <strong>{{ averagePurchase | number:'1.2-2' }}</strong>
 
       </div>
 
@@ -308,7 +299,8 @@
 
           <button
             class="icon-button danger"
-            aria-label="Delete purchase">
+            aria-label="Delete purchase"
+            (onClick)="deletePurchase(purchase)">
 
             <mat-icon>delete</mat-icon>
 

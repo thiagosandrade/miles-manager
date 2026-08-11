@@ -24,7 +24,7 @@
       class="primary-button"
       type="button"
       (click)="openCreateUserDialog()"
-      [disabled]="loading">
+      [disabled]="isLoadingResults">
 
       <mat-icon>person_add</mat-icon>
 
@@ -79,21 +79,30 @@
   <!-- Table -->
 
   <app-table
+
     title="Users"
     subtitle="Directory"
-    [loading]="loading"
-    [dataSource]="users"
-    [length]="users.length"
+
+    [loading]="isLoadingResults"
+
+    [dataSource]="data"
+
+    [length]="data.length"
+
     [showPaginator]="false"
+
     emptyIcon="group_off"
+
     emptyTitle="No users found"
+
     emptyDescription="Create your first user to start using Miles Manager.">
 
-    <!-- Empty state button -->
+    <!-- Empty State -->
 
     <button
       empty-action
       class="primary-button"
+      type="button"
       (click)="openCreateUserDialog()">
 
       <mat-icon>person_add</mat-icon>
@@ -102,11 +111,11 @@
 
     </button>
 
-    <!-- Actual table -->
+    <!-- Material Table -->
 
     <table
       mat-table
-      [dataSource]="users">
+      [dataSource]="data">
 
       <!-- User -->
 
@@ -230,8 +239,9 @@
 
           <button
             class="icon-button danger"
+            type="button"
             (click)="deleteUser(user)"
-            [disabled]="loading">
+            [disabled]="isLoadingResults">
 
             <mat-icon>delete</mat-icon>
 
@@ -255,31 +265,17 @@
 
   </app-table>
 
-  <!-- Feedback -->
+  <!-- Error -->
 
   <div
     class="feedback"
-    *ngIf="error">
+    *ngIf="isRateLimitReached">
 
     <strong>Error</strong>
 
     <span>
 
-      {{ error }}
-
-    </span>
-
-  </div>
-
-  <div
-    class="feedback success"
-    *ngIf="notice">
-
-    <strong>Success</strong>
-
-    <span>
-
-      {{ notice }}
+      Could not load users. Please try again later.
 
     </span>
 

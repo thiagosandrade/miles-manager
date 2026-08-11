@@ -8,16 +8,24 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from '@angular/material/table';
 import { CreateRedemptionDialogComponent } from './create-redemption-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-redemptions-page',
   standalone: true,
-  imports: [CommonModule, MatCardModule, AppTableComponent, MatIconModule, MatTableModule],
+  imports: [
+    CommonModule, 
+    MatCardModule, 
+    AppTableComponent, 
+    MatIconModule, 
+    MatTableModule
+  ],
   templateUrl: './redemptions-page.component.html',
   styleUrls: ['./redemptions-page.component.scss']
 })
 export class RedemptionsPageComponent implements OnInit {
   private dialog = inject(MatDialog);
+  private snackbarService = inject(SnackbarService);
 
   redemptions = signal<FlightRedemption[]>([]);
   loading = signal<boolean>(false);
@@ -97,12 +105,16 @@ export class RedemptionsPageComponent implements OnInit {
       this.loading.set(true);
 
       this.redemptionService.createFlightRedemption(request).subscribe({
-
-        next: () => this.loadRedemptions(),
-
-        error: () => this.loading.set(false)
-
-      });
+          next: () => {
+            this.snackbarService.success('Redemption updated succesfully.', 3000);
+            this.loadRedemptions();
+            this.loading.set(false)
+          },
+          error: () => {
+            this.snackbarService.error('Could not create redemption.', 3000);
+            this.loading.set(false)
+          } 
+        });
 
     });
 
@@ -143,10 +155,15 @@ export class RedemptionsPageComponent implements OnInit {
 
       this.redemptionService.updateFlightRedemption(request).subscribe({
 
-        next: () => this.loadRedemptions(),
-
-        error: () => this.loading.set(false)
-
+        next: () => {
+          this.snackbarService.success('Redemption updated succesfully.', 3000);
+          this.loadRedemptions();
+          this.loading.set(false);
+        },
+        error: () => {
+          this.snackbarService.error('Could not update redemption.', 3000);
+          this.loading.set(false);
+        } 
       });
 
     });
@@ -154,22 +171,24 @@ export class RedemptionsPageComponent implements OnInit {
   }
 
   deleteRedemption(redemption: FlightRedemption): void {
-
-    if (!confirm('Are you sure you want to delete this redemption?')) {
-      return;
-    }
-
+    
     this.loading.set(true);
 
     this.redemptionService.deleteFlightRedemption(redemption.id).subscribe({
 
-      next: () => this.loadRedemptions(),
+      next: () => {
+        this.snackbarService.success('Redemption deleted succesfully.', 3000);
+        this.loadRedemptions();
+        this.loading.set(false);
+      },
 
-      error: () => this.loading.set(false)
+      error: () => {
+        this.snackbarService.error('Could not delete redemption.', 3000);
+        this.loading.set(false);
+      }
 
     });
-
-  } 
+  }
 
   getCabinClass(value: number): string {
 

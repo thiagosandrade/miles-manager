@@ -43,10 +43,12 @@ export class ToolbarComponent {
     }
 
     try {
-        const user = await this.userApi.getUser(id);
+          this.userApi.getUser(id).subscribe(result => {
+            this.userName.set(result.fullName);
+            this.userEmail.set(result.email);
+        });
 
-        this.userName.set(user.fullName);
-        this.userEmail.set(user.email);
+
     }
     catch {
         this.userName.set('');
@@ -75,8 +77,17 @@ export class ToolbarComponent {
   }
 
   switchTheme(): void {
-    const currentTheme = document.body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    document.body.setAttribute('data-theme', newTheme);
+
+    const html = document.documentElement;
+
+    html.classList.toggle('dark-theme');
+
+    localStorage.setItem(
+      'theme',
+      html.classList.contains('dark-theme')
+        ? 'dark'
+        : 'light'
+    );
+
   }
 }

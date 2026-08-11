@@ -1,12 +1,20 @@
 <app-toolbar (toggleSidenav)="toggleSidenav()"></app-toolbar>
 
-<div class="layout-container" role="main" aria-label="Main content area">
-  <app-sidebar [opened]="sidenavOpenedSignal()" (closeSidenav)="toggleSidenav()"></app-sidebar>
+<div class="layout-container">
+
+  <app-sidebar
+    [opened]="sidenavOpenedSignal()"
+    (closeSidenav)="toggleSidenav()">
+  </app-sidebar>
 
   <main class="main-content">
+
     <div class="content-wrapper">
       <router-outlet></router-outlet>
     </div>
+
     <app-footer></app-footer>
+
   </main>
+
 </div>

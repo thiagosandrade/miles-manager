@@ -39,7 +39,9 @@ export class UserDetailsComponent implements OnInit {
     this.loading = true;
     this.error = '';
     try {
-      this.user = await this.userApi.getUser(id);
+      this.userApi.getUser(id).subscribe(result => {
+        this.user = result;
+      });
     } catch (err: any) {
       this.error = err.message || 'Failed to load user details';
       this.user = null;
