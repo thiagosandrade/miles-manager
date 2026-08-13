@@ -1,19 +1,411 @@
 {
+  "auth": {
+    "welcome": "Willkommen zurück",
+    "top-definition": "Melde dich an, um deine Airline-Programme, Meilen und Prämien weiter zu verwalten.",
+    "email": "E-Mail",
+    "emailRequired": "E-Mail ist erforderlich.",
+    "emailInvalid": "Ungültige E-Mail",
+    "password": "Passwort",
+    "passwordRequired": "Passwort ist erforderlich.",
+    "signin": "Anmelden",
+    "logging": "Anmeldung läuft...",
+    "footer": "Miles Manager",
+    "version": "Version 1.0"
+  },
   "common": {
     "ok": "OK",
     "cancel": "Abbrechen",
-    "close": "Schließen"
+    "close": "Schließen",
+    "create": "Erstellen",
+    "update": "Aktualisieren",
+    "delete": "Löschen",
+    "save": "Speichern",
+    "search": "Suchen",
+    "yes": "Ja",
+    "no": "Nein",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "loading": "Wird geladen...",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "email": "E-Mail",
+    "status": "Status",
+    "created": "Erstellt",
+    "updated": "Aktualisiert",
+    "date": "Datum",
+    "actions": "Aktionen",
+    "name": "Name",
+    "description": "Beschreibung",
+    "profile": "Profil",
+    "language": "Sprache",
+    "logout": "Abmelden",
+    "settings": "Einstellungen",
+    "all": "Alle",
+    "program": "Programm",
+    "programs": "Programme",
+    "loyaltyProgram": "Treueprogramm",
+    "miles": "Meilen",
+    "milesSent": "Gesendete Meilen",
+    "milesReceived": "Empfangene Meilen",
+    "amount": "Betrag",
+    "balance": "Saldo",
+    "origin": "Ursprung",
+    "destination": "Ziel",
+    "cabin": "Kabine",
+    "flightDate": "Flugdatum",
+    "passengers": "Passagiere",
+    "taxes": "Steuern",
+    "cashPrice": "Barpreis",
+    "price": "Preis",
+    "referencePrice": "Referenzpreis",
+    "website": "Website",
+    "logoUrl": "Logo-URL",
+    "programCode": "Programmcode",
+    "fullName": "Vollständiger Name"
   },
   "toolbar": {
-    "title": "Meilenverwaltung"
+    "title": "Miles Manager",
+    "menu": "Anwendungsmenü",
+    "profile": "Profil",
+    "language": "Sprache",
+    "logout": "Abmelden",
+    "currentLanguage": "Aktuelle Sprache"
   },
   "sidebar": {
-    "dashboard": "Instrumententafel",
+    "dashboard": "Dashboard",
+    "users": "Benutzer",
     "programs": "Programme",
-    "balances": "Kontostände",
-    "purchases": "Einkäufe",
-    "transfers": "Überweisungen",
+    "programBalances": "Programm-Salden",
+    "purchases": "Käufe",
+    "transfers": "Transfers",
     "redemptions": "Einlösungen",
     "settings": "Einstellungen"
+  },
+  "dashboard": {
+    "eyebrow": "Übersicht",
+    "title": "Dashboard",
+    "subtitle": "Verfolge Meilenaktivität, Wert und aktuelle Bewegungen über alle Treueprogramme hinweg.",
+    "metrics": {
+      "totalMiles": "Gesamte Meilen",
+      "investment": "Investition",
+      "costPerThousand": "Kosten pro 1.000 Meilen",
+      "marketValue": "Marktwert",
+      "profit": "Gewinn",
+      "loss": "Verlust"
+    },
+    "cards": {
+      "recentPrograms": "Aktuelle Programme",
+      "recentPurchases": "Aktuelle Käufe",
+      "recentTransfers": "Aktuelle Transfers",
+      "recentRedemptions": "Aktuelle Einlösungen"
+    },
+    "transfer": {
+      "to": "zu"
+    }
+  },
+  "users": {
+    "page": {
+      "eyebrow": "Verwaltung",
+      "title": "Benutzer",
+      "subtitle": "Verwalte Benutzer, Einladungen und Zugriffsrechte.",
+      "newUser": "Benutzer erstellen"
+    },
+    "details": {
+      "eyebrow": "Verwaltung",
+      "title": "Benutzerdetails",
+      "subtitle": "Kontoinformationen und Aktivität prüfen.",
+      "status": "Status",
+      "created": "Erstellt",
+      "lastLogin": "Letzte Anmeldung",
+      "accountInformation": "Kontoinformationen",
+      "userId": "Benutzer-ID"
+    },
+    "metrics": {
+      "totalUsers": "Benutzer insgesamt",
+      "activeUsers": "Aktive Benutzer",
+      "inactiveUsers": "Inaktive Benutzer"
+    },
+    "table": {
+      "title": "Benutzer",
+      "subtitle": "Verzeichnis",
+      "search": "Benutzer suchen",
+      "searchPlaceholder": "Nach Name oder E-Mail suchen...",
+      "emptyTitle": "Keine Benutzer gefunden",
+      "emptyDescription": "Erstelle deinen ersten Benutzer, um loszulegen.",
+      "columns": {
+        "fullName": "Vollständiger Name",
+        "email": "E-Mail",
+        "status": "Status",
+        "createdAt": "Erstellt am",
+        "lastLoginAt": "Letzte Anmeldung",
+        "user": "Benutzer"
+      }
+    },
+    "dialog": {
+      "createTitle": "Benutzer erstellen",
+      "updateTitle": "Benutzer aktualisieren",
+      "subtitle": "Einen neuen Miles-Manager-Benutzer hinzufügen.",
+      "fullName": "Vollständiger Name",
+      "fullNamePlaceholder": "Max Mustermann",
+      "email": "E-Mail",
+      "emailPlaceholder": "max@email.com",
+      "password": "Passwort",
+      "passwordPlaceholder": "Passwort",
+      "createButton": "Benutzer erstellen",
+      "updateButton": "Benutzer aktualisieren"
+    },
+    "validation": {
+      "fullNameRequired": "Vollständiger Name ist erforderlich.",
+      "emailRequired": "E-Mail ist erforderlich.",
+      "emailInvalid": "Ungültige E-Mail.",
+      "passwordRequired": "Passwort ist erforderlich."
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "actions": {
+      "create": "Benutzer erstellen",
+      "edit": "Benutzer bearbeiten",
+      "delete": "Benutzer löschen"
+    },
+    "messages": {
+      "loadError": "Benutzer konnten nicht geladen werden. Bitte versuche es später erneut."
+    }
+  },
+  "programs": {
+    "page": {
+      "eyebrow": "Verwaltung",
+      "title": "Programme",
+      "subtitle": "Verwalte Airline- und Hotel-Treueprogramme.",
+      "newProgram": "Neues Programm"
+    },
+    "metrics": {
+      "totalPrograms": "Programme insgesamt",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "table": {
+      "title": "Programme",
+      "subtitle": "Verzeichnis",
+      "search": "Programme suchen",
+      "searchPlaceholder": "Nach Name suchen...",
+      "emptyTitle": "Keine Programme gefunden",
+      "emptyDescription": "Erstelle dein erstes Treueprogramm.",
+      "loyaltyProgram": "Treueprogramm",
+      "columns": {
+        "program": "Programm",
+        "status": "Status"
+      }
+    },
+    "dialog": {
+      "createTitle": "Neues Programm",
+      "updateTitle": "Programm aktualisieren",
+      "programCode": "Programmcode",
+      "name": "Name",
+      "programType": "Programmtyp",
+      "website": "Website",
+      "logoUrl": "Logo-URL",
+      "referencePrice": "Referenzpreis pro 1.000 Meilen",
+      "active": "Aktiv",
+      "createButton": "Programm erstellen",
+      "updateButton": "Programm aktualisieren"
+    },
+    "types": {
+      "airline": "Airline",
+      "hotel": "Hotel",
+      "bank": "Bank",
+      "creditCard": "Kreditkarte"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "actions": {
+      "edit": "Programm bearbeiten",
+      "delete": "Programm löschen"
+    },
+    "messages": {
+      "loadError": "Programme konnten nicht geladen werden. Bitte versuche es später erneut."
+    }
+  },
+  "balances": {
+    "eyebrow": "Programme",
+    "title": "Programm-Salden",
+    "subtitle": "Sieh dir die Salden aller deiner Treueprogramme an.",
+    "metrics": {
+      "totalPrograms": "Programme insgesamt",
+      "totalMiles": "Gesamte Meilen",
+      "averageBalance": "Durchschnittssaldo"
+    },
+    "table": {
+      "title": "Salden",
+      "subtitle": "Programme",
+      "emptyTitle": "Keine Salden gefunden",
+      "emptyDescription": "Die Salden deiner Treueprogramme werden hier angezeigt.",
+      "loyaltyProgram": "Treueprogramm",
+      "columns": {
+        "program": "Programm",
+        "balance": "Saldo"
+      }
+    }
+  },
+  "purchases": {
+    "page": {
+      "eyebrow": "Transaktionen",
+      "title": "Käufe",
+      "subtitle": "Meilenkäufe anzeigen und verwalten.",
+      "newPurchase": "Neuer Kauf"
+    },
+    "metrics": {
+      "totalPurchases": "Käufe insgesamt",
+      "totalAmount": "Gesamtbetrag",
+      "averagePurchase": "Durchschnittskauf"
+    },
+    "table": {
+      "title": "Käufe",
+      "subtitle": "Verlauf",
+      "search": "Käufe suchen",
+      "searchPlaceholder": "Käufe suchen...",
+      "emptyTitle": "Keine Käufe gefunden",
+      "emptyDescription": "Erstelle deinen ersten Meilenkauf.",
+      "directPurchase": "Direktkauf",
+      "columns": {
+        "program": "Programm",
+        "amountPaid": "Bezahlter Betrag",
+        "milesPurchased": "Gekaufte Meilen",
+        "bonus": "Bonus",
+        "purchaseDate": "Kaufdatum",
+        "status": "Status"
+      }
+    },
+    "dialog": {
+      "createTitle": "Neuer Kauf",
+      "updateTitle": "Kauf aktualisieren",
+      "program": "Programm",
+      "partner": "Partner",
+      "description": "Beschreibung",
+      "amountPaid": "Bezahlter Betrag",
+      "milesPurchased": "Gekaufte Meilen",
+      "bonus": "Bonus",
+      "purchaseDate": "Kaufdatum",
+      "status": "Status",
+      "createButton": "Kauf erstellen",
+      "updateButton": "Kauf aktualisieren"
+    },
+    "actions": {
+      "edit": "Kauf bearbeiten",
+      "delete": "Kauf löschen"
+    },
+    "messages": {
+      "loadError": "Käufe konnten nicht geladen werden. Bitte versuche es später erneut."
+    }
+  },
+  "transfers": {
+    "page": {
+      "eyebrow": "Treue",
+      "title": "Transfers",
+      "subtitle": "Meilenübertragungen zwischen Treueprogrammen verwalten.",
+      "newTransfer": "Neuer Transfer"
+    },
+    "metrics": {
+      "totalTransfers": "Transfers insgesamt",
+      "totalMilesSent": "Gesendete Meilen insgesamt",
+      "programs": "Programme"
+    },
+    "table": {
+      "title": "Transfers",
+      "subtitle": "Verlauf",
+      "search": "Transfers suchen",
+      "searchPlaceholder": "Transfers suchen...",
+      "emptyTitle": "Keine Transfers gefunden",
+      "emptyDescription": "Erstelle deinen ersten Meilentransfer.",
+      "sourceProgram": "Quellprogramm",
+      "columns": {
+        "origin": "Ursprung",
+        "destination": "Ziel",
+        "milesSent": "Gesendete Meilen",
+        "bonusPercentage": "Bonusprozentsatz",
+        "milesReceived": "Empfangene Meilen",
+        "transferDate": "Transferdatum"
+      }
+    },
+    "dialog": {
+      "createTitle": "Neuer Transfer",
+      "updateTitle": "Transfer aktualisieren",
+      "originProgram": "Quellprogramm",
+      "destinationProgram": "Zielprogramm",
+      "milesSent": "Gesendete Meilen",
+      "bonusPercentage": "Bonusprozentsatz",
+      "milesReceived": "Empfangene Meilen",
+      "transferDate": "Transferdatum",
+      "costPerThousandOrigin": "Kosten pro Tausend (Ursprung)",
+      "costPerThousandDestination": "Kosten pro Tausend (Ziel)"
+    },
+    "actions": {
+      "edit": "Transfer bearbeiten",
+      "delete": "Transfer löschen"
+    },
+    "messages": {
+      "loadError": "Transfers konnten nicht geladen werden. Bitte versuche es später erneut."
+    }
+  },
+  "redemptions": {
+    "page": {
+      "eyebrow": "Prämien",
+      "title": "Einlösungen",
+      "subtitle": "Meileneinlösungen anzeigen und verwalten.",
+      "newRedemption": "Neue Einlösung"
+    },
+    "metrics": {
+      "totalRedemptions": "Einlösungen insgesamt"
+    },
+    "table": {
+      "title": "Einlösungen",
+      "subtitle": "Verlauf",
+      "emptyTitle": "Keine Einlösungen gefunden",
+      "emptyDescription": "Erstelle deine erste Einlösung.",
+      "columns": {
+        "program": "Programm",
+        "origin": "Ursprung",
+        "destination": "Ziel",
+        "flightDate": "Flugdatum",
+        "cabin": "Kabine",
+        "passengers": "Passagiere",
+        "milesUsed": "Verwendete Meilen",
+        "taxes": "Steuern",
+        "cashPrice": "Barpreis",
+        "effectiveCostPerThousand": "Kosten / 1.000 Meilen"
+      }
+    },
+    "cabin": {
+      "economy": "Economy",
+      "premiumEconomy": "Premium Economy",
+      "business": "Business",
+      "first": "First"
+    },
+    "dialog": {
+      "createTitle": "Neue Einlösung",
+      "updateTitle": "Einlösung aktualisieren",
+      "program": "Programm",
+      "originAirport": "Abflughafen",
+      "destinationAirport": "Zielflughafen",
+      "flightDate": "Flugdatum",
+      "cabinClass": "Kabinenklasse",
+      "passengers": "Passagiere",
+      "milesUsed": "Verwendete Meilen",
+      "taxes": "Steuern",
+      "cashPrice": "Barpreis",
+      "effectiveCostPerThousand": "Kosten / 1.000 Meilen",
+      "createButton": "Einlösung erstellen",
+      "updateButton": "Einlösung aktualisieren"
+    },
+    "actions": {
+      "edit": "Einlösung bearbeiten",
+      "delete": "Einlösung löschen"
+    },
+    "messages": {
+      "loadError": "Einlösungen konnten nicht geladen werden. Bitte versuche es später erneut."
+    }
   }
 }

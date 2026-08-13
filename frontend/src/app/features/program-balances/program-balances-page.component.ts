@@ -9,6 +9,7 @@ import { AppTableComponent } from '../../shared/components/app-table/app-table.c
 import { ProgramBalanceService } from './program-balance.service';
 import { ProgramBalance } from './models/program-balance.model';
 import { MatInputModule } from '@angular/material/input';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-program-balances-page',
@@ -18,7 +19,8 @@ import { MatInputModule } from '@angular/material/input';
     MatIconModule,
     MatInputModule,
     MatTableModule,
-    AppTableComponent
+    AppTableComponent,
+    TranslatePipe
   ],
   templateUrl: './program-balances-page.component.html',
   styleUrls: ['./program-balances-page.component.scss']

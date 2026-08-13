@@ -9,6 +9,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AppLoadingSpinnerComponent } from "../../shared/components/app-loading-spinner/app-loading-spinner.component";
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -17,7 +18,9 @@ import { AppLoadingSpinnerComponent } from "../../shared/components/app-loading-
     MatProgressSpinnerModule,
     MatListModule,
     MatIconModule,
-    MatButtonModule, AppLoadingSpinnerComponent],
+    MatButtonModule, 
+    AppLoadingSpinnerComponent,
+    TranslatePipe],
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.scss']
 })

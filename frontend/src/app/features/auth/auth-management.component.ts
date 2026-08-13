@@ -9,13 +9,18 @@ import { Router } from '@angular/router';
 import { AuthApiService } from './auth-api.service';
 import { TokenStorageService } from '../../core/services/token-storage.service';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
   selector: 'app-auth-management',
   templateUrl: './auth-management.component.html',
   styleUrls: ['./auth-management.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatCardModule, MatSnackBarModule, MatIconModule],
+  imports: [
+    CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, 
+    MatCardModule, MatSnackBarModule, MatIconModule,
+    TranslatePipe
+],
 })
 export class AuthManagementComponent {
   private fb = inject(FormBuilder);

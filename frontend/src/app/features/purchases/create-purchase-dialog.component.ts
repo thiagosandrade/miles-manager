@@ -13,6 +13,7 @@ import { ProgramsApiService } from "../programs/programs-api.service";
 import { Program } from "../programs/models/program.model";
 import { PurchaseStatus } from "../../core/enums/purchase-status.enum";
 import { PurchasesApiService } from "./purchases-api.service";
+import { TranslatePipe } from "@ngx-translate/core";
 
 interface PurchaseDialogData {
   operation: 'create' | 'update';
@@ -31,7 +32,8 @@ interface PurchaseDialogData {
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatButtonModule
+    MatButtonModule,
+    TranslatePipe
   ],
   templateUrl: './create-purchase-dialog.component.html',
   styleUrls: ['./create-purchase-dialog.component.scss']

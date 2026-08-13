@@ -7,15 +7,15 @@
     <div>
 
       <p class="eyebrow">
-        Administration
+        {{ 'users.page.eyebrow' | translate }}
       </p>
 
       <h1>
-        User Management
+        {{ 'users.page.title' | translate }}
       </h1>
 
       <p class="subtitle">
-        Manage application users, invitations and access permissions.
+        {{ 'users.page.subtitle' | translate }}
       </p>
 
     </div>
@@ -28,7 +28,11 @@
 
       <mat-icon>person_add</mat-icon>
 
-      <span>Create User</span>
+      <span>
+
+        {{ 'users.page.newUser' | translate }}
+
+      </span>
 
     </button>
 
@@ -48,7 +52,11 @@
 
       <div>
 
-        <span>Total Users</span>
+        <span>
+
+          {{ 'users.metrics.totalUsers' | translate }}
+
+        </span>
 
         <strong>{{ totalUsers }}</strong>
 
@@ -66,7 +74,11 @@
 
       <div>
 
-        <span>Active Users</span>
+        <span>
+
+          {{ 'users.metrics.activeUsers' | translate }}
+
+        </span>
 
         <strong>{{ activeUsers }}</strong>
 
@@ -80,8 +92,8 @@
 
   <app-table
 
-    title="Users"
-    subtitle="Directory"
+    [title]="'users.table.title' | translate"
+    [subtitle]="'users.table.subtitle' | translate"
 
     [loading]="isLoadingResults"
 
@@ -93,9 +105,9 @@
 
     emptyIcon="group_off"
 
-    emptyTitle="No users found"
+    [emptyTitle]="'users.table.emptyTitle' | translate"
 
-    emptyDescription="Create your first user to start using Miles Manager.">
+    [emptyDescription]="'users.table.emptyDescription' | translate">
 
     <!-- Empty State -->
 
@@ -107,7 +119,11 @@
 
       <mat-icon>person_add</mat-icon>
 
-      <span>Create User</span>
+      <span>
+
+        {{ 'users.page.newUser' | translate }}
+
+      </span>
 
     </button>
 
@@ -123,7 +139,7 @@
 
         <th mat-header-cell *matHeaderCellDef>
 
-          User
+          {{ 'users.table.columns.user' | translate }}
 
         </th>
 
@@ -165,7 +181,7 @@
 
         <th mat-header-cell *matHeaderCellDef>
 
-          Email
+          {{ 'users.table.columns.email' | translate }}
 
         </th>
 
@@ -183,7 +199,7 @@
 
         <th mat-header-cell *matHeaderCellDef>
 
-          Status
+          {{ 'users.table.columns.status' | translate }}
 
         </th>
 
@@ -195,7 +211,11 @@
 
             <span class="status-dot"></span>
 
-            {{ user.isActive ? 'Active' : 'Inactive' }}
+            {{
+              user.isActive
+                ? ('common.active' | translate)
+                : ('common.inactive' | translate)
+            }}
 
           </span>
 
@@ -209,7 +229,7 @@
 
         <th mat-header-cell *matHeaderCellDef>
 
-          Created
+          {{ 'users.table.columns.createdAt' | translate }}
 
         </th>
 
@@ -240,6 +260,7 @@
           <button
             class="icon-button danger"
             type="button"
+            [attr.aria-label]="'users.actions.delete' | translate"
             (click)="deleteUser(user)"
             [disabled]="isLoadingResults">
 
@@ -271,11 +292,15 @@
     class="feedback"
     *ngIf="isRateLimitReached">
 
-    <strong>Error</strong>
+    <strong>
+
+      {{ 'common.error' | translate }}
+
+    </strong>
 
     <span>
 
-      Could not load users. Please try again later.
+      {{ 'users.messages.loadError' | translate }}
 
     </span>
 

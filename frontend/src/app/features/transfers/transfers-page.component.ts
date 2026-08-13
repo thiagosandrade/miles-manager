@@ -18,6 +18,7 @@ import { AppTableComponent } from "../../shared/components/app-table/app-table.c
 import { CreateTransferDialogComponent } from './create-transfer-dialog.component';
 import { TokenStorageService } from '../../core/services/token-storage.service';
 import { SnackbarService } from '../../core/services/snackbar.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
@@ -34,7 +35,8 @@ import { SnackbarService } from '../../core/services/snackbar.service';
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    AppTableComponent
+    AppTableComponent,
+    TranslatePipe
 ],
   templateUrl: './transfers-page.component.html',
   styleUrls: ['./transfers-page.component.scss']

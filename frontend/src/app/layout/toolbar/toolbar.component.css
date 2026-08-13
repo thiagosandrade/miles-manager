@@ -201,3 +201,32 @@
 
   color: #dc2626 !important;
 }
+
+
+/* =======================================================
+   Theme
+   ======================================================= */
+
+.current-language {
+  color: var(--muted);
+  font-size: .85rem;
+  font-weight: 500;
+}
+
+.flag {
+  width: 26px;
+  text-align: center;
+  margin-right: 12px;
+  font-size: 18px;
+}
+
+.menu-spacer {
+  flex: 1;
+}
+
+
+::ng-deep .mat-mdc-menu-item mat-icon {
+
+  margin-left: auto;
+
+}

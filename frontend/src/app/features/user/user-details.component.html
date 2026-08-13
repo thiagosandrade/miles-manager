@@ -1,21 +1,19 @@
 <section class="page">
 
-  <!-- Header -->
-
   <header class="page-header">
 
     <div>
 
       <p class="eyebrow">
-        Account
+        {{ 'users.details.eyebrow' | translate }}
       </p>
 
       <h1>
-        User Details
+        {{ 'users.details.title' | translate }}
       </h1>
 
       <p class="subtitle">
-        View detailed information about this Miles Manager user.
+        {{ 'users.details.subtitle' | translate }}
       </p>
 
     </div>
@@ -23,24 +21,28 @@
   </header>
 
   <app-loading-spinner
-    *ngIf="loading">
+    *ngIf="loading()">
   </app-loading-spinner>
 
   <div
     class="feedback"
-    *ngIf="error">
+    *ngIf="error()">
 
-    <strong>Error</strong>
+    <strong>
+
+      {{ 'common.error' | translate }}
+
+    </strong>
 
     <span>
 
-      {{ error }}
+      {{ error() }}
 
     </span>
 
   </div>
 
-  <ng-container *ngIf="!loading && user">
+  <ng-container *ngIf="!loading() && user() as user">
 
     <!-- Metrics -->
 
@@ -56,11 +58,19 @@
 
         <div>
 
-          <span>Status</span>
+          <span>
+
+            {{ 'users.details.status' | translate }}
+
+          </span>
 
           <strong>
 
-            {{ user.isActive ? 'Active' : 'Inactive' }}
+            {{
+              user.isActive
+                ? ('common.active' | translate)
+                : ('common.inactive' | translate)
+            }}
 
           </strong>
 
@@ -78,7 +88,11 @@
 
         <div>
 
-          <span>Created</span>
+          <span>
+
+            {{ 'users.details.created' | translate }}
+
+          </span>
 
           <strong>
 
@@ -102,7 +116,11 @@
 
         <div>
 
-          <span>Last Login</span>
+          <span>
+
+            {{ 'users.details.lastLogin' | translate }}
+
+          </span>
 
           <strong>
 
@@ -119,8 +137,6 @@
     <!-- Cards -->
 
     <section class="dashboard-grid">
-
-      <!-- Profile -->
 
       <mat-card>
 
@@ -152,7 +168,11 @@
                 class="status-pill"
                 [class.inactive]="!user.isActive">
 
-                {{ user.isActive ? 'Active' : 'Inactive' }}
+                {{
+                  user.isActive
+                    ? ('common.active' | translate)
+                    : ('common.inactive' | translate)
+                }}
 
               </span>
 
@@ -164,15 +184,13 @@
 
       </mat-card>
 
-      <!-- Details -->
-
       <mat-card>
 
         <mat-card-header>
 
           <mat-card-title>
 
-            Account Information
+            {{ 'users.details.accountInformation' | translate }}
 
           </mat-card-title>
 
@@ -184,7 +202,11 @@
 
             <div class="detail-item">
 
-              <span>Full Name</span>
+              <span>
+
+                {{ 'users.dialog.fullName' | translate }}
+
+              </span>
 
               <strong>
 
@@ -196,7 +218,11 @@
 
             <div class="detail-item">
 
-              <span>Email</span>
+              <span>
+
+                {{ 'users.dialog.email' | translate }}
+
+              </span>
 
               <strong>
 
@@ -208,7 +234,11 @@
 
             <div class="detail-item">
 
-              <span>User ID</span>
+              <span>
+
+                {{ 'users.details.userId' | translate }}
+
+              </span>
 
               <strong>
 
@@ -220,7 +250,11 @@
 
             <div class="detail-item">
 
-              <span>Created</span>
+              <span>
+
+                {{ 'users.details.created' | translate }}
+
+              </span>
 
               <strong>
 
@@ -234,7 +268,11 @@
               class="detail-item"
               *ngIf="user.updatedAtUtc">
 
-              <span>Last Updated</span>
+              <span>
+
+                {{ 'users.details.lastUpdated' | translate }}
+
+              </span>
 
               <strong>
 
@@ -248,7 +286,11 @@
               class="detail-item"
               *ngIf="user.lastLoginAtUtc">
 
-              <span>Last Login</span>
+              <span>
+
+                {{ 'users.details.lastLogin' | translate }}
+
+              </span>
 
               <strong>
 

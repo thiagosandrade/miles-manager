@@ -1,5 +1,9 @@
 <h2 mat-dialog-title>
-  New Transfer
+  {{
+    data.operation === 'create'
+      ? ('transfers.dialog.createTitle' | translate)
+      : ('transfers.dialog.updateTitle' | translate)
+  }}
 </h2>
 
 <mat-dialog-content>
@@ -12,7 +16,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Origin Program</mat-label>
+      <mat-label>
+        {{ 'transfers.dialog.originProgram' | translate }}
+      </mat-label>
 
       <mat-select formControlName="originProgramId">
 
@@ -32,7 +38,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Destination Program</mat-label>
+      <mat-label>
+        {{ 'transfers.dialog.destinationProgram' | translate }}
+      </mat-label>
 
       <mat-select formControlName="destinationProgramId">
 
@@ -52,7 +60,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Miles Sent</mat-label>
+      <mat-label>
+        {{ 'transfers.dialog.milesSent' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -65,7 +75,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Bonus Percentage</mat-label>
+      <mat-label>
+        {{ 'transfers.dialog.bonusPercentage' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -78,7 +90,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Miles Received</mat-label>
+      <mat-label>
+        {{ 'transfers.dialog.milesReceived' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -91,7 +105,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Transfer Date</mat-label>
+      <mat-label>
+        {{ 'transfers.dialog.transferDate' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -111,7 +127,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Cost Per Thousand (Origin)</mat-label>
+      <mat-label>
+        {{ 'transfers.dialog.costPerThousandOrigin' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -124,7 +142,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Cost Per Thousand (Destination)</mat-label>
+      <mat-label>
+        {{ 'transfers.dialog.costPerThousandDestination' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -144,7 +164,7 @@
     type="button"
     (click)="cancel()">
 
-    Cancel
+    {{ 'common.cancel' | translate }}
 
   </button>
 
@@ -155,7 +175,11 @@
     (click)="save()"
     [disabled]="form.invalid">
 
-    Create Transfer
+    {{
+      data.operation === 'create'
+        ? ('common.create' | translate)
+        : ('common.update' | translate)
+    }}
 
   </button>
 

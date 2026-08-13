@@ -7,15 +7,15 @@
     <div>
 
       <p class="eyebrow">
-        Transactions
+        {{ 'purchases.page.eyebrow' | translate }}
       </p>
 
       <h1>
-        Purchases
+        {{ 'purchases.page.title' | translate }}
       </h1>
 
       <p class="subtitle">
-        View and manage mileage purchases.
+        {{ 'purchases.page.subtitle' | translate }}
       </p>
 
     </div>
@@ -27,7 +27,9 @@
 
       <mat-icon>add</mat-icon>
 
-      <span>New Purchase</span>
+      <span>
+        {{ 'purchases.page.newPurchase' | translate }}
+      </span>
 
     </button>
 
@@ -47,7 +49,9 @@
 
       <div>
 
-        <span>Total Purchases</span>
+        <span>
+          {{ 'purchases.metrics.totalPurchases' | translate }}
+        </span>
 
         <strong>{{ data().length }}</strong>
 
@@ -65,7 +69,9 @@
 
       <div>
 
-        <span>Total Amount</span>
+        <span>
+          {{ 'purchases.metrics.totalAmount' | translate }}
+        </span>
 
         <strong>
 
@@ -87,7 +93,9 @@
 
       <div>
 
-        <span>Average Purchase</span>
+        <span>
+          {{ 'purchases.metrics.averagePurchase' | translate }}
+        </span>
 
         <strong>{{ averagePurchase | number:'1.2-2' }}</strong>
 
@@ -101,8 +109,8 @@
 
   <app-table
 
-    title="Purchases"
-    subtitle="History"
+    [title]="'purchases.table.title' | translate"
+    [subtitle]="'purchases.table.subtitle' | translate"
 
     [loading]="loading()"
 
@@ -114,9 +122,9 @@
 
     emptyIcon="shopping_cart"
 
-    emptyTitle="No purchases found"
+    [emptyTitle]="'purchases.table.emptyTitle' | translate"
 
-    emptyDescription="Create your first mileage purchase.">
+    [emptyDescription]="'purchases.table.emptyDescription' | translate">
 
     <!-- Toolbar -->
 
@@ -124,11 +132,13 @@
 
       <mat-form-field appearance="outline">
 
-        <mat-label>Search Purchases</mat-label>
+        <mat-label>
+          {{ 'purchases.table.search' | translate }}
+        </mat-label>
 
         <input
           matInput
-          placeholder="Search purchases..."
+          [placeholder]="'purchases.table.searchPlaceholder' | translate"
           (input)="applyFilter($any($event.target).value)">
 
       </mat-form-field>
@@ -145,7 +155,9 @@
 
       <mat-icon>add</mat-icon>
 
-      <span>New Purchase</span>
+      <span>
+        {{ 'purchases.page.newPurchase' | translate }}
+      </span>
 
     </button>
 
@@ -160,7 +172,9 @@
       <ng-container matColumnDef="programName">
 
         <th mat-header-cell *matHeaderCellDef>
-          Program
+
+          {{ 'purchases.table.columns.program' | translate }}
+
         </th>
 
         <td mat-cell *matCellDef="let purchase">
@@ -175,7 +189,11 @@
 
               <strong>{{ purchase.programName }}</strong>
 
-              <span>{{ purchase.partner || 'Direct Purchase' }}</span>
+              <span>
+
+                {{ purchase.partner || ('purchases.table.directPurchase' | translate) }}
+
+              </span>
 
             </div>
 
@@ -190,7 +208,9 @@
       <ng-container matColumnDef="amountPaid">
 
         <th mat-header-cell *matHeaderCellDef>
-          Amount Paid
+
+          {{ 'purchases.table.columns.amountPaid' | translate }}
+
         </th>
 
         <td mat-cell *matCellDef="let purchase">
@@ -206,7 +226,9 @@
       <ng-container matColumnDef="milesPurchased">
 
         <th mat-header-cell *matHeaderCellDef>
-          Miles Purchased
+
+          {{ 'purchases.table.columns.milesPurchased' | translate }}
+
         </th>
 
         <td mat-cell *matCellDef="let purchase">
@@ -222,7 +244,9 @@
       <ng-container matColumnDef="bonusPercentage">
 
         <th mat-header-cell *matHeaderCellDef>
-          Bonus
+
+          {{ 'purchases.table.columns.bonus' | translate }}
+
         </th>
 
         <td mat-cell *matCellDef="let purchase">
@@ -238,7 +262,9 @@
       <ng-container matColumnDef="purchaseDate">
 
         <th mat-header-cell *matHeaderCellDef>
-          Purchase Date
+
+          {{ 'purchases.table.columns.purchaseDate' | translate }}
+
         </th>
 
         <td mat-cell *matCellDef="let purchase">
@@ -254,7 +280,9 @@
       <ng-container matColumnDef="purchaseStatus">
 
         <th mat-header-cell *matHeaderCellDef>
-          Status
+
+          {{ 'purchases.table.columns.status' | translate }}
+
         </th>
 
         <td mat-cell *matCellDef="let purchase">
@@ -265,7 +293,10 @@
 
             <span class="status-dot"></span>
 
-            {{ getPurchaseStatus(purchase.purchaseStatus) }}
+            {{
+              ('purchases.status.' + getPurchaseStatus(purchase.purchaseStatus).toLowerCase())
+                | translate
+            }}
 
           </span>
 
@@ -290,7 +321,7 @@
 
           <button
             class="icon-button"
-            aria-label="Edit purchase"
+            [attr.aria-label]="'purchases.actions.edit' | translate"
             (click)="openEditPurchaseDialog(purchase)">
 
             <mat-icon>edit</mat-icon>
@@ -299,8 +330,8 @@
 
           <button
             class="icon-button danger"
-            aria-label="Delete purchase"
-            (onClick)="deletePurchase(purchase)">
+            [attr.aria-label]="'purchases.actions.delete' | translate"
+            (click)="deletePurchase(purchase)">
 
             <mat-icon>delete</mat-icon>
 
@@ -330,11 +361,13 @@
     class="feedback"
     *ngIf="isRateLimitReached()">
 
-    <strong>Error</strong>
+    <strong>
+      {{ 'common.error' | translate }}
+    </strong>
 
     <span>
 
-      Could not load purchases. Please try again later.
+      {{ 'purchases.messages.loadError' | translate }}
 
     </span>
 

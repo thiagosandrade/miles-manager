@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { CreateRedemptionDialogComponent } from './create-redemption-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../core/services/snackbar.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-redemptions-page',
@@ -18,7 +19,8 @@ import { SnackbarService } from '../../core/services/snackbar.service';
     MatCardModule, 
     AppTableComponent, 
     MatIconModule, 
-    MatTableModule
+    MatTableModule,
+    TranslatePipe
   ],
   templateUrl: './redemptions-page.component.html',
   styleUrls: ['./redemptions-page.component.scss']

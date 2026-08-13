@@ -5,6 +5,7 @@ import { routes } from "./app.routes";
 import { ErrorInterceptor } from "./core/interceptors/error.interceptor";
 import { JwtInterceptor } from "./core/interceptors/jwt.interceptor";
 import { LoadingInterceptor } from "./core/interceptors/loading.interceptor";
+import { provideTranslation } from "./core/i18n/translation.config";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
       useClass: ErrorInterceptor,
       multi: true
     },
-    provideRouter(routes)
+    provideRouter(routes),
+    provideTranslation
   ]
 };

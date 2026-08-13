@@ -23,6 +23,7 @@ import { Program } from '../programs/models/program.model';
 import { ProgramsApiService } from '../programs/programs-api.service';
 import { FlightRedemptionService } from './flight-redemption.service';
 import { AirportsDTO, LookupService } from '../../core/services/dataapp-api.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export interface RedemptionDialogData {
   operation: 'create' | 'update';
@@ -44,7 +45,8 @@ export interface RedemptionDialogData {
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    TranslatePipe
   ]
 })
 export class CreateRedemptionDialogComponent {

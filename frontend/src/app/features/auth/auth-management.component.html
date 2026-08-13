@@ -9,11 +9,10 @@
         alt="Miles Manager"
         class="logo">
 
-      <h1>Welcome back</h1>
+      <h1>{{ 'auth.welcome' | translate }}</h1>
 
       <p>
-        Sign in to continue managing your airline programs,
-        miles and rewards.
+        {{ 'auth.top-definition' | translate }}
       </p>
 
     </div>
@@ -26,7 +25,7 @@
       <mat-form-field
         appearance="outline">
 
-        <mat-label>Email</mat-label>
+        <mat-label>{{ 'auth.email' | translate }}</mat-label>
 
         <input
           matInput
@@ -37,11 +36,11 @@
         <mat-icon matPrefix>mail</mat-icon>
 
         <mat-error *ngIf="form.get('email')?.hasError('required')">
-          Email is required
+          {{ 'auth.email-required' | translate }}
         </mat-error>
 
         <mat-error *ngIf="form.get('email')?.hasError('email')">
-          Invalid email
+          {{ 'auth.email-invalid' | translate }}
         </mat-error>
 
       </mat-form-field>
@@ -49,7 +48,7 @@
       <mat-form-field
         appearance="outline">
 
-        <mat-label>Password</mat-label>
+        <mat-label>{{ 'auth.password' | translate }}</mat-label>
 
         <input
           matInput
@@ -60,7 +59,7 @@
         <mat-icon matPrefix>lock</mat-icon>
 
         <mat-error *ngIf="form.get('password')?.hasError('required')">
-          Password is required
+          {{ 'auth.password-required' | translate }}
         </mat-error>
 
       </mat-form-field>
@@ -72,13 +71,13 @@
 
         <span *ngIf="!loading">
 
-          Sign In
+          {{ 'auth.signin' | translate }}
 
         </span>
 
         <span *ngIf="loading">
 
-          Signing in...
+          {{ 'auth.logging' | translate }}
 
         </span>
 
@@ -88,11 +87,11 @@
 
     <div class="login-footer">
 
-      Miles Manager
+      {{ 'auth.footer' | translate }}
 
       <span>•</span>
 
-      Version 1.0
+      {{ 'auth.version' | translate }}
 
     </div>
 

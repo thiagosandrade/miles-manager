@@ -7,15 +7,15 @@
     <div>
 
       <p class="eyebrow">
-        Programs
+        {{ 'balances.eyebrow' | translate }}
       </p>
 
       <h1>
-        Program Balances
+        {{ 'balances.title' | translate }}
       </h1>
 
       <p class="subtitle">
-        View balances across all your loyalty programs.
+        {{ 'balances.subtitle' | translate }}
       </p>
 
     </div>
@@ -33,8 +33,13 @@
       </div>
 
       <div>
-        <span>Total Programs</span>
+
+        <span>
+          {{ 'balances.metrics.totalPrograms' | translate }}
+        </span>
+
         <strong>{{ balances().length }}</strong>
+
       </div>
 
     </article>
@@ -46,10 +51,15 @@
       </div>
 
       <div>
-        <span>Total Miles</span>
+
+        <span>
+          {{ 'balances.metrics.totalMiles' | translate }}
+        </span>
+
         <strong>
           {{ balances().reduce((sum, b) => sum + b.balance, 0) | number:'1.0-0' }}
         </strong>
+
       </div>
 
     </article>
@@ -61,7 +71,11 @@
       </div>
 
       <div>
-        <span>Average Balance</span>
+
+        <span>
+          {{ 'balances.metrics.averageBalance' | translate }}
+        </span>
+
         <strong>
           {{
             balances().length
@@ -70,6 +84,7 @@
               | number:'1.0-0'
           }}
         </strong>
+
       </div>
 
     </article>
@@ -79,15 +94,23 @@
   <!-- Table -->
 
   <app-table
-    title="Balances"
-    subtitle="Programs"
+
+    [title]="'balances.table.title' | translate"
+    [subtitle]="'balances.table.subtitle' | translate"
+
     [loading]="loading()"
+
     [dataSource]="balances()"
+
     [length]="balances().length"
+
     [showPaginator]="false"
+
     emptyIcon="account_balance_wallet"
-    emptyTitle="No balances found"
-    emptyDescription="Your loyalty program balances will appear here.">
+
+    [emptyTitle]="'balances.table.emptyTitle' | translate"
+
+    [emptyDescription]="'balances.table.emptyDescription' | translate">
 
     <table
       mat-table
@@ -98,7 +121,9 @@
       <ng-container matColumnDef="program">
 
         <th mat-header-cell *matHeaderCellDef>
-          Program
+
+          {{ 'balances.table.columns.program' | translate }}
+
         </th>
 
         <td mat-cell *matCellDef="let balance">
@@ -116,7 +141,7 @@
               </strong>
 
               <span>
-                Loyalty Program
+                {{ 'balances.table.loyaltyProgram' | translate }}
               </span>
 
             </div>
@@ -132,7 +157,9 @@
       <ng-container matColumnDef="balance">
 
         <th mat-header-cell *matHeaderCellDef>
-          Balance
+
+          {{ 'balances.table.columns.balance' | translate }}
+
         </th>
 
         <td mat-cell *matCellDef="let balance">

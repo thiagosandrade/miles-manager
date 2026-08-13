@@ -1,19 +1,411 @@
 {
+  "auth": {
+    "welcome": "Welcome back",
+    "top-definition": "Sign in to continue managing your airline programs, miles and rewards.",
+    "email": "Email",
+    "emailRequired": "Email is required.",
+    "emailInvalid": "Invalid email",
+    "password": "Password",
+    "passwordRequired": "Password is required.",
+    "signin": "Sign In",
+    "logging": "Signing in...",
+    "footer": "Miles Manager",
+    "version": "Version 1.0"
+  },
   "common": {
     "ok": "OK",
     "cancel": "Cancel",
-    "close": "Close"
+    "close": "Close",
+    "create": "Create",
+    "update": "Update",
+    "delete": "Delete",
+    "save": "Save",
+    "search": "Search",
+    "yes": "Yes",
+    "no": "No",
+    "error": "Error",
+    "success": "Success",
+    "loading": "Loading...",
+    "active": "Active",
+    "inactive": "Inactive",
+    "email": "Email",
+    "status": "Status",
+    "created": "Created",
+    "updated": "Updated",
+    "date": "Date",
+    "actions": "Actions",
+    "name": "Name",
+    "description": "Description",
+    "profile": "Profile",
+    "language": "Language",
+    "logout": "Logout",
+    "settings": "Settings",
+    "all": "All",
+    "program": "Program",
+    "programs": "Programs",
+    "loyaltyProgram": "Loyalty Program",
+    "miles": "Miles",
+    "milesSent": "Miles Sent",
+    "milesReceived": "Miles Received",
+    "amount": "Amount",
+    "balance": "Balance",
+    "origin": "Origin",
+    "destination": "Destination",
+    "cabin": "Cabin",
+    "flightDate": "Flight Date",
+    "passengers": "Passengers",
+    "taxes": "Taxes",
+    "cashPrice": "Cash Price",
+    "price": "Price",
+    "referencePrice": "Reference Price",
+    "website": "Website",
+    "logoUrl": "Logo URL",
+    "programCode": "Program Code",
+    "fullName": "Full Name"
   },
   "toolbar": {
-    "title": "Mileage Management"
+    "title": "Miles Manager",
+    "menu": "Application Menu",
+    "profile": "Profile",
+    "language": "Language",
+    "logout": "Logout",
+    "currentLanguage": "Current language"
   },
   "sidebar": {
     "dashboard": "Dashboard",
+    "users": "Users",
     "programs": "Programs",
-    "balances": "Balances",
+    "programBalances": "Program Balances",
     "purchases": "Purchases",
     "transfers": "Transfers",
     "redemptions": "Redemptions",
     "settings": "Settings"
+  },
+  "dashboard": {
+    "eyebrow": "Overview",
+    "title": "Dashboard",
+    "subtitle": "Track mileage activity, value and recent movement across your loyalty programs.",
+    "metrics": {
+      "totalMiles": "Total Miles",
+      "investment": "Investment",
+      "costPerThousand": "Cost per 1,000 Miles",
+      "marketValue": "Market Value",
+      "profit": "Profit",
+      "loss": "Loss"
+    },
+    "cards": {
+      "recentPrograms": "Recent Programs",
+      "recentPurchases": "Recent Purchases",
+      "recentTransfers": "Recent Transfers",
+      "recentRedemptions": "Recent Redemptions"
+    },
+    "transfer": {
+      "to": "to"
+    }
+  },
+  "users": {
+    "page": {
+      "eyebrow": "Administration",
+      "title": "Users",
+      "subtitle": "Manage application users, invitations and access permissions.",
+      "newUser": "Create User"
+    },
+    "details": {
+      "eyebrow": "Administration",
+      "title": "User Details",
+      "subtitle": "Review account information and activity.",
+      "status": "Status",
+      "created": "Created",
+      "lastLogin": "Last Login",
+      "accountInformation": "Account Information",
+      "userId": "User ID"
+    },
+    "metrics": {
+      "totalUsers": "Total Users",
+      "activeUsers": "Active Users",
+      "inactiveUsers": "Inactive Users"
+    },
+    "table": {
+      "title": "Users",
+      "subtitle": "Directory",
+      "search": "Search Users",
+      "searchPlaceholder": "Search by name or email...",
+      "emptyTitle": "No users found",
+      "emptyDescription": "Create your first user to get started.",
+      "columns": {
+        "fullName": "Full Name",
+        "email": "Email",
+        "status": "Status",
+        "createdAt": "Created At",
+        "lastLoginAt": "Last Login",
+        "user": "User"
+      }
+    },
+    "dialog": {
+      "createTitle": "Create User",
+      "updateTitle": "Update User",
+      "subtitle": "Add a new Miles Manager user.",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "John Doe",
+      "email": "Email",
+      "emailPlaceholder": "john@email.com",
+      "password": "Password",
+      "passwordPlaceholder": "Password",
+      "createButton": "Create User",
+      "updateButton": "Update User"
+    },
+    "validation": {
+      "fullNameRequired": "Full name is required.",
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Invalid email.",
+      "passwordRequired": "Password is required."
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "actions": {
+      "create": "Create User",
+      "edit": "Edit User",
+      "delete": "Delete User"
+    },
+    "messages": {
+      "loadError": "Could not load users. Please try again later."
+    }
+  },
+  "programs": {
+    "page": {
+      "eyebrow": "Administration",
+      "title": "Programs",
+      "subtitle": "Manage airline and hotel loyalty programs.",
+      "newProgram": "New Program"
+    },
+    "metrics": {
+      "totalPrograms": "Total Programs",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "table": {
+      "title": "Programs",
+      "subtitle": "Directory",
+      "search": "Search Programs",
+      "searchPlaceholder": "Search by name...",
+      "emptyTitle": "No programs found",
+      "emptyDescription": "Create your first loyalty program.",
+      "loyaltyProgram": "Loyalty Program",
+      "columns": {
+        "program": "Program",
+        "status": "Status"
+      }
+    },
+    "dialog": {
+      "createTitle": "New Program",
+      "updateTitle": "Update Program",
+      "programCode": "Program Code",
+      "name": "Name",
+      "programType": "Program Type",
+      "website": "Website",
+      "logoUrl": "Logo URL",
+      "referencePrice": "Reference Price per 1,000 Miles",
+      "active": "Active",
+      "createButton": "Create Program",
+      "updateButton": "Update Program"
+    },
+    "types": {
+      "airline": "Airline",
+      "hotel": "Hotel",
+      "bank": "Bank",
+      "creditCard": "Credit Card"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "actions": {
+      "edit": "Edit program",
+      "delete": "Delete program"
+    },
+    "messages": {
+      "loadError": "Could not load programs. Please try again later."
+    }
+  },
+  "balances": {
+    "eyebrow": "Programs",
+    "title": "Program Balances",
+    "subtitle": "View balances across all your loyalty programs.",
+    "metrics": {
+      "totalPrograms": "Total Programs",
+      "totalMiles": "Total Miles",
+      "averageBalance": "Average Balance"
+    },
+    "table": {
+      "title": "Balances",
+      "subtitle": "Programs",
+      "emptyTitle": "No balances found",
+      "emptyDescription": "Your loyalty program balances will appear here.",
+      "loyaltyProgram": "Loyalty Program",
+      "columns": {
+        "program": "Program",
+        "balance": "Balance"
+      }
+    }
+  },
+  "purchases": {
+    "page": {
+      "eyebrow": "Transactions",
+      "title": "Purchases",
+      "subtitle": "View and manage mileage purchases.",
+      "newPurchase": "New Purchase"
+    },
+    "metrics": {
+      "totalPurchases": "Total Purchases",
+      "totalAmount": "Total Amount",
+      "averagePurchase": "Average Purchase"
+    },
+    "table": {
+      "title": "Purchases",
+      "subtitle": "History",
+      "search": "Search Purchases",
+      "searchPlaceholder": "Search purchases...",
+      "emptyTitle": "No purchases found",
+      "emptyDescription": "Create your first mileage purchase.",
+      "directPurchase": "Direct Purchase",
+      "columns": {
+        "program": "Program",
+        "amountPaid": "Amount Paid",
+        "milesPurchased": "Miles Purchased",
+        "bonus": "Bonus",
+        "purchaseDate": "Purchase Date",
+        "status": "Status"
+      }
+    },
+    "dialog": {
+      "createTitle": "New Purchase",
+      "updateTitle": "Update Purchase",
+      "program": "Program",
+      "partner": "Partner",
+      "description": "Description",
+      "amountPaid": "Amount Paid",
+      "milesPurchased": "Miles Purchased",
+      "bonus": "Bonus",
+      "purchaseDate": "Purchase Date",
+      "status": "Status",
+      "createButton": "Create Purchase",
+      "updateButton": "Update Purchase"
+    },
+    "actions": {
+      "edit": "Edit purchase",
+      "delete": "Delete purchase"
+    },
+    "messages": {
+      "loadError": "Could not load purchases. Please try again later."
+    }
+  },
+  "transfers": {
+    "page": {
+      "eyebrow": "Loyalty",
+      "title": "Transfers",
+      "subtitle": "Manage mileage transfers between loyalty programs.",
+      "newTransfer": "New Transfer"
+    },
+    "metrics": {
+      "totalTransfers": "Total Transfers",
+      "totalMilesSent": "Total Miles Sent",
+      "programs": "Programs"
+    },
+    "table": {
+      "title": "Transfers",
+      "subtitle": "History",
+      "search": "Search Transfers",
+      "searchPlaceholder": "Search transfers...",
+      "emptyTitle": "No transfers found",
+      "emptyDescription": "Create your first mileage transfer.",
+      "sourceProgram": "Source Program",
+      "columns": {
+        "origin": "Origin",
+        "destination": "Destination",
+        "milesSent": "Miles Sent",
+        "bonusPercentage": "Bonus Percentage",
+        "milesReceived": "Miles Received",
+        "transferDate": "Transfer Date"
+      }
+    },
+    "dialog": {
+      "createTitle": "New Transfer",
+      "updateTitle": "Update Transfer",
+      "originProgram": "Origin Program",
+      "destinationProgram": "Destination Program",
+      "milesSent": "Miles Sent",
+      "bonusPercentage": "Bonus Percentage",
+      "milesReceived": "Miles Received",
+      "transferDate": "Transfer Date",
+      "costPerThousandOrigin": "Cost Per Thousand (Origin)",
+      "costPerThousandDestination": "Cost Per Thousand (Destination)"
+    },
+    "actions": {
+      "edit": "Edit transfer",
+      "delete": "Delete transfer"
+    },
+    "messages": {
+      "loadError": "Could not load transfers. Please try again later."
+    }
+  },
+  "redemptions": {
+    "page": {
+      "eyebrow": "Rewards",
+      "title": "Redemptions",
+      "subtitle": "View and manage mileage redemptions.",
+      "newRedemption": "New Redemption"
+    },
+    "metrics": {
+      "totalRedemptions": "Total Redemptions"
+    },
+    "table": {
+      "title": "Redemptions",
+      "subtitle": "History",
+      "emptyTitle": "No redemptions found",
+      "emptyDescription": "Create your first redemption.",
+      "columns": {
+        "program": "Program",
+        "origin": "Origin",
+        "destination": "Destination",
+        "flightDate": "Flight Date",
+        "cabin": "Cabin",
+        "passengers": "Passengers",
+        "milesUsed": "Miles Used",
+        "taxes": "Taxes",
+        "cashPrice": "Cash Price",
+        "effectiveCostPerThousand": "Cost / 1,000 Miles"
+      }
+    },
+    "cabin": {
+      "economy": "Economy",
+      "premiumEconomy": "Premium Economy",
+      "business": "Business",
+      "first": "First"
+    },
+    "dialog": {
+      "createTitle": "New Redemption",
+      "updateTitle": "Update Redemption",
+      "program": "Program",
+      "originAirport": "Origin Airport",
+      "destinationAirport": "Destination Airport",
+      "flightDate": "Flight Date",
+      "cabinClass": "Cabin Class",
+      "passengers": "Passengers",
+      "milesUsed": "Miles Used",
+      "taxes": "Taxes",
+      "cashPrice": "Cash Price",
+      "effectiveCostPerThousand": "Cost / 1,000 Miles",
+      "createButton": "Create Redemption",
+      "updateButton": "Update Redemption"
+    },
+    "actions": {
+      "edit": "Edit redemption",
+      "delete": "Delete redemption"
+    },
+    "messages": {
+      "loadError": "Could not load redemptions. Please try again later."
+    }
   }
 }

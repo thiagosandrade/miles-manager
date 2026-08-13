@@ -16,6 +16,7 @@ import { UserApiService } from './user-api.service';
 import { UserSummary, CreateUserRequest } from './models/user.models';
 import { CreateUserDialogComponent } from './create-user-dialog.component';
 import { SnackbarService } from '../../core/services/snackbar.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-management',
@@ -27,7 +28,8 @@ import { SnackbarService } from '../../core/services/snackbar.service';
     MatButtonModule,
     MatDialogModule,
     MatSnackBarModule,
-    AppTableComponent
+    AppTableComponent,
+    TranslatePipe
   ],
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css']

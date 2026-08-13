@@ -9,13 +9,23 @@ import { UserApiService } from '../../features/user/user-api.service';
 import { MatDivider } from "@angular/material/divider";
 import { AuthApiService } from '../../features/auth/auth-api.service';
 import { TokenStorageService } from '../../core/services/token-storage.service';
+import { LanguageService } from '../../core/services/language.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css'],
-  imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, MatMenuModule, MatDivider]
+  imports: [
+    CommonModule, 
+    MatToolbarModule, 
+    MatButtonModule, 
+    MatIconModule, 
+    MatMenuModule, 
+    MatDivider,
+    TranslatePipe
+  ]
 })
 
 export class ToolbarComponent {
@@ -23,6 +33,16 @@ export class ToolbarComponent {
   private authApi = inject(AuthApiService);
   private tokenStorage = inject(TokenStorageService);
   private router = inject(Router);
+  languageService = inject(LanguageService);
+
+  languages = [
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'pt-BR', name: 'Português (Brasil)', flag: '🇧🇷' },
+    { code: 'pt-PT', name: 'Português', flag: '🇵🇹' },
+    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'de', name: 'Deutsch', flag: '🇩🇪' }
+  ];
 
   userName = signal('');
   userEmail = signal('');
@@ -76,18 +96,17 @@ export class ToolbarComponent {
     }
   }
 
-  switchTheme(): void {
+  get currentLanguage(): string {
+    return this.languageService.currentLanguage;
+  }
 
-    const html = document.documentElement;
+  get currentLanguageName(): string {
+    return this.languages.find(x => x.code === this.currentLanguage)?.name ?? 'English';
+  }
 
-    html.classList.toggle('dark-theme');
+  changeLanguage(language: string): void {
 
-    localStorage.setItem(
-      'theme',
-      html.classList.contains('dark-theme')
-        ? 'dark'
-        : 'light'
-    );
+      this.languageService.changeLanguage(language);
 
   }
 }

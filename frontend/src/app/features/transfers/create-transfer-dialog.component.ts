@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ProgramsApiService } from '../programs/programs-api.service';
 import { Program } from '../programs/models/program.model';
 import { TransfersApiService } from './transfers-api.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface TransferDialogData {
   operation: 'create' | 'update';
@@ -42,7 +43,8 @@ interface TransferDialogData {
     MatSelectModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    TranslatePipe
   ]
 })
 export class CreateTransferDialogComponent implements OnInit {

@@ -19,6 +19,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ProgramsApiService } from './programs-api.service';
 import { ProgramCreateRequest, ProgramUpdateRequest } from './models/program.model';
 import { MatSelectModule } from "@angular/material/select";
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface ProgramDialogData {
   operation: 'create' | 'update';
@@ -36,7 +37,8 @@ interface ProgramDialogData {
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    TranslatePipe
 ],
   templateUrl: './create-program-dialog.component.html',
   styleUrls: ['./create-program-dialog.component.scss']

@@ -1,5 +1,9 @@
 <h2 mat-dialog-title>
-  {{ data.operation === 'create' ? 'New Program' : 'Update Program' }}
+  {{
+    data.operation === 'create'
+      ? ('programs.dialog.createTitle' | translate)
+      : ('programs.dialog.updateTitle' | translate)
+  }}
 </h2>
 
 <form
@@ -10,7 +14,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Program Code</mat-label>
+      <mat-label>
+        {{ 'programs.dialog.programCode' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -20,7 +26,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Name</mat-label>
+      <mat-label>
+        {{ 'programs.dialog.name' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -30,24 +38,26 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Program Type</mat-label>
+      <mat-label>
+        {{ 'programs.dialog.programType' | translate }}
+      </mat-label>
 
       <mat-select formControlName="programType">
 
         <mat-option [value]="0">
-          Airline
+          {{ 'programs.types.airline' | translate }}
         </mat-option>
 
         <mat-option [value]="1">
-          Hotel
+          {{ 'programs.types.hotel' | translate }}
         </mat-option>
 
         <mat-option [value]="2">
-          Bank
+          {{ 'programs.types.bank' | translate }}
         </mat-option>
 
         <mat-option [value]="3">
-          Credit Card
+          {{ 'programs.types.creditCard' | translate }}
         </mat-option>
 
       </mat-select>
@@ -56,7 +66,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Website</mat-label>
+      <mat-label>
+        {{ 'programs.dialog.website' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -66,7 +78,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Logo URL</mat-label>
+      <mat-label>
+        {{ 'programs.dialog.logoUrl' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -76,7 +90,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Reference Price per 1,000 Miles</mat-label>
+      <mat-label>
+        {{ 'programs.dialog.referencePrice' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -87,7 +103,7 @@
 
     <mat-checkbox formControlName="isActive">
 
-      Active
+      {{ 'programs.dialog.active' | translate }}
 
     </mat-checkbox>
 
@@ -100,7 +116,7 @@
       type="button"
       (click)="close()">
 
-      Cancel
+      {{ 'common.cancel' | translate }}
 
     </button>
 
@@ -110,7 +126,11 @@
       type="submit"
       [disabled]="form.invalid || loading">
 
-      {{ data.operation === 'create' ? 'Create' : 'Update' }}
+      {{
+        data.operation === 'create'
+          ? ('common.create' | translate)
+          : ('common.update' | translate)
+      }}
 
     </button>
 

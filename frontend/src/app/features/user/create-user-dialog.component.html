@@ -10,10 +10,12 @@
 
     <div>
 
-      <h2>Create User</h2>
+      <h2>
+        {{ 'users.dialog.createTitle' | translate }}
+      </h2>
 
       <p>
-        Add a new Miles Manager user.
+        {{ 'users.dialog.subtitle' | translate }}
       </p>
 
     </div>
@@ -32,17 +34,21 @@
       appearance="outline"
       class="full-width">
 
-      <mat-label>Full Name</mat-label>
+      <mat-label>
+        {{ 'users.dialog.fullName' | translate }}
+      </mat-label>
 
       <mat-icon matPrefix>badge</mat-icon>
 
       <input
         matInput
         formControlName="fullName"
-        placeholder="John Doe">
+        [placeholder]="'users.dialog.fullNamePlaceholder' | translate">
 
       <mat-error *ngIf="form.get('fullName')?.hasError('required')">
-        Full name is required
+
+        {{ 'users.validation.fullNameRequired' | translate }}
+
       </mat-error>
 
     </mat-form-field>
@@ -51,21 +57,27 @@
       appearance="outline"
       class="full-width">
 
-      <mat-label>Email</mat-label>
+      <mat-label>
+        {{ 'users.dialog.email' | translate }}
+      </mat-label>
 
       <mat-icon matPrefix>mail</mat-icon>
 
       <input
         matInput
         formControlName="email"
-        placeholder="john@email.com">
+        [placeholder]="'users.dialog.emailPlaceholder' | translate">
 
       <mat-error *ngIf="form.get('email')?.hasError('required')">
-        Email is required
+
+        {{ 'users.validation.emailRequired' | translate }}
+
       </mat-error>
 
       <mat-error *ngIf="form.get('email')?.hasError('email')">
-        Invalid email
+
+        {{ 'users.validation.emailInvalid' | translate }}
+
       </mat-error>
 
     </mat-form-field>
@@ -74,7 +86,9 @@
       appearance="outline"
       class="full-width">
 
-      <mat-label>Password</mat-label>
+      <mat-label>
+        {{ 'users.dialog.password' | translate }}
+      </mat-label>
 
       <mat-icon matPrefix>lock</mat-icon>
 
@@ -82,10 +96,12 @@
         matInput
         type="password"
         formControlName="password"
-        placeholder="Password">
+        [placeholder]="'users.dialog.passwordPlaceholder' | translate">
 
       <mat-error *ngIf="form.get('password')?.hasError('required')">
-        Password is required
+
+        {{ 'users.validation.passwordRequired' | translate }}
+
       </mat-error>
 
     </mat-form-field>
@@ -99,7 +115,7 @@
       type="button"
       (click)="onCancel()">
 
-      Cancel
+      {{ 'common.cancel' | translate }}
 
     </button>
 
@@ -111,7 +127,7 @@
 
       <mat-icon>check</mat-icon>
 
-      Create User
+      {{ 'users.dialog.createButton' | translate }}
 
     </button>
 

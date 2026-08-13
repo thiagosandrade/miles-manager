@@ -12,6 +12,7 @@ import { Program } from './models/program.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateProgramDialogComponent } from './create-program-dialog.component';
 import { SnackbarService } from '../../core/services/snackbar.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-programs-page',
@@ -21,7 +22,8 @@ import { SnackbarService } from '../../core/services/snackbar.service';
     MatIconModule,
     MatInputModule,
     MatTableModule,
-    AppTableComponent
+    AppTableComponent,
+    TranslatePipe
   ],
   templateUrl: './programs-page.component.html',
   styleUrls: ['./programs-page.component.scss']

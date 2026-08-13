@@ -7,15 +7,15 @@
     <div>
 
       <p class="eyebrow">
-        Administration
+        {{ 'programs.page.eyebrow' | translate }}
       </p>
 
       <h1>
-        Programs
+        {{ 'programs.page.title' | translate }}
       </h1>
 
       <p class="subtitle">
-        Manage airline and hotel loyalty programs.
+        {{ 'programs.page.subtitle' | translate }}
       </p>
 
     </div>
@@ -26,7 +26,9 @@
 
       <mat-icon>add</mat-icon>
 
-      <span>New Program</span>
+      <span>
+        {{ 'programs.page.newProgram' | translate }}
+      </span>
 
     </button>
 
@@ -46,7 +48,9 @@
 
       <div>
 
-        <span>Total Programs</span>
+        <span>
+          {{ 'programs.metrics.totalPrograms' | translate }}
+        </span>
 
         <strong>{{ data().length }}</strong>
 
@@ -64,7 +68,9 @@
 
       <div>
 
-        <span>Active</span>
+        <span>
+          {{ 'programs.metrics.active' | translate }}
+        </span>
 
         <strong>{{ data().filter(p => p.isActive).length }}</strong>
 
@@ -82,7 +88,9 @@
 
       <div>
 
-        <span>Inactive</span>
+        <span>
+          {{ 'programs.metrics.inactive' | translate }}
+        </span>
 
         <strong>{{ data().filter(p => !p.isActive).length }}</strong>
 
@@ -96,8 +104,8 @@
 
   <app-table
 
-    title="Programs"
-    subtitle="Directory"
+    [title]="'programs.table.title' | translate"
+    [subtitle]="'programs.table.subtitle' | translate"
 
     [loading]="loading()"
 
@@ -111,9 +119,9 @@
 
     emptyIcon="flight"
 
-    emptyTitle="No programs found"
+    [emptyTitle]="'programs.table.emptyTitle' | translate"
 
-    emptyDescription="Create your first loyalty program.">
+    [emptyDescription]="'programs.table.emptyDescription' | translate">
 
     <!-- Toolbar -->
 
@@ -123,13 +131,15 @@
         appearance="outline"
         class="search-field">
 
-        <mat-label>Search Programs</mat-label>
+        <mat-label>
+          {{ 'programs.table.search' | translate }}
+        </mat-label>
 
         <mat-icon matPrefix>search</mat-icon>
 
         <input
           matInput
-          placeholder="Search by name..."
+          [placeholder]="'programs.table.searchPlaceholder' | translate"
           (input)="applyFilter($any($event.target).value)">
 
       </mat-form-field>
@@ -145,7 +155,9 @@
 
       <mat-icon>add</mat-icon>
 
-      <span>New Program</span>
+      <span>
+        {{ 'programs.page.newProgram' | translate }}
+      </span>
 
     </button>
 
@@ -161,7 +173,7 @@
 
         <th mat-header-cell *matHeaderCellDef>
 
-          Program
+          {{ 'programs.table.columns.program' | translate }}
 
         </th>
 
@@ -185,7 +197,7 @@
 
               <span>
 
-                Loyalty Program
+                {{ 'programs.table.loyaltyProgram' | translate }}
 
               </span>
 
@@ -203,7 +215,7 @@
 
         <th mat-header-cell *matHeaderCellDef>
 
-          Status
+          {{ 'programs.table.columns.status' | translate }}
 
         </th>
 
@@ -215,7 +227,11 @@
 
             <span class="status-dot"></span>
 
-            {{ program.isActive ? 'Active' : 'Inactive' }}
+            {{
+              program.isActive
+                ? ('programs.status.active' | translate)
+                : ('programs.status.inactive' | translate)
+            }}
 
           </span>
 
@@ -241,7 +257,7 @@
 
           <button
             class="icon-button"
-            aria-label="Edit program"
+            [attr.aria-label]="'programs.actions.edit' | translate"
             (click)="openUpdateDialog(program)">
 
             <mat-icon>edit</mat-icon>
@@ -250,7 +266,7 @@
 
           <button
             class="icon-button danger"
-            aria-label="Delete program"
+            [attr.aria-label]="'programs.actions.delete' | translate"
             (click)="deleteProgram(program)">
 
             <mat-icon>delete</mat-icon>
@@ -281,11 +297,13 @@
     class="feedback"
     *ngIf="isRateLimitReached()">
 
-    <strong>Error</strong>
+    <strong>
+      {{ 'common.error' | translate }}
+    </strong>
 
     <span>
 
-      Could not load programs. Please try again later.
+      {{ 'programs.messages.loadError' | translate }}
 
     </span>
 

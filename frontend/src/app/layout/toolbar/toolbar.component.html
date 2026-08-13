@@ -6,7 +6,7 @@
 
     <img
       src="assets/logo-icon.png"
-      alt="Miles Manager"
+      [attr.alt]="'toolbar.title' | translate"
       class="logo">
 
   </div>
@@ -17,7 +17,7 @@
     mat-icon-button
     class="menu-button"
     [matMenuTriggerFor]="menu"
-    aria-label="Application Menu">
+    [attr.aria-label]="'toolbar.menu' | translate">
 
     <mat-icon>menu</mat-icon>
 
@@ -64,39 +64,66 @@
 
     <mat-icon>person</mat-icon>
 
-    <span>Profile</span>
+    <span>
 
-  </button>
+      {{ 'toolbar.profile' | translate }}
 
-  <button mat-menu-item>
-
-    <mat-icon>language</mat-icon>
-
-    <span>Language</span>
-
-    <span class="menu-spacer"></span>
-
-    <mat-icon class="chevron">
-      chevron_right
-    </mat-icon>
+    </span>
 
   </button>
 
   <button
     mat-menu-item
-    (click)="switchTheme()">
+    [matMenuTriggerFor]="languageMenu">
 
-    <mat-icon>dark_mode</mat-icon>
+    <mat-icon>language</mat-icon>
 
-    <span>Theme</span>
+    <span>
+
+      {{ 'toolbar.language' | translate }}
+
+    </span>
 
     <span class="menu-spacer"></span>
 
-    <mat-icon class="chevron">
-      chevron_right
-    </mat-icon>
+    <span class="current-language">
+
+      {{ currentLanguageName }}
+
+    </span>
 
   </button>
+
+  <mat-menu #languageMenu="matMenu">
+
+    <button
+      mat-menu-item
+      *ngFor="let language of languages"
+      (click)="changeLanguage(language.code)">
+
+      <span class="flag">
+
+        {{ language.flag }}
+
+      </span>
+
+      <span>
+
+        {{ language.name }}
+
+      </span>
+
+      <span class="menu-spacer"></span>
+
+      <mat-icon *ngIf="currentLanguage === language.code">
+
+        check
+
+      </mat-icon>
+
+    </button>
+
+  </mat-menu>
 
   <mat-divider></mat-divider>
 
@@ -107,7 +134,11 @@
 
     <mat-icon>logout</mat-icon>
 
-    <span>Logout</span>
+    <span>
+
+      {{ 'toolbar.logout' | translate }}
+
+    </span>
 
   </button>
 

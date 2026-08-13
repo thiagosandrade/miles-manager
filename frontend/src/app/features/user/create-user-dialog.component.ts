@@ -5,13 +5,21 @@ import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from "@angular/material/icon";
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
   selector: 'app-create-user-dialog',
   templateUrl: './create-user-dialog.component.html',
   styleUrls: ['./create-user-dialog.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, MatDialogModule, MatInputModule, MatButtonModule, MatIconModule],
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    MatDialogModule, 
+    MatInputModule, 
+    MatButtonModule, 
+    MatIconModule,
+    TranslatePipe],
 })
 export class CreateUserDialogComponent {
   private fb = inject(FormBuilder);

@@ -1,19 +1,411 @@
 {
+  "auth": {
+    "welcome": "Bem-vindo novamente",
+    "top-definition": "Inicie sessão para continuar a gerir os seus programas, milhas e recompensas.",
+    "email": "E-mail",
+    "emailRequired": "O e-mail é obrigatório.",
+    "emailInvalid": "E-mail inválido",
+    "password": "Palavra-passe",
+    "passwordRequired": "A palavra-passe é obrigatória.",
+    "signin": "Iniciar sessão",
+    "logging": "A iniciar sessão...",
+    "footer": "Miles Manager",
+    "version": "Versão 1.0"
+  },
   "common": {
     "ok": "OK",
     "cancel": "Cancelar",
-    "close": "Fechar"
+    "close": "Fechar",
+    "create": "Criar",
+    "update": "Atualizar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "search": "Pesquisar",
+    "yes": "Sim",
+    "no": "Não",
+    "error": "Erro",
+    "success": "Sucesso",
+    "loading": "A carregar...",
+    "active": "Ativo",
+    "inactive": "Inativo",
+    "email": "E-mail",
+    "status": "Estado",
+    "created": "Criado",
+    "updated": "Atualizado",
+    "date": "Data",
+    "actions": "Ações",
+    "name": "Nome",
+    "description": "Descrição",
+    "profile": "Perfil",
+    "language": "Idioma",
+    "logout": "Terminar sessão",
+    "settings": "Definições",
+    "all": "Todos",
+    "program": "Programa",
+    "programs": "Programas",
+    "loyaltyProgram": "Programa de Fidelidade",
+    "miles": "Milhas",
+    "milesSent": "Milhas enviadas",
+    "milesReceived": "Milhas recebidas",
+    "amount": "Montante",
+    "balance": "Saldo",
+    "origin": "Origem",
+    "destination": "Destino",
+    "cabin": "Classe",
+    "flightDate": "Data do voo",
+    "passengers": "Passageiros",
+    "taxes": "Taxas",
+    "cashPrice": "Preço em dinheiro",
+    "price": "Preço",
+    "referencePrice": "Preço de referência",
+    "website": "Website",
+    "logoUrl": "URL do logótipo",
+    "programCode": "Código do programa",
+    "fullName": "Nome completo"
   },
   "toolbar": {
-    "title": "Gestão de Quilometragem"
+    "title": "Miles Manager",
+    "menu": "Menu da aplicação",
+    "profile": "Perfil",
+    "language": "Idioma",
+    "logout": "Terminar sessão",
+    "currentLanguage": "Idioma atual"
   },
   "sidebar": {
     "dashboard": "Painel",
+    "users": "Utilizadores",
     "programs": "Programas",
-    "balances": "Saldos",
+    "programBalances": "Saldos de Programas",
     "purchases": "Compras",
     "transfers": "Transferências",
     "redemptions": "Resgates",
-    "settings": "Configurações"
+    "settings": "Definições"
+  },
+  "dashboard": {
+    "eyebrow": "Visão geral",
+    "title": "Painel",
+    "subtitle": "Acompanhe a atividade, o valor e os movimentos recentes dos seus programas de fidelidade.",
+    "metrics": {
+      "totalMiles": "Milhas totais",
+      "investment": "Investimento",
+      "costPerThousand": "Custo por 1.000 milhas",
+      "marketValue": "Valor de mercado",
+      "profit": "Lucro",
+      "loss": "Perda"
+    },
+    "cards": {
+      "recentPrograms": "Programas recentes",
+      "recentPurchases": "Compras recentes",
+      "recentTransfers": "Transferências recentes",
+      "recentRedemptions": "Resgates recentes"
+    },
+    "transfer": {
+      "to": "para"
+    }
+  },
+  "users": {
+    "page": {
+      "eyebrow": "Administração",
+      "title": "Utilizadores",
+      "subtitle": "Gira utilizadores da aplicação, convites e permissões de acesso.",
+      "newUser": "Criar utilizador"
+    },
+    "details": {
+      "eyebrow": "Administração",
+      "title": "Detalhes do utilizador",
+      "subtitle": "Revise as informações da conta e a atividade.",
+      "status": "Estado",
+      "created": "Criado",
+      "lastLogin": "Último início de sessão",
+      "accountInformation": "Informações da conta",
+      "userId": "ID do utilizador"
+    },
+    "metrics": {
+      "totalUsers": "Total de utilizadores",
+      "activeUsers": "Utilizadores ativos",
+      "inactiveUsers": "Utilizadores inativos"
+    },
+    "table": {
+      "title": "Utilizadores",
+      "subtitle": "Diretório",
+      "search": "Pesquisar utilizadores",
+      "searchPlaceholder": "Pesquisar por nome ou e-mail...",
+      "emptyTitle": "Nenhum utilizador encontrado",
+      "emptyDescription": "Crie o seu primeiro utilizador para começar.",
+      "columns": {
+        "fullName": "Nome completo",
+        "email": "E-mail",
+        "status": "Estado",
+        "createdAt": "Criado em",
+        "lastLoginAt": "Último início de sessão",
+        "user": "Utilizador"
+      }
+    },
+    "dialog": {
+      "createTitle": "Criar utilizador",
+      "updateTitle": "Atualizar utilizador",
+      "subtitle": "Adicione um novo utilizador do Miles Manager.",
+      "fullName": "Nome completo",
+      "fullNamePlaceholder": "João Silva",
+      "email": "E-mail",
+      "emailPlaceholder": "joao@email.com",
+      "password": "Palavra-passe",
+      "passwordPlaceholder": "Palavra-passe",
+      "createButton": "Criar utilizador",
+      "updateButton": "Atualizar utilizador"
+    },
+    "validation": {
+      "fullNameRequired": "O nome completo é obrigatório.",
+      "emailRequired": "O e-mail é obrigatório.",
+      "emailInvalid": "E-mail inválido.",
+      "passwordRequired": "A palavra-passe é obrigatória."
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "actions": {
+      "create": "Criar utilizador",
+      "edit": "Editar utilizador",
+      "delete": "Eliminar utilizador"
+    },
+    "messages": {
+      "loadError": "Não foi possível carregar os utilizadores. Tente novamente mais tarde."
+    }
+  },
+  "programs": {
+    "page": {
+      "eyebrow": "Administração",
+      "title": "Programas",
+      "subtitle": "Gira programas de fidelidade de companhias aéreas e hotéis.",
+      "newProgram": "Novo programa"
+    },
+    "metrics": {
+      "totalPrograms": "Total de programas",
+      "active": "Ativos",
+      "inactive": "Inativos"
+    },
+    "table": {
+      "title": "Programas",
+      "subtitle": "Diretório",
+      "search": "Pesquisar programas",
+      "searchPlaceholder": "Pesquisar por nome...",
+      "emptyTitle": "Nenhum programa encontrado",
+      "emptyDescription": "Crie o seu primeiro programa de fidelidade.",
+      "loyaltyProgram": "Programa de Fidelidade",
+      "columns": {
+        "program": "Programa",
+        "status": "Estado"
+      }
+    },
+    "dialog": {
+      "createTitle": "Novo programa",
+      "updateTitle": "Atualizar programa",
+      "programCode": "Código do programa",
+      "name": "Nome",
+      "programType": "Tipo de programa",
+      "website": "Website",
+      "logoUrl": "URL do logótipo",
+      "referencePrice": "Preço de referência por 1.000 milhas",
+      "active": "Ativo",
+      "createButton": "Criar programa",
+      "updateButton": "Atualizar programa"
+    },
+    "types": {
+      "airline": "Companhia aérea",
+      "hotel": "Hotel",
+      "bank": "Banco",
+      "creditCard": "Cartão de crédito"
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "actions": {
+      "edit": "Editar programa",
+      "delete": "Eliminar programa"
+    },
+    "messages": {
+      "loadError": "Não foi possível carregar os programas. Tente novamente mais tarde."
+    }
+  },
+  "balances": {
+    "eyebrow": "Programas",
+    "title": "Saldos de Programas",
+    "subtitle": "Veja os saldos de todos os seus programas de fidelidade.",
+    "metrics": {
+      "totalPrograms": "Total de programas",
+      "totalMiles": "Milhas totais",
+      "averageBalance": "Saldo médio"
+    },
+    "table": {
+      "title": "Saldos",
+      "subtitle": "Programas",
+      "emptyTitle": "Nenhum saldo encontrado",
+      "emptyDescription": "Os saldos dos seus programas de fidelidade aparecerão aqui.",
+      "loyaltyProgram": "Programa de Fidelidade",
+      "columns": {
+        "program": "Programa",
+        "balance": "Saldo"
+      }
+    }
+  },
+  "purchases": {
+    "page": {
+      "eyebrow": "Transações",
+      "title": "Compras",
+      "subtitle": "Veja e gira compras de milhas.",
+      "newPurchase": "Nova compra"
+    },
+    "metrics": {
+      "totalPurchases": "Total de compras",
+      "totalAmount": "Montante total",
+      "averagePurchase": "Compra média"
+    },
+    "table": {
+      "title": "Compras",
+      "subtitle": "Histórico",
+      "search": "Pesquisar compras",
+      "searchPlaceholder": "Pesquisar compras...",
+      "emptyTitle": "Nenhuma compra encontrada",
+      "emptyDescription": "Crie a sua primeira compra de milhas.",
+      "directPurchase": "Compra direta",
+      "columns": {
+        "program": "Programa",
+        "amountPaid": "Montante pago",
+        "milesPurchased": "Milhas compradas",
+        "bonus": "Bónus",
+        "purchaseDate": "Data da compra",
+        "status": "Estado"
+      }
+    },
+    "dialog": {
+      "createTitle": "Nova compra",
+      "updateTitle": "Atualizar compra",
+      "program": "Programa",
+      "partner": "Parceiro",
+      "description": "Descrição",
+      "amountPaid": "Montante pago",
+      "milesPurchased": "Milhas compradas",
+      "bonus": "Bónus",
+      "purchaseDate": "Data da compra",
+      "status": "Estado",
+      "createButton": "Criar compra",
+      "updateButton": "Atualizar compra"
+    },
+    "actions": {
+      "edit": "Editar compra",
+      "delete": "Eliminar compra"
+    },
+    "messages": {
+      "loadError": "Não foi possível carregar as compras. Tente novamente mais tarde."
+    }
+  },
+  "transfers": {
+    "page": {
+      "eyebrow": "Fidelidade",
+      "title": "Transferências",
+      "subtitle": "Gira transferências de milhas entre programas de fidelidade.",
+      "newTransfer": "Nova transferência"
+    },
+    "metrics": {
+      "totalTransfers": "Total de transferências",
+      "totalMilesSent": "Total de milhas enviadas",
+      "programs": "Programas"
+    },
+    "table": {
+      "title": "Transferências",
+      "subtitle": "Histórico",
+      "search": "Pesquisar transferências",
+      "searchPlaceholder": "Pesquisar transferências...",
+      "emptyTitle": "Nenhuma transferência encontrada",
+      "emptyDescription": "Crie a sua primeira transferência de milhas.",
+      "sourceProgram": "Programa de origem",
+      "columns": {
+        "origin": "Origem",
+        "destination": "Destino",
+        "milesSent": "Milhas enviadas",
+        "bonusPercentage": "Percentagem de bónus",
+        "milesReceived": "Milhas recebidas",
+        "transferDate": "Data da transferência"
+      }
+    },
+    "dialog": {
+      "createTitle": "Nova transferência",
+      "updateTitle": "Atualizar transferência",
+      "originProgram": "Programa de origem",
+      "destinationProgram": "Programa de destino",
+      "milesSent": "Milhas enviadas",
+      "bonusPercentage": "Percentagem de bónus",
+      "milesReceived": "Milhas recebidas",
+      "transferDate": "Data da transferência",
+      "costPerThousandOrigin": "Custo por mil (origem)",
+      "costPerThousandDestination": "Custo por mil (destino)"
+    },
+    "actions": {
+      "edit": "Editar transferência",
+      "delete": "Eliminar transferência"
+    },
+    "messages": {
+      "loadError": "Não foi possível carregar as transferências. Tente novamente mais tarde."
+    }
+  },
+  "redemptions": {
+    "page": {
+      "eyebrow": "Recompensas",
+      "title": "Resgates",
+      "subtitle": "Veja e gira resgates de milhas.",
+      "newRedemption": "Novo resgate"
+    },
+    "metrics": {
+      "totalRedemptions": "Total de resgates"
+    },
+    "table": {
+      "title": "Resgates",
+      "subtitle": "Histórico",
+      "emptyTitle": "Nenhum resgate encontrado",
+      "emptyDescription": "Crie o seu primeiro resgate.",
+      "columns": {
+        "program": "Programa",
+        "origin": "Origem",
+        "destination": "Destino",
+        "flightDate": "Data do voo",
+        "cabin": "Classe",
+        "passengers": "Passageiros",
+        "milesUsed": "Milhas usadas",
+        "taxes": "Taxas",
+        "cashPrice": "Preço em dinheiro",
+        "effectiveCostPerThousand": "Custo / 1.000 milhas"
+      }
+    },
+    "cabin": {
+      "economy": "Económica",
+      "premiumEconomy": "Económica premium",
+      "business": "Executiva",
+      "first": "Primeira"
+    },
+    "dialog": {
+      "createTitle": "Novo resgate",
+      "updateTitle": "Atualizar resgate",
+      "program": "Programa",
+      "originAirport": "Aeroporto de origem",
+      "destinationAirport": "Aeroporto de destino",
+      "flightDate": "Data do voo",
+      "cabinClass": "Classe da cabine",
+      "passengers": "Passageiros",
+      "milesUsed": "Milhas usadas",
+      "taxes": "Taxas",
+      "cashPrice": "Preço em dinheiro",
+      "effectiveCostPerThousand": "Custo / 1.000 milhas",
+      "createButton": "Criar resgate",
+      "updateButton": "Atualizar resgate"
+    },
+    "actions": {
+      "edit": "Editar resgate",
+      "delete": "Eliminar resgate"
+    },
+    "messages": {
+      "loadError": "Não foi possível carregar os resgates. Tente novamente mais tarde."
+    }
   }
 }

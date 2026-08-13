@@ -15,6 +15,7 @@
   import { TokenStorageService } from '../../core/services/token-storage.service';
   import { PurchaseStatus } from '../../core/enums/purchase-status.enum';
 import { SnackbarService } from '../../core/services/snackbar.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
   @Component({
     selector: 'app-purchases-page',
@@ -25,7 +26,8 @@ import { SnackbarService } from '../../core/services/snackbar.service';
       MatInputModule,
       MatFormFieldModule,
       MatTableModule,
-      AppTableComponent
+      AppTableComponent,
+      TranslatePipe
     ],
     templateUrl: './purchases-page.component.html',
     styleUrls: ['./purchases-page.component.scss']

@@ -1,5 +1,9 @@
 <h2 mat-dialog-title>
-    {{ data.operation === 'create' ? 'New Redemption' : 'Update Redemption' }}
+  {{
+    data.operation === 'create'
+      ? ('redemptions.dialog.createTitle' | translate)
+      : ('redemptions.dialog.updateTitle' | translate)
+  }}
 </h2>
 
 <mat-dialog-content>
@@ -12,7 +16,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Program</mat-label>
+      <mat-label>
+        {{ 'redemptions.dialog.program' | translate }}
+      </mat-label>
 
       <mat-select formControlName="programId">
 
@@ -32,7 +38,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Origin Airport</mat-label>
+      <mat-label>
+        {{ 'redemptions.dialog.originAirport' | translate }}
+      </mat-label>
 
       <mat-select formControlName="originAirportCode">
 
@@ -52,7 +60,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Destination Airport</mat-label>
+      <mat-label>
+        {{ 'redemptions.dialog.destinationAirport' | translate }}
+      </mat-label>
 
       <mat-select formControlName="destinationAirportCode">
 
@@ -72,7 +82,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Flight Date</mat-label>
+      <mat-label>
+        {{ 'redemptions.dialog.flightDate' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -92,17 +104,27 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Cabin Class</mat-label>
+      <mat-label>
+        {{ 'redemptions.dialog.cabinClass' | translate }}
+      </mat-label>
 
       <mat-select formControlName="cabinClass">
 
-        <mat-option [value]="0">Economy</mat-option>
+        <mat-option [value]="0">
+          {{ 'redemptions.cabin.economy' | translate }}
+        </mat-option>
 
-        <mat-option [value]="1">Premium Economy</mat-option>
+        <mat-option [value]="1">
+          {{ 'redemptions.cabin.premiumEconomy' | translate }}
+        </mat-option>
 
-        <mat-option [value]="2">Business</mat-option>
+        <mat-option [value]="2">
+          {{ 'redemptions.cabin.business' | translate }}
+        </mat-option>
 
-        <mat-option [value]="3">First</mat-option>
+        <mat-option [value]="3">
+          {{ 'redemptions.cabin.first' | translate }}
+        </mat-option>
 
       </mat-select>
 
@@ -112,7 +134,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Passengers</mat-label>
+      <mat-label>
+        {{ 'redemptions.dialog.passengers' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -125,7 +149,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Miles Used</mat-label>
+      <mat-label>
+        {{ 'redemptions.dialog.milesUsed' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -138,7 +164,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Taxes</mat-label>
+      <mat-label>
+        {{ 'redemptions.dialog.taxes' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -151,7 +179,9 @@
 
     <mat-form-field appearance="outline">
 
-      <mat-label>Cash Price</mat-label>
+      <mat-label>
+        {{ 'redemptions.dialog.cashPrice' | translate }}
+      </mat-label>
 
       <input
         matInput
@@ -164,7 +194,7 @@
 
     <mat-checkbox formControlName="isRoundTrip">
 
-      Round Trip
+      {{ 'redemptions.dialog.roundTrip' | translate }}
 
     </mat-checkbox>
 
@@ -179,7 +209,7 @@
     type="button"
     (click)="cancel()">
 
-    Cancel
+    {{ 'common.cancel' | translate }}
 
   </button>
 
@@ -190,7 +220,11 @@
     (click)="save()"
     [disabled]="form.invalid">
 
-    {{ data.operation === 'create' ? 'Create' : 'Update' }}
+    {{
+      data.operation === 'create'
+        ? ('common.create' | translate)
+        : ('common.update' | translate)
+    }}
 
   </button>
 
