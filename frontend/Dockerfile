@@ -1,10 +1,33 @@
+# ============================================================
+# Build Stage
+# ============================================================
+
 FROM node:22-alpine AS build
+
 WORKDIR /app
-COPY frontend/package*.json ./
-RUN npm install
-COPY frontend/ ./
+
+# Copy dependencies first (better Docker cache)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy application
+COPY . .
+
+# Build Angular
 RUN npm run build
 
+# ============================================================
+# Runtime Stage
+# ============================================================
+
 FROM nginx:1.27-alpine
-COPY --from=build /app/dist/milesmanager-frontend /usr/share/nginx/html
+
+# Custom Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Angular application
+COPY --from=build /app/dist/milesmanager-frontend/browser/ /usr/share/nginx/html
+
 EXPOSE 80
