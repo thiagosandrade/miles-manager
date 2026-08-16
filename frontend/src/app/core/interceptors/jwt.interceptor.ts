@@ -10,7 +10,7 @@ export class JwtInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.tokenStorage.getToken();
     const isExcludedUrl = req.url.endsWith('/auth/login') || req.url.endsWith('/auth/register');
-    
+
     if (token && !isExcludedUrl) {
       const clonedReq = req.clone({
         setHeaders: {

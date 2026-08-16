@@ -1,6 +1,5 @@
 #nullable enable
 using MediatR;
-using MilesManager.Application.Features.Dashboard.DTOs;
 using MilesManager.Application.Features.Lookup.DTOs;
 
 namespace MilesManager.Application.Features.Lookup.Queries.GetLookup;

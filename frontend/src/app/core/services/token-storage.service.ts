@@ -1,44 +1,76 @@
 import { Injectable } from '@angular/core';
 import { UserToken } from '../../features/auth/models/authentication.model';
+import { jwtDecode } from 'jwt-decode';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
+
+interface JwtPayload {
+  sub: string;
+  email: string;
+  name: string;
+  role?: string | string[];
+  exp: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenStorageService {
-  public signOut(): void {
-    window.sessionStorage.clear();
-  }
-
+  
   public saveToken(token: UserToken): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, JSON.stringify(token));
+
+    localStorage.setItem(TOKEN_KEY, JSON.stringify(token));
+
+    const jwt = jwtDecode<JwtPayload>(token.accessToken);
+
+    const roles =
+      Array.isArray(jwt.role)
+        ? jwt.role
+        : jwt.role
+          ? [jwt.role]
+          : [];
+
+    localStorage.setItem(
+      USER_KEY,
+      JSON.stringify({
+
+        id: jwt.sub,
+        email: jwt.email,
+        fullName: jwt.name,
+        roles
+
+      }));
+
   }
 
   public getToken(): UserToken | null {
-    const usertoken = window.sessionStorage.getItem(TOKEN_KEY);
-    if (usertoken) {
-      return JSON.parse(usertoken);
-    }
-    return null;
+    const value = localStorage.getItem(TOKEN_KEY);
+
+    return value
+      ? JSON.parse(value)
+      : null;
+
   }
 
   public logoutToken(): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-  }
-
-  public saveUser(user: any): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
   }
 
   public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return JSON.parse(user);
-    }
-    return null;
+    const value = localStorage.getItem(USER_KEY);
+
+    return value
+      ? JSON.parse(value)
+      : null;
+  }
+
+  isAdministrator(): boolean {
+
+    const user = this.getUser();
+
+    return user?.roles?.includes('Administrator') ?? false;
+
   }
 }

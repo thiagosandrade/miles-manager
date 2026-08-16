@@ -61,7 +61,10 @@
     "website": "Website",
     "logoUrl": "Logo-URL",
     "programCode": "Programmcode",
-    "fullName": "Vollständiger Name"
+    "fullName": "Vollständiger Name",
+    "canceled": "Storniert",
+    "completed": "Abgeschlossen",
+    "pending": "Ausstehend"
   },
   "toolbar": {
     "title": "Miles Manager",
@@ -79,7 +82,8 @@
     "purchases": "Käufe",
     "transfers": "Transfers",
     "redemptions": "Einlösungen",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "user-roles": "Benutzerrollen"
   },
   "dashboard": {
     "eyebrow": "Übersicht",
@@ -118,6 +122,7 @@
       "created": "Erstellt",
       "lastLogin": "Letzte Anmeldung",
       "accountInformation": "Kontoinformationen",
+      "lastUpdated": "Zuletzt aktualisiert",
       "userId": "Benutzer-ID"
     },
     "metrics": {
@@ -321,6 +326,7 @@
       "emptyTitle": "Keine Transfers gefunden",
       "emptyDescription": "Erstelle deinen ersten Meilentransfer.",
       "sourceProgram": "Quellprogramm",
+      "destinationProgram": "Zielprogramm",
       "columns": {
         "origin": "Ursprung",
         "destination": "Ziel",
@@ -406,6 +412,38 @@
     },
     "messages": {
       "loadError": "Einlösungen konnten nicht geladen werden. Bitte versuche es später erneut."
+    }
+  },
+  "userRoles": {
+    "page": {
+      "eyebrow": "Verwaltung",
+      "title": "Benutzerrollen",
+      "subtitle": "Verwalten Sie die Rollen der Anwendungsbenutzer."
+    },
+    "metrics": {
+      "totalUsers": "Benutzer insgesamt"
+    },
+    "table": {
+      "title": "Benutzerrollen",
+      "subtitle": "Zuweisungen",
+      "emptyTitle": "Keine Benutzer gefunden",
+      "emptyDescription": "Benutzer werden hier angezeigt, sobald sie verfügbar sind.",
+      "columns": {
+        "user": "Benutzer",
+        "email": "E-Mail",
+        "roles": "Rollen"
+      }
+    },
+    "actions": {
+      "edit": "Rollen verwalten"
+    },
+    "messages": {
+      "loadError": "Benutzer konnten nicht geladen werden."
+    },
+    "dialog": {
+      "title": "Benutzerrollen verwalten",
+      "subtitle": "Weisen Sie diesem Benutzer Rollen zu oder entfernen Sie sie.",
+      "roles": "Rollen"
     }
   }
 }

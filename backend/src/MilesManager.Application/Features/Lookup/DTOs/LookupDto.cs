@@ -1,6 +1,4 @@
 #nullable enable
-using MilesManager;
-
 namespace MilesManager.Application.Features.Lookup.DTOs;
 
 public sealed class LookupDto

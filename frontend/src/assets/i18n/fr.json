@@ -61,7 +61,10 @@
     "website": "Site web",
     "logoUrl": "URL du logo",
     "programCode": "Code du programme",
-    "fullName": "Nom complet"
+    "fullName": "Nom complet",
+    "canceled": "Annulé",
+    "completed": "Terminé",
+    "pending": "En attente"
   },
   "toolbar": {
     "title": "Miles Manager",
@@ -79,7 +82,8 @@
     "purchases": "Achats",
     "transfers": "Transferts",
     "redemptions": "Rédemptions",
-    "settings": "Paramètres"
+    "settings": "Paramètres",
+    "user-roles": "Rôles des utilisateurs"
   },
   "dashboard": {
     "eyebrow": "Aperçu",
@@ -117,6 +121,7 @@
       "status": "Statut",
       "created": "Créé",
       "lastLogin": "Dernière connexion",
+      "lastUpdated": "Dernière mise à jour",
       "accountInformation": "Informations du compte",
       "userId": "ID utilisateur"
     },
@@ -321,6 +326,7 @@
       "emptyTitle": "Aucun transfert trouvé",
       "emptyDescription": "Créez votre premier transfert de miles.",
       "sourceProgram": "Programme source",
+      "destinationProgram": "Programme de destination",
       "columns": {
         "origin": "Origine",
         "destination": "Destination",
@@ -406,6 +412,38 @@
     },
     "messages": {
       "loadError": "Impossible de charger les rédemptions. Veuillez réessayer plus tard."
+    }
+  },
+  "userRoles": {
+    "page": {
+      "eyebrow": "Administration",
+      "title": "Rôles des utilisateurs",
+      "subtitle": "Attribuez et gérez les rôles des utilisateurs de l'application."
+    },
+    "metrics": {
+      "totalUsers": "Nombre d'utilisateurs"
+    },
+    "table": {
+      "title": "Rôles des utilisateurs",
+      "subtitle": "Attributions",
+      "emptyTitle": "Aucun utilisateur trouvé",
+      "emptyDescription": "Les utilisateurs apparaîtront ici lorsqu'ils seront disponibles.",
+      "columns": {
+        "user": "Utilisateur",
+        "email": "E-mail",
+        "roles": "Rôles"
+      }
+    },
+    "actions": {
+      "edit": "Gérer les rôles"
+    },
+    "messages": {
+      "loadError": "Impossible de charger les utilisateurs."
+    },
+    "dialog": {
+      "title": "Gérer les rôles des utilisateurs",
+      "subtitle": "Attribuez ou supprimez des rôles pour cet utilisateur.",
+      "roles": "Rôles"
     }
   }
 }

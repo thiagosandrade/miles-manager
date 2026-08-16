@@ -1,11 +1,4 @@
 
-export interface AuthSession {
-  accessToken: string;
-  refreshToken: string;
-  expiresIn: number;
-  user: AuthUser;
-}
-
 export interface UserToken {
   accessToken: string;
   expiresAtUtc: number;
@@ -28,14 +21,4 @@ export interface LoginRequest {
 export interface LoginResponse {
   token: UserToken;
   user: AuthUser;
-}
-
-export interface Authentication {
-  accessToken: string;
-  refreshToken?: string;
-  user: {
-    id: string;
-    email: string;
-    fullName: string;
-  };
 }

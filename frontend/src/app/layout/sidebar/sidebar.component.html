@@ -11,7 +11,7 @@
 
       <a
         mat-list-item
-        *ngFor="let item of navigation"
+        *ngFor="let item of visibleNavigation"
         [routerLink]="item.path"
         routerLinkActive="active-link"
         (click)="onClose()">

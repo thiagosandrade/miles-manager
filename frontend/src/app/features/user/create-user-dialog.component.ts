@@ -1,10 +1,21 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+
+import {
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+
+import {
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from "@angular/material/icon";
+import { MatIconModule } from '@angular/material/icon';
+
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -13,35 +24,52 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './create-user-dialog.component.html',
   styleUrls: ['./create-user-dialog.component.scss'],
   imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    MatDialogModule, 
-    MatInputModule, 
-    MatButtonModule, 
+    CommonModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatInputModule,
+    MatButtonModule,
     MatIconModule,
-    TranslatePipe],
+    TranslatePipe
+  ]
 })
 export class CreateUserDialogComponent {
-  private fb = inject(FormBuilder);
-  private dialogRef = inject(MatDialogRef<CreateUserDialogComponent>);
 
-  form: FormGroup;
+  private readonly fb = inject(FormBuilder);
 
-  constructor() {
-    this.form = this.fb.group({
-      fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
-  }
+  private readonly dialogRef =
+    inject(MatDialogRef<CreateUserDialogComponent>);
 
-  onSubmit(): void {
-    if (this.form.valid) {
-      this.dialogRef.close(this.form.value);
+  readonly form = this.fb.nonNullable.group({
+
+    fullName: ['', Validators.required],
+
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.email
+      ]
+    ],
+
+    password: ['', Validators.required]
+
+  });
+
+  save(): void {
+
+    if (this.form.invalid) {
+      return;
     }
+
+    this.dialogRef.close(this.form.getRawValue());
+
   }
 
-  onCancel(): void {
+  cancel(): void {
+
     this.dialogRef.close(null);
+
   }
+
 }

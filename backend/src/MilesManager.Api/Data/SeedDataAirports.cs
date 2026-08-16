@@ -1,9 +1,6 @@
 using MilesManager.Application.Abstractions;
 using MilesManager.Domain.Lookups;
-using MilesManager.Domain.Pricing;
 using Microsoft.EntityFrameworkCore;
-using MilesManager.Domain.Users;
-using MilesManager.Application.Features.Users.Abstractions;
 
 namespace MilesManager.Api.Data;
 

@@ -28,8 +28,6 @@ export class SidebarComponent {
   @Input() opened = false;
   @Output() closeSidenav = new EventEmitter<void>();
 
-  private readonly storageService = inject(TokenStorageService);
-
   private readonly storage = inject(TokenStorageService);
 
   readonly isAdministrator = this.storage.isAdministrator();

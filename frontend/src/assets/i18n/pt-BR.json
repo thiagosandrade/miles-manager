@@ -61,7 +61,10 @@
     "website": "Site",
     "logoUrl": "URL do logo",
     "programCode": "Código do programa",
-    "fullName": "Nome completo"
+    "fullName": "Nome completo",
+    "canceled": "Cancelado",
+    "completed": "Concluído",
+    "pending": "Pendente"
   },
   "toolbar": {
     "title": "Miles Manager",
@@ -79,7 +82,8 @@
     "purchases": "Compras",
     "transfers": "Transferências",
     "redemptions": "Resgates",
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "user-roles": "Funções de Usuário"  
   },
   "dashboard": {
     "eyebrow": "Visão geral",
@@ -117,6 +121,7 @@
       "status": "Status",
       "created": "Criado",
       "lastLogin": "Último acesso",
+      "lastUpdated": "Última Atualização",
       "accountInformation": "Informações da conta",
       "userId": "ID do usuário"
     },
@@ -321,6 +326,7 @@
       "emptyTitle": "Nenhuma transferência encontrada",
       "emptyDescription": "Crie sua primeira transferência de milhas.",
       "sourceProgram": "Programa de origem",
+      "destinationProgram": "Programa de destino",
       "columns": {
         "origin": "Origem",
         "destination": "Destino",
@@ -406,6 +412,38 @@
     },
     "messages": {
       "loadError": "Não foi possível carregar os resgates. Tente novamente mais tarde."
+    }
+  },
+  "userRoles": {
+    "page": {
+      "eyebrow": "Administração",
+      "title": "Funções de Usuário",
+      "subtitle": "Atribua e gerencie funções dos usuários da aplicação."
+    },
+    "metrics": {
+      "totalUsers": "Total de Usuários"
+    },
+    "table": {
+      "title": "Funções de Usuário",
+      "subtitle": "Atribuições",
+      "emptyTitle": "Nenhum usuário encontrado",
+      "emptyDescription": "Os usuários aparecerão aqui quando estiverem disponíveis.",
+      "columns": {
+        "user": "Usuário",
+        "email": "Email",
+        "roles": "Funções"
+      }
+    },
+    "actions": {
+      "edit": "Gerenciar funções"
+    },
+    "messages": {
+      "loadError": "Não foi possível carregar os usuários."
+    },
+    "dialog": {
+      "title": "Gerenciar Funções de Usuário",
+      "subtitle": "Atribua ou remova funções deste usuário.",
+      "roles": "Funções"
     }
   }
 }

@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateProgramDialogComponent } from './create-program-dialog.component';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { TokenStorageService } from '../../core/services/token-storage.service';
 
 @Component({
   selector: 'app-programs-page',
@@ -31,7 +32,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class ProgramsPageComponent implements OnInit {
   dialog = inject(MatDialog);
   snackbarService = inject(SnackbarService);
-
+  
+  private readonly storage = inject(TokenStorageService);
+  readonly isAdministrator = this.storage.isAdministrator();
+  
   data = signal<Program[]>([]);
   loading = signal(false);
   isRateLimitReached = signal(false);
@@ -39,14 +43,15 @@ export class ProgramsPageComponent implements OnInit {
   displayedColumns = [
     'name',
     'isActive',
-    'actions'
   ];
 
   filter = '';
 
   constructor(
     private programsService: ProgramsApiService
-  ) {}
+  ) {
+    if(this.isAdministrator) this.displayedColumns.push('actions')
+  }
 
   ngOnInit(): void {
     this.loadPrograms();

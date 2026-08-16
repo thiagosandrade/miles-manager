@@ -61,7 +61,10 @@
     "website": "Website",
     "logoUrl": "URL do logótipo",
     "programCode": "Código do programa",
-    "fullName": "Nome completo"
+    "fullName": "Nome completo",
+    "canceled": "Cancelado",
+    "completed": "Concluído",
+    "pending": "Pendente"
   },
   "toolbar": {
     "title": "Miles Manager",
@@ -79,7 +82,8 @@
     "purchases": "Compras",
     "transfers": "Transferências",
     "redemptions": "Resgates",
-    "settings": "Definições"
+    "settings": "Definições",
+    "user-roles": "Funções de Utilizador"
   },
   "dashboard": {
     "eyebrow": "Visão geral",
@@ -117,6 +121,7 @@
       "status": "Estado",
       "created": "Criado",
       "lastLogin": "Último início de sessão",
+      "lastUpdated": "Última Atualização",
       "accountInformation": "Informações da conta",
       "userId": "ID do utilizador"
     },
@@ -321,6 +326,7 @@
       "emptyTitle": "Nenhuma transferência encontrada",
       "emptyDescription": "Crie a sua primeira transferência de milhas.",
       "sourceProgram": "Programa de origem",
+      "destinationProgram": "Programa de destino",
       "columns": {
         "origin": "Origem",
         "destination": "Destino",
@@ -406,6 +412,38 @@
     },
     "messages": {
       "loadError": "Não foi possível carregar os resgates. Tente novamente mais tarde."
+    }
+  },
+  "userRoles": {
+    "page": {
+      "eyebrow": "Administração",
+      "title": "Funções de Utilizador",
+      "subtitle": "Atribua e gira funções dos utilizadores da aplicação."
+    },
+    "metrics": {
+      "totalUsers": "Total de Utilizadores"
+    },
+    "table": {
+      "title": "Funções de Utilizador",
+      "subtitle": "Atribuições",
+      "emptyTitle": "Nenhum utilizador encontrado",
+      "emptyDescription": "Os utilizadores aparecerão aqui quando estiverem disponíveis.",
+      "columns": {
+        "user": "Utilizador",
+        "email": "Email",
+        "roles": "Funções"
+      }
+    },
+    "actions": {
+      "edit": "Gerir funções"
+    },
+    "messages": {
+      "loadError": "Não foi possível carregar os utilizadores."
+    },
+    "dialog": {
+      "title": "Gerir Funções de Utilizador",
+      "subtitle": "Atribua ou remova funções deste utilizador.",
+      "roles": "Funções"
     }
   }
 }

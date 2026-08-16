@@ -43,8 +43,8 @@ export class AuthManagementComponent {
       this.loading = true;
       this.authApi.login(this.form.value).subscribe({
         next: (res) => {
+
           this.tokenStorage.saveToken(res.token);
-          this.tokenStorage.saveUser(res.user);
           this.snackBar.open('Login successful', 'Close', { duration: 3000 });
           this.router.navigate(['/dashboard']);
         },

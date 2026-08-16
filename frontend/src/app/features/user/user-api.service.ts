@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CreateUserRequest, UserDetails, UserSummary } from './models/user.models';
 import { environment } from '../../../environments/environment';
 

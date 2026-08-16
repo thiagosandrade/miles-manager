@@ -20,7 +20,7 @@
 
     </div>
 
-    <button
+    <button *ngIf="isAdministrator"
       class="primary-button"
       (click)="openCreateDialog()">
 
@@ -149,6 +149,7 @@
     <!-- Empty State -->
 
     <button
+      *ngIf="isAdministrator"
       empty-action
       class="primary-button"
       (click)="openCreateDialog()">
@@ -241,7 +242,7 @@
 
       <!-- Actions -->
 
-      <ng-container matColumnDef="actions">
+      <ng-container matColumnDef="actions" *ngIf="isAdministrator">
 
         <th
           mat-header-cell

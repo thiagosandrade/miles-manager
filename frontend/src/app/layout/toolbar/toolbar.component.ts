@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { UserApiService } from '../../features/user/user-api.service';
 import { MatDivider } from "@angular/material/divider";
 import { AuthApiService } from '../../features/auth/auth-api.service';
 import { TokenStorageService } from '../../core/services/token-storage.service';
@@ -29,10 +28,12 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 
 export class ToolbarComponent {
-  private userApi = inject(UserApiService);
   private authApi = inject(AuthApiService);
   private tokenStorage = inject(TokenStorageService);
   private router = inject(Router);
+
+  readonly user = this.tokenStorage.getUser();
+
   languageService = inject(LanguageService);
 
   languages = [
@@ -62,24 +63,13 @@ export class ToolbarComponent {
         return;
     }
 
-    try {
-          this.userApi.getUser(id).subscribe(result => {
-            this.userName.set(result.fullName);
-            this.userEmail.set(result.email);
-        });
-
-
-    }
-    catch {
-        this.userName.set('');
-        this.userEmail.set('');
-    }
+    this.userName.set(this.user.fullName);
+    this.userEmail.set(this.user.email);
   }
 
   private currentUserId(): string {
-    const user = this.tokenStorage.getUser();
-    if (user && user.id) {
-      return user.id;
+    if (this.user && this.user.id) {
+      return this.user.id;
     }
     return '';
   }

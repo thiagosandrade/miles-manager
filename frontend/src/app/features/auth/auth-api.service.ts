@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { finalize, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LoginRequest, LoginResponse, AuthSession } from './models/authentication.model';
+import { LoginRequest, LoginResponse } from './models/authentication.model';
 import { TokenStorageService } from '../../core/services/token-storage.service';
 import { Router } from '@angular/router';
 
@@ -35,9 +35,5 @@ export class AuthApiService {
   logoutLocal(): void {
     this.tokenStorageService.logoutToken();
     this.router.navigate(['/auth']);
-  }
-
-  getSession(): Observable<AuthSession> {
-    return this.http.get<AuthSession>(`${this.apiBaseUrl}/session`);
   }
 }

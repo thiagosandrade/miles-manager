@@ -61,7 +61,10 @@
     "website": "Sitio web",
     "logoUrl": "URL del logotipo",
     "programCode": "Código del programa",
-    "fullName": "Nombre completo"
+    "fullName": "Nombre completo",
+    "canceled": "Cancelado",
+    "completed": "Completado",
+    "pending": "Pendiente"
   },
   "toolbar": {
     "title": "Miles Manager",
@@ -79,7 +82,8 @@
     "purchases": "Compras",
     "transfers": "Transferencias",
     "redemptions": "Canjes",
-    "settings": "Configuración"
+    "settings": "Configuración",
+    "user-roles": "Roles de Usuario"  
   },
   "dashboard": {
     "eyebrow": "Resumen",
@@ -117,6 +121,7 @@
       "status": "Estado",
       "created": "Creado",
       "lastLogin": "Último inicio de sesión",
+      "lastUpdated": "Última Actualización",
       "accountInformation": "Información de la cuenta",
       "userId": "ID de usuario"
     },
@@ -321,6 +326,7 @@
       "emptyTitle": "No se encontraron transferencias",
       "emptyDescription": "Crea tu primera transferencia de millas.",
       "sourceProgram": "Programa de origen",
+      "destinationProgram": "Programa de destino",
       "columns": {
         "origin": "Origen",
         "destination": "Destino",
@@ -406,6 +412,38 @@
     },
     "messages": {
       "loadError": "No se pudieron cargar los canjes. Intenta nuevamente más tarde."
+    }
+  },
+  "userRoles": {
+    "page": {
+      "eyebrow": "Administración",
+      "title": "Roles de Usuario",
+      "subtitle": "Asigne y gestione los roles de los usuarios de la aplicación."
+    },
+    "metrics": {
+      "totalUsers": "Total de Usuarios"
+    },
+    "table": {
+      "title": "Roles de Usuario",
+      "subtitle": "Asignaciones",
+      "emptyTitle": "No se encontraron usuarios",
+      "emptyDescription": "Los usuarios aparecerán aquí cuando estén disponibles.",
+      "columns": {
+        "user": "Usuario",
+        "email": "Correo electrónico",
+        "roles": "Roles"
+      }
+    },
+    "actions": {
+      "edit": "Administrar roles"
+    },
+    "messages": {
+      "loadError": "No se pudieron cargar los usuarios."
+    },
+    "dialog": {
+      "title": "Administrar Roles de Usuario",
+      "subtitle": "Asigne o elimine roles para este usuario.",
+      "roles": "Roles"
     }
   }
 }
