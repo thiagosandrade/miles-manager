@@ -2,9 +2,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using MilesManager.Application.Features.Users.Abstractions;
-using MilesManager.Application.Features.Users.Models;
 using MilesManager.Domain.Users;
 using Microsoft.Extensions.Configuration;
+using MilesManager.Application.Features.Users.DTOs;
 
 namespace MilesManager.Infrastructure.Security;
 
@@ -30,6 +30,9 @@ public sealed class JwtTokenService(IConfiguration configuration) : IJwtTokenSer
             ["sub"] = user.Id.ToString(),
             ["email"] = user.Email,
             ["name"] = user.FullName,
+
+            ["role"] = user.UserRoles.Select(r => r.Role.Name).ToArray(),
+
             ["jti"] = Guid.NewGuid().ToString("N"),
             ["iat"] = now.ToUnixTimeSeconds(),
             ["nbf"] = now.ToUnixTimeSeconds(),

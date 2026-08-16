@@ -19,7 +19,7 @@ internal sealed class MileageAccountConfiguration : IEntityTypeConfiguration<Mil
         builder.Property(x => x.Status).IsRequired();
         builder.Property(x => x.ExpirationDate).HasColumnType("date");
 
-        builder.HasOne<MilesManager.Domain.Programs.LoyaltyProgram>()
+        builder.HasOne<Domain.Programs.LoyaltyProgram>()
             .WithMany()
             .HasForeignKey(x => x.ProgramId)
             .OnDelete(DeleteBehavior.Cascade);

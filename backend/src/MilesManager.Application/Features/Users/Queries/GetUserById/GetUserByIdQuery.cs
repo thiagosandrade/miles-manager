@@ -1,6 +1,6 @@
 using MediatR;
-using MilesManager.Application.Features.Users.Models;
+using MilesManager.Application.Features.Users.DTOs;
 
 namespace MilesManager.Application.Features.Users.Queries.GetUserById;
 
-public sealed record GetUserByIdQuery(Guid Id) : IRequest<UserDetails?>;
+public sealed record GetUserByIdQuery(Guid Id) : IRequest<UserDetailsDTO?>;

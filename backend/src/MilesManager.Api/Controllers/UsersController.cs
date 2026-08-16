@@ -7,21 +7,20 @@ using MilesManager.Application.Common;
 using MilesManager.Application.Features.Users.Commands.CreateUser;
 using MilesManager.Application.Features.Users.Commands.DeleteUser;
 using MilesManager.Application.Features.Users.Commands.UpdateUser;
-using MilesManager.Application.Features.Users.Models;
+using MilesManager.Application.Features.Users.DTOs;
 using MilesManager.Application.Features.Users.Queries.GetUserById;
 using MilesManager.Application.Features.Users.Queries.GetUsers;
 
 namespace MilesManager.Api.Controllers;
 
 [ApiController]
-[Authorize]
 [Route("api/v{version:apiVersion}/users")]
 [ApiVersion("1.0")]
 public sealed class UsersController(ISender sender) : ApiController(sender)
 {
     [HttpPost]
-    [AllowAnonymous]
-    public async Task<ActionResult<UserDetails>> Create([FromBody] CreateUserRequest request)
+    [Authorize(Roles = "Administrator")]
+    public async Task<ActionResult<UserDetailsDTO>> Create([FromBody] CreateUserRequest request)
     {
         var result = await Sender.Send(new CreateUserCommand(request.Email, request.FullName, request.Password));
         return result.Status switch
@@ -33,21 +32,24 @@ public sealed class UsersController(ISender sender) : ApiController(sender)
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<UserSummary>>> GetUsers()
+    [Authorize(Roles = "Administrator")]
+    public async Task<ActionResult<IReadOnlyList<UserDTO>>> GetUsers()
     {
         var result = await Sender.Send(new GetUsersQuery());
         return Ok(result);
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<UserDetails>> GetById(Guid id)
+    [Authorize(Roles = "User")]
+    public async Task<ActionResult<UserDetailsDTO>> GetById(Guid id)
     {
         var user = await Sender.Send(new GetUserByIdQuery(id));
         return user is null ? NotFound() : Ok(user);
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<ActionResult<UserDetails>> Update(Guid id, [FromBody] UpdateUserRequest request)
+    [Authorize(Roles = "Administrator")]
+    public async Task<ActionResult<UserDetailsDTO>> Update(Guid id, [FromBody] UpdateUserRequest request)
     {
         var result = await Sender.Send(new UpdateUserCommand(id, request.Email, request.FullName, request.Password, request.IsActive));
         return result.Status switch
@@ -60,9 +62,10 @@ public sealed class UsersController(ISender sender) : ApiController(sender)
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var result = await Sender.Send(new DeleteUserCommand(id));
-        return result == MilesManager.Application.Features.Users.Models.OperationStatus.Success ? NoContent() : NotFound();
+        return result == OperationStatus.Success ? NoContent() : NotFound();
     }
 }

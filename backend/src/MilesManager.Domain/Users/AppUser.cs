@@ -10,4 +10,5 @@ public sealed class AppUser : Entity
     public bool IsActive { get; set; } = true;
     public int TokenVersion { get; set; }
     public DateTimeOffset? LastLoginAtUtc { get; set; }
+    public ICollection<UserRole> UserRoles { get; } = [];
 }

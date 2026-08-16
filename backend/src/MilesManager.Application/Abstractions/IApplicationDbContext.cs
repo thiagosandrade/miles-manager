@@ -13,8 +13,9 @@ public interface IApplicationDbContext
 {
     DbSet<Trip> Trips { get; }
     DbSet<AppUser> Users { get; }
-    DbSet<MilesManager.Domain.Users.UserPreferences> UserPreferences { get; }
-    DbSet<MilesManager.Domain.Programs.LoyaltyProgram> Programs { get; }
+    DbSet<UserRole> UserRoles { get; }
+    DbSet<Role> Roles { get; }
+    DbSet<LoyaltyProgram> Programs { get; }
     DbSet<ProgramBalance> ProgramBalances { get; }
     DbSet<MileagePurchase> MileagePurchases { get; }
     DbSet<TransferRoute> TransferRoutes { get; }

@@ -1,16 +1,21 @@
+using AutoMapper;
 using MediatR;
 using MilesManager.Application.Features.Users.Abstractions;
-using MilesManager.Application.Features.Users.Models;
+using MilesManager.Application.Features.Users.DTOs;
+using MilesManager.Domain.Users;
 
 namespace MilesManager.Application.Features.Users.Queries.GetUsers;
 
-public sealed class GetUsersHandler(IUserRepository userRepository) : IRequestHandler<GetUsersQuery, IReadOnlyList<UserSummary>>
+public sealed class GetUsersHandler(IUserRepository userRepository, IMapper mapper) : IRequestHandler<GetUsersQuery, IReadOnlyList<UserDTO>>
 {
     private readonly IUserRepository _userRepository = userRepository;
 
-    public async Task<IReadOnlyList<UserSummary>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<UserDTO>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
         var users = await _userRepository.ListAsync(cancellationToken);
-        return users.Select(u => new UserSummary(u.Id, u.Email, u.FullName, u.IsActive, u.CreatedAtUtc)).ToList();
+
+        var usersDTO = mapper.Map<IReadOnlyList<AppUser>, IReadOnlyList<UserDTO>>(users);
+
+        return usersDTO;
     }
 }

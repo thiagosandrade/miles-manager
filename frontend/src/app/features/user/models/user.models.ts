@@ -1,9 +1,12 @@
+import { UserRole } from "../../user-roles/models/user-roles.models";
+
 export interface UserSummary {
   id: string;
   email: string;
   fullName: string;
   isActive: boolean;
   createdAtUtc: string;
+  roles: UserRole[];
 }
 
 export interface UserDetails extends UserSummary {

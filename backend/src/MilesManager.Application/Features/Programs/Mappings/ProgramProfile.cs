@@ -9,7 +9,7 @@ internal sealed class ProgramProfile : Profile
 {
     public ProgramProfile()
     {
-        CreateMap<MilesManager.Domain.Programs.LoyaltyProgram, ProgramDto>();
+        CreateMap<LoyaltyProgram, ProgramDto>();
         CreateMap<ProgramBalance, ProgramBalanceDto>()
             .ForMember(dest => dest.ProgramName, opt => opt.MapFrom(src => src.Program.Name));
     }

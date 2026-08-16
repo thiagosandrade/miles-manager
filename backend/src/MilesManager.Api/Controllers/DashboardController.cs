@@ -20,7 +20,7 @@ public sealed class DashboardController(ISender sender) : ApiController(sender)
     /// Gets dashboard summary.
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<MilesManager.Application.Features.Dashboard.DTOs.DashboardDto>> Get(CancellationToken cancellationToken)
+    public async Task<ActionResult<Application.Features.Dashboard.DTOs.DashboardDto>> Get(CancellationToken cancellationToken)
     {
         var dto = await Sender.Send(new GetDashboardQuery(), cancellationToken);
         return Ok(dto);

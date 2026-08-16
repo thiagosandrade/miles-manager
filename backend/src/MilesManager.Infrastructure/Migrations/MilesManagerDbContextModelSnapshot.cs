@@ -603,7 +603,7 @@ namespace MilesManager.Infrastructure.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("MilesManager.Domain.Users.UserPreferences", b =>
+            modelBuilder.Entity("MilesManager.Domain.Users.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -612,20 +612,29 @@ namespace MilesManager.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("EmailNotificationsEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("ExpirationAlertsEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("PreferredCurrency")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("character varying(3)");
+                        .HasColumnType("text");
 
-                    b.Property<string>("Theme")
-                        .HasMaxLength(24)
-                        .HasColumnType("character varying(24)");
+                    b.Property<DateTimeOffset?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("roles", (string)null);
+                });
+
+            modelBuilder.Entity("MilesManager.Domain.Users.UserRole", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset?>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
@@ -635,10 +644,11 @@ namespace MilesManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("RoleId");
 
-                    b.ToTable("user_preferences", (string)null);
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_roles", (string)null);
                 });
 
             modelBuilder.Entity("MilesManager.Domain.Transactions.EarnTransaction", b =>
@@ -788,6 +798,25 @@ namespace MilesManager.Infrastructure.Migrations
                     b.Navigation("OriginProgram");
                 });
 
+            modelBuilder.Entity("MilesManager.Domain.Users.UserRole", b =>
+                {
+                    b.HasOne("MilesManager.Domain.Users.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MilesManager.Domain.Users.AppUser", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MilesManager.Domain.Programs.LoyaltyProgram", b =>
                 {
                     b.Navigation("DestinationTransfers");
@@ -801,6 +830,16 @@ namespace MilesManager.Infrastructure.Migrations
                     b.Navigation("ProgramBalances");
 
                     b.Navigation("ReferenceMileagePrices");
+                });
+
+            modelBuilder.Entity("MilesManager.Domain.Users.AppUser", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("MilesManager.Domain.Users.Role", b =>
+                {
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

@@ -18,8 +18,8 @@ public class GetProgramsHandlerTests
 
         await using (var context = new MilesManagerDbContext(options))
         {
-            context.Programs.Add(new MilesManager.Domain.Programs.LoyaltyProgram { ProgramCode = "A", Name = "A" });
-            context.Programs.Add(new MilesManager.Domain.Programs.LoyaltyProgram { ProgramCode = "B", Name = "B" });
+            context.Programs.Add(new Domain.Programs.LoyaltyProgram { ProgramCode = "A", Name = "A" });
+            context.Programs.Add(new Domain.Programs.LoyaltyProgram { ProgramCode = "B", Name = "B" });
             await context.SaveChangesAsync(CancellationToken.None);
         }
 
@@ -27,7 +27,7 @@ public class GetProgramsHandlerTests
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<MilesManager.Domain.Programs.LoyaltyProgram, MilesManager.Application.Features.Programs.DTOs.ProgramDto>();
+                cfg.CreateMap<Domain.Programs.LoyaltyProgram, Application.Features.Programs.DTOs.ProgramDto>();
             });
             var mapper = config.CreateMapper();
 

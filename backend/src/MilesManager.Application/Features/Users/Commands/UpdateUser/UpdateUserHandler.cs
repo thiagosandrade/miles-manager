@@ -1,32 +1,30 @@
+using AutoMapper;
 using MediatR;
 using MilesManager.Application.Common;
 using MilesManager.Application.Features.Users.Abstractions;
-using MilesManager.Application.Features.Users.Models;
+using MilesManager.Application.Features.Users.DTOs;
 using MilesManager.Domain.Users;
 
 namespace MilesManager.Application.Features.Users.Commands.UpdateUser;
 
-public sealed class UpdateUserHandler(IUserRepository userRepository, IPasswordHasher passwordHasher) : IRequestHandler<UpdateUserCommand, Result<UserDetails>>
+public sealed class UpdateUserHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IMapper mapper) : IRequestHandler<UpdateUserCommand, Result<UserDetailsDTO>>
 {
-    private readonly IUserRepository _userRepository = userRepository;
-    private readonly IPasswordHasher _passwordHasher = passwordHasher;
-
-    public async Task<Result<UserDetails>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<UserDetailsDTO>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
+        var user = await userRepository.GetByIdAsync(request.Id, cancellationToken);
         if (user is null)
         {
-            return Result<UserDetails>.NotFound();
+            return Result<UserDetailsDTO>.NotFound();
         }
 
         var normalizedEmail = request.Email.Trim().ToLowerInvariant();
         var emailChanged = !string.Equals(user.Email, normalizedEmail, StringComparison.OrdinalIgnoreCase);
         if (emailChanged)
         {
-            var duplicate = await _userRepository.GetByEmailAsync(normalizedEmail, cancellationToken);
+            var duplicate = await userRepository.GetByEmailAsync(normalizedEmail, cancellationToken);
             if (duplicate is not null && duplicate.Id != user.Id)
             {
-                return Result<UserDetails>.Conflict();
+                return Result<UserDetailsDTO>.Conflict();
             }
             user.Email = normalizedEmail;
         }
@@ -46,7 +44,7 @@ public sealed class UpdateUserHandler(IUserRepository userRepository, IPasswordH
 
         if (!string.IsNullOrWhiteSpace(request.Password))
         {
-            user.PasswordHash = _passwordHasher.HashPassword(request.Password);
+            user.PasswordHash = passwordHasher.HashPassword(request.Password);
             authChanged = true;
         }
 
@@ -57,12 +55,8 @@ public sealed class UpdateUserHandler(IUserRepository userRepository, IPasswordH
 
         user.UpdatedAtUtc = DateTimeOffset.UtcNow;
 
-        await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-        return Result<UserDetails>.Success(ToDetails(user));
-    }
+        await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-    private static UserDetails ToDetails(AppUser user)
-    {
-        return new UserDetails(user.Id, user.Email, user.FullName, user.IsActive, user.CreatedAtUtc, user.UpdatedAtUtc, user.LastLoginAtUtc);
+        return Result<UserDetailsDTO>.Success(mapper.Map<AppUser, UserDetailsDTO>(user));
     }
 }

@@ -20,7 +20,7 @@ public static class DependencyInjection
         // Enable FluentValidation automatic model validation and register validators from the Application assembly
         services.AddFluentValidationAutoValidation();
         services.AddFluentValidationClientsideAdapters();
-        services.AddValidatorsFromAssembly(typeof(MilesManager.Application.DependencyInjection).Assembly);
+        services.AddValidatorsFromAssembly(typeof(Application.DependencyInjection).Assembly);
 
         services.AddApiVersioning(options =>
         {

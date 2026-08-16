@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MilesManager.Infrastructure.Persistence.Configurations;
 
-internal sealed class ProgramConfiguration : IEntityTypeConfiguration<MilesManager.Domain.Programs.LoyaltyProgram>
+internal sealed class ProgramConfiguration : IEntityTypeConfiguration<Domain.Programs.LoyaltyProgram>
 {
-    public void Configure(EntityTypeBuilder<MilesManager.Domain.Programs.LoyaltyProgram> builder)
+    public void Configure(EntityTypeBuilder<Domain.Programs.LoyaltyProgram> builder)
     {
         builder.ToTable("programs");
         builder.HasKey(x => x.Id);

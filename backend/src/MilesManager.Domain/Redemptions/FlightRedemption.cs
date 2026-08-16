@@ -19,5 +19,5 @@ public class FlightRedemption : Entity
     public decimal CashPrice { get; set; }
     public decimal EffectiveCostPerThousand { get; set; }
 
-    public virtual MilesManager.Domain.Programs.LoyaltyProgram LoyaltyProgram { get; set; } = null!;
+    public virtual Programs.LoyaltyProgram LoyaltyProgram { get; set; } = null!;
 }

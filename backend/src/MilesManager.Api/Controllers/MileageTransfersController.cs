@@ -24,7 +24,7 @@ public sealed class MileageTransfersController(ISender sender) : ApiController(s
     /// Gets mileage transfers.
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<MilesManager.Application.Features.Transfers.DTOs.MileageTransferDto>>> Get(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<Application.Features.Transfers.DTOs.MileageTransferDto>>> Get(CancellationToken cancellationToken)
     {
         var result = await Sender.Send(new GetTransfersQuery(), cancellationToken);
         return Convert(result);
@@ -34,7 +34,7 @@ public sealed class MileageTransfersController(ISender sender) : ApiController(s
     /// Gets a mileage transfer by id.
     /// </summary>
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<MilesManager.Application.Features.Transfers.DTOs.MileageTransferDto>> GetById(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<Application.Features.Transfers.DTOs.MileageTransferDto>> GetById(Guid id, CancellationToken cancellationToken)
     {
         var result = await Sender.Send(new GetMileageTransferByIdQuery { Id = id }, cancellationToken);
         return Convert(result);

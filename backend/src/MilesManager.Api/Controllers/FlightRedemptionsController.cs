@@ -24,7 +24,7 @@ public sealed class FlightRedemptionsController(ISender sender) : ApiController(
     /// Gets flight redemptions.
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<MilesManager.Application.Features.Redemptions.DTOs.FlightRedemptionDto>>> Get(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<Application.Features.Redemptions.DTOs.FlightRedemptionDto>>> Get(CancellationToken cancellationToken)
     {
         var result = await Sender.Send(new GetRedemptionsQuery(), cancellationToken);
         return Convert(result);
@@ -34,7 +34,7 @@ public sealed class FlightRedemptionsController(ISender sender) : ApiController(
     /// Gets a flight redemption by id.
     /// </summary>
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<MilesManager.Application.Features.Redemptions.DTOs.FlightRedemptionDto>> GetById(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<Application.Features.Redemptions.DTOs.FlightRedemptionDto>> GetById(Guid id, CancellationToken cancellationToken)
     {
         var result = await Sender.Send(new GetFlightRedemptionByIdQuery { Id = id }, cancellationToken);
         return Convert(result);

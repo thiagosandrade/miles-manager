@@ -15,6 +15,6 @@ public class MileageTransfer : Entity
     public decimal CostPerThousandDestination { get; set; }
     public DateOnly TransferDate { get; set; }
 
-    public virtual MilesManager.Domain.Programs.LoyaltyProgram OriginProgram { get; set; } = null!;
-    public virtual MilesManager.Domain.Programs.LoyaltyProgram DestinationProgram { get; set; } = null!;
+    public virtual Programs.LoyaltyProgram OriginProgram { get; set; } = null!;
+    public virtual Programs.LoyaltyProgram DestinationProgram { get; set; } = null!;
 }

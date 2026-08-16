@@ -7,17 +7,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MilesManager.Application.Features.Purchases.Queries.GetPurchases;
 
-public sealed class GetPurchasesHandler(IApplicationDbContext context, IMapper mapper) : IRequestHandler<GetPurchasesQuery, Result<IReadOnlyList<MilesManager.Application.Features.Purchases.DTOs.MileagePurchaseDto>>>
+public sealed class GetPurchasesHandler(IApplicationDbContext context, IMapper mapper) : IRequestHandler<GetPurchasesQuery, Result<IReadOnlyList<DTOs.MileagePurchaseDto>>>
 {
     private readonly IApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result<IReadOnlyList<MilesManager.Application.Features.Purchases.DTOs.MileagePurchaseDto>>> Handle(GetPurchasesQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IReadOnlyList<DTOs.MileagePurchaseDto>>> Handle(GetPurchasesQuery request, CancellationToken cancellationToken)
     {
         var items = await _context.MileagePurchases.AsNoTracking()
-            .ProjectTo<MilesManager.Application.Features.Purchases.DTOs.MileagePurchaseDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<DTOs.MileagePurchaseDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        return Result<IReadOnlyList<MilesManager.Application.Features.Purchases.DTOs.MileagePurchaseDto>>.Success(items);
+        return Result<IReadOnlyList<DTOs.MileagePurchaseDto>>.Success(items);
     }
 }

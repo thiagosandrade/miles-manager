@@ -1,0 +1,35 @@
+@use '../../../styles/pages';
+
+.roles-list {
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+}
+
+.role-chip {
+
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 12px;
+
+  border-radius: 999px;
+
+  background: rgba(21, 101, 192, .10);
+
+  color: var(--mm-primary);
+
+  font-size: .75rem;
+  font-weight: 600;
+
+}
+
+.role-empty {
+
+  color: var(--muted);
+
+  font-size: .85rem;
+
+}

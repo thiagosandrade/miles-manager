@@ -1,6 +1,6 @@
 using MilesManager.Domain.Users;
-using MilesManager.Application.Features.Users.Models;
 using MilesManager.Application.Abstractions;
+using MilesManager.Application.Features.Users.DTOs;
 
 namespace MilesManager.Application.Features.Users.Abstractions;
 

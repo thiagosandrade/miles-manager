@@ -9,5 +9,5 @@ public class ReferenceMileagePrice : Entity
     public decimal PricePerThousand { get; set; }
     public DateOnly EffectiveDate { get; set; }
 
-    public virtual MilesManager.Domain.Programs.LoyaltyProgram Program { get; set; } = null!;
+    public virtual Programs.LoyaltyProgram Program { get; set; } = null!;
 }

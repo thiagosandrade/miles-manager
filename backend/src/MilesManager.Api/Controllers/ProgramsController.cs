@@ -24,7 +24,7 @@ public sealed class ProgramsController(ISender sender) : ApiController(sender)
     /// Gets all programs.
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<System.Collections.Generic.IReadOnlyList<MilesManager.Application.Features.Programs.DTOs.ProgramDto>>> Get(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<Application.Features.Programs.DTOs.ProgramDto>>> Get(CancellationToken cancellationToken)
     {
         var result = await Sender.Send(new GetProgramsQuery(), cancellationToken);
         return Convert(result);
@@ -34,7 +34,7 @@ public sealed class ProgramsController(ISender sender) : ApiController(sender)
     /// Gets a program by id.
     /// </summary>
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<MilesManager.Application.Features.Programs.DTOs.ProgramDto>> GetById(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<Application.Features.Programs.DTOs.ProgramDto>> GetById(Guid id, CancellationToken cancellationToken)
     {
         var result = await Sender.Send(new GetProgramByIdQuery { Id = id }, cancellationToken);
         return Convert(result);

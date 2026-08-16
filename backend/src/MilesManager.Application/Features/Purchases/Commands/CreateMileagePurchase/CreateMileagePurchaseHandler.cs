@@ -27,7 +27,7 @@ public sealed class CreateMileagePurchaseHandler(IApplicationDbContext context) 
             return Result<Guid>.ValidationFailed("MilesPurchased must be positive.");
         }
 
-        var purchase = new MilesManager.Domain.Programs.MileagePurchase
+        var purchase = new Domain.Programs.MileagePurchase
         {
             UserId = request.UserId,
             ProgramId = request.ProgramId,
@@ -45,7 +45,7 @@ public sealed class CreateMileagePurchaseHandler(IApplicationDbContext context) 
         var balance = await _context.ProgramBalances.FirstOrDefaultAsync(pb => pb.UserId == request.UserId && pb.ProgramId == request.ProgramId, cancellationToken);
         if (balance is null)
         {
-            balance = new MilesManager.Domain.Programs.ProgramBalance
+            balance = new Domain.Programs.ProgramBalance
             {
                 UserId = request.UserId,
                 ProgramId = request.ProgramId,

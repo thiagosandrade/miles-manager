@@ -1,40 +1,33 @@
+using AutoMapper;
 using MediatR;
 using MilesManager.Application.Common;
 using MilesManager.Application.Features.Users.Abstractions;
-using MilesManager.Application.Features.Users.Models;
+using MilesManager.Application.Features.Users.DTOs;
 using MilesManager.Domain.Users;
 
 namespace MilesManager.Application.Features.Users.Commands.CreateUser;
 
-public sealed class CreateUserHandler(IUserRepository userRepository, IPasswordHasher passwordHasher) : IRequestHandler<CreateUserCommand, Result<UserDetails>>
+public sealed class CreateUserHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IMapper mapper) : IRequestHandler<CreateUserCommand, Result<UserDetailsDTO>>
 {
-    private readonly IUserRepository _userRepository = userRepository;
-    private readonly IPasswordHasher _passwordHasher = passwordHasher;
-
-    public async Task<Result<UserDetails>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<UserDetailsDTO>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var normalizedEmail = request.Email.Trim().ToLowerInvariant();
-        var existing = await _userRepository.GetByEmailAsync(normalizedEmail, cancellationToken);
+        var existing = await userRepository.GetByEmailAsync(normalizedEmail, cancellationToken);
         if (existing is not null)
         {
-            return Result<UserDetails>.Conflict();
+            return Result<UserDetailsDTO>.Conflict();
         }
 
         var user = new AppUser
         {
             Email = normalizedEmail,
             FullName = request.FullName.Trim(),
-            PasswordHash = _passwordHasher.HashPassword(request.Password)
+            PasswordHash = passwordHasher.HashPassword(request.Password)
         };
 
-        await _userRepository.AddAsync(user, cancellationToken);
-        await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await userRepository.AddAsync(user, cancellationToken);
+        await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Result<UserDetails>.Success(ToDetails(user));
-    }
-
-    private static UserDetails ToDetails(AppUser user)
-    {
-        return new UserDetails(user.Id, user.Email, user.FullName, user.IsActive, user.CreatedAtUtc, user.UpdatedAtUtc, user.LastLoginAtUtc);
+        return Result<UserDetailsDTO>.Success(mapper.Map<AppUser,UserDetailsDTO>(user));
     }
 }

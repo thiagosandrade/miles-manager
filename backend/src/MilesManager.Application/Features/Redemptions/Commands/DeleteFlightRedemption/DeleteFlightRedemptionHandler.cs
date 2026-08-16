@@ -20,7 +20,7 @@ public sealed class DeleteFlightRedemptionHandler(IApplicationDbContext context)
         var balance = await _context.ProgramBalances.FirstOrDefaultAsync(pb => pb.UserId == redemption.UserId && pb.ProgramId == redemption.ProgramId, cancellationToken);
         if (balance is null)
         {
-            balance = new MilesManager.Domain.Programs.ProgramBalance
+            balance = new Domain.Programs.ProgramBalance
             {
                 UserId = redemption.UserId,
                 ProgramId = redemption.ProgramId,

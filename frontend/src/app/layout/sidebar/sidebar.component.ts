@@ -1,10 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+
+import { UserApiService } from '../../features/user/user-api.service';
+import { TokenStorageService } from '../../core/services/token-storage.service';
 
 @Component({
   standalone: true,
@@ -21,8 +24,15 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
+
   @Input() opened = false;
   @Output() closeSidenav = new EventEmitter<void>();
+
+  private readonly storageService = inject(TokenStorageService);
+
+  private readonly storage = inject(TokenStorageService);
+
+  readonly isAdministrator = this.storage.isAdministrator();
 
   navigation = [
     {
@@ -33,7 +43,14 @@ export class SidebarComponent {
     {
       path: '/users',
       label: 'sidebar.users',
-      icon: 'person'
+      icon: 'person',
+      adminOnly: true
+    },
+    {
+      path: '/user-roles',
+      label: 'sidebar.user-roles',
+      icon: 'admin_panel_settings',
+      adminOnly: true
     },
     {
       path: '/programs',
@@ -62,7 +79,18 @@ export class SidebarComponent {
     }
   ];
 
-  onClose(): void {
-    this.closeSidenav.emit();
+  get visibleNavigation() {
+
+    return this.navigation.filter(item =>
+      !item.adminOnly || this.isAdministrator
+    );
+
   }
+
+  onClose(): void {
+
+    this.closeSidenav.emit();
+
+  }
+
 }

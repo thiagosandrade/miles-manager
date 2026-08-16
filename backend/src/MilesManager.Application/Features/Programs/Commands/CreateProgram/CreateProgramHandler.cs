@@ -17,7 +17,7 @@ public sealed class CreateProgramHandler(IApplicationDbContext context) : IReque
             return Result<Guid>.Conflict("Program code already exists.");
         }
 
-        var program = new MilesManager.Domain.Programs.LoyaltyProgram
+        var program = new Domain.Programs.LoyaltyProgram
         {
             Name = request.Name?.Trim() ?? string.Empty,
             ProgramCode = request.ProgramCode?.Trim() ?? string.Empty,

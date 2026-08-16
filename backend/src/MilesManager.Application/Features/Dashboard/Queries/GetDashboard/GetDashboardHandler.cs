@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MilesManager.Application.Features.Dashboard.Queries.GetDashboard;
 
-public sealed class GetDashboardHandler(IApplicationDbContext context, IMapper mapper) : IRequestHandler<GetDashboardQuery, MilesManager.Application.Features.Dashboard.DTOs.DashboardDto>
+public sealed class GetDashboardHandler(IApplicationDbContext context, IMapper mapper) : IRequestHandler<GetDashboardQuery, DTOs.DashboardDto>
 {
     private readonly IApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<MilesManager.Application.Features.Dashboard.DTOs.DashboardDto> Handle(GetDashboardQuery request, CancellationToken cancellationToken)
+    public async Task<DTOs.DashboardDto> Handle(GetDashboardQuery request, CancellationToken cancellationToken)
     {
         var balances = await _context.ProgramBalances.AsNoTracking().ToListAsync(cancellationToken);
         var totalMiles = balances.Sum(b => b.Balance);
@@ -36,28 +36,28 @@ public sealed class GetDashboardHandler(IApplicationDbContext context, IMapper m
         var currentLoss = profit < 0 ? -profit : 0m;
 
         var programs = await _context.ProgramBalances.AsNoTracking()
-            .ProjectTo<MilesManager.Application.Features.Programs.DTOs.ProgramBalanceDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<Programs.DTOs.ProgramBalanceDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
         var recentPurchases = (await _context.MileagePurchases.AsNoTracking()
             .OrderByDescending(p => p.PurchaseDate)
-            .ProjectTo<MilesManager.Application.Features.Purchases.DTOs.MileagePurchaseDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<Purchases.DTOs.MileagePurchaseDto>(_mapper.ConfigurationProvider)
             .Take(5)
             .ToListAsync(cancellationToken)).Cast<object>().ToList();
 
         var recentTransfers = (await _context.MileageTransfers.AsNoTracking()
             .OrderByDescending(t => t.TransferDate)
-            .ProjectTo<MilesManager.Application.Features.Transfers.DTOs.MileageTransferDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<Transfers.DTOs.MileageTransferDto>(_mapper.ConfigurationProvider)
             .Take(5)
             .ToListAsync(cancellationToken)).Cast<object>().ToList();
 
         var recentRedemptions = (await _context.FlightRedemptions.AsNoTracking()
             .OrderByDescending(r => r.FlightDate)
-            .ProjectTo<MilesManager.Application.Features.Redemptions.DTOs.FlightRedemptionDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<Redemptions.DTOs.FlightRedemptionDto>(_mapper.ConfigurationProvider)
             .Take(5)
             .ToListAsync(cancellationToken)).Cast<object>().ToList();
 
-        var dto = new MilesManager.Application.Features.Dashboard.DTOs.DashboardDto
+        var dto = new DTOs.DashboardDto
         {
             TotalMiles = totalMiles,
             TotalInvestment = totalInvestment,

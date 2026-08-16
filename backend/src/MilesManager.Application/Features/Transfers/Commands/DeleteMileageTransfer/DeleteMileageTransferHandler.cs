@@ -27,7 +27,7 @@ public sealed class DeleteMileageTransferHandler(IApplicationDbContext context) 
 
         if (originBalance is null)
         {
-            originBalance = new MilesManager.Domain.Programs.ProgramBalance
+            originBalance = new Domain.Programs.ProgramBalance
             {
                 UserId = transfer.UserId,
                 ProgramId = transfer.OriginProgramId,

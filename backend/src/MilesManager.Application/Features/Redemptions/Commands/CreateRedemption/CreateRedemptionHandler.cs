@@ -25,7 +25,7 @@ public sealed class CreateRedemptionHandler(IApplicationDbContext context) : IRe
 
         balance.Balance -= request.MilesUsed;
 
-        var redemption = new MilesManager.Domain.Redemptions.FlightRedemption
+        var redemption = new Domain.Redemptions.FlightRedemption
         {
             UserId = request.UserId,
             ProgramId = request.ProgramId,

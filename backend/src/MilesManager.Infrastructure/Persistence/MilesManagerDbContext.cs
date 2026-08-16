@@ -1,5 +1,4 @@
 using MilesManager.Application.Abstractions;
-using MilesManager.Application.Features.Users.Abstractions;
 using MilesManager.Domain.Trips;
 using MilesManager.Domain.Users;
 using MilesManager.Domain.Programs;
@@ -18,7 +17,8 @@ public sealed class MilesManagerDbContext(DbContextOptions<MilesManagerDbContext
 {
     public DbSet<Trip> Trips => Set<Trip>();
     public DbSet<AppUser> Users => Set<AppUser>();
-    public DbSet<UserPreferences> UserPreferences => Set<UserPreferences>();
+    public DbSet<UserRole> UserRoles => Set<UserRole>();
+    public DbSet<Role> Roles => Set<Role>();
     public DbSet<LoyaltyProgram> Programs => Set<LoyaltyProgram>();
     public DbSet<ProgramBalance> ProgramBalances => Set<ProgramBalance>();
     public DbSet<MileagePurchase> MileagePurchases => Set<MileagePurchase>();

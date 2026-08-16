@@ -18,18 +18,29 @@ public sealed class UserRepository(MilesManagerDbContext dbContext) : IUserRepos
 
     public async Task<AppUser?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        return await _dbContext.Users
+            .Include(x => x.UserRoles)
+            .ThenInclude(x => x.Role)
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
     public async Task<AppUser?> GetByEmailAsync(string email, CancellationToken cancellationToken)
     {
         var normalized = email.Trim().ToLowerInvariant();
-        return await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == normalized, cancellationToken);
+        return await _dbContext.Users
+            .Include (x => x.UserRoles)
+            .ThenInclude (x => x.Role)
+            .FirstOrDefaultAsync(x => x.Email == normalized, cancellationToken);
     }
 
     public async Task<IReadOnlyList<AppUser>> ListAsync(CancellationToken cancellationToken)
     {
-        return await _dbContext.Users.AsNoTracking().OrderBy(x => x.Email).ToListAsync(cancellationToken);
+        return await _dbContext.Users
+            .Include(x => x.UserRoles)
+            .ThenInclude(x => x.Role)
+            .AsNoTracking()
+            .OrderBy(x => x.Email)
+            .ToListAsync(cancellationToken);
     }
 
     public void Remove(AppUser user)

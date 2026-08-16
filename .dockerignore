@@ -1,0 +1,28 @@
+# Git
+.git
+.gitignore
+
+# Visual Studio
+.vs
+.vscode
+
+# Frontend
+frontend/node_modules
+frontend/dist
+frontend/.angular
+frontend/.cache
+
+# Backend
+backend/**/bin
+backend/**/obj
+backend/TestResults
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml

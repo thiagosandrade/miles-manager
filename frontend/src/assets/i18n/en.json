@@ -61,7 +61,10 @@
     "website": "Website",
     "logoUrl": "Logo URL",
     "programCode": "Program Code",
-    "fullName": "Full Name"
+    "fullName": "Full Name",
+    "canceled": "Canceled",
+    "completed": "Completed",
+    "pending": "Pending"
   },
   "toolbar": {
     "title": "Miles Manager",
@@ -74,6 +77,7 @@
   "sidebar": {
     "dashboard": "Dashboard",
     "users": "Users",
+    "user-roles": "User Roles",
     "programs": "Programs",
     "programBalances": "Program Balances",
     "purchases": "Purchases",
@@ -85,6 +89,7 @@
     "eyebrow": "Overview",
     "title": "Dashboard",
     "subtitle": "Track mileage activity, value and recent movement across your loyalty programs.",
+    "redemption-miles":"miles",
     "metrics": {
       "totalMiles": "Total Miles",
       "investment": "Investment",
@@ -117,6 +122,7 @@
       "status": "Status",
       "created": "Created",
       "lastLogin": "Last Login",
+      "lastUpdated": "Last Updated",
       "accountInformation": "Account Information",
       "userId": "User ID"
     },
@@ -321,6 +327,7 @@
       "emptyTitle": "No transfers found",
       "emptyDescription": "Create your first mileage transfer.",
       "sourceProgram": "Source Program",
+      "destinationProgram": "Destination Program",
       "columns": {
         "origin": "Origin",
         "destination": "Destination",
@@ -406,6 +413,38 @@
     },
     "messages": {
       "loadError": "Could not load redemptions. Please try again later."
+    }
+  },
+  "userRoles": {
+    "page": {
+      "eyebrow": "Administration",
+      "title": "User Roles",
+      "subtitle": "Assign and manage roles for application users."
+    },
+    "metrics": {
+      "totalUsers": "Total Users"
+    },
+    "table": {
+      "title": "User Roles",
+      "subtitle": "Assignments",
+      "emptyTitle": "No users found",
+      "emptyDescription": "Users will appear here when available.",
+      "columns": {
+        "user": "User",
+        "email": "Email",
+        "roles": "Roles"
+      }
+    },
+    "actions": {
+      "edit": "Manage roles"
+    },
+    "messages": {
+      "loadError": "Could not load users."
+    },
+    "dialog": {
+      "title": "Manage User Roles",
+      "subtitle": "Assign or remove roles for this user.",
+      "roles": "Roles"
     }
   }
 }

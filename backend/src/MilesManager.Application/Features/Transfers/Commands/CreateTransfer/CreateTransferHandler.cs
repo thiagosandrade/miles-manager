@@ -29,7 +29,7 @@ public sealed class CreateTransferHandler(IApplicationDbContext context) : IRequ
         var destinationBalance = await _context.ProgramBalances.FirstOrDefaultAsync(pb => pb.UserId == request.UserId && pb.ProgramId == request.DestinationProgramId, cancellationToken);
         if (destinationBalance is null)
         {
-            destinationBalance = new MilesManager.Domain.Programs.ProgramBalance
+            destinationBalance = new Domain.Programs.ProgramBalance
             {
                 UserId = request.UserId,
                 ProgramId = request.DestinationProgramId,
@@ -42,7 +42,7 @@ public sealed class CreateTransferHandler(IApplicationDbContext context) : IRequ
             destinationBalance.Balance += request.MilesReceived;
         }
 
-        var transfer = new MilesManager.Domain.Transfers.MileageTransfer
+        var transfer = new Domain.Transfers.MileageTransfer
         {
             UserId = request.UserId,
             OriginProgramId = request.OriginProgramId,
