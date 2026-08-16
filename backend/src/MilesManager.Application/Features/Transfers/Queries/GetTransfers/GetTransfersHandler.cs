@@ -4,18 +4,20 @@ using MilesManager.Application.Abstractions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using MilesManager.Application.Context;
 
 namespace MilesManager.Application.Features.Transfers.Queries.GetTransfers;
 
-public sealed class GetTransfersHandler(IApplicationDbContext context, IMapper mapper) : IRequestHandler<GetTransfersQuery, Result<IReadOnlyList<DTOs.MileageTransferDto>>>
+public sealed class GetTransfersHandler(IApplicationDbContext context, IMapper mapper, ICurrentUser currentUser) : IRequestHandler<GetTransfersQuery, Result<IReadOnlyList<DTOs.MileageTransferDto>>>
 {
-    private readonly IApplicationDbContext _context = context;
-    private readonly IMapper _mapper = mapper;
-
     public async Task<Result<IReadOnlyList<DTOs.MileageTransferDto>>> Handle(GetTransfersQuery request, CancellationToken cancellationToken)
     {
-        var items = await _context.MileageTransfers.AsNoTracking()
-            .ProjectTo<DTOs.MileageTransferDto>(_mapper.ConfigurationProvider)
+        var loggedUserId = currentUser.UserId;
+
+        var items = await context.MileageTransfers
+            .Where(x => x.UserId ==  loggedUserId)
+            .AsNoTracking()
+            .ProjectTo<DTOs.MileageTransferDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
         return Result<IReadOnlyList<DTOs.MileageTransferDto>>.Success(items);

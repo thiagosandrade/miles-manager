@@ -1,12 +1,13 @@
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using MilesManager.Api.Data;
 using MilesManager.Api.Middleware;
 using MilesManager.Api.Presentation;
-using MilesManager.Api.Data;
 using MilesManager.Application;
+using MilesManager.Application.Context;
 using MilesManager.Infrastructure;
 using System.Security.Claims;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,10 @@ builder.Services.AddCors(options =>
         .WithOrigins("http://localhost:4200", "https://9cnmnz5x-4200.euw.devtunnels.ms")
         .AllowAnyHeader().AllowAnyMethod());
 });
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
 var app = builder.Build();
 

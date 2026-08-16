@@ -3,23 +3,23 @@ using MilesManager.Application.Abstractions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using MilesManager.Application.Context;
 
 namespace MilesManager.Application.Features.Dashboard.Queries.GetDashboard;
 
-public sealed class GetDashboardHandler(IApplicationDbContext context, IMapper mapper) : IRequestHandler<GetDashboardQuery, DTOs.DashboardDto>
+public sealed class GetDashboardHandler(IApplicationDbContext context, IMapper mapper, ICurrentUser currentUser) : IRequestHandler<GetDashboardQuery, DTOs.DashboardDto>
 {
-    private readonly IApplicationDbContext _context = context;
-    private readonly IMapper _mapper = mapper;
-
     public async Task<DTOs.DashboardDto> Handle(GetDashboardQuery request, CancellationToken cancellationToken)
     {
-        var balances = await _context.ProgramBalances.AsNoTracking().ToListAsync(cancellationToken);
+        var userLoggedId = currentUser.UserId;
+
+        var balances = await context.ProgramBalances.Where(x => x.UserId == userLoggedId).AsNoTracking().ToListAsync(cancellationToken);
         var totalMiles = balances.Sum(b => b.Balance);
 
-        var totalInvestment = await _context.MileagePurchases.AsNoTracking().SumAsync(p => p.AmountPaid, cancellationToken);
+        var totalInvestment = await context.MileagePurchases.Where(x => x.UserId == userLoggedId).AsNoTracking().SumAsync(p => p.AmountPaid, cancellationToken);
         var averageCostPerThousand = totalMiles > 0 ? totalInvestment / (totalMiles / 1000m) : 0m;
 
-        var prices = await _context.ReferenceMileagePrices.AsNoTracking().ToListAsync(cancellationToken);
+        var prices = await context.ReferenceMileagePrices.AsNoTracking().ToListAsync(cancellationToken);
         var latestPriceByProgram = prices.GroupBy(p => p.ProgramId).ToDictionary(g => g.Key, g => g.OrderByDescending(x => x.EffectiveDate).First().PricePerThousand);
 
         decimal currentMarketValue = 0m;
@@ -35,25 +35,25 @@ public sealed class GetDashboardHandler(IApplicationDbContext context, IMapper m
         var currentProfit = profit > 0 ? profit : 0m;
         var currentLoss = profit < 0 ? -profit : 0m;
 
-        var programs = await _context.ProgramBalances.AsNoTracking()
-            .ProjectTo<Programs.DTOs.ProgramBalanceDto>(_mapper.ConfigurationProvider)
+        var programs = await context.ProgramBalances.Where(x => x.UserId == userLoggedId).AsNoTracking()
+            .ProjectTo<Programs.DTOs.ProgramBalanceDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        var recentPurchases = (await _context.MileagePurchases.AsNoTracking()
+        var recentPurchases = (await context.MileagePurchases.Where(x => x.UserId == userLoggedId).AsNoTracking()
             .OrderByDescending(p => p.PurchaseDate)
-            .ProjectTo<Purchases.DTOs.MileagePurchaseDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<Purchases.DTOs.MileagePurchaseDto>(mapper.ConfigurationProvider)
             .Take(5)
             .ToListAsync(cancellationToken)).Cast<object>().ToList();
 
-        var recentTransfers = (await _context.MileageTransfers.AsNoTracking()
+        var recentTransfers = (await context.MileageTransfers.Where(x => x.UserId == userLoggedId).AsNoTracking()
             .OrderByDescending(t => t.TransferDate)
-            .ProjectTo<Transfers.DTOs.MileageTransferDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<Transfers.DTOs.MileageTransferDto>(mapper.ConfigurationProvider)
             .Take(5)
             .ToListAsync(cancellationToken)).Cast<object>().ToList();
 
-        var recentRedemptions = (await _context.FlightRedemptions.AsNoTracking()
+        var recentRedemptions = (await context.FlightRedemptions.Where(x => x.UserId == userLoggedId).AsNoTracking()
             .OrderByDescending(r => r.FlightDate)
-            .ProjectTo<Redemptions.DTOs.FlightRedemptionDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<Redemptions.DTOs.FlightRedemptionDto>(mapper.ConfigurationProvider)
             .Take(5)
             .ToListAsync(cancellationToken)).Cast<object>().ToList();
 
