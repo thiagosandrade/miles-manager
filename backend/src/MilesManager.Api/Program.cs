@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MilesManager.Api.Data;
 using MilesManager.Api.Middleware;
@@ -6,6 +7,7 @@ using MilesManager.Api.Presentation;
 using MilesManager.Application;
 using MilesManager.Application.Context;
 using MilesManager.Infrastructure;
+using MilesManager.Infrastructure.Persistence;
 using System.Security.Claims;
 using System.Text;
 
@@ -66,6 +68,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<MilesManagerDbContext>();
+
+    await dbContext.Database.MigrateAsync();
+}
 
 await SeedData.InitializeAsync(app.Services, CancellationToken.None);
 await SeedDataAirports.InitializeAsync(app.Services, CancellationToken.None);
