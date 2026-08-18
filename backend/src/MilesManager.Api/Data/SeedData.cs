@@ -117,7 +117,8 @@ public static class SeedData
                 RoleId = adminRoleId,
                 UserId = adminId
             };
-            
+
+            await context.UserRoles.AddAsync(userRole, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
         }
 
