@@ -1,12 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnDestroy,
+  inject
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
 
-import { UserApiService } from '../../features/user/user-api.service';
 import { TokenStorageService } from '../../core/services/token-storage.service';
 
 @Component({
@@ -23,14 +33,22 @@ import { TokenStorageService } from '../../core/services/token-storage.service';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit, OnDestroy {
 
   @Input() opened = false;
+
   @Output() closeSidenav = new EventEmitter<void>();
 
   private readonly storage = inject(TokenStorageService);
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
+  private breakpointSubscription?: Subscription;
 
   readonly isAdministrator = this.storage.isAdministrator();
+
+  isMobile = false;
+
+  sidenavMode: 'side' | 'over' = 'side';
 
   navigation = [
     {
@@ -77,18 +95,32 @@ export class SidebarComponent {
     }
   ];
 
-  get visibleNavigation() {
+  ngOnInit(): void {
+    this.breakpointSubscription =
+      this.breakpointObserver
+        .observe('(max-width: 768px)')
+        .subscribe(result => {
 
+          this.isMobile = result.matches;
+
+          this.sidenavMode = this.isMobile
+            ? 'over'
+            : 'side';
+
+        });
+  }
+
+  ngOnDestroy(): void {
+    this.breakpointSubscription?.unsubscribe();
+  }
+
+  get visibleNavigation() {
     return this.navigation.filter(item =>
       !item.adminOnly || this.isAdministrator
     );
-
   }
 
   onClose(): void {
-
     this.closeSidenav.emit();
-
   }
-
 }

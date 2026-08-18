@@ -1,1 +1,129 @@
 @use '../../../styles/pages';
+
+/* ==========================================================
+   Users Table
+========================================================== */
+
+.desktop-table {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.desktop-table table {
+  width: 100%;
+}
+
+
+/* ==========================================================
+   Mobile Users
+========================================================== */
+
+.mobile-users {
+  display: none;
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 768px) {
+
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-users {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .user-card {
+    padding: 16px;
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    box-shadow: var(--shadow-sm);
+  }
+
+  .user-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+  }
+
+  .user-card-header .user-info {
+    min-width: 0;
+  }
+
+  .user-card-header .user-details {
+    min-width: 0;
+  }
+
+  .user-card-header .user-details strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .user-card-header .user-details span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .user-card-email {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 16px;
+    padding-top: 14px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--muted);
+
+    min-width: 0;
+  }
+
+  .user-card-email mat-icon {
+    width: 20px;
+    height: 20px;
+
+    font-size: 20px;
+
+    flex-shrink: 0;
+  }
+
+  .user-card-email span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .user-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-top: 14px;
+  }
+
+  .user-card-date {
+    color: var(--muted);
+    font-size: .8rem;
+    text-align: right;
+  }
+
+}

@@ -1,5 +1,8 @@
-.app-toolbar {
+/* ==========================================================
+   Toolbar
+========================================================== */
 
+.app-toolbar {
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -20,39 +23,78 @@
     box-shadow .25s ease;
 }
 
+
+/* ==========================================================
+   Toolbar Left
+========================================================== */
+
 .toolbar-left {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
+
+
+/* ==========================================================
+   Logo
+========================================================== */
 
 .logo {
   height: 42px;
+  width: auto;
 }
+
+
+/* ==========================================================
+   Spacer
+========================================================== */
 
 .spacer {
   flex: 1;
 }
 
-.menu-button {
+
+/* ==========================================================
+   Sidenav Button
+========================================================== */
+
+.sidenav-button {
+  display: none;
 
   color: white;
-
   border-radius: 10px;
 
-  transition: background .2s ease;
+  transition:
+    background .2s ease;
+}
+
+.sidenav-button:hover {
+  background: rgba(255, 255, 255, .12);
+}
+
+
+/* ==========================================================
+   User Menu Button
+========================================================== */
+
+.menu-button {
+  color: white;
+  border-radius: 10px;
+
+  transition:
+    background .2s ease;
 }
 
 .menu-button:hover {
-
-  background: rgba(255,255,255,.12);
+  background: rgba(255, 255, 255, .12);
 }
 
-/* =======================================================
+
+/* ==========================================================
    User Menu
-   ======================================================= */
+========================================================== */
 
 ::ng-deep .user-menu-panel {
-
   width: 300px;
 
   margin-top: 10px;
@@ -62,7 +104,6 @@
   overflow: hidden;
 
   background: var(--panel);
-
   color: var(--ink);
 
   box-shadow: var(--shadow) !important;
@@ -70,19 +111,28 @@
   border: 1px solid var(--border);
 }
 
-.menu-header {
 
+/* ==========================================================
+   Menu Header
+========================================================== */
+
+.menu-header {
   display: flex;
   align-items: center;
+
   gap: 16px;
 
   padding: 22px;
 
-  background: color-mix(in srgb, var(--mm-primary) 6%, transparent);
+  background:
+    color-mix(
+      in srgb,
+      var(--mm-primary) 6%,
+      transparent
+    );
 }
 
 .menu-avatar {
-
   width: 54px;
   height: 54px;
 
@@ -99,11 +149,12 @@
 
   color: white;
 
-  background: linear-gradient(
-    135deg,
-    var(--mm-primary),
-    var(--mm-secondary)
-  );
+  background:
+    linear-gradient(
+      135deg,
+      var(--mm-primary),
+      var(--mm-secondary)
+    );
 }
 
 .menu-user {
@@ -111,7 +162,6 @@
 }
 
 .menu-user-name {
-
   color: var(--ink);
 
   font-size: 1rem;
@@ -119,7 +169,6 @@
 }
 
 .menu-user-email {
-
   margin-top: 4px;
 
   color: var(--muted);
@@ -131,12 +180,12 @@
   white-space: nowrap;
 }
 
-/* =======================================================
+
+/* ==========================================================
    Menu Items
-   ======================================================= */
+========================================================== */
 
 ::ng-deep .user-menu-panel .mat-mdc-menu-item {
-
   height: 50px;
 
   padding: 0 18px;
@@ -149,84 +198,88 @@
 }
 
 ::ng-deep .user-menu-panel .mat-mdc-menu-item mat-icon {
-
   color: var(--muted);
 
-  transition: color .2s ease;
+  transition:
+    color .2s ease;
 }
 
 ::ng-deep .user-menu-panel .mat-mdc-menu-item:hover {
-
-  background: rgba(21,101,192,.08);
+  background: rgba(21, 101, 192, .08);
 }
 
 ::ng-deep .user-menu-panel .mat-mdc-menu-item:hover mat-icon {
-
   color: var(--mm-primary);
 }
+
+
+/* ==========================================================
+   Menu Helpers
+========================================================== */
 
 .menu-spacer {
   flex: 1;
 }
 
-.chevron {
-
-  color: var(--muted);
-
-  font-size: 18px;
-
-  opacity: .6;
-}
-
-/* =======================================================
-   Logout
-   ======================================================= */
-
-.logout-item {
-
-  color: #dc2626 !important;
-}
-
-.logout-item mat-icon {
-
-  color: inherit !important;
-}
-
-.logout-item:hover {
-
-  background: rgba(220,38,38,.08) !important;
-}
-
-.logout-item:hover mat-icon {
-
-  color: #dc2626 !important;
-}
-
-
-/* =======================================================
-   Theme
-   ======================================================= */
-
 .current-language {
   color: var(--muted);
+
   font-size: .85rem;
   font-weight: 500;
 }
 
 .flag {
   width: 26px;
+
   text-align: center;
+
   margin-right: 12px;
+
   font-size: 18px;
 }
 
-.menu-spacer {
-  flex: 1;
+
+/* ==========================================================
+   Logout
+========================================================== */
+
+.logout-item {
+  color: #dc2626 !important;
+}
+
+.logout-item mat-icon {
+  color: inherit !important;
+}
+
+.logout-item:hover {
+  background: rgba(220, 38, 38, .08) !important;
+}
+
+.logout-item:hover mat-icon {
+  color: #dc2626 !important;
 }
 
 
-::ng-deep .mat-mdc-menu-item mat-icon {
+/* ==========================================================
+   Mobile
+========================================================== */
 
-  margin-left: auto;
+@media (max-width: 768px) {
 
+  .app-toolbar {
+    height: 56px;
+    padding: 0 12px;
+  }
+
+  .sidenav-button {
+    display: inline-flex;
+  }
+
+  .logo {
+    height: 36px;
+  }
+
+  ::ng-deep .user-menu-panel {
+    width: min(300px, calc(100vw - 24px));
+  }
 }

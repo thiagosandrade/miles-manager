@@ -1,10 +1,12 @@
-<app-toolbar (toggleSidenav)="toggleSidenav()"></app-toolbar>
+<app-toolbar
+  (sidenavToggle)="toggleSidenav()">
+</app-toolbar>
 
 <div class="layout-container">
 
   <app-sidebar
     [opened]="sidenavOpenedSignal()"
-    (closeSidenav)="toggleSidenav()">
+    (closeSidenav)="closeSidenav()">
   </app-sidebar>
 
   <main class="main-content">

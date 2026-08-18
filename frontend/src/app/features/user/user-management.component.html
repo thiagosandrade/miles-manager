@@ -91,22 +91,14 @@
   <!-- Table -->
 
   <app-table
-
     [title]="'users.table.title' | translate"
     [subtitle]="'users.table.subtitle' | translate"
-
     [loading]="isLoadingResults"
-
     [dataSource]="data"
-
     [length]="data.length"
-
     [showPaginator]="false"
-
     emptyIcon="group_off"
-
     [emptyTitle]="'users.table.emptyTitle' | translate"
-
     [emptyDescription]="'users.table.emptyDescription' | translate">
 
     <!-- Empty State -->
@@ -120,90 +112,220 @@
       <mat-icon>person_add</mat-icon>
 
       <span>
-
         {{ 'users.page.newUser' | translate }}
-
       </span>
 
     </button>
 
-    <!-- Material Table -->
 
-    <table
-      mat-table
-      [dataSource]="data">
+    <!-- ========================================================
+        Desktop Table
+    ========================================================= -->
 
-      <!-- User -->
+    <div class="desktop-table">
 
-      <ng-container matColumnDef="user">
+      <table
+        mat-table
+        [dataSource]="data">
 
-        <th mat-header-cell *matHeaderCellDef>
+        <!-- User -->
 
-          {{ 'users.table.columns.user' | translate }}
+        <ng-container matColumnDef="user">
 
-        </th>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'users.table.columns.user' | translate }}
+          </th>
 
-        <td mat-cell *matCellDef="let user">
+          <td mat-cell *matCellDef="let user">
+
+            <div class="user-info">
+
+              <div class="avatar">
+                {{ user.fullName.charAt(0) | uppercase }}
+              </div>
+
+              <div class="user-details">
+
+                <strong>
+                  {{ user.fullName }}
+                </strong>
+
+                <span>
+                  {{ user.id }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- Email -->
+
+        <ng-container matColumnDef="email">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'users.table.columns.email' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let user">
+            {{ user.email }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Status -->
+
+        <ng-container matColumnDef="status">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'users.table.columns.status' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let user">
+
+            <span
+              class="status-pill"
+              [class.inactive]="!user.isActive">
+
+              <span class="status-dot"></span>
+
+              {{
+                user.isActive
+                  ? ('common.active' | translate)
+                  : ('common.inactive' | translate)
+              }}
+
+            </span>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- Created -->
+
+        <ng-container matColumnDef="created">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'users.table.columns.createdAt' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let user">
+            {{ formatDate(user.createdAtUtc) }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Actions -->
+
+        <ng-container matColumnDef="actions">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="actions-column">
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let user"
+            class="actions-column">
+
+            <button
+              class="icon-button danger"
+              type="button"
+              [attr.aria-label]="'users.actions.delete' | translate"
+              (click)="deleteUser(user)"
+              [disabled]="isLoadingResults">
+
+              <mat-icon>delete</mat-icon>
+
+            </button>
+
+          </td>
+
+        </ng-container>
+
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns">
+        </tr>
+
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+
+      </table>
+
+    </div>
+
+
+    <!-- ========================================================
+        Mobile Cards
+    ========================================================= -->
+
+    <div class="mobile-users">
+
+      <article
+        class="user-card"
+        *ngFor="let user of data">
+
+        <div class="user-card-header">
 
           <div class="user-info">
 
             <div class="avatar">
-
               {{ user.fullName.charAt(0) | uppercase }}
-
             </div>
 
             <div class="user-details">
 
               <strong>
-
                 {{ user.fullName }}
-
               </strong>
 
               <span>
-
                 {{ user.id }}
-
               </span>
 
             </div>
 
           </div>
 
-        </td>
+          <button
+            class="icon-button danger"
+            type="button"
+            [attr.aria-label]="'users.actions.delete' | translate"
+            (click)="deleteUser(user)"
+            [disabled]="isLoadingResults">
 
-      </ng-container>
+            <mat-icon>delete</mat-icon>
 
-      <!-- Email -->
+          </button>
 
-      <ng-container matColumnDef="email">
+        </div>
 
-        <th mat-header-cell *matHeaderCellDef>
 
-          {{ 'users.table.columns.email' | translate }}
+        <div class="user-card-email">
 
-        </th>
+          <mat-icon>email</mat-icon>
 
-        <td mat-cell *matCellDef="let user">
+          <span>
+            {{ user.email }}
+          </span>
 
-          {{ user.email }}
+        </div>
 
-        </td>
 
-      </ng-container>
-
-      <!-- Status -->
-
-      <ng-container matColumnDef="status">
-
-        <th mat-header-cell *matHeaderCellDef>
-
-          {{ 'users.table.columns.status' | translate }}
-
-        </th>
-
-        <td mat-cell *matCellDef="let user">
+        <div class="user-card-footer">
 
           <span
             class="status-pill"
@@ -219,70 +341,15 @@
 
           </span>
 
-        </td>
+          <span class="user-card-date">
+            {{ formatDate(user.createdAtUtc) }}
+          </span>
 
-      </ng-container>
+        </div>
 
-      <!-- Created -->
+      </article>
 
-      <ng-container matColumnDef="created">
-
-        <th mat-header-cell *matHeaderCellDef>
-
-          {{ 'users.table.columns.createdAt' | translate }}
-
-        </th>
-
-        <td mat-cell *matCellDef="let user">
-
-          {{ formatDate(user.createdAtUtc) }}
-
-        </td>
-
-      </ng-container>
-
-      <!-- Actions -->
-
-      <ng-container matColumnDef="actions">
-
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          class="actions-column">
-
-        </th>
-
-        <td
-          mat-cell
-          *matCellDef="let user"
-          class="actions-column">
-
-          <button
-            class="icon-button danger"
-            type="button"
-            [attr.aria-label]="'users.actions.delete' | translate"
-            (click)="deleteUser(user)"
-            [disabled]="isLoadingResults">
-
-            <mat-icon>delete</mat-icon>
-
-          </button>
-
-        </td>
-
-      </ng-container>
-
-      <tr
-        mat-header-row
-        *matHeaderRowDef="displayedColumns">
-      </tr>
-
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns;">
-      </tr>
-
-    </table>
+    </div>
 
   </app-table>
 

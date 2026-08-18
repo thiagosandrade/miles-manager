@@ -1,43 +1,62 @@
+/* ==========================================================
+   Sidenav Container
+========================================================== */
+
 .sidenav-container {
   height: 100%;
   background: transparent;
 }
 
+
+/* ==========================================================
+   Sidenav
+========================================================== */
+
 .app-sidenav {
+  width: 240px;
 
   margin-top: 64px;
-
   height: calc(100vh - 64px);
+
+  background: var(--panel);
 }
+
+
+/* ==========================================================
+   Navigation List
+========================================================== */
 
 .mat-mdc-nav-list {
   padding: 16px 12px;
 }
 
-.mat-mdc-list-item {
 
+/* ==========================================================
+   Navigation Items
+========================================================== */
+
+.mat-mdc-list-item {
   margin-bottom: 6px;
 
   border-radius: 12px;
 
   color: var(--ink);
 
-  transition: all .2s ease;
+  transition:
+    background-color .2s ease,
+    color .2s ease;
 }
 
 .mat-mdc-list-item:hover {
-
-  background: rgba(21,101,192,.08);
+  background: rgba(21, 101, 192, .08);
 }
 
 .mat-mdc-list-item mat-icon {
-
   color: var(--muted);
 }
 
 .active-link {
-
-  background: rgba(21,101,192,.12);
+  background: rgba(21, 101, 192, .12);
 
   color: var(--mm-primary);
 
@@ -45,6 +64,43 @@
 }
 
 .active-link mat-icon {
-
   color: var(--mm-primary);
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 768px) {
+
+  .app-sidenav {
+    width: 280px;
+
+    margin-top: 56px;
+    height: calc(100vh - 56px);
+  }
+
+  .mat-mdc-nav-list {
+    padding: 12px 10px;
+  }
+
+  .mat-mdc-list-item {
+    margin-bottom: 4px;
+  }
+
+}
+
+
+/* ==========================================================
+   Small Phones
+========================================================== */
+
+@media (max-width: 400px) {
+
+  .app-sidenav {
+    width: 85vw;
+    max-width: 280px;
+  }
+
 }

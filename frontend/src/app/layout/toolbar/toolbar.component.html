@@ -4,6 +4,18 @@
 
   <div class="toolbar-left">
 
+    <!-- Mobile sidebar button -->
+    <button
+      *ngIf="isMobile"
+      mat-icon-button
+      class="sidenav-button"
+      (click)="toggleSidenav()"
+      [attr.aria-label]="'toolbar.navigation' | translate">
+
+      <mat-icon>menu</mat-icon>
+
+    </button>
+
     <img
       src="assets/logo-icon.png"
       [attr.alt]="'toolbar.title' | translate"
@@ -13,17 +25,23 @@
 
   <span class="spacer"></span>
 
+  <!-- User menu -->
   <button
     mat-icon-button
     class="menu-button"
     [matMenuTriggerFor]="menu"
     [attr.aria-label]="'toolbar.menu' | translate">
 
-    <mat-icon>menu</mat-icon>
+    <mat-icon>account_circle</mat-icon>
 
   </button>
 
 </mat-toolbar>
+
+
+<!-- ==========================================================
+     User Menu
+========================================================== -->
 
 <mat-menu
   #menu="matMenu"
@@ -33,23 +51,17 @@
   <div class="menu-header">
 
     <div class="menu-avatar">
-
       {{ userName().charAt(0) | uppercase }}
-
     </div>
 
     <div class="menu-user">
 
       <div class="menu-user-name">
-
         {{ userName() }}
-
       </div>
 
       <div class="menu-user-email">
-
         {{ userEmail() }}
-
       </div>
 
     </div>
@@ -58,6 +70,9 @@
 
   <mat-divider></mat-divider>
 
+
+  <!-- Profile -->
+
   <button
     mat-menu-item
     (click)="userDetails()">
@@ -65,12 +80,13 @@
     <mat-icon>person</mat-icon>
 
     <span>
-
       {{ 'toolbar.profile' | translate }}
-
     </span>
 
   </button>
+
+
+  <!-- Language -->
 
   <button
     mat-menu-item
@@ -79,20 +95,17 @@
     <mat-icon>language</mat-icon>
 
     <span>
-
       {{ 'toolbar.language' | translate }}
-
     </span>
 
     <span class="menu-spacer"></span>
 
     <span class="current-language">
-
       {{ currentLanguageName }}
-
     </span>
 
   </button>
+
 
   <mat-menu #languageMenu="matMenu">
 
@@ -102,20 +115,17 @@
       (click)="changeLanguage(language.code)">
 
       <span class="flag">
-
         {{ language.flag }}
-
       </span>
 
       <span>
-
         {{ language.name }}
-
       </span>
 
       <span class="menu-spacer"></span>
 
-      <mat-icon *ngIf="currentLanguage === language.code">
+      <mat-icon
+        *ngIf="currentLanguage === language.code">
 
         check
 
@@ -125,7 +135,11 @@
 
   </mat-menu>
 
+
   <mat-divider></mat-divider>
+
+
+  <!-- Logout -->
 
   <button
     mat-menu-item
@@ -135,9 +149,7 @@
     <mat-icon>logout</mat-icon>
 
     <span>
-
       {{ 'toolbar.logout' | translate }}
-
     </span>
 
   </button>
