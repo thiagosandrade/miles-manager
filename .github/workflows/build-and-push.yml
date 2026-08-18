@@ -83,6 +83,6 @@ jobs:
           script_stop: true
           script: |
             cd ${{ env.VM_APP_DIR }}
-            docker compose -f docker-compose-vm.yml pull
-            docker compose -f docker-compose-vm.yml up -d
-            docker compose -f docker-compose-vm.yml ps
+            docker compose -f docker-compose.vm.yml pull
+            docker compose -f docker-compose.vm.yml up -d
+            docker compose -f docker-compose.vm.yml ps
