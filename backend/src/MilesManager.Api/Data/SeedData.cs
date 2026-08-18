@@ -33,6 +33,7 @@ public static class SeedData
             };
 
             await context.Programs.AddRangeAsync(programs, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
 
             var airports = new[]
             {
@@ -52,6 +53,7 @@ public static class SeedData
             };
 
             await context.Airports.AddRangeAsync(airports, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
 
             var programList = await context.Programs.AsNoTracking().ToListAsync(cancellationToken);
             var referencePrices = new[]
@@ -62,7 +64,6 @@ public static class SeedData
             };
 
             await context.ReferenceMileagePrices.AddRangeAsync(referencePrices, cancellationToken);
-
             await context.SaveChangesAsync(cancellationToken);
         }
 
@@ -92,6 +93,7 @@ public static class SeedData
             };
 
             await context.Users.AddRangeAsync(users, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
         }
 
         var adminRoleId = new Guid();
@@ -105,6 +107,7 @@ public static class SeedData
             };
 
             await context.Roles.AddRangeAsync(roleList, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
         }
 
         if (!await context.UserRoles.AnyAsync(cancellationToken))
@@ -114,8 +117,9 @@ public static class SeedData
                 RoleId = adminRoleId,
                 UserId = adminId
             };
+            
+            await context.SaveChangesAsync(cancellationToken);
         }
 
-        await context.SaveChangesAsync(cancellationToken);
     }
 }
