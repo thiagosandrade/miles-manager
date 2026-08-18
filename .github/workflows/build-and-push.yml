@@ -1,4 +1,4 @@
-name: Build and Push Docker Images
+name: Build and Deploy Docker Images
 
 on:
   push:
@@ -10,6 +10,7 @@ env:
   REGISTRY: us-central1-docker.pkg.dev
   PROJECT_ID: impactful-shard-137923
   REPOSITORY: miles-manager-containers
+  VM_APP_DIR: /home/thiagosoares_andrade/miles-manager
 
 jobs:
   build-and-push:
@@ -72,3 +73,16 @@ jobs:
         run: |
           docker push "${{ steps.images.outputs.frontend }}:latest"
           docker push "${{ steps.images.outputs.frontend }}:${{ steps.images.outputs.sha }}"
+
+      - name: Deploy to Google VM
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host: ${{ secrets.GCP_VM_HOST }}
+          username: ${{ secrets.GCP_VM_USER }}
+          key: ${{ secrets.GCP_VM_SSH_KEY }}
+          script_stop: true
+          script: |
+            cd ${{ env.VM_APP_DIR }}
+            docker compose -f docker-compose-vm.yml pull
+            docker compose -f docker-compose-vm.yml up -d
+            docker compose -f docker-compose-vm.yml ps
