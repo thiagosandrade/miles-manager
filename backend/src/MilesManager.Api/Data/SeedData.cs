@@ -69,7 +69,7 @@ public static class SeedData
 
 
         var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
-        var adminId = new Guid();
+        var adminId = Guid.NewGuid();
 
         if (!await context.Users.AnyAsync(cancellationToken))
         {
@@ -96,7 +96,7 @@ public static class SeedData
             await context.SaveChangesAsync(cancellationToken);
         }
 
-        var adminRoleId = new Guid();
+        var adminRoleId = Guid.NewGuid();
 
         if (!await context.Roles.AnyAsync(cancellationToken))
         {
