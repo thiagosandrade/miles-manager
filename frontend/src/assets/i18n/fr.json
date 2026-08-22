@@ -296,7 +296,8 @@
       "purchaseDate": "Date d'achat",
       "status": "Statut",
       "createButton": "Créer un achat",
-      "updateButton": "Mettre à jour l'achat"
+      "updateButton": "Mettre à jour l'achat",
+      "purchaseStatus": "Statut de l'achat"
     },
     "actions": {
       "edit": "Modifier l'achat",
@@ -404,7 +405,8 @@
       "cashPrice": "Prix en espèces",
       "effectiveCostPerThousand": "Coût / 1 000 miles",
       "createButton": "Créer une rédemption",
-      "updateButton": "Mettre à jour la rédemption"
+      "updateButton": "Mettre à jour la rédemption",
+      "roundTrip": "Aller-retour"
     },
     "actions": {
       "edit": "Modifier la rédemption",

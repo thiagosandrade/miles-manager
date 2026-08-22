@@ -1,5 +1,8 @@
-.app-footer {
+/* ==========================================================
+   Footer
+========================================================== */
 
+.app-footer {
   flex-shrink: 0;
 
   padding: 18px 28px;
@@ -7,7 +10,6 @@
   border-top: 1px solid var(--border);
 
   background: var(--panel);
-
   color: var(--muted);
 
   transition:
@@ -15,52 +17,108 @@
     border-color .25s ease;
 }
 
+
+/* ==========================================================
+   Footer Content
+========================================================== */
+
 .footer-content {
-
-  position: relative;
-
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+
+  gap: 24px;
 
   max-width: 1400px;
-
   margin: 0 auto;
 }
 
-.footer-center {
 
+/* ==========================================================
+   Center Content
+========================================================== */
+
+.footer-center {
   display: flex;
   align-items: center;
+
   gap: 12px;
+
+  min-width: 0;
 }
 
 .footer-brand {
-
   font-weight: 700;
-
   color: var(--ink);
+
+  white-space: nowrap;
 }
 
 .footer-divider {
-
   color: var(--border);
+
+  flex-shrink: 0;
 }
 
+.footer-center small {
+  white-space: nowrap;
+}
+
+
+/* ==========================================================
+   Version
+========================================================== */
+
 .footer-version {
-
-  position: absolute;
-
-  right: 0;
+  flex-shrink: 0;
 
   padding: 4px 10px;
 
   border-radius: 999px;
 
-  background: rgba(21,101,192,.08);
+  background: rgba(21, 101, 192, .08);
 
   color: var(--mm-primary);
 
   font-size: .75rem;
   font-weight: 600;
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 600px) {
+
+  .app-footer {
+    padding: 14px 16px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    text-align: center;
+  }
+
+  .footer-center {
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+  }
+
+  .footer-center small {
+    white-space: normal;
+  }
+
+  .footer-version {
+    font-size: .7rem;
+  }
+
 }

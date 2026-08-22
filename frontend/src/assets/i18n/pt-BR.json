@@ -296,7 +296,8 @@
       "purchaseDate": "Data da compra",
       "status": "Status",
       "createButton": "Criar compra",
-      "updateButton": "Atualizar compra"
+      "updateButton": "Atualizar compra",
+      "purchaseStatus": "Status da compra"
     },
     "actions": {
       "edit": "Editar compra",
@@ -404,7 +405,8 @@
       "cashPrice": "Preço em dinheiro",
       "effectiveCostPerThousand": "Custo / 1.000 milhas",
       "createButton": "Criar resgate",
-      "updateButton": "Atualizar resgate"
+      "updateButton": "Atualizar resgate",
+      "roundTrip": "Ida e volta"
     },
     "actions": {
       "edit": "Editar resgate",

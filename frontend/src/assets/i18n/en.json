@@ -297,7 +297,8 @@
       "purchaseDate": "Purchase Date",
       "status": "Status",
       "createButton": "Create Purchase",
-      "updateButton": "Update Purchase"
+      "updateButton": "Update Purchase",
+      "purchaseStatus": "Purchase Status"
     },
     "actions": {
       "edit": "Edit purchase",
@@ -405,7 +406,8 @@
       "cashPrice": "Cash Price",
       "effectiveCostPerThousand": "Cost / 1,000 Miles",
       "createButton": "Create Redemption",
-      "updateButton": "Update Redemption"
+      "updateButton": "Update Redemption",
+      "roundTrip": "Roundtrip"
     },
     "actions": {
       "edit": "Edit redemption",

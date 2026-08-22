@@ -4,7 +4,6 @@
     [opened]="opened"
     [mode]="sidenavMode"
     class="app-sidenav"
-    (closedStart)="onClose()"
     [fixedInViewport]="true">
 
     <mat-nav-list>
@@ -14,7 +13,7 @@
         *ngFor="let item of visibleNavigation"
         [routerLink]="item.path"
         routerLinkActive="active-link"
-        (click)="onClose()">
+        (click)="onNavigationClick()">
 
         <mat-icon>
           {{ item.icon }}

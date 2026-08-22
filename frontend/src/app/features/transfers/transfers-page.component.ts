@@ -123,7 +123,8 @@ export class TransfersPageComponent implements OnInit {
   openEditTransferDialog(transfer: MileageTransfer): void {
 
     const dialogRef = this.dialog.open(CreateTransferDialogComponent, {
-      width: '600px',
+       width: '500px',
+      maxWidth: '95vw',
       data: {
         operation: 'update',
         transferId: transfer.id

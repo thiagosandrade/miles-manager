@@ -62,7 +62,7 @@ export class CreatePurchaseDialogComponent implements OnInit {
   purchaseStatuses = [
     { value: PurchaseStatus.Pending, label: 'Pending' },
     { value: PurchaseStatus.Completed, label: 'Completed' },
-    { value: PurchaseStatus.Cancelled, label: 'Cancelled' }
+    { value: PurchaseStatus.Canceled, label: 'Canceled' }
   ];
 
   ngOnInit(): void {
@@ -126,8 +126,8 @@ export class CreatePurchaseDialogComponent implements OnInit {
       case PurchaseStatus.Completed:
         return 'Completed';
 
-      case PurchaseStatus.Cancelled:
-        return 'Cancelled';
+      case PurchaseStatus.Canceled:
+        return 'Canceled';
 
       default:
         return 'Unknown';
@@ -146,7 +146,7 @@ export class CreatePurchaseDialogComponent implements OnInit {
       case PurchaseStatus.Pending:
         return 'warning';
 
-      case PurchaseStatus.Cancelled:
+      case PurchaseStatus.Canceled:
         return 'danger';
 
       default:

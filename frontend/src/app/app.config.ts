@@ -6,6 +6,7 @@ import { ErrorInterceptor } from "./core/interceptors/error.interceptor";
 import { JwtInterceptor } from "./core/interceptors/jwt.interceptor";
 import { LoadingInterceptor } from "./core/interceptors/loading.interceptor";
 import { provideTranslation } from "./core/i18n/translation.config";
+import { provideNativeDateAdapter } from "@angular/material/core";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +27,7 @@ export const appConfig: ApplicationConfig = {
       multi: true
     },
     provideRouter(routes),
+    provideNativeDateAdapter(),
     provideTranslation
   ]
 };

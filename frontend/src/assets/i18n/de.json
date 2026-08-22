@@ -296,7 +296,8 @@
       "purchaseDate": "Kaufdatum",
       "status": "Status",
       "createButton": "Kauf erstellen",
-      "updateButton": "Kauf aktualisieren"
+      "updateButton": "Kauf aktualisieren",
+      "purchaseStatus": "Kaufstatus"
     },
     "actions": {
       "edit": "Kauf bearbeiten",
@@ -404,7 +405,8 @@
       "cashPrice": "Barpreis",
       "effectiveCostPerThousand": "Kosten / 1.000 Meilen",
       "createButton": "Einlösung erstellen",
-      "updateButton": "Einlösung aktualisieren"
+      "updateButton": "Einlösung aktualisieren",
+      "roundTrip": "Hin- und Rückflug"
     },
     "actions": {
       "edit": "Einlösung bearbeiten",

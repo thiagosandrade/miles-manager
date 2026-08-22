@@ -25,7 +25,7 @@ public abstract class ApiController(ISender sender) : ControllerBase
     /// <returns>The user id or Guid.Empty when not available.</returns>
     protected Guid GetUserId()
     {
-        var sub = User?.FindFirstValue("sub");
+        var sub = User?.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
         return Guid.TryParse(sub, out var id) ? id : Guid.Empty;
     }
 

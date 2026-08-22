@@ -103,7 +103,8 @@ import { TranslatePipe } from '@ngx-translate/core';
     openEditPurchaseDialog(purchase: MileagePurchase): void {
 
       const dialogRef = this.dialog.open(CreatePurchaseDialogComponent, {
-        width: '600px',
+        width: '500px',
+        maxWidth: '95vw',
         data: {
           operation: 'update',
           purchaseId: purchase.id
@@ -200,8 +201,8 @@ import { TranslatePipe } from '@ngx-translate/core';
         case PurchaseStatus.Completed:
           return 'Completed';
 
-        case PurchaseStatus.Cancelled:
-          return 'Cancelled';
+        case PurchaseStatus.Canceled:
+          return 'Canceled';
 
         default:
           return 'Unknown';

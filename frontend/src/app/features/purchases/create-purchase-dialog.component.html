@@ -101,7 +101,7 @@
     <mat-form-field appearance="outline">
 
       <mat-label>
-        {{ 'purchases.dialog.bonusPercentage' | translate }}
+        {{ 'purchases.dialog.bonus' | translate }}
       </mat-label>
 
       <input
@@ -125,7 +125,7 @@
           *ngFor="let status of purchaseStatuses"
           [value]="status.value">
 
-          {{ ('purchases.status.' + status.label.toLowerCase()) | translate }}
+          {{ ('common.' + status.label.toLowerCase()) | translate }}
 
         </mat-option>
 

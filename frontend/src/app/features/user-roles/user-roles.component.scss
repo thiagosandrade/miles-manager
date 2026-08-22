@@ -1,15 +1,32 @@
 @use '../../../styles/pages';
 
-.roles-list {
 
+/* ==========================================================
+   Desktop Table
+========================================================== */
+
+.desktop-table {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.desktop-table table {
+  width: 100%;
+}
+
+
+/* ==========================================================
+   Roles
+========================================================== */
+
+.roles-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-
 }
 
 .role-chip {
-
   display: inline-flex;
   align-items: center;
 
@@ -23,13 +40,122 @@
 
   font-size: .75rem;
   font-weight: 600;
-
 }
 
 .role-empty {
-
   color: var(--muted);
-
   font-size: .85rem;
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+.mobile-user-roles {
+  display: none;
+}
+
+
+@media (max-width: 768px) {
+
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-user-roles {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .user-role-card {
+    padding: 16px;
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    box-shadow: var(--shadow-sm);
+  }
+
+
+  /* ----------------------------------------------------------
+     Card Header
+  ---------------------------------------------------------- */
+
+  .user-role-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+  }
+
+  .user-role-card-header .user-info {
+    min-width: 0;
+  }
+
+  .user-role-card-header .user-details {
+    min-width: 0;
+  }
+
+  .user-role-card-header .user-details strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .user-role-card-header .user-details span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+
+  /* ----------------------------------------------------------
+     Roles
+  ---------------------------------------------------------- */
+
+  .user-role-card-roles {
+    margin-top: 16px;
+    padding-top: 14px;
+
+    border-top: 1px solid var(--border);
+  }
+
+  .field-label {
+    margin-bottom: 8px;
+
+    color: var(--muted);
+
+    font-size: .75rem;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  .roles-list {
+    gap: 6px;
+  }
+
+  .role-chip {
+    padding: 5px 11px;
+  }
+
+}
+
+
+/* ==========================================================
+   Small Phones
+========================================================== */
+
+@media (max-width: 400px) {
+
+  .user-role-card {
+    padding: 14px;
+  }
 
 }

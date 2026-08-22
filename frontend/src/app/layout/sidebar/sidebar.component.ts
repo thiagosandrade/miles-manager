@@ -2,9 +2,9 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output,
-  OnInit,
   OnDestroy,
+  OnInit,
+  Output,
   inject
 } from '@angular/core';
 
@@ -37,7 +37,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   @Input() opened = false;
 
-  @Output() closeSidenav = new EventEmitter<void>();
+  @Output()
+  closeSidenav = new EventEmitter<void>();
 
   private readonly storage = inject(TokenStorageService);
   private readonly breakpointObserver = inject(BreakpointObserver);
@@ -95,7 +96,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
   ];
 
+  get visibleNavigation() {
+    return this.navigation.filter(item =>
+      !item.adminOnly || this.isAdministrator
+    );
+  }
+
   ngOnInit(): void {
+
     this.breakpointSubscription =
       this.breakpointObserver
         .observe('(max-width: 768px)')
@@ -108,19 +116,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
             : 'side';
 
         });
+
   }
 
   ngOnDestroy(): void {
     this.breakpointSubscription?.unsubscribe();
   }
 
-  get visibleNavigation() {
-    return this.navigation.filter(item =>
-      !item.adminOnly || this.isAdministrator
-    );
-  }
-
   onClose(): void {
     this.closeSidenav.emit();
+  }
+
+  onNavigationClick(): void {
+    if (this.isMobile) {
+      this.closeSidenav.emit();
+    }
   }
 }

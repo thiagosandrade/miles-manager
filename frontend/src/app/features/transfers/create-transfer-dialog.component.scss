@@ -1,14 +1,97 @@
+/* ==========================================================
+   Dialog Form
+========================================================== */
+
 .dialog-form {
   display: flex;
   flex-direction: column;
+
   gap: 16px;
+
+  width: 100%;
+  min-width: 0;
+
   padding-top: 8px;
 }
+
+
+/* ==========================================================
+   Form Fields
+========================================================== */
 
 mat-form-field {
   width: 100%;
 }
 
+
+/* ==========================================================
+   Dialog Content
+========================================================== */
+
 mat-dialog-content {
+  width: 100%;
   min-width: 500px;
+
+  max-height: 70vh;
+
+  overflow-y: auto;
+}
+
+
+/* ==========================================================
+   Dialog Actions
+========================================================== */
+
+mat-dialog-actions {
+  padding: 16px 24px 20px;
+
+  gap: 8px;
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 600px) {
+
+  mat-dialog-content {
+    min-width: 0;
+
+    width: auto;
+
+    max-height: 65vh;
+
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .dialog-form {
+    gap: 14px;
+    padding-top: 4px;
+  }
+
+  mat-dialog-actions {
+    padding: 12px 16px 16px;
+  }
+
+}
+
+
+/* ==========================================================
+   Small Phones
+========================================================== */
+
+@media (max-width: 400px) {
+
+  mat-dialog-content {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  mat-dialog-actions {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
 }

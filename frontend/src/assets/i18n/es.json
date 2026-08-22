@@ -296,7 +296,8 @@
       "purchaseDate": "Fecha de compra",
       "status": "Estado",
       "createButton": "Crear compra",
-      "updateButton": "Actualizar compra"
+      "updateButton": "Actualizar compra",
+      "purchaseStatus": "Estado de la compra"
     },
     "actions": {
       "edit": "Editar compra",
@@ -404,7 +405,8 @@
       "cashPrice": "Precio en efectivo",
       "effectiveCostPerThousand": "Costo / 1.000 millas",
       "createButton": "Crear canje",
-      "updateButton": "Actualizar canje"
+      "updateButton": "Actualizar canje",
+      "roundTrip": "Ida y vuelta"
     },
     "actions": {
       "edit": "Editar canje",
