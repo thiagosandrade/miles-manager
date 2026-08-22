@@ -25,11 +25,11 @@
 .footer-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
-  gap: 24px;
-
+  width: 100%;
   max-width: 1400px;
+
   margin: 0 auto;
 }
 
@@ -41,6 +41,7 @@
 .footer-center {
   display: flex;
   align-items: center;
+  justify-content: center;
 
   gap: 12px;
 
@@ -96,13 +97,7 @@
   }
 
   .footer-content {
-    flex-direction: column;
-
     justify-content: center;
-
-    gap: 8px;
-
-    text-align: center;
   }
 
   .footer-center {
@@ -111,6 +106,8 @@
     flex-wrap: wrap;
 
     gap: 8px;
+
+    text-align: center;
   }
 
   .footer-center small {
