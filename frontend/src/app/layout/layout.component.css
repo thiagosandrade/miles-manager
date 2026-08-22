@@ -6,7 +6,6 @@
   display: flex;
 
   height: calc(100vh - 64px);
-
   width: 100%;
 }
 
@@ -21,6 +20,7 @@
   display: flex;
   flex-direction: column;
 
+  width: 100%;
   min-width: 0;
   min-height: 0;
 
@@ -29,18 +29,25 @@
   overflow: hidden;
 }
 
+/* Keep the footer as a real flex item of the layout host. */
+.main-content > app-footer {
+  display: block;
+  flex: 0 0 auto;
+}
+
 
 /* ==========================================================================
    Routed Pages
 ========================================================================== */
 
 .content-wrapper {
-  flex: 1;
+  flex: 1 1 auto;
 
   min-width: 0;
   min-height: 0;
 
   overflow-y: auto;
+  overflow-x: hidden;
 
   padding: 24px;
 }
@@ -53,13 +60,13 @@
 @media (max-width: 768px) {
 
   .layout-container {
-    height: calc(100vh - 56px);
+    height: calc(100dvh - 56px);
+    min-height: calc(100dvh - 56px);
   }
 
   .main-content {
-    height: calc(100vh - 56px);
-
-    width: 100%;
+    height: calc(100dvh - 56px);
+    min-height: calc(100dvh - 56px);
   }
 
   .content-wrapper {
