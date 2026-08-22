@@ -16,7 +16,7 @@ RUN npm ci
 COPY . .
 
 # Build Angular
-RUN npm run build --production
+RUN npm run build -- --configuration production
 
 # ============================================================
 # Runtime Stage
