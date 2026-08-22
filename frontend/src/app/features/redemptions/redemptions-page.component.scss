@@ -1,1 +1,220 @@
 @use '../../../styles/pages';
+
+
+/* ==========================================================
+   Desktop Table
+========================================================== */
+
+.desktop-table {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.desktop-table table {
+  width: 100%;
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+.mobile-redemptions {
+  display: none;
+}
+
+
+/* ==========================================================
+   Redemption Card
+========================================================== */
+
+.redemption-card {
+  padding: 16px;
+
+  background: var(--panel);
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  box-shadow: var(--shadow-sm);
+}
+
+
+/* ==========================================================
+   Header
+========================================================== */
+
+.redemption-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+.redemption-header .user-info {
+  min-width: 0;
+}
+
+.redemption-header .user-details {
+  min-width: 0;
+}
+
+.redemption-header .user-details strong,
+.redemption-header .user-details span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.redemption-actions {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+}
+
+
+/* ==========================================================
+   Route
+========================================================== */
+
+.redemption-route {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-top: 16px;
+  padding-top: 14px;
+
+  border-top: 1px solid var(--border);
+}
+
+.airport {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  flex: 1;
+  min-width: 0;
+}
+
+.airport strong {
+  font-size: 1.05rem;
+}
+
+.redemption-route > mat-icon {
+  flex-shrink: 0;
+
+  color: var(--muted);
+}
+
+
+/* ==========================================================
+   Details
+========================================================== */
+
+.redemption-details {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-top: 16px;
+  padding-top: 14px;
+
+  border-top: 1px solid var(--border);
+}
+
+.redemption-detail {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.redemption-detail strong {
+  font-size: .9rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.redemption-detail.highlight {
+  padding: 10px;
+
+  border-radius: 10px;
+
+  background: rgba(21, 101, 192, .06);
+}
+
+.redemption-detail.highlight strong {
+  color: var(--mm-primary);
+}
+
+
+/* ==========================================================
+   Shared Label
+========================================================== */
+
+.field-label {
+  color: var(--muted);
+
+  font-size: .7rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 768px) {
+
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-redemptions {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+}
+
+
+/* ==========================================================
+   Small Phones
+========================================================== */
+
+@media (max-width: 400px) {
+
+  .redemption-card {
+    padding: 14px;
+  }
+
+  .redemption-route {
+    gap: 8px;
+  }
+
+  .redemption-details {
+    gap: 10px;
+  }
+
+  .redemption-detail.highlight {
+    padding: 8px;
+  }
+
+}

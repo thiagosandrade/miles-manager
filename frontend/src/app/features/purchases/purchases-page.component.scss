@@ -1,1 +1,196 @@
 @use '../../../styles/pages';
+
+
+/* ==========================================================
+   Desktop Table
+========================================================== */
+
+.desktop-table {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.desktop-table table {
+  width: 100%;
+}
+
+
+/* ==========================================================
+   Toolbar
+========================================================== */
+
+.purchases-toolbar {
+  display: flex;
+  width: 100%;
+}
+
+.purchases-toolbar mat-form-field {
+  width: 100%;
+  max-width: 420px;
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+.mobile-purchases {
+  display: none;
+}
+
+
+/* ==========================================================
+   Purchase Card
+========================================================== */
+
+.purchase-card {
+  padding: 16px;
+
+  background: var(--panel);
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  box-shadow: var(--shadow-sm);
+}
+
+
+/* ==========================================================
+   Header
+========================================================== */
+
+.purchase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+.purchase-header .user-info {
+  min-width: 0;
+}
+
+.purchase-header .user-details {
+  min-width: 0;
+}
+
+.purchase-header .user-details strong,
+.purchase-header .user-details span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.purchase-actions {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+}
+
+
+/* ==========================================================
+   Status
+========================================================== */
+
+.purchase-status {
+  margin-top: 14px;
+}
+
+
+/* ==========================================================
+   Details
+========================================================== */
+
+.purchase-details {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-top: 14px;
+  padding-top: 14px;
+
+  border-top: 1px solid var(--border);
+}
+
+.purchase-detail {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.purchase-detail strong {
+  font-size: .9rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ==========================================================
+   Labels
+========================================================== */
+
+.field-label {
+  color: var(--muted);
+
+  font-size: .7rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 768px) {
+
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-purchases {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .purchases-toolbar {
+    width: 100%;
+  }
+
+  .purchases-toolbar mat-form-field {
+    width: 100%;
+    max-width: none;
+  }
+
+}
+
+
+/* ==========================================================
+   Small Phones
+========================================================== */
+
+@media (max-width: 400px) {
+
+  .purchase-card {
+    padding: 14px;
+  }
+
+  .purchase-details {
+    gap: 10px;
+  }
+
+}

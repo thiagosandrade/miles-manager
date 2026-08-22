@@ -1,1 +1,218 @@
 @use '../../../styles/pages';
+
+/* ==========================================================
+   Desktop Table
+========================================================== */
+
+.desktop-table {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.desktop-table table {
+  width: 100%;
+}
+
+
+/* ==========================================================
+   Search
+========================================================== */
+
+.transfers-toolbar {
+  display: flex;
+  width: 100%;
+}
+
+.transfers-toolbar mat-form-field {
+  width: 100%;
+  max-width: 420px;
+}
+
+
+/* ==========================================================
+   Mobile Cards
+========================================================== */
+
+.mobile-transfers {
+  display: none;
+}
+
+
+/* ==========================================================
+   Transfer Card
+========================================================== */
+
+.transfer-card {
+  position: relative;
+
+  padding: 16px;
+
+  background: var(--panel);
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  box-shadow: var(--shadow-sm);
+}
+
+
+/* ==========================================================
+   Route
+========================================================== */
+
+.transfer-route {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+.transfer-program {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  flex: 1;
+  min-width: 0;
+}
+
+.transfer-program .avatar {
+  flex-shrink: 0;
+}
+
+.transfer-program-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.transfer-program-info strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.field-label {
+  color: var(--muted);
+
+  font-size: .7rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.route-icon {
+  flex-shrink: 0;
+
+  color: var(--muted);
+}
+
+
+/* ==========================================================
+   Details
+========================================================== */
+
+.transfer-details {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-top: 16px;
+  padding-top: 14px;
+
+  border-top: 1px solid var(--border);
+}
+
+.transfer-detail {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.transfer-detail strong {
+  font-size: .9rem;
+}
+
+
+/* ==========================================================
+   Actions
+========================================================== */
+
+.transfer-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 4px;
+
+  margin-top: 12px;
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 768px) {
+
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-transfers {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .transfers-toolbar {
+    width: 100%;
+  }
+
+  .transfers-toolbar mat-form-field {
+    width: 100%;
+    max-width: none;
+  }
+
+}
+
+
+/* ==========================================================
+   Small Phones
+========================================================== */
+
+@media (max-width: 400px) {
+
+  .transfer-card {
+    padding: 14px;
+  }
+
+  .transfer-route {
+    gap: 8px;
+  }
+
+  .transfer-program {
+    gap: 7px;
+  }
+
+  .transfer-program .avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .transfer-details {
+    gap: 12px;
+  }
+
+}

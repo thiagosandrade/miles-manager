@@ -77,13 +77,14 @@
         </span>
 
         <strong>
-          {{
+        {{
+          (
             balances().length
               ? (balances().reduce((sum, b) => sum + b.balance, 0) / balances().length)
               : 0
-              | number:'1.0-0'
-          }}
-        </strong>
+          ) | number:'1.2-2'
+        }}
+      </strong>
 
       </div>
 

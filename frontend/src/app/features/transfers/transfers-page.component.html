@@ -99,8 +99,9 @@
 
   <!-- Table -->
 
-  <app-table
+  <!-- Table -->
 
+  <app-table
     [title]="'transfers.table.title' | translate"
     [subtitle]="'transfers.table.subtitle' | translate"
 
@@ -120,16 +121,17 @@
 
     [emptyDescription]="'transfers.table.emptyDescription' | translate">
 
-    <!-- Toolbar -->
 
-    <div table-toolbar>
+    <!-- ========================================================
+        Toolbar
+    ========================================================= -->
+
+    <div table-toolbar class="transfers-toolbar">
 
       <mat-form-field appearance="outline">
 
         <mat-label>
-
           {{ 'transfers.table.search' | translate }}
-
         </mat-label>
 
         <input
@@ -141,7 +143,10 @@
 
     </div>
 
-    <!-- Empty State -->
+
+    <!-- ========================================================
+        Empty State
+    ========================================================= -->
 
     <button
       empty-action
@@ -152,197 +157,344 @@
       <mat-icon>add</mat-icon>
 
       <span>
-
         {{ 'transfers.page.newTransfer' | translate }}
-
       </span>
 
     </button>
 
-    <!-- Material Table -->
 
-    <table
-      mat-table
-      [dataSource]="data ?? []">
+    <!-- ========================================================
+        Desktop Table
+    ========================================================= -->
 
-      <!-- Origin -->
+    <div class="desktop-table">
 
-      <ng-container matColumnDef="originProgram">
+      <table
+        mat-table
+        [dataSource]="data ?? []">
 
-        <th mat-header-cell *matHeaderCellDef>
 
-          {{ 'transfers.table.columns.origin' | translate }}
+        <!-- Origin -->
 
-        </th>
+        <ng-container matColumnDef="originProgram">
 
-        <td mat-cell *matCellDef="let transfer">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'transfers.table.columns.origin' | translate }}
+          </th>
 
-          <div class="user-info">
+          <td mat-cell *matCellDef="let transfer">
 
-            <div class="avatar">
+            <div class="user-info">
 
-              {{ transfer.originProgram?.charAt(0) | uppercase }}
+              <div class="avatar">
+                {{ transfer.originProgram?.charAt(0) | uppercase }}
+              </div>
+
+              <div class="user-details">
+
+                <strong>
+                  {{ transfer.originProgram }}
+                </strong>
+
+                <span>
+                  {{ 'transfers.table.sourceProgram' | translate }}
+                </span>
+
+              </div>
 
             </div>
 
-            <div class="user-details">
+          </td>
+
+        </ng-container>
+
+
+        <!-- Destination -->
+
+        <ng-container matColumnDef="destinationProgram">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'transfers.table.columns.destination' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let transfer">
+
+            <div class="user-info">
+
+              <div class="avatar">
+                {{ transfer.destinationProgram?.charAt(0) | uppercase }}
+              </div>
+
+              <div class="user-details">
+
+                <strong>
+                  {{ transfer.destinationProgram }}
+                </strong>
+
+                <span>
+                  {{ 'transfers.table.destinationProgram' | translate }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- Miles Sent -->
+
+        <ng-container matColumnDef="milesSent">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'transfers.table.columns.milesSent' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let transfer">
+            {{ transfer.milesSent | number }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Miles Received -->
+
+        <ng-container matColumnDef="milesReceived">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'transfers.table.columns.milesReceived' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let transfer">
+            {{ transfer.milesReceived | number }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Bonus -->
+
+        <ng-container matColumnDef="bonusPercentage">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'transfers.table.columns.bonusPercentage' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let transfer">
+            {{ transfer.bonusPercentage }}%
+          </td>
+
+        </ng-container>
+
+
+        <!-- Transfer Date -->
+
+        <ng-container matColumnDef="transferDate">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'transfers.table.columns.transferDate' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let transfer">
+            {{ transfer.transferDate | date:'mediumDate' }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Actions -->
+
+        <ng-container matColumnDef="actions">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="actions-column">
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let transfer"
+            class="actions-column">
+
+            <button
+              class="icon-button"
+              [attr.aria-label]="'transfers.actions.edit' | translate"
+              (click)="openEditTransferDialog(transfer)">
+
+              <mat-icon>
+                edit
+              </mat-icon>
+
+            </button>
+
+            <button
+              class="icon-button danger"
+              [attr.aria-label]="'transfers.actions.delete' | translate"
+              (click)="deleteTransfer(transfer)">
+
+              <mat-icon>
+                delete
+              </mat-icon>
+
+            </button>
+
+          </td>
+
+        </ng-container>
+
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns">
+        </tr>
+
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+
+      </table>
+
+    </div>
+
+
+    <!-- ========================================================
+        Mobile Cards
+    ========================================================= -->
+
+    <div class="mobile-transfers">
+
+      <article
+        class="transfer-card"
+        *ngFor="let transfer of data ?? []">
+
+
+        <!-- Route -->
+
+        <div class="transfer-route">
+
+          <div class="transfer-program">
+
+            <div class="avatar">
+              {{ transfer.originProgram.charAt(0) | uppercase }}
+            </div>
+
+            <div class="transfer-program-info">
+
+              <span class="field-label">
+                {{ 'transfers.table.columns.origin' | translate }}
+              </span>
 
               <strong>
-
                 {{ transfer.originProgram }}
-
               </strong>
-
-              <span>
-
-                {{ 'transfers.table.sourceProgram' | translate }}
-
-              </span>
 
             </div>
 
           </div>
 
-        </td>
 
-      </ng-container>
+          <mat-icon class="route-icon">
+            arrow_forward
+          </mat-icon>
 
-      <!-- Destination -->
 
-      <ng-container matColumnDef="destinationProgram">
-
-        <th mat-header-cell *matHeaderCellDef>
-
-          {{ 'transfers.table.columns.destination' | translate }}
-
-        </th>
-
-        <td mat-cell *matCellDef="let transfer">
-
-          <div class="user-info">
+          <div class="transfer-program">
 
             <div class="avatar">
-
-              {{ transfer.destinationProgram?.charAt(0) | uppercase }}
-
+              {{ transfer.destinationProgram.charAt(0) | uppercase }}
             </div>
 
-            <div class="user-details">
+            <div class="transfer-program-info">
+
+              <span class="field-label">
+                {{ 'transfers.table.columns.destination' | translate }}
+              </span>
 
               <strong>
-
                 {{ transfer.destinationProgram }}
-
               </strong>
-
-              <span>
-
-                {{ 'transfers.table.destinationProgram' | translate }}
-
-              </span>
 
             </div>
 
           </div>
 
-        </td>
+        </div>
 
-      </ng-container>
 
-      <!-- Miles Sent -->
+        <!-- Details -->
 
-      <ng-container matColumnDef="milesSent">
+        <div class="transfer-details">
 
-        <th mat-header-cell *matHeaderCellDef>
+          <div class="transfer-detail">
 
-          {{ 'transfers.table.columns.milesSent' | translate }}
+            <span class="field-label">
+              {{ 'transfers.table.columns.milesSent' | translate }}
+            </span>
 
-        </th>
+            <strong>
+              {{ transfer.milesSent | number }}
+            </strong>
 
-        <td mat-cell *matCellDef="let transfer">
+          </div>
 
-          {{ transfer.milesSent | number }}
 
-        </td>
+          <div class="transfer-detail">
 
-      </ng-container>
+            <span class="field-label">
+              {{ 'transfers.table.columns.milesReceived' | translate }}
+            </span>
 
-      <!-- Miles Received -->
+            <strong>
+              {{ transfer.milesReceived | number }}
+            </strong>
 
-      <ng-container matColumnDef="milesReceived">
+          </div>
 
-        <th mat-header-cell *matHeaderCellDef>
 
-          {{ 'transfers.table.columns.milesReceived' | translate }}
+          <div class="transfer-detail">
 
-        </th>
+            <span class="field-label">
+              {{ 'transfers.table.columns.bonusPercentage' | translate }}
+            </span>
 
-        <td mat-cell *matCellDef="let transfer">
+            <strong>
+              {{ transfer.bonusPercentage }}%
+            </strong>
 
-          {{ transfer.milesReceived | number }}
+          </div>
 
-        </td>
 
-      </ng-container>
+          <div class="transfer-detail">
 
-      <!-- Bonus -->
+            <span class="field-label">
+              {{ 'transfers.table.columns.transferDate' | translate }}
+            </span>
 
-      <ng-container matColumnDef="bonusPercentage">
+            <strong>
+              {{ transfer.transferDate | date:'mediumDate' }}
+            </strong>
 
-        <th mat-header-cell *matHeaderCellDef>
+          </div>
 
-          {{ 'transfers.table.columns.bonusPercentage' | translate }}
+        </div>
 
-        </th>
 
-        <td mat-cell *matCellDef="let transfer">
+        <!-- Actions -->
 
-          {{ transfer.bonusPercentage }}%
-
-        </td>
-
-      </ng-container>
-
-      <!-- Transfer Date -->
-
-      <ng-container matColumnDef="transferDate">
-
-        <th mat-header-cell *matHeaderCellDef>
-
-          {{ 'transfers.table.columns.transferDate' | translate }}
-
-        </th>
-
-        <td mat-cell *matCellDef="let transfer">
-
-          {{ transfer.transferDate | date:'mediumDate' }}
-
-        </td>
-
-      </ng-container>
-
-      <!-- Actions -->
-
-      <ng-container matColumnDef="actions">
-
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          class="actions-column">
-
-        </th>
-
-        <td
-          mat-cell
-          *matCellDef="let transfer"
-          class="actions-column">
+        <div class="transfer-actions">
 
           <button
             class="icon-button"
             [attr.aria-label]="'transfers.actions.edit' | translate"
             (click)="openEditTransferDialog(transfer)">
 
-            <mat-icon>edit</mat-icon>
+            <mat-icon>
+              edit
+            </mat-icon>
 
           </button>
 
@@ -351,25 +503,17 @@
             [attr.aria-label]="'transfers.actions.delete' | translate"
             (click)="deleteTransfer(transfer)">
 
-            <mat-icon>delete</mat-icon>
+            <mat-icon>
+              delete
+            </mat-icon>
 
           </button>
 
-        </td>
+        </div>
 
-      </ng-container>
+      </article>
 
-      <tr
-        mat-header-row
-        *matHeaderRowDef="displayedColumns">
-      </tr>
-
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns;">
-      </tr>
-
-    </table>
+    </div>
 
   </app-table>
 

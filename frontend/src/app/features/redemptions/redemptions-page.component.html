@@ -64,8 +64,11 @@
 
   <!-- Table -->
 
-  <app-table
+  <!-- ========================================================
+     Table
+========================================================= -->
 
+  <app-table
     [title]="'redemptions.table.title' | translate"
     [subtitle]="'redemptions.table.subtitle' | translate"
 
@@ -83,7 +86,10 @@
 
     [emptyDescription]="'redemptions.table.emptyDescription' | translate">
 
-    <!-- Empty State -->
+
+    <!-- ========================================================
+        Empty State
+    ========================================================= -->
 
     <button
       empty-action
@@ -99,23 +105,272 @@
 
     </button>
 
-    <!-- Material Table -->
 
-    <table
-      mat-table
-      [dataSource]="redemptions()">
+    <!-- ========================================================
+        Desktop Table
+    ========================================================= -->
 
-      <!-- Program -->
+    <div class="desktop-table">
 
-      <ng-container matColumnDef="program">
+      <table
+        mat-table
+        [dataSource]="redemptions()">
 
-        <th mat-header-cell *matHeaderCellDef>
 
-          {{ 'redemptions.table.columns.program' | translate }}
+        <!-- Program -->
 
-        </th>
+        <ng-container matColumnDef="program">
 
-        <td mat-cell *matCellDef="let redemption">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'redemptions.table.columns.program' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let redemption">
+
+            <div class="user-info">
+
+              <div class="avatar">
+                {{ redemption.program.charAt(0) | uppercase }}
+              </div>
+
+              <div class="user-details">
+
+                <strong>
+                  {{ redemption.program }}
+                </strong>
+
+                <span>
+                  {{ 'common.loyaltyProgram' | translate }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- Origin -->
+
+        <ng-container matColumnDef="originAirportCode">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'redemptions.table.columns.origin' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let redemption">
+            {{ redemption.originAirportCode || '-' }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Destination -->
+
+        <ng-container matColumnDef="destinationAirportCode">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'redemptions.table.columns.destination' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let redemption">
+            {{ redemption.destinationAirportCode || '-' }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Flight Date -->
+
+        <ng-container matColumnDef="flightDate">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'redemptions.table.columns.flightDate' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let redemption">
+            {{ redemption.flightDate | date:'mediumDate' }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Cabin -->
+
+        <ng-container matColumnDef="cabinClass">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'redemptions.table.columns.cabin' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let redemption">
+
+            {{
+              (
+                'redemptions.cabin.' +
+                getCabinClass(redemption.cabinClass)
+                  .replace(' ', '')
+                  .charAt(0)
+                  .toLowerCase() +
+                getCabinClass(redemption.cabinClass)
+                  .replace(' ', '')
+                  .slice(1)
+              ) | translate
+            }}
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- Passengers -->
+
+        <ng-container matColumnDef="passengers">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'redemptions.table.columns.passengers' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let redemption">
+            {{ redemption.passengers }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Miles -->
+
+        <ng-container matColumnDef="milesUsed">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'redemptions.table.columns.milesUsed' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let redemption">
+            {{ redemption.milesUsed | number }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Taxes -->
+
+        <ng-container matColumnDef="taxes">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'redemptions.table.columns.taxes' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let redemption">
+            {{ redemption.taxes | currency }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Cash Price -->
+
+        <ng-container matColumnDef="cashPrice">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'redemptions.table.columns.cashPrice' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let redemption">
+            {{ redemption.cashPrice | currency }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- CPM -->
+
+        <ng-container matColumnDef="effectiveCostPerThousand">
+
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'redemptions.table.columns.effectiveCostPerThousand' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let redemption">
+            {{ redemption.effectiveCostPerThousand | number:'1.2-2' }}
+          </td>
+
+        </ng-container>
+
+
+        <!-- Actions -->
+
+        <ng-container matColumnDef="actions">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="actions-column">
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let redemption"
+            class="actions-column">
+
+            <button
+              class="icon-button"
+              [attr.aria-label]="'redemptions.actions.edit' | translate"
+              (click)="openEditRedemptionDialog(redemption)">
+
+              <mat-icon>
+                edit
+              </mat-icon>
+
+            </button>
+
+            <button
+              class="icon-button danger"
+              [attr.aria-label]="'redemptions.actions.delete' | translate"
+              (click)="deleteRedemption(redemption)">
+
+              <mat-icon>
+                delete
+              </mat-icon>
+
+            </button>
+
+          </td>
+
+        </ng-container>
+
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns">
+        </tr>
+
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+
+      </table>
+
+    </div>
+
+
+    <!-- ========================================================
+        Mobile Cards
+    ========================================================= -->
+
+    <div class="mobile-redemptions">
+
+      <article
+        class="redemption-card"
+        *ngFor="let redemption of redemptions()">
+
+
+        <!-- Header -->
+
+        <div class="redemption-header">
 
           <div class="user-info">
 
@@ -125,7 +380,9 @@
 
             <div class="user-details">
 
-              <strong>{{ redemption.program }}</strong>
+              <strong>
+                {{ redemption.program }}
+              </strong>
 
               <span>
                 {{ 'common.loyaltyProgram' | translate }}
@@ -135,223 +392,180 @@
 
           </div>
 
-        </td>
+          <div class="redemption-actions">
 
-      </ng-container>
+            <button
+              class="icon-button"
+              [attr.aria-label]="'redemptions.actions.edit' | translate"
+              (click)="openEditRedemptionDialog(redemption)">
 
-      <!-- Origin -->
+              <mat-icon>
+                edit
+              </mat-icon>
 
-      <ng-container matColumnDef="originAirportCode">
+            </button>
 
-        <th mat-header-cell *matHeaderCellDef>
+            <button
+              class="icon-button danger"
+              [attr.aria-label]="'redemptions.actions.delete' | translate"
+              (click)="deleteRedemption(redemption)">
 
-          {{ 'redemptions.table.columns.origin' | translate }}
+              <mat-icon>
+                delete
+              </mat-icon>
 
-        </th>
+            </button>
 
-        <td mat-cell *matCellDef="let redemption">
+          </div>
 
-          {{ redemption.originAirportCode || '-' }}
+        </div>
 
-        </td>
 
-      </ng-container>
+        <!-- Route -->
 
-      <!-- Destination -->
+        <div class="redemption-route">
 
-      <ng-container matColumnDef="destinationAirportCode">
+          <div class="airport">
 
-        <th mat-header-cell *matHeaderCellDef>
+            <span class="field-label">
+              {{ 'redemptions.table.columns.origin' | translate }}
+            </span>
 
-          {{ 'redemptions.table.columns.destination' | translate }}
+            <strong>
+              {{ redemption.originAirportCode || '-' }}
+            </strong>
 
-        </th>
+          </div>
 
-        <td mat-cell *matCellDef="let redemption">
+          <mat-icon>
+            arrow_forward
+          </mat-icon>
 
-          {{ redemption.destinationAirportCode || '-' }}
+          <div class="airport">
 
-        </td>
+            <span class="field-label">
+              {{ 'redemptions.table.columns.destination' | translate }}
+            </span>
 
-      </ng-container>
+            <strong>
+              {{ redemption.destinationAirportCode || '-' }}
+            </strong>
 
-      <!-- Flight Date -->
+          </div>
 
-      <ng-container matColumnDef="flightDate">
+        </div>
 
-        <th mat-header-cell *matHeaderCellDef>
 
-          {{ 'redemptions.table.columns.flightDate' | translate }}
+        <!-- Details -->
 
-        </th>
+        <div class="redemption-details">
 
-        <td mat-cell *matCellDef="let redemption">
+          <div class="redemption-detail">
 
-          {{ redemption.flightDate | date:'mediumDate' }}
+            <span class="field-label">
+              {{ 'redemptions.table.columns.flightDate' | translate }}
+            </span>
 
-        </td>
+            <strong>
+              {{ redemption.flightDate | date:'mediumDate' }}
+            </strong>
 
-      </ng-container>
+          </div>
 
-      <!-- Cabin -->
 
-      <ng-container matColumnDef="cabinClass">
+          <div class="redemption-detail">
 
-        <th mat-header-cell *matHeaderCellDef>
+            <span class="field-label">
+              {{ 'redemptions.table.columns.cabin' | translate }}
+            </span>
 
-          {{ 'redemptions.table.columns.cabin' | translate }}
+            <strong>
+              {{
+                (
+                  'redemptions.cabin.' +
+                  getCabinClass(redemption.cabinClass)
+                    .replace(' ', '')
+                    .charAt(0)
+                    .toLowerCase() +
+                  getCabinClass(redemption.cabinClass)
+                    .replace(' ', '')
+                    .slice(1)
+                ) | translate
+              }}
+            </strong>
 
-        </th>
+          </div>
 
-        <td mat-cell *matCellDef="let redemption">
 
-          {{
-            ('redemptions.cabin.' + getCabinClass(redemption.cabinClass).replace(' ', '').charAt(0).toLowerCase() + getCabinClass(redemption.cabinClass).replace(' ', '').slice(1))
-            | translate
-          }}
+          <div class="redemption-detail">
 
-        </td>
+            <span class="field-label">
+              {{ 'redemptions.table.columns.passengers' | translate }}
+            </span>
 
-      </ng-container>
+            <strong>
+              {{ redemption.passengers }}
+            </strong>
 
-      <!-- Passengers -->
+          </div>
 
-      <ng-container matColumnDef="passengers">
 
-        <th mat-header-cell *matHeaderCellDef>
+          <div class="redemption-detail">
 
-          {{ 'redemptions.table.columns.passengers' | translate }}
+            <span class="field-label">
+              {{ 'redemptions.table.columns.milesUsed' | translate }}
+            </span>
 
-        </th>
+            <strong>
+              {{ redemption.milesUsed | number }}
+            </strong>
 
-        <td mat-cell *matCellDef="let redemption">
+          </div>
 
-          {{ redemption.passengers }}
 
-        </td>
+          <div class="redemption-detail">
 
-      </ng-container>
+            <span class="field-label">
+              {{ 'redemptions.table.columns.taxes' | translate }}
+            </span>
 
-      <!-- Miles -->
+            <strong>
+              {{ redemption.taxes | currency }}
+            </strong>
 
-      <ng-container matColumnDef="milesUsed">
+          </div>
 
-        <th mat-header-cell *matHeaderCellDef>
 
-          {{ 'redemptions.table.columns.milesUsed' | translate }}
+          <div class="redemption-detail">
 
-        </th>
+            <span class="field-label">
+              {{ 'redemptions.table.columns.cashPrice' | translate }}
+            </span>
 
-        <td mat-cell *matCellDef="let redemption">
+            <strong>
+              {{ redemption.cashPrice | currency }}
+            </strong>
 
-          {{ redemption.milesUsed | number }}
+          </div>
 
-        </td>
 
-      </ng-container>
+          <div class="redemption-detail highlight">
 
-      <!-- Taxes -->
+            <span class="field-label">
+              {{ 'redemptions.table.columns.effectiveCostPerThousand' | translate }}
+            </span>
 
-      <ng-container matColumnDef="taxes">
+            <strong>
+              {{ redemption.effectiveCostPerThousand | number:'1.2-2' }}
+            </strong>
 
-        <th mat-header-cell *matHeaderCellDef>
+          </div>
 
-          {{ 'redemptions.table.columns.taxes' | translate }}
+        </div>
 
-        </th>
+      </article>
 
-        <td mat-cell *matCellDef="let redemption">
-
-          {{ redemption.taxes | currency }}
-
-        </td>
-
-      </ng-container>
-
-      <!-- Cash Price -->
-
-      <ng-container matColumnDef="cashPrice">
-
-        <th mat-header-cell *matHeaderCellDef>
-
-          {{ 'redemptions.table.columns.cashPrice' | translate }}
-
-        </th>
-
-        <td mat-cell *matCellDef="let redemption">
-
-          {{ redemption.cashPrice | currency }}
-
-        </td>
-
-      </ng-container>
-
-      <!-- CPM -->
-
-      <ng-container matColumnDef="effectiveCostPerThousand">
-
-        <th mat-header-cell *matHeaderCellDef>
-
-          {{ 'redemptions.table.columns.effectiveCostPerThousand' | translate }}
-
-        </th>
-
-        <td mat-cell *matCellDef="let redemption">
-
-          {{ redemption.effectiveCostPerThousand | number:'1.2-2' }}
-
-        </td>
-
-      </ng-container>
-
-      <!-- Actions -->
-
-      <ng-container matColumnDef="actions">
-
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          class="actions-column">
-        </th>
-
-        <td
-          mat-cell
-          *matCellDef="let redemption"
-          class="actions-column">
-
-          <button
-            class="icon-button"
-            [attr.aria-label]="'redemptions.actions.edit' | translate"
-            (click)="openEditRedemptionDialog(redemption)">
-
-            <mat-icon>edit</mat-icon>
-
-          </button>
-
-          <button
-            class="icon-button danger"
-            [attr.aria-label]="'redemptions.actions.delete' | translate"
-            (click)="deleteRedemption(redemption)">
-
-            <mat-icon>delete</mat-icon>
-
-          </button>
-
-        </td>
-
-      </ng-container>
-
-      <tr
-        mat-header-row
-        *matHeaderRowDef="displayedColumns">
-      </tr>
-
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns;">
-      </tr>
-
-    </table>
+    </div>
 
   </app-table>
 
