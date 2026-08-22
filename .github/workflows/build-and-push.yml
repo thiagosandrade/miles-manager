@@ -2,9 +2,19 @@ name: Build and Deploy Docker Images
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
+    inputs:
+      step:
+        description: Which step to run
+        required: false
+        default: all
+        type: choice
+        options:
+          - all
+          - build
+          - push
+          - deploy
 
 env:
   REGISTRY: us-central1-docker.pkg.dev
@@ -13,74 +23,66 @@ env:
   VM_APP_DIR: /home/thiagosoares_andrade/miles-manager
 
 jobs:
-  build-and-push:
-    name: Build and Push Images
+  build-backend:
+    if: github.event_name != 'workflow_dispatch' || inputs.step == 'all' || inputs.step == 'build'
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      id-token: write
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Authenticate to Google Cloud
-        id: auth
-        uses: google-github-actions/auth@v3
-        with:
-          project_id: ${{ env.PROJECT_ID }}
-          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-          token_format: access_token
-
-      - name: Login to Artifact Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: oauth2accesstoken
-          password: ${{ steps.auth.outputs.access_token }}
-
-      - name: Set image names
-        id: images
-        run: |
-          echo "backend=${REGISTRY}/${PROJECT_ID}/${REPOSITORY}/backend" >> "$GITHUB_OUTPUT"
-          echo "frontend=${REGISTRY}/${PROJECT_ID}/${REPOSITORY}/frontend" >> "$GITHUB_OUTPUT"
-          echo "sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
-
+      - uses: actions/checkout@v4
       - name: Build backend image
         run: |
           docker build \
             -f backend/src/MilesManager.Api/Dockerfile \
-            -t "${{ steps.images.outputs.backend }}:latest" \
-            -t "${{ steps.images.outputs.backend }}:${{ steps.images.outputs.sha }}" \
+            -t backend:latest \
             ./backend
+      - name: Save backend image
+        run: docker save backend:latest -o backend-image.tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backend-image
+          path: backend-image.tar
 
+  build-frontend:
+    if: github.event_name != 'workflow_dispatch' || inputs.step == 'all' || inputs.step == 'build'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
       - name: Build frontend image
         run: |
           docker build \
             -f frontend/Dockerfile \
-            -t "${{ steps.images.outputs.frontend }}:latest" \
-            -t "${{ steps.images.outputs.frontend }}:${{ steps.images.outputs.sha }}" \
+            -t frontend:latest \
             ./frontend
+      - name: Save frontend image
+        run: docker save frontend:latest -o frontend-image.tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frontend-image
+          path: frontend-image.tar
 
-      - name: Push backend image
-        run: |
-          docker push "${{ steps.images.outputs.backend }}:latest"
-          docker push "${{ steps.images.outputs.backend }}:${{ steps.images.outputs.sha }}"
+  push-images:
+    if: github.event_name != 'workflow_dispatch' || inputs.step == 'all' || inputs.step == 'push'
+    runs-on: ubuntu-latest
+    needs: [build-backend, build-frontend]
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: backend-image
+      - uses: actions/download-artifact@v4
+        with:
+          name: frontend-image
+      # login + docker load + docker tag + docker push here
 
-      - name: Push frontend image
-        run: |
-          docker push "${{ steps.images.outputs.frontend }}:latest"
-          docker push "${{ steps.images.outputs.frontend }}:${{ steps.images.outputs.sha }}"
-
+  deploy:
+    if: github.event_name != 'workflow_dispatch' || inputs.step == 'all' || inputs.step == 'deploy'
+    runs-on: ubuntu-latest
+    needs: push-images
+    steps:
       - name: Deploy to Google VM
         uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.GCP_VM_HOST }}
           username: ${{ secrets.GCP_VM_USER }}
           key: ${{ secrets.GCP_VM_SSH_KEY }}
-          script_stop: true
           script: |
             cd ${{ env.VM_APP_DIR }}
             docker compose -f docker-compose.vm.yml pull
