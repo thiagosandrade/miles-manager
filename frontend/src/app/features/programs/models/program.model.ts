@@ -12,6 +12,7 @@ export interface Program {
   status: number;
   expirationAfterMonths: number;
   expirationEnabled: boolean;
+  currencyCode: string;
 }
 
 export interface ProgramCreateRequest {
@@ -22,6 +23,7 @@ export interface ProgramCreateRequest {
   logo?: string | null;
   referencePricePerThousand: number;
   isActive?: boolean;
+  currencyCode: string;
 }
 
 export interface ProgramUpdateRequest {
@@ -33,6 +35,7 @@ export interface ProgramUpdateRequest {
   logo?: string | null;
   referencePricePerThousand: number;
   isActive: boolean;
+  currencyCode: string;
 }
 
 export interface ProgramListResponse {

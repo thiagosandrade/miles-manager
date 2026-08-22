@@ -56,19 +56,7 @@ public sealed class ProgramsController(ISender sender) : ApiController(sender)
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<Guid>> Update(Guid id, [FromBody] UpdateProgramCommand command, CancellationToken cancellationToken)
     {
-        var updated = new UpdateProgramCommand
-        {
-            Id = id,
-            ProgramCode = command.ProgramCode,
-            Name = command.Name,
-            ProgramType = command.ProgramType,
-            Website = command.Website,
-            Logo = command.Logo,
-            ReferencePricePerThousand = command.ReferencePricePerThousand,
-            IsActive = command.IsActive
-        };
-
-        var result = await Sender.Send(updated, cancellationToken);
+        var result = await Sender.Send(command, cancellationToken);
         return Convert(result);
     }
 

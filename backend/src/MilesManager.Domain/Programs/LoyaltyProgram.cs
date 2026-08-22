@@ -12,15 +12,13 @@ public class LoyaltyProgram : Entity
     public string? Website { get; set; }
     public string? Logo { get; set; }
     public ProgramType ProgramType { get; set; }
+    public string CurrencyCode { get; set; } = "EUR";
     public decimal ReferencePricePerThousand { get; set; }
     public bool IsActive { get; set; } = true;
 
     public string? Description { get; set; }
     public Guid PartnerId { get; set; }
     public string ProgramCode { get; set; } = string.Empty;
-    public ProgramStatus Status { get; set; } = ProgramStatus.Active;
-    public int ExpirationAfterMonths { get; set; } = 36;
-    public bool ExpirationEnabled { get; set; } = true;
 
     public virtual ICollection<ProgramBalance> ProgramBalances { get; set; } = new List<ProgramBalance>();
     public virtual ICollection<MileagePurchase> MileagePurchases { get; set; } = new List<MileagePurchase>();

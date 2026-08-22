@@ -24,6 +24,7 @@ public sealed class UpdateProgramHandler(IApplicationDbContext context) : IReque
         program.Logo = request.Logo;
         program.ReferencePricePerThousand = request.ReferencePricePerThousand;
         program.IsActive = request.IsActive;
+        program.CurrencyCode = request.CurrencyCode;
 
         await _context.SaveChangesAsync(cancellationToken);
 

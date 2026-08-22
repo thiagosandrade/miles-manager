@@ -13,4 +13,5 @@ public sealed class ProgramDto
     public string? Logo { get; init; }
     public decimal ReferencePricePerThousand { get; init; }
     public bool IsActive { get; init; }
+    public string CurrencyCode { get; init; } = string.Empty;
 }

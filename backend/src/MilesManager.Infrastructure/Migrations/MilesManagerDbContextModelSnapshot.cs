@@ -187,14 +187,12 @@ namespace MilesManager.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ExpirationAfterMonths")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("ExpirationEnabled")
-                        .HasColumnType("boolean");
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -224,9 +222,6 @@ namespace MilesManager.Infrastructure.Migrations
                     b.Property<decimal>("ReferencePricePerThousand")
                         .HasPrecision(18, 4)
                         .HasColumnType("numeric(18,4)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
 
                     b.Property<DateTimeOffset?>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");

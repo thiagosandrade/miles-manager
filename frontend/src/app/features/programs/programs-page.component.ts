@@ -113,7 +113,7 @@ export class ProgramsPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(updated => {
 
       if (updated) {
-        this.snackbarService.error('Program updated succesfully.', 3000);
+        this.snackbarService.success('Program updated succesfully.', 3000);
         this.loadPrograms();
       }
 
@@ -133,7 +133,7 @@ export class ProgramsPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(created => {
 
       if (created) {
-        this.snackbarService.error('Program created succesfully.', 3000);
+        this.snackbarService.success('Program created succesfully.', 3000);
         this.loadPrograms();
       }
     });

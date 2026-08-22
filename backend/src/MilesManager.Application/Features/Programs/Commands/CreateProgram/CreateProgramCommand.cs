@@ -14,4 +14,5 @@ public sealed class CreateProgramCommand : IRequest<Result<Guid>>
     public string? Logo { get; init; }
     public decimal ReferencePricePerThousand { get; init; }
     public bool IsActive { get; init; } = true;
+    public string CurrencyCode { get; init; } = string.Empty;
 }

@@ -24,7 +24,9 @@ public sealed class CreateProgramHandler(IApplicationDbContext context) : IReque
             ProgramType = request.ProgramType,
             Website = request.Website,
             Logo = request.Logo,
-            ReferencePricePerThousand = request.ReferencePricePerThousand
+            ReferencePricePerThousand = request.ReferencePricePerThousand,
+            IsActive = request.IsActive,
+            CurrencyCode = request.CurrencyCode
         };
 
         await _context.Programs.AddAsync(program, cancellationToken);

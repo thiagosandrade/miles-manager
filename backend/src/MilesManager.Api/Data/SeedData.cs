@@ -64,37 +64,43 @@ public static class SeedData
             {
                 Name = "Smiles",
                 ProgramCode = "SMLS",
-                ReferencePricePerThousand = 20m
+                ReferencePricePerThousand = 20m,
+                CurrencyCode = "BRL"
             },
             new Domain.Programs.LoyaltyProgram
             {
                 Name = "LATAM Pass",
                 ProgramCode = "LTAM",
-                ReferencePricePerThousand = 22m
+                ReferencePricePerThousand = 22m,
+                CurrencyCode = "BRL"
             },
             new Domain.Programs.LoyaltyProgram
             {
                 Name = "Livelo",
                 ProgramCode = "LIV",
-                ReferencePricePerThousand = 18m
+                ReferencePricePerThousand = 18m,
+                CurrencyCode = "BRL"
             },
             new Domain.Programs.LoyaltyProgram
             {
                 Name = "Esfera",
                 ProgramCode = "ESF",
-                ReferencePricePerThousand = 15m
+                ReferencePricePerThousand = 15m,
+                CurrencyCode = "BRL"
             },
             new Domain.Programs.LoyaltyProgram
             {
                 Name = "Azul Fidelidade",
                 ProgramCode = "AZL",
-                ReferencePricePerThousand = 19m
+                ReferencePricePerThousand = 19m,
+                CurrencyCode = "BRL"
             },
             new Domain.Programs.LoyaltyProgram
             {
                 Name = "TAP Miles&Go",
                 ProgramCode = "TAP",
-                ReferencePricePerThousand = 25m
+                ReferencePricePerThousand = 25m,
+                CurrencyCode = "BRL"
             }
         };
 

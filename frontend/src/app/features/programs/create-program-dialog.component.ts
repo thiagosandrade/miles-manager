@@ -63,7 +63,8 @@ export class CreateProgramDialogComponent implements OnInit {
             0,
             [Validators.required, Validators.min(0)]
         ],
-        isActive: [true]
+        isActive: [true],
+        currencyCode: ['EUR', Validators.required]
     });
 
     ngOnInit(): void {
@@ -87,7 +88,7 @@ export class CreateProgramDialogComponent implements OnInit {
         }
 
         this.loading = true;
-
+        console.log(this.data.operation)
         if(this.data?.operation === 'update' && this.data?.programId) {
             const request: ProgramUpdateRequest = {
                 id: this.data.programId!,
@@ -97,7 +98,8 @@ export class CreateProgramDialogComponent implements OnInit {
                 website: this.form.value.website ?? null,
                 logo: this.form.value.logo ?? null,
                 referencePricePerThousand: Number(this.form.value.referencePricePerThousand),
-                isActive: this.form.value.isActive ?? true
+                isActive: this.form.value.isActive ?? true,
+                currencyCode: this.form.value.currencyCode!
             };
 
             this.api.updateProgram(this.data.programId!, request).subscribe({
@@ -121,7 +123,8 @@ export class CreateProgramDialogComponent implements OnInit {
                 website: this.form.value.website ?? null,
                 logo: this.form.value.logo ?? null,
                 referencePricePerThousand: Number(this.form.value.referencePricePerThousand),
-                isActive: this.form.value.isActive ?? true
+                isActive: this.form.value.isActive ?? true,
+                currencyCode: this.form.value.currencyCode!
             };
 
             this.api.createProgram(request).subscribe({
