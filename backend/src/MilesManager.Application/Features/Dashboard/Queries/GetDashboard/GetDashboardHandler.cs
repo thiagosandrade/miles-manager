@@ -1,76 +1,193 @@
-using MediatR;
-using MilesManager.Application.Abstractions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MilesManager.Application.Abstractions;
 using MilesManager.Application.Context;
+using MilesManager.Domain.Common.Enums;
 
 namespace MilesManager.Application.Features.Dashboard.Queries.GetDashboard;
 
-public sealed class GetDashboardHandler(IApplicationDbContext context, IMapper mapper, ICurrentUser currentUser) : IRequestHandler<GetDashboardQuery, DTOs.DashboardDto>
+public sealed class GetDashboardHandler(
+    IApplicationDbContext context,
+    IMapper mapper,
+    ICurrentUser currentUser)
+    : IRequestHandler<GetDashboardQuery, DTOs.DashboardDto>
 {
-    public async Task<DTOs.DashboardDto> Handle(GetDashboardQuery request, CancellationToken cancellationToken)
+    public async Task<DTOs.DashboardDto> Handle(
+        GetDashboardQuery request,
+        CancellationToken cancellationToken)
     {
-        var userLoggedId = currentUser.UserId;
+        var userId = currentUser.UserId;
 
-        var balances = await context.ProgramBalances.Where(x => x.UserId == userLoggedId).AsNoTracking().ToListAsync(cancellationToken);
-        var totalMiles = balances.Sum(b => b.Balance);
+        // =========================================================
+        // Current balances
+        // =========================================================
 
-        var totalInvestment = await context.MileagePurchases.Where(x => x.UserId == userLoggedId).AsNoTracking().SumAsync(p => p.AmountPaid, cancellationToken);
-        var averageCostPerThousand = totalMiles > 0 ? totalInvestment / (totalMiles / 1000m) : 0m;
-
-        var prices = await context.ReferenceMileagePrices.AsNoTracking().ToListAsync(cancellationToken);
-        var latestPriceByProgram = prices.GroupBy(p => p.ProgramId).ToDictionary(g => g.Key, g => g.OrderByDescending(x => x.EffectiveDate).First().PricePerThousand);
-
-        decimal currentMarketValue = 0m;
-        foreach (var b in balances)
-        {
-            if (latestPriceByProgram.TryGetValue(b.ProgramId, out var pricePerThousand))
-            {
-                currentMarketValue += b.Balance * (pricePerThousand / 1000m);
-            }
-        }
-
-        var profit = currentMarketValue - totalInvestment;
-        var currentProfit = profit > 0 ? profit : 0m;
-        var currentLoss = profit < 0 ? -profit : 0m;
-
-        var programs = await context.ProgramBalances.Where(x => x.UserId == userLoggedId).AsNoTracking()
-            .ProjectTo<Programs.DTOs.ProgramBalanceDto>(mapper.ConfigurationProvider)
+        var balances = await context.ProgramBalances
+            .Where(x => x.UserId == userId)
+            .Include(x => x.Program)
+            .AsNoTracking()
             .ToListAsync(cancellationToken);
 
-        var recentPurchases = (await context.MileagePurchases.Where(x => x.UserId == userLoggedId).AsNoTracking()
-            .OrderByDescending(p => p.PurchaseDate)
-            .ProjectTo<Purchases.DTOs.MileagePurchaseDto>(mapper.ConfigurationProvider)
-            .Take(5)
-            .ToListAsync(cancellationToken)).Cast<object>().ToList();
+        // =========================================================
+        // Confirmed purchases
+        // =========================================================
 
-        var recentTransfers = (await context.MileageTransfers.Where(x => x.UserId == userLoggedId).AsNoTracking()
-            .OrderByDescending(t => t.TransferDate)
-            .ProjectTo<Transfers.DTOs.MileageTransferDto>(mapper.ConfigurationProvider)
-            .Take(5)
-            .ToListAsync(cancellationToken)).Cast<object>().ToList();
+        var purchases = await context.MileagePurchases
+            .Where(x =>
+                x.UserId == userId &&
+                x.PurchaseStatus == PurchaseStatus.Confirmed)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
 
-        var recentRedemptions = (await context.FlightRedemptions.Where(x => x.UserId == userLoggedId).AsNoTracking()
-            .OrderByDescending(r => r.FlightDate)
-            .ProjectTo<Redemptions.DTOs.FlightRedemptionDto>(mapper.ConfigurationProvider)
-            .Take(5)
-            .ToListAsync(cancellationToken)).Cast<object>().ToList();
+        // =========================================================
+        // Latest reference price for each program
+        // =========================================================
 
-        var dto = new DTOs.DashboardDto
+        var latestReferencePrices = await context.ReferenceMileagePrices
+            .AsNoTracking()
+            .GroupBy(x => x.ProgramId)
+            .Select(g => g
+                .OrderByDescending(x => x.EffectiveDate)
+                .Select(x => new
+                {
+                    x.ProgramId,
+                    x.PricePerThousand
+                })
+                .First())
+            .ToDictionaryAsync(
+                x => x.ProgramId,
+                x => x.PricePerThousand,
+                cancellationToken);
+
+        // =========================================================
+        // Purchase statistics by program
+        // =========================================================
+
+        var purchaseStatsByProgram = purchases
+            .GroupBy(x => x.ProgramId)
+            .ToDictionary(
+                g => g.Key,
+                g => new
+                {
+                    TotalAmount = g.Sum(x => x.AmountPaid),
+                    TotalMiles = g.Sum(x => x.MilesPurchased)
+                });
+
+        // =========================================================
+        // Program dashboard data
+        // =========================================================
+
+        var programs = balances
+            .Select(balance =>
+            {
+                var program = balance.Program;
+
+                var hasPurchaseData = purchaseStatsByProgram.TryGetValue(program.Id, out var purchaseStats);
+
+                var totalPurchaseAmount = hasPurchaseData && purchaseStats != null
+                        ? purchaseStats.TotalAmount
+                        : 0m;
+
+                var totalPurchasedMiles = hasPurchaseData && purchaseStats != null
+                        ? purchaseStats.TotalMiles
+                        : 0m;
+
+                var actualCostPerThousand = totalPurchasedMiles > 0
+                        ? totalPurchaseAmount /
+                          (totalPurchasedMiles / 1000m)
+                        : 0m;
+
+                var referencePricePerThousand = latestReferencePrices.TryGetValue(program.Id, out var referencePrice)
+                        ? referencePrice
+                        : 0m;
+
+                var unrealizedProfitLoss = (referencePricePerThousand - actualCostPerThousand) * (balance.Balance / 1000m);
+
+                var unrealizedProfitLossPercentage = actualCostPerThousand > 0
+                        ? (
+                            (referencePricePerThousand -
+                             actualCostPerThousand)
+                            / actualCostPerThousand
+                          ) * 100m
+                        : 0m;
+
+                return new DTOs.DashboardProgramDto
+                {
+                    ProgramId = program.Id,
+                    ProgramName = program.Name,
+                    CurrencyCode = program.CurrencyCode,
+                    Miles = balance.Balance,
+                    ActualCostPerThousand = actualCostPerThousand,
+                    ReferencePricePerThousand = referencePricePerThousand,
+                    UnrealizedProfitLoss = unrealizedProfitLoss,
+                    UnrealizedProfitLossPercentage = unrealizedProfitLossPercentage
+                };
+            })
+            .OrderBy(x => x.ProgramName)
+            .ToList();
+
+        // =========================================================
+        // Recent purchases
+        // =========================================================
+
+        var recentPurchases =
+            (await context.MileagePurchases
+                .Where(x => x.UserId == userId)
+                .AsNoTracking()
+                .OrderByDescending(x => x.PurchaseDate)
+                .ProjectTo<Purchases.DTOs.MileagePurchaseDto>(
+                    mapper.ConfigurationProvider)
+                .Take(5)
+                .ToListAsync(cancellationToken))
+            .Cast<object>()
+            .ToList();
+
+        // =========================================================
+        // Recent transfers
+        // =========================================================
+
+        var recentTransfers =
+            (await context.MileageTransfers
+                .Where(x => x.UserId == userId)
+                .AsNoTracking()
+                .OrderByDescending(x => x.TransferDate)
+                .ProjectTo<Transfers.DTOs.MileageTransferDto>(
+                    mapper.ConfigurationProvider)
+                .Take(5)
+                .ToListAsync(cancellationToken))
+            .Cast<object>()
+            .ToList();
+
+        // =========================================================
+        // Recent redemptions
+        // =========================================================
+
+        var recentRedemptions =
+            (await context.FlightRedemptions
+                .Include(x => x.LoyaltyProgram)
+                .Where(x => x.UserId == userId)
+                .AsNoTracking()
+                .OrderByDescending(x => x.FlightDate)
+                .ProjectTo<Redemptions.DTOs.FlightRedemptionDto>(
+                    mapper.ConfigurationProvider)
+                .Take(5)
+                .ToListAsync(cancellationToken))
+            .Cast<object>()
+            .ToList();
+
+        // =========================================================
+        // Dashboard
+        // =========================================================
+
+        return new DTOs.DashboardDto
         {
-            TotalMiles = totalMiles,
-            TotalInvestment = totalInvestment,
-            AverageCostPerThousand = averageCostPerThousand,
-            CurrentMarketValue = currentMarketValue,
-            CurrentProfit = currentProfit,
-            CurrentLoss = currentLoss,
-            Programs = programs.Cast<object>().ToList(),
+            ProgramCount = programs.Count,
+            Programs = programs,
             RecentPurchases = recentPurchases,
             RecentTransfers = recentTransfers,
             RecentRedemptions = recentRedemptions
         };
-
-        return dto;
     }
 }

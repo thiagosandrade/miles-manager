@@ -16,5 +16,6 @@ public sealed class FlightRedemptionDto
     public decimal MilesUsed { get; init; }
     public decimal Taxes { get; init; }
     public decimal CashPrice { get; init; }
+    public string CurrencyCode { get; set; } = string.Empty;
     public decimal EffectiveCostPerThousand { get; init; }
 }

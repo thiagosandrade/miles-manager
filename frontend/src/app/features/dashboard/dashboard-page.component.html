@@ -1,316 +1,663 @@
 <section class="page">
 
-  <!-- Header -->
+  <!-- =====================================================
+       Header
+  ====================================================== -->
 
-  <header class="page-header">
+  <app-loading-spinner
+    *ngIf="loading()">
+  </app-loading-spinner>
 
-    <div>
+  <ng-container *ngIf="!loading()">
 
-      <p class="eyebrow">
-        {{ 'dashboard.eyebrow' | translate }}
-      </p>
+    <header class="page-header">
 
-      <h1>
-        {{ 'dashboard.title' | translate }}
-      </h1>
+      <div>
 
-      <p class="subtitle">
-        {{ 'dashboard.subtitle' | translate }}
-      </p>
+        <p class="eyebrow">
+          {{ 'dashboard.eyebrow' | translate }}
+        </p>
+
+        <h1>
+          {{ 'dashboard.title' | translate }}
+        </h1>
+
+        <p class="subtitle">
+          {{ 'dashboard.subtitle' | translate }}
+        </p>
+
+      </div>
+
+    </header>
+
+
+    <!-- ===================================================
+         Program Summary
+    ==================================================== -->
+
+    <section class="dashboard-section">
+
+      <header class="section-header">
+
+        <div>
+
+          <h2>
+            {{ 'dashboard.cards.programSummary' | translate }}
+          </h2>
+
+          <p>
+            {{ 'dashboard.cards.programSummarySubtitle' | translate }}
+          </p>
+
+        </div>
+
+        <div
+          class="program-count"
+          *ngIf="stats()">
+
+          {{ stats()?.programCount }}
+
+          <span>
+            {{ 'dashboard.cards.programs' | translate }}
+          </span>
+
+        </div>
+
+      </header>
+
+
+      <!-- =================================================
+           Desktop Program Table
+      ================================================== -->
+
+      <div class="desktop-program-table">
+
+        <div class="program-table-header">
+
+          <span>
+            {{ 'dashboard.programs.program' | translate }}
+          </span>
+
+          <span>
+            {{ 'dashboard.programs.miles' | translate }}
+          </span>
+
+          <span>
+            {{ 'dashboard.programs.costPerThousand' | translate }}
+          </span>
+
+          <span>
+            {{ 'dashboard.programs.referencePrice' | translate }}
+          </span>
+
+          <span>
+            {{ 'dashboard.programs.profitLoss' | translate }}
+          </span>
+
+        </div>
+
+
+        <article
+          class="program-row"
+          *ngFor="let program of stats()?.programs">
+
+          <!-- Program -->
+
+          <div class="program-name">
+
+            <div class="avatar">
+
+              {{ program.programName.charAt(0) | uppercase }}
+
+            </div>
+
+            <div class="program-details">
+
+              <strong>
+                {{ program.programName }}
+              </strong>
+
+              <span>
+                {{ program.currencyCode }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- Miles -->
+
+          <strong class="program-number">
+
+            {{ formatMiles(program.miles) }}
+
+          </strong>
+
+
+          <!-- Actual Cost -->
+
+          <div class="program-money">
+
+            {{
+              formatCurrency(
+                program.actualCostPerThousand,
+                program.currencyCode
+              )
+            }}
+
+          </div>
+
+
+          <!-- Reference -->
+
+          <div class="program-money">
+
+            {{
+              formatCurrency(
+                program.referencePricePerThousand,
+                program.currencyCode
+              )
+            }}
+ 
+          </div>
+
+
+          <!-- Profit / Loss -->
+
+          <div
+            class="program-profit-loss"
+            [class.profit]="isProfit(program)"
+            [class.loss]="!isProfit(program)">
+
+            <strong>
+
+              {{
+                formatCurrency(
+                  program.unrealizedProfitLoss,
+                  program.currencyCode
+                )
+              }}
+
+            </strong>
+
+            <small>
+
+              {{
+                formatPercentage(
+                  program.unrealizedProfitLossPercentage
+                )
+              }}
+
+            </small>
+
+          </div>
+
+        </article>
+
+
+        <!-- Empty -->
+
+        <div
+          class="program-empty"
+          *ngIf="stats() && !stats()?.programs?.length">
+
+          <mat-icon>
+            flight_off
+          </mat-icon>
+
+          <span>
+            {{ 'dashboard.programs.empty' | translate }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           Mobile Program Cards
+      ================================================== -->
+
+      <div class="mobile-program-cards">
+
+        <article
+          class="program-card"
+          *ngFor="let program of stats()?.programs">
+
+          <div class="program-card-header">
+
+            <div class="program-name">
+
+              <div class="avatar">
+
+                {{ program.programName.charAt(0) | uppercase }}
+
+              </div>
+
+              <div class="program-details">
+
+                <strong>
+                  {{ program.programName }}
+                </strong>
+
+                <span>
+                  {{ program.currencyCode }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Miles -->
+
+          <div class="program-card-miles">
+
+            <span>
+              {{ 'dashboard.programs.miles' | translate }}
+            </span>
+
+            <strong>
+              {{ formatMiles(program.miles) }}
+            </strong>
+
+          </div>
+
+
+          <!-- Financial Values -->
+
+          <div class="program-card-financials">
+
+            <div>
+
+              <span>
+                {{ 'dashboard.programs.costPerThousand' | translate }}
+              </span>
+
+              <strong>
+
+                {{
+                  formatCurrency(
+                    program.actualCostPerThousand,
+                    program.currencyCode
+                  )
+                }}
+
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                {{ 'dashboard.programs.referencePrice' | translate }}
+              </span>
+
+              <strong>
+
+                {{
+                  formatCurrency(
+                    program.referencePricePerThousand,
+                    program.currencyCode
+                  )
+                }}
+
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- Profit / Loss -->
+
+          <div
+            class="program-card-profit"
+            [class.profit]="isProfit(program)"
+            [class.loss]="!isProfit(program)">
+
+            <span>
+              {{ 'dashboard.programs.profitLoss' | translate }}
+            </span>
+
+            <div>
+
+              <strong>
+
+                {{
+                  formatCurrency(
+                    program.unrealizedProfitLoss,
+                    program.currencyCode
+                  )
+                }}
+
+              </strong>
+
+              <small>
+
+                {{
+                  formatPercentage(
+                    program.unrealizedProfitLossPercentage
+                  )
+                }}
+
+              </small>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- Empty -->
+
+        <div
+          class="program-empty mobile-empty"
+          *ngIf="stats() && !stats()?.programs?.length">
+
+          <mat-icon>
+            flight_off
+          </mat-icon>
+
+          <span>
+            {{ 'dashboard.programs.empty' | translate }}
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         Recent Activity
+    ====================================================== -->
+
+    <section class="dashboard-grid">
+
+
+      <!-- =================================================
+           Recent Purchases
+      ================================================== -->
+
+      <article class="dashboard-card">
+
+        <header class="dashboard-card-header">
+
+          <h2>
+            {{ 'dashboard.cards.recentPurchases' | translate }}
+          </h2>
+
+        </header>
+
+        <div class="dashboard-card-content">
+
+          <div class="dashboard-list">
+
+            <div
+              class="dashboard-list-item"
+              *ngFor="let purchase of stats()?.recentPurchases">
+
+              <div class="activity-main">
+
+                <strong>
+                  {{ purchase.programName }}
+                </strong>
+
+                <span *ngIf="purchase.partner">
+                  {{ purchase.partner }}
+                </span>
+
+              </div>
+
+              <div class="activity-value">
+
+                <strong>
+
+                  {{
+                    formatCurrency(
+                      purchase.amountPaid,
+                      purchase.currencyCode
+                    )
+                  }}
+
+                </strong>
+
+                <small>
+
+                  {{ purchase.purchaseDate | date:'mediumDate' }}
+
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="activity-empty"
+              *ngIf="stats() && !stats()?.recentPurchases?.length">
+
+              {{ 'dashboard.activity.noPurchases' | translate }}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- =================================================
+           Recent Transfers
+      ================================================== -->
+
+      <article class="dashboard-card">
+
+        <header class="dashboard-card-header">
+
+          <h2>
+            {{ 'dashboard.cards.recentTransfers' | translate }}
+          </h2>
+
+        </header>
+
+        <div class="dashboard-card-content">
+
+          <div class="dashboard-list">
+
+            <div
+              class="dashboard-list-item"
+              *ngFor="let transfer of stats()?.recentTransfers">
+
+              <div class="activity-main">
+
+                <strong>
+
+                  {{ transfer.originProgram }}
+
+                  <mat-icon>
+                    arrow_forward
+                  </mat-icon>
+
+                  {{ transfer.destinationProgram }}
+
+                </strong>
+
+                <span>
+
+                  {{
+                    formatCurrency(
+                      transfer.costPerThousandOrigin,
+                      transfer.currencyCodeOrigin
+                    )
+                  }}
+
+                  /
+
+                  {{
+                    formatCurrency(
+                      transfer.costPerThousandDestination,
+                      transfer.currencyCodeDestination
+                    )
+                  }}
+
+                  {{ 'dashboard.programs.costPerThousand' | translate }}
+
+                </span>
+
+              </div>
+
+              <div class="activity-value">
+
+                <strong>
+
+                  {{ formatMiles(transfer.milesReceived) }}
+
+                </strong>
+
+                <small>
+
+                  {{ transfer.transferDate | date:'mediumDate' }}
+
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="activity-empty"
+              *ngIf="stats() && !stats()?.recentTransfers?.length">
+
+              {{ 'dashboard.activity.noTransfers' | translate }}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- =================================================
+           Recent Redemptions
+      ================================================== -->
+
+      <article class="dashboard-card">
+
+        <header class="dashboard-card-header">
+
+          <h2>
+            {{ 'dashboard.cards.recentRedemptions' | translate }}
+          </h2>
+
+        </header>
+
+        <div class="dashboard-card-content">
+
+          <div class="dashboard-list">
+
+            <div
+              class="dashboard-list-item"
+              *ngFor="let redemption of stats()?.recentRedemptions">
+
+              <div class="activity-main">
+
+                <strong>
+                  {{ redemption.program }}
+                </strong>
+
+                <span>
+
+                  {{ redemption.originAirport }}
+
+                  <mat-icon>
+                    arrow_forward
+                  </mat-icon>
+
+                  {{ redemption.destinationAirport }}
+
+                </span>
+
+              </div>
+
+              <div class="activity-value">
+
+                <strong>
+
+                  {{
+                    formatCurrency(
+                      redemption.cashPrice,
+                      redemption.currencyCode
+                    )
+                  }}
+
+                </strong>
+
+                <small>
+
+                  {{
+                    formatMiles(redemption.milesUsed)
+                  }}
+
+                  {{ 'dashboard.redemption-miles' | translate }}
+
+                  ·
+
+                  {{ redemption.flightDate | date:'mediumDate' }}
+
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="activity-empty"
+              *ngIf="stats() && !stats()?.recentRedemptions?.length">
+
+              {{ 'dashboard.activity.noRedemptions' | translate }}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <!-- =====================================================
+         Error
+    ====================================================== -->
+
+    <div
+      class="feedback"
+      *ngIf="error()">
+
+      <strong>
+        {{ 'common.error' | translate }}
+      </strong>
+
+      <span>
+        {{ error() }}
+      </span>
 
     </div>
 
-  </header>
-
-  <!-- Metrics -->
-
-  <section class="metrics">
-
-    <article class="metric-card">
-
-      <div class="metric-icon">
-        <mat-icon>flight</mat-icon>
-      </div>
-
-      <div>
-
-        <span>
-          {{ 'dashboard.metrics.totalMiles' | translate }}
-        </span>
-
-        <strong>{{ stats?.totalMiles | number }}</strong>
-
-      </div>
-
-    </article>
-
-    <article class="metric-card">
-
-      <div class="metric-icon">
-        <mat-icon>payments</mat-icon>
-      </div>
-
-      <div>
-
-        <span>
-          {{ 'dashboard.metrics.investment' | translate }}
-        </span>
-
-        <strong>{{ stats?.totalInvestment | currency }}</strong>
-
-      </div>
-
-    </article>
-
-    <article class="metric-card">
-
-      <div class="metric-icon">
-        <mat-icon>price_check</mat-icon>
-      </div>
-
-      <div>
-
-        <span>
-          {{ 'dashboard.metrics.costPerThousand' | translate }}
-        </span>
-
-        <strong>{{ stats?.averageCostPerThousand | currency }}</strong>
-
-      </div>
-
-    </article>
-
-    <article class="metric-card">
-
-      <div class="metric-icon">
-        <mat-icon>trending_up</mat-icon>
-      </div>
-
-      <div>
-
-        <span>
-          {{ 'dashboard.metrics.marketValue' | translate }}
-        </span>
-
-        <strong>{{ stats?.currentMarketValue | currency }}</strong>
-
-      </div>
-
-    </article>
-
-    <article class="metric-card">
-
-      <div class="metric-icon success">
-        <mat-icon>arrow_upward</mat-icon>
-      </div>
-
-      <div>
-
-        <span>
-          {{ 'dashboard.metrics.profit' | translate }}
-        </span>
-
-        <strong>{{ stats?.currentProfit | currency }}</strong>
-
-      </div>
-
-    </article>
-
-    <article class="metric-card">
-
-      <div class="metric-icon danger">
-        <mat-icon>arrow_downward</mat-icon>
-      </div>
-
-      <div>
-
-        <span>
-          {{ 'dashboard.metrics.loss' | translate }}
-        </span>
-
-        <strong>{{ stats?.currentLoss | currency }}</strong>
-
-      </div>
-
-    </article>
-
-  </section>
-
-  <!-- Recent Programs -->
-
-  <section class="dashboard-grid">
-
-    <article class="dashboard-card">
-
-      <header class="dashboard-card-header">
-
-        <h2>
-          {{ 'dashboard.cards.recentPrograms' | translate }}
-        </h2>
-
-      </header>
-
-      <div class="dashboard-card-content">
-
-        <div class="program-list">
-
-          <ng-container *ngFor="let program of stats?.programs">
-
-            <div
-              class="program-pill"
-              *ngIf="program">
-
-              {{ program.programName }}
-
-            </div>
-
-          </ng-container>
-
-        </div>
-
-      </div>
-
-    </article>
-
-  </section>
-
-  <!-- Recent Activity -->
-
-  <section class="dashboard-grid">
-
-    <!-- Purchases -->
-
-    <article class="dashboard-card">
-
-      <header class="dashboard-card-header">
-
-        <h2>
-          {{ 'dashboard.cards.recentPurchases' | translate }}
-        </h2>
-
-      </header>
-
-      <div class="dashboard-card-content">
-
-        <div class="dashboard-list">
-
-          <ng-container *ngFor="let purchase of stats?.recentPurchases">
-
-            <div
-              class="dashboard-list-item"
-              *ngIf="purchase">
-
-              {{ purchase.purchaseDate }}
-              -
-              {{ purchase.programName }}
-              -
-              {{ purchase.amountPaid | currency }}
-
-            </div>
-
-          </ng-container>
-
-        </div>
-
-      </div>
-
-    </article>
-
-    <!-- Transfers -->
-
-    <article class="dashboard-card">
-
-      <header class="dashboard-card-header">
-
-        <h2>
-          {{ 'dashboard.cards.recentTransfers' | translate }}
-        </h2>
-
-      </header>
-
-      <div class="dashboard-card-content">
-
-        <div class="dashboard-list">
-
-          <ng-container *ngFor="let transfer of stats?.recentTransfers">
-
-            <div
-              class="dashboard-list-item"
-              *ngIf="transfer">
-
-              {{ transfer.transferDate }}
-              -
-              {{ transfer.originProgram }}
-              {{ 'dashboard.transfer.to' | translate }}
-              {{ transfer.destinationProgram }}
-
-            </div>
-
-          </ng-container>
-
-        </div>
-
-      </div>
-
-    </article>
-
-    <!-- Redemptions -->
-
-    <article class="dashboard-card">
-
-      <header class="dashboard-card-header">
-
-        <h2>
-          {{ 'dashboard.cards.recentRedemptions' | translate }}
-        </h2>
-
-      </header>
-
-      <div class="dashboard-card-content">
-
-        <div class="dashboard-list">
-
-          <ng-container *ngFor="let redemption of stats?.recentRedemptions">
-
-            <div
-              class="dashboard-list-item"
-              *ngIf="redemption">
-
-              {{ redemption.flightDate }}
-              -
-              {{ redemption.program }}
-              -
-              {{ redemption.milesUsed }}
-              {{ 'dashboard.redemption-miles' | translate }}
-
-            </div>
-
-          </ng-container>
-
-        </div>
-
-      </div>
-
-    </article>
-
-  </section>
-
-  <!-- Error -->
-
-  <div
-    class="feedback"
-    *ngIf="error">
-
-    <strong>
-      {{ 'common.error' | translate }}
-    </strong>
-
-    <span>
-      {{ error }}
-    </span>
-
-  </div>
+  </ng-container>
 
 </section>
-
-<app-loading-spinner *ngIf="loading"></app-loading-spinner>

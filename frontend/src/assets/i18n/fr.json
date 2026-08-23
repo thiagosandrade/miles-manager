@@ -86,23 +86,31 @@
     "user-roles": "Rôles des utilisateurs"
   },
   "dashboard": {
-    "eyebrow": "Aperçu",
+    "eyebrow": "Vue d’ensemble",
     "title": "Tableau de bord",
-    "subtitle": "Suivez l'activité, la valeur et les mouvements récents de vos programmes de fidélité.",
-    "metrics": {
-      "totalMiles": "Miles totaux",
-      "investment": "Investissement",
-      "costPerThousand": "Coût pour 1 000 miles",
-      "marketValue": "Valeur de marché",
-      "profit": "Profit",
-      "loss": "Perte"
-    },
+    "subtitle": "Suivez l’activité, la valeur et les mouvements récents de vos programmes de fidélité.",
     "cards": {
-      "recentPrograms": "Programmes récents",
+      "programSummary": "Résumé des programmes",
+      "programSummarySubtitle": "Miles, coût et valeur par programme de fidélité.",
+      "programs": "programmes",
       "recentPurchases": "Achats récents",
       "recentTransfers": "Transferts récents",
-      "recentRedemptions": "Rédemptions récentes"
+      "recentRedemptions": "Utilisations récentes"
     },
+    "programs": {
+      "program": "Programme",
+      "miles": "Miles",
+      "costPerThousand": "Coût / 1 000",
+      "referencePrice": "Référence / 1 000",
+      "profitLoss": "Gain / Perte",
+      "empty": "Aucune donnée de programme disponible."
+    },
+    "activity": {
+      "noPurchases": "Aucun achat récent.",
+      "noTransfers": "Aucun transfert récent.",
+      "noRedemptions": "Aucune utilisation récente."
+    },
+    "redemption-miles": "miles",
     "transfer": {
       "to": "vers"
     }

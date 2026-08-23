@@ -88,21 +88,29 @@
   "dashboard": {
     "eyebrow": "Übersicht",
     "title": "Dashboard",
-    "subtitle": "Verfolge Meilenaktivität, Wert und aktuelle Bewegungen über alle Treueprogramme hinweg.",
-    "metrics": {
-      "totalMiles": "Gesamte Meilen",
-      "investment": "Investition",
-      "costPerThousand": "Kosten pro 1.000 Meilen",
-      "marketValue": "Marktwert",
-      "profit": "Gewinn",
-      "loss": "Verlust"
-    },
+    "subtitle": "Verfolgen Sie Aktivitäten, Wert und aktuelle Bewegungen Ihrer Treueprogramme.",
     "cards": {
-      "recentPrograms": "Aktuelle Programme",
-      "recentPurchases": "Aktuelle Käufe",
-      "recentTransfers": "Aktuelle Transfers",
-      "recentRedemptions": "Aktuelle Einlösungen"
+      "programSummary": "Programmübersicht",
+      "programSummarySubtitle": "Meilen, Kosten und Wert je Treueprogramm.",
+      "programs": "Programme",
+      "recentPurchases": "Letzte Käufe",
+      "recentTransfers": "Letzte Übertragungen",
+      "recentRedemptions": "Letzte Einlösungen"
     },
+    "programs": {
+      "program": "Programm",
+      "miles": "Meilen",
+      "costPerThousand": "Kosten / 1.000",
+      "referencePrice": "Referenz / 1.000",
+      "profitLoss": "Gewinn / Verlust",
+      "empty": "Keine Programmdaten verfügbar."
+    },
+    "activity": {
+      "noPurchases": "Keine aktuellen Käufe.",
+      "noTransfers": "Keine aktuellen Übertragungen.",
+      "noRedemptions": "Keine aktuellen Einlösungen."
+    },
+    "redemption-miles": "Meilen",
     "transfer": {
       "to": "zu"
     }

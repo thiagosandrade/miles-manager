@@ -1,1 +1,563 @@
 @use '../../../styles/pages';
+
+
+/* ==========================================================
+   Dashboard Section
+========================================================== */
+
+.dashboard-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+/* ==========================================================
+   Section Header
+========================================================== */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.section-header h2 {
+  margin: 0;
+
+  color: var(--ink);
+
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.section-header p {
+  margin: 6px 0 0;
+
+  color: var(--muted);
+
+  font-size: .85rem;
+}
+
+
+/* ==========================================================
+   Desktop Program Table
+========================================================== */
+
+.desktop-program-table {
+  width: 100%;
+
+  border: 1px solid var(--border);
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  background: var(--panel);
+
+  box-shadow: var(--shadow-sm);
+}
+
+
+/* ==========================================================
+   Table Header
+========================================================== */
+
+.program-table-header,
+.program-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(220px, 1.5fr)
+    minmax(120px, 1fr)
+    minmax(130px, 1fr)
+    minmax(130px, 1fr)
+    minmax(150px, 1fr);
+
+  align-items: center;
+
+  column-gap: 20px;
+}
+
+
+.program-table-header {
+  padding: 14px 20px;
+
+  background: rgba(21, 101, 192, .04);
+
+  border-bottom: 1px solid var(--border);
+
+  color: var(--muted);
+
+  font-size: .72rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+
+/* ==========================================================
+   Program Row
+========================================================== */
+
+.program-row {
+  padding: 18px 20px;
+
+  border-bottom: 1px solid var(--border);
+
+  transition: background .2s ease;
+}
+
+.program-row:last-child {
+  border-bottom: none;
+}
+
+.program-row:hover {
+  background: rgba(21, 101, 192, .025);
+}
+
+
+/* ==========================================================
+   Program Name
+========================================================== */
+
+.program-name {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+
+.avatar {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    var(--mm-primary),
+    var(--mm-secondary)
+  );
+
+  color: white;
+
+  font-weight: 700;
+}
+
+
+.program-details {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.program-details strong {
+  color: var(--ink);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: .92rem;
+}
+
+.program-details span {
+  color: var(--muted);
+
+  font-size: .75rem;
+}
+
+
+/* ==========================================================
+   Numbers
+========================================================== */
+
+.program-number {
+  color: var(--ink);
+
+  font-size: .95rem;
+}
+
+
+/* ==========================================================
+   Money
+========================================================== */
+
+.program-money {
+  color: var(--ink);
+
+  font-size: .9rem;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================================
+   Profit / Loss
+========================================================== */
+
+.program-profit-loss {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.program-profit-loss small {
+  font-size: .72rem;
+  font-weight: 500;
+}
+
+.program-profit-loss.profit {
+  color: #15803d;
+}
+
+.program-profit-loss.loss {
+  color: #dc2626;
+}
+
+
+/* ==========================================================
+   Mobile Cards
+========================================================== */
+
+.mobile-program-cards {
+  display: none;
+}
+
+
+/* ==========================================================
+   Recent Activity
+========================================================== */
+
+.dashboard-list {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.dashboard-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding: 14px 0;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.dashboard-list-item:last-child {
+  border-bottom: none;
+}
+
+
+.activity-main {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  min-width: 0;
+}
+
+.activity-main strong {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  color: var(--ink);
+
+  font-size: .88rem;
+}
+
+.activity-main span {
+  color: var(--muted);
+
+  font-size: .75rem;
+}
+
+.activity-main mat-icon {
+  width: 16px;
+  height: 16px;
+
+  font-size: 16px;
+
+  color: var(--muted);
+}
+
+
+.activity-value {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  gap: 3px;
+
+  flex-shrink: 0;
+}
+
+.activity-value strong {
+  color: var(--ink);
+
+  font-size: .85rem;
+}
+
+.activity-value small {
+  color: var(--muted);
+
+  font-size: .72rem;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================================
+   Dashboard Cards
+========================================================== */
+
+.dashboard-card {
+  min-width: 0;
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 900px) {
+
+  .program-table-header,
+  .program-row {
+    grid-template-columns:
+      minmax(180px, 1.4fr)
+      minmax(100px, 1fr)
+      minmax(120px, 1fr)
+      minmax(120px, 1fr)
+      minmax(130px, 1fr);
+
+    column-gap: 12px;
+  }
+
+}
+
+
+@media (max-width: 768px) {
+
+  /* --------------------------------------------------------
+     Program table → cards
+  -------------------------------------------------------- */
+
+  .desktop-program-table {
+    display: none;
+  }
+
+  .mobile-program-cards {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+
+  /* --------------------------------------------------------
+     Program card
+  -------------------------------------------------------- */
+
+  .program-card {
+    padding: 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    background: var(--panel);
+
+    box-shadow: var(--shadow-sm);
+  }
+
+
+  .program-card-header {
+    display: flex;
+    align-items: center;
+  }
+
+
+  /* --------------------------------------------------------
+     Miles
+  -------------------------------------------------------- */
+
+  .program-card-miles {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-top: 16px;
+    padding-top: 14px;
+
+    border-top: 1px solid var(--border);
+  }
+
+  .program-card-miles span {
+    color: var(--muted);
+    font-size: .75rem;
+  }
+
+  .program-card-miles strong {
+    color: var(--ink);
+    font-size: 1rem;
+  }
+
+
+  /* --------------------------------------------------------
+     Financial values
+  -------------------------------------------------------- */
+
+  .program-card-financials {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 14px;
+
+    margin-top: 14px;
+  }
+
+  .program-card-financials > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+  }
+
+  .program-card-financials span,
+  .program-card-profit > span {
+    color: var(--muted);
+
+    font-size: .7rem;
+    font-weight: 500;
+  }
+
+  .program-card-financials strong {
+    color: var(--ink);
+
+    font-size: .88rem;
+  }
+
+
+  /* --------------------------------------------------------
+     Profit/Loss
+  -------------------------------------------------------- */
+
+  .program-card-profit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-top: 14px;
+    padding-top: 14px;
+
+    border-top: 1px solid var(--border);
+  }
+
+  .program-card-profit > div {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 2px;
+  }
+
+  .program-card-profit strong {
+    font-size: .95rem;
+  }
+
+  .program-card-profit small {
+    font-size: .7rem;
+  }
+
+  .program-card-profit.profit {
+    color: #15803d;
+  }
+
+  .program-card-profit.loss {
+    color: #dc2626;
+  }
+
+
+  /* --------------------------------------------------------
+     Recent activity
+  -------------------------------------------------------- */
+
+  .dashboard-list-item {
+    align-items: flex-start;
+
+    padding: 12px 0;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .program-card {
+    padding: 14px;
+  }
+
+  .program-card-financials {
+    gap: 10px;
+  }
+
+  .program-details strong {
+    font-size: .86rem;
+  }
+
+  .program-details span {
+    font-size: .7rem;
+  }
+
+  .avatar {
+    width: 38px;
+    height: 38px;
+  }
+
+  .dashboard-list-item {
+    gap: 10px;
+  }
+
+  .activity-main strong {
+    font-size: .82rem;
+  }
+
+  .activity-value strong {
+    font-size: .8rem;
+  }
+
+}

@@ -87,22 +87,30 @@
   },
   "dashboard": {
     "eyebrow": "Visão geral",
-    "title": "Painel",
-    "subtitle": "Acompanhe a atividade, o valor e os movimentos recentes dos seus programas de fidelidade.",
-    "metrics": {
-      "totalMiles": "Milhas totais",
-      "investment": "Investimento",
-      "costPerThousand": "Custo por 1.000 milhas",
-      "marketValue": "Valor de mercado",
-      "profit": "Lucro",
-      "loss": "Perda"
-    },
+    "title": "Dashboard",
+    "subtitle": "Acompanhe a atividade, o valor e as movimentações recentes dos seus programas de fidelidade.",
     "cards": {
-      "recentPrograms": "Programas recentes",
+      "programSummary": "Resumo dos programas",
+      "programSummarySubtitle": "Milhas, custo e valor por programa de fidelidade.",
+      "programs": "programas",
       "recentPurchases": "Compras recentes",
       "recentTransfers": "Transferências recentes",
       "recentRedemptions": "Resgates recentes"
     },
+    "programs": {
+      "program": "Programa",
+      "miles": "Milhas",
+      "costPerThousand": "Custo / 1.000",
+      "referencePrice": "Referência / 1.000",
+      "profitLoss": "Lucro / Prejuízo",
+      "empty": "Nenhum dado de programa disponível."
+    },
+    "activity": {
+      "noPurchases": "Nenhuma compra recente.",
+      "noTransfers": "Nenhuma transferência recente.",
+      "noRedemptions": "Nenhum resgate recente."
+    },
+    "redemption-miles": "milhas",
     "transfer": {
       "to": "para"
     }

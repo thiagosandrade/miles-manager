@@ -1,56 +1,149 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { DashboardApiService } from './dashboard-api.service';
+
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DashboardDto } from './models/dashboard.model';
-import { MatListModule } from "@angular/material/list";
+import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { AppLoadingSpinnerComponent } from "../../shared/components/app-loading-spinner/app-loading-spinner.component";
+
+import { from } from 'rxjs';
+
+import { DashboardApiService } from './dashboard-api.service';
+
+import {
+  DashboardDto,
+  DashboardProgramDto
+} from './models/dashboard.model';
+
+import { AppLoadingSpinnerComponent }
+  from '../../shared/components/app-loading-spinner/app-loading-spinner.component';
+
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard-page',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatTableModule,
+  imports: [
+    CommonModule,
+    MatCardModule,
     MatProgressSpinnerModule,
     MatListModule,
+    MatButtonModule,
     MatIconModule,
-    MatButtonModule, 
     AppLoadingSpinnerComponent,
-    TranslatePipe],
+    TranslatePipe
+  ],
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.scss']
 })
 export class DashboardPageComponent implements OnInit {
-  private dashboardApi = inject(DashboardApiService);
-  private cd = inject(ChangeDetectorRef);
-  
-  loading = true;
-  error = '';
-  stats: DashboardDto | null = null;
 
-  displayedColumns: string[] = ['name', 'value', 'description'];
-  dataSource = [];
+  private readonly dashboardApi = inject(DashboardApiService);
 
-  ngOnInit() {
+  stats = signal<DashboardDto | null>(null);
+
+  loading = signal(false);
+
+  error = signal('');
+
+
+  ngOnInit(): void {
     this.loadDashboard();
   }
 
-  async loadDashboard() {
-    this.loading = true;
-    this.error = '';
-    try {
-      const response = await this.dashboardApi.getDashboard();
-      this.stats = response;
-      this.loading = false;
-      this.cd.detectChanges();
-    } catch (err: any) {
-      this.error = err.message || 'Error loading dashboard statistics';
-      this.loading = false;
-    }
-  }
-}
 
+  loadDashboard(): void {
+
+    this.loading.set(true);
+
+    this.error.set('');
+
+    from(this.dashboardApi.getDashboard()).subscribe({
+
+      next: response => {
+
+        this.stats.set(response);
+
+      },
+
+      error: err => {
+
+        this.error.set(
+          err instanceof Error
+            ? err.message
+            : 'Error loading dashboard statistics'
+        );
+
+        this.loading.set(false);
+
+      },
+
+      complete: () => {
+
+        this.loading.set(false);
+
+      }
+
+    });
+
+  }
+
+
+  formatCurrency(
+    value: number,
+    currencyCode: string
+  ): string {
+
+    return new Intl.NumberFormat(
+      undefined,
+      {
+        style: 'currency',
+        currency: currencyCode,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }
+    ).format(value);
+
+  }
+
+
+  formatMiles(value: number): string {
+
+    return new Intl.NumberFormat(
+      undefined,
+      {
+        maximumFractionDigits: 0
+      }
+    ).format(value);
+
+  }
+
+
+  formatPercentage(value: number): string {
+
+    return new Intl.NumberFormat(
+      undefined,
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+        signDisplay: 'always'
+      }
+    ).format(value) + '%';
+
+  }
+
+
+  isProfit(program: DashboardProgramDto): boolean {
+
+    return program.unrealizedProfitLoss >= 0;
+
+  }
+
+}

@@ -3,14 +3,21 @@ namespace MilesManager.Application.Features.Dashboard.DTOs;
 
 public sealed class DashboardDto
 {
-    public decimal TotalMiles { get; init; }
-    public decimal TotalInvestment { get; init; }
-    public decimal AverageCostPerThousand { get; init; }
-    public decimal CurrentMarketValue { get; init; }
-    public decimal CurrentProfit { get; init; }
-    public decimal CurrentLoss { get; init; }
-    public IReadOnlyList<object> Programs { get; init; } = [];
+    public int ProgramCount { get; init; }
+    public IReadOnlyList<DashboardProgramDto> Programs { get; init; } = [];
     public IReadOnlyList<object> RecentPurchases { get; init; } = [];
     public IReadOnlyList<object> RecentTransfers { get; init; } = [];
     public IReadOnlyList<object> RecentRedemptions { get; init; } = [];
+}
+
+public sealed class DashboardProgramDto
+{
+    public Guid ProgramId { get; init; }
+    public string ProgramName { get; init; } = string.Empty;
+    public string CurrencyCode { get; init; } = string.Empty;
+    public decimal Miles { get; init; }
+    public decimal ActualCostPerThousand { get; init; }
+    public decimal ReferencePricePerThousand { get; init; }
+    public decimal UnrealizedProfitLoss { get; init; }
+    public decimal UnrealizedProfitLossPercentage { get; init; }
 }
