@@ -8,4 +8,5 @@ public sealed class UserProgramPurchaseDto
     public decimal Balance { get; init; }
     public decimal ReferencePricePerThousand { get; init; }
     public decimal CurrentValue { get; init; }
+    public string CurrencyCode { get; set; } = string.Empty;
 }

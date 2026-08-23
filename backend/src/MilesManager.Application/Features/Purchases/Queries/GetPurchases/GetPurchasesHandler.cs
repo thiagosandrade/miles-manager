@@ -15,6 +15,7 @@ public sealed class GetPurchasesHandler(IApplicationDbContext context, IMapper m
         var loggedUserId = currentUser.UserId;
 
         var items = await context.MileagePurchases
+            .Include(x =>x.Program)
             .Where(x => x.UserId == loggedUserId)
             .AsNoTracking()
             .ProjectTo<DTOs.MileagePurchaseDto>(mapper.ConfigurationProvider)

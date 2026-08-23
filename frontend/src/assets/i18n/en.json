@@ -201,7 +201,9 @@
       "loyaltyProgram": "Loyalty Program",
       "columns": {
         "program": "Program",
-        "status": "Status"
+        "status": "Status",
+        "referencePrice": "Reference price / 1k",
+        "currency": "Currency"
       }
     },
     "dialog": {
@@ -252,7 +254,10 @@
       "loyaltyProgram": "Loyalty Program",
       "columns": {
         "program": "Program",
-        "balance": "Balance"
+        "balance": "Balance",
+        "referencePrice": "Reference price / 1k",
+        "currentValue": "Current value / 1k",
+        "currency": "Currency"
       }
     }
   },

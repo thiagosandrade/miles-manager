@@ -21,6 +21,7 @@ public sealed class GetUserProgramPurchasesHandler(IApplicationDbContext context
             {
                 program.Id,
                 program.Name,
+                program.CurrencyCode,
                 TotalMilesPurchased = _context.MileagePurchases
                     .AsNoTracking()
                     .Where(p => p.UserId == request.UserId && p.ProgramId == program.Id)
@@ -39,7 +40,8 @@ public sealed class GetUserProgramPurchasesHandler(IApplicationDbContext context
                 ProgramName = x.Name,
                 Balance = x.TotalMilesPurchased,
                 ReferencePricePerThousand = x.CurrentPricePerThousand,
-                CurrentValue = (x.TotalMilesPurchased / 1000m) * x.CurrentPricePerThousand
+                CurrentValue = (x.TotalMilesPurchased / 1000m) * x.CurrentPricePerThousand,
+                CurrencyCode = x.CurrencyCode
             })
             .ToListAsync(cancellationToken);
 

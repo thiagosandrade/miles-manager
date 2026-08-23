@@ -1,6 +1,8 @@
 <section class="page">
 
-  <!-- Header -->
+  <!-- =====================================================
+       Header
+  ====================================================== -->
 
   <header class="page-header">
 
@@ -22,9 +24,14 @@
 
   </header>
 
-  <!-- Metrics -->
+
+  <!-- =====================================================
+       Metrics
+  ====================================================== -->
 
   <section class="metrics">
+
+    <!-- Total Programs -->
 
     <article class="metric-card">
 
@@ -38,11 +45,16 @@
           {{ 'balances.metrics.totalPrograms' | translate }}
         </span>
 
-        <strong>{{ balances().length }}</strong>
+        <strong>
+          {{ balances().length }}
+        </strong>
 
       </div>
 
     </article>
+
+
+    <!-- Total Miles -->
 
     <article class="metric-card">
 
@@ -57,12 +69,18 @@
         </span>
 
         <strong>
-          {{ balances().reduce((sum, b) => sum + b.balance, 0) | number:'1.0-0' }}
+          {{
+            balances().reduce((sum, b) => sum + b.balance, 0)
+              | number:'1.0-0'
+          }}
         </strong>
 
       </div>
 
     </article>
+
+
+    <!-- Average Balance -->
 
     <article class="metric-card">
 
@@ -77,14 +95,19 @@
         </span>
 
         <strong>
-        {{
-          (
-            balances().length
-              ? (balances().reduce((sum, b) => sum + b.balance, 0) / balances().length)
-              : 0
-          ) | number:'1.2-2'
-        }}
-      </strong>
+          {{
+            (
+              balances().length
+                ? (
+                    balances().reduce(
+                      (sum, b) => sum + b.balance,
+                      0
+                    ) / balances().length
+                  )
+                : 0
+            ) | number:'1.2-2'
+          }}
+        </strong>
 
       </div>
 
@@ -92,7 +115,10 @@
 
   </section>
 
-  <!-- Table -->
+
+  <!-- =====================================================
+       Table Container
+  ====================================================== -->
 
   <app-table
 
@@ -113,26 +139,215 @@
 
     [emptyDescription]="'balances.table.emptyDescription' | translate">
 
-    <table
-      mat-table
-      [dataSource]="balances()">
 
-      <!-- Program -->
+    <!-- ===================================================
+         Desktop Table
+    ==================================================== -->
 
-      <ng-container matColumnDef="program">
+    <div class="desktop-table">
 
-        <th mat-header-cell *matHeaderCellDef>
+      <table
+        mat-table
+        [dataSource]="balances()">
 
-          {{ 'balances.table.columns.program' | translate }}
 
-        </th>
+        <!-- ================================================
+             Program
+        ================================================= -->
 
-        <td mat-cell *matCellDef="let balance">
+        <ng-container matColumnDef="program">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+
+            {{ 'balances.table.columns.program' | translate }}
+
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let balance">
+
+            <div class="user-info">
+
+              <div class="avatar">
+
+                {{ balance.programName.charAt(0) | uppercase }}
+
+              </div>
+
+              <div class="user-details">
+
+                <strong>
+                  {{ balance.programName }}
+                </strong>
+
+                <span>
+                  {{ balance.currencyCode }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- ================================================
+             Reference Price
+        ================================================= -->
+
+        <ng-container matColumnDef="referencePricePerThousand">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+
+            {{ 'balances.table.columns.referencePrice' | translate }}
+
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let balance">
+
+            {{ balance.referencePricePerThousand
+              | currency:balance.currencyCode }}
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- ================================================
+             Current Value
+        ================================================= -->
+
+        <ng-container matColumnDef="currentValue">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+
+            {{ 'balances.table.columns.currentValue' | translate }}
+
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let balance">
+
+            {{ balance.currentValue
+              | currency:balance.currencyCode }}
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- ================================================
+             Currency
+        ================================================= -->
+
+        <ng-container matColumnDef="currencyCode">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+
+            {{ 'balances.table.columns.currency' | translate }}
+
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let balance">
+
+            <span class="currency-pill">
+
+              {{ balance.currencyCode }}
+
+            </span>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- ================================================
+             Balance
+        ================================================= -->
+
+        <ng-container matColumnDef="balance">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+
+            {{ 'balances.table.columns.balance' | translate }}
+
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let balance">
+
+            <strong class="balance-value">
+
+              {{ balance.balance | number:'1.0-0' }}
+
+            </strong>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- ================================================
+             Rows
+        ================================================= -->
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns">
+        </tr>
+
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+
+      </table>
+
+    </div>
+
+
+    <!-- ===================================================
+         Mobile Cards
+    ==================================================== -->
+
+    <div class="mobile-cards">
+
+      <article
+        class="balance-card"
+        *ngFor="let balance of balances()">
+
+
+        <!-- ==============================================
+             Card Header
+        =============================================== -->
+
+        <div class="balance-card-header">
 
           <div class="user-info">
 
             <div class="avatar">
+
               {{ balance.programName.charAt(0) | uppercase }}
+
             </div>
 
             <div class="user-details">
@@ -142,48 +357,86 @@
               </strong>
 
               <span>
-                {{ 'balances.table.loyaltyProgram' | translate }}
+                {{ balance.currencyCode }}
               </span>
 
             </div>
 
           </div>
 
-        </td>
+        </div>
 
-      </ng-container>
 
-      <!-- Balance -->
+        <!-- ==============================================
+             Values
+        =============================================== -->
 
-      <ng-container matColumnDef="balance">
+        <div class="balance-card-values">
 
-        <th mat-header-cell *matHeaderCellDef>
 
-          {{ 'balances.table.columns.balance' | translate }}
+          <!-- Reference -->
 
-        </th>
+          <div class="balance-value-item">
 
-        <td mat-cell *matCellDef="let balance">
+            <span class="balance-label">
 
-          <strong>
-            {{ balance.balance | number:'1.0-0' }}
-          </strong>
+              {{ 'balances.table.columns.referencePrice' | translate }}
 
-        </td>
+            </span>
 
-      </ng-container>
+            <strong>
 
-      <tr
-        mat-header-row
-        *matHeaderRowDef="displayedColumns">
-      </tr>
+              {{ balance.referencePricePerThousand
+                | currency:balance.currencyCode }}
 
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns;">
-      </tr>
+            </strong>
 
-    </table>
+          </div>
+
+
+          <!-- Current -->
+
+          <div class="balance-value-item">
+
+            <span class="balance-label">
+
+              {{ 'balances.table.columns.currentValue' | translate }}
+
+            </span>
+
+            <strong>
+
+              {{ balance.currentValue
+                | currency:balance.currencyCode }}
+
+            </strong>
+
+          </div>
+
+
+          <!-- Balance -->
+
+          <div class="balance-value-item balance-total">
+
+            <span class="balance-label">
+
+              {{ 'balances.table.columns.balance' | translate }}
+
+            </span>
+
+            <strong>
+
+              {{ balance.balance | number:'1.0-0' }}
+
+            </strong>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
 
   </app-table>
 

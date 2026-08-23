@@ -200,7 +200,9 @@
       "loyaltyProgram": "Programme de fidélité",
       "columns": {
         "program": "Programme",
-        "status": "Statut"
+        "status": "Statut",
+        "referencePrice": "Prix de référence / 1 000",
+        "currency": "Devise"
       }
     },
     "dialog": {
@@ -251,7 +253,10 @@
       "loyaltyProgram": "Programme de fidélité",
       "columns": {
         "program": "Programme",
-        "balance": "Solde"
+        "balance": "Solde",
+        "referencePrice": "Prix de référence / 1 000",
+        "currentValue": "Valeur actuelle / 1 000",
+        "currency": "Devise"
       }
     }
   },

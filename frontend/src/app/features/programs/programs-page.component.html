@@ -1,6 +1,8 @@
 <section class="page">
 
-  <!-- Header -->
+  <!-- =====================================================
+       Header
+  ====================================================== -->
 
   <header class="page-header">
 
@@ -20,8 +22,10 @@
 
     </div>
 
-    <button *ngIf="isAdministrator"
+    <button
+      *ngIf="isAdministrator"
       class="primary-button"
+      type="button"
       (click)="openCreateDialog()">
 
       <mat-icon>add</mat-icon>
@@ -34,9 +38,14 @@
 
   </header>
 
-  <!-- Metrics -->
+
+  <!-- =====================================================
+       Metrics
+  ====================================================== -->
 
   <section class="metrics">
+
+    <!-- Total -->
 
     <article class="metric-card">
 
@@ -52,11 +61,16 @@
           {{ 'programs.metrics.totalPrograms' | translate }}
         </span>
 
-        <strong>{{ data().length }}</strong>
+        <strong>
+          {{ data().length }}
+        </strong>
 
       </div>
 
     </article>
+
+
+    <!-- Active -->
 
     <article class="metric-card">
 
@@ -72,11 +86,16 @@
           {{ 'programs.metrics.active' | translate }}
         </span>
 
-        <strong>{{ data().filter(p => p.isActive).length }}</strong>
+        <strong>
+          {{ data().filter(p => p.isActive).length }}
+        </strong>
 
       </div>
 
     </article>
+
+
+    <!-- Inactive -->
 
     <article class="metric-card">
 
@@ -92,7 +111,9 @@
           {{ 'programs.metrics.inactive' | translate }}
         </span>
 
-        <strong>{{ data().filter(p => !p.isActive).length }}</strong>
+        <strong>
+          {{ data().filter(p => !p.isActive).length }}
+        </strong>
 
       </div>
 
@@ -100,11 +121,15 @@
 
   </section>
 
-  <!-- Table -->
+
+  <!-- =====================================================
+       Table Container
+  ====================================================== -->
 
   <app-table
 
     [title]="'programs.table.title' | translate"
+
     [subtitle]="'programs.table.subtitle' | translate"
 
     [loading]="loading()"
@@ -123,7 +148,10 @@
 
     [emptyDescription]="'programs.table.emptyDescription' | translate">
 
-    <!-- Toolbar -->
+
+    <!-- ===================================================
+         Toolbar
+    ==================================================== -->
 
     <div table-toolbar>
 
@@ -135,7 +163,9 @@
           {{ 'programs.table.search' | translate }}
         </mat-label>
 
-        <mat-icon matPrefix>search</mat-icon>
+        <mat-icon matPrefix>
+          search
+        </mat-icon>
 
         <input
           matInput
@@ -146,12 +176,16 @@
 
     </div>
 
-    <!-- Empty State -->
+
+    <!-- ===================================================
+         Empty State Action
+    ==================================================== -->
 
     <button
       *ngIf="isAdministrator"
       empty-action
       class="primary-button"
+      type="button"
       (click)="openCreateDialog()">
 
       <mat-icon>add</mat-icon>
@@ -162,23 +196,239 @@
 
     </button>
 
-    <!-- Material Table -->
 
-    <table
-      mat-table
-      [dataSource]="data()">
+    <!-- ===================================================
+         DESKTOP TABLE
+    ==================================================== -->
 
-      <!-- Program -->
+    <div class="desktop-table">
 
-      <ng-container matColumnDef="name">
+      <table
+        mat-table
+        [dataSource]="data()">
 
-        <th mat-header-cell *matHeaderCellDef>
 
-          {{ 'programs.table.columns.program' | translate }}
+        <!-- ===============================================
+             Program
+        ================================================ -->
 
-        </th>
+        <ng-container matColumnDef="name">
 
-        <td mat-cell *matCellDef="let program">
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+
+            {{ 'programs.table.columns.program' | translate }}
+
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let program">
+
+            <div class="user-info">
+
+              <div class="avatar">
+
+                {{ program.name.charAt(0) | uppercase }}
+
+              </div>
+
+              <div class="user-details">
+
+                <strong>
+                  {{ program.name }}
+                </strong>
+
+                <span>
+                  {{ program.currencyCode }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- ===============================================
+             Reference Price
+        ================================================ -->
+
+        <ng-container
+          matColumnDef="referencePricePerThousand">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+
+            {{ 'programs.table.columns.referencePrice' | translate }}
+
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let program">
+
+            {{ program.referencePricePerThousand
+              | currency:program.currencyCode }}
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- ===============================================
+             Currency
+        ================================================ -->
+
+        <ng-container matColumnDef="currencyCode">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+
+            {{ 'programs.table.columns.currency' | translate }}
+
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let program">
+
+            <span class="currency-pill">
+
+              {{ program.currencyCode }}
+
+            </span>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- ===============================================
+             Status
+        ================================================ -->
+
+        <ng-container matColumnDef="isActive">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+
+            {{ 'programs.table.columns.status' | translate }}
+
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let program">
+
+            <span
+              class="status-pill"
+              [class.inactive]="!program.isActive">
+
+              <span class="status-dot"></span>
+
+              {{
+                program.isActive
+                  ? ('programs.status.active' | translate)
+                  : ('programs.status.inactive' | translate)
+              }}
+
+            </span>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- ===============================================
+             Actions
+        ================================================ -->
+
+        <ng-container
+          matColumnDef="actions"
+          *ngIf="isAdministrator">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="actions-column">
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let program"
+            class="actions-column">
+
+            <button
+              class="icon-button"
+              type="button"
+              [attr.aria-label]="'programs.actions.edit' | translate"
+              (click)="openUpdateDialog(program)">
+
+              <mat-icon>
+                edit
+              </mat-icon>
+
+            </button>
+
+            <button
+              class="icon-button danger"
+              type="button"
+              [attr.aria-label]="'programs.actions.delete' | translate"
+              (click)="deleteProgram(program)">
+
+              <mat-icon>
+                delete
+              </mat-icon>
+
+            </button>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- ===============================================
+             Desktop Rows
+        ================================================ -->
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns">
+        </tr>
+
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+
+      </table>
+
+    </div>
+
+
+    <!-- ===================================================
+         MOBILE CARDS
+    ==================================================== -->
+
+    <div class="mobile-programs">
+
+      <article
+        class="program-card"
+        *ngFor="let program of data()">
+
+
+        <!-- =============================================
+             Card Header
+        ============================================== -->
+
+        <div class="program-card-header">
 
           <div class="user-info">
 
@@ -191,108 +441,139 @@
             <div class="user-details">
 
               <strong>
-
                 {{ program.name }}
-
               </strong>
 
               <span>
-
-                {{ 'programs.table.loyaltyProgram' | translate }}
-
+                {{ program.currencyCode }}
               </span>
 
             </div>
 
           </div>
 
-        </td>
 
-      </ng-container>
+          <!-- Actions -->
 
-      <!-- Status -->
+          <div
+            class="program-actions"
+            *ngIf="isAdministrator">
 
-      <ng-container matColumnDef="isActive">
+            <button
+              class="icon-button"
+              type="button"
+              [attr.aria-label]="'programs.actions.edit' | translate"
+              (click)="openUpdateDialog(program)">
 
-        <th mat-header-cell *matHeaderCellDef>
+              <mat-icon>
+                edit
+              </mat-icon>
 
-          {{ 'programs.table.columns.status' | translate }}
+            </button>
 
-        </th>
+            <button
+              class="icon-button danger"
+              type="button"
+              [attr.aria-label]="'programs.actions.delete' | translate"
+              (click)="deleteProgram(program)">
 
-        <td mat-cell *matCellDef="let program">
+              <mat-icon>
+                delete
+              </mat-icon>
 
-          <span
-            class="status-pill"
-            [class.inactive]="!program.isActive">
+            </button>
 
-            <span class="status-dot"></span>
+          </div>
 
-            {{
-              program.isActive
-                ? ('programs.status.active' | translate)
-                : ('programs.status.inactive' | translate)
-            }}
+        </div>
+
+
+        <!-- =============================================
+             Reference Price
+        ============================================== -->
+
+        <div class="program-reference">
+
+          <span class="program-label">
+
+            {{ 'programs.table.columns.referencePrice' | translate }}
 
           </span>
 
-        </td>
+          <strong>
 
-      </ng-container>
+            {{ program.referencePricePerThousand
+              | currency:program.currencyCode }}
 
-      <!-- Actions -->
+          </strong>
 
-      <ng-container matColumnDef="actions" *ngIf="isAdministrator">
+        </div>
 
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          class="actions-column">
 
-        </th>
+        <!-- =============================================
+             Currency + Status
+        ============================================== -->
 
-        <td
-          mat-cell
-          *matCellDef="let program"
-          class="actions-column">
+        <div class="program-meta">
 
-          <button
-            class="icon-button"
-            [attr.aria-label]="'programs.actions.edit' | translate"
-            (click)="openUpdateDialog(program)">
 
-            <mat-icon>edit</mat-icon>
+          <!-- Currency -->
 
-          </button>
+          <div class="program-meta-item">
 
-          <button
-            class="icon-button danger"
-            [attr.aria-label]="'programs.actions.delete' | translate"
-            (click)="deleteProgram(program)">
+            <span class="program-label">
 
-            <mat-icon>delete</mat-icon>
+              {{ 'programs.table.columns.currency' | translate }}
 
-          </button>
+            </span>
 
-        </td>
+            <span class="currency-pill">
 
-      </ng-container>
+              {{ program.currencyCode }}
 
-      <tr
-        mat-header-row
-        *matHeaderRowDef="displayedColumns">
-      </tr>
+            </span>
 
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns;">
-      </tr>
+          </div>
 
-    </table>
+
+          <!-- Status -->
+
+          <div class="program-meta-item">
+
+            <span class="program-label">
+
+              {{ 'programs.table.columns.status' | translate }}
+
+            </span>
+
+            <span
+              class="status-pill"
+              [class.inactive]="!program.isActive">
+
+              <span class="status-dot"></span>
+
+              {{
+                program.isActive
+                  ? ('programs.status.active' | translate)
+                  : ('programs.status.inactive' | translate)
+              }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
 
   </app-table>
 
-  <!-- Error -->
+
+  <!-- =====================================================
+       Error
+  ====================================================== -->
 
   <div
     class="feedback"
@@ -303,9 +584,7 @@
     </strong>
 
     <span>
-
       {{ 'programs.messages.loadError' | translate }}
-
     </span>
 
   </div>

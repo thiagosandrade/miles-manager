@@ -200,7 +200,9 @@
       "loyaltyProgram": "Programa de Fidelidade",
       "columns": {
         "program": "Programa",
-        "status": "Estado"
+        "status": "Estado",
+        "referencePrice": "Preço de referência / 1 mil",
+        "currency": "Moeda"
       }
     },
     "dialog": {
@@ -247,11 +249,14 @@
       "title": "Saldos",
       "subtitle": "Programas",
       "emptyTitle": "Nenhum saldo encontrado",
-      "emptyDescription": "Os saldos dos seus programas de fidelidade aparecerão aqui.",
-      "loyaltyProgram": "Programa de Fidelidade",
+      "emptyDescription": "Os saldos dos seus programas de fidelização aparecerão aqui.",
+      "loyaltyProgram": "Programa de fidelização",
       "columns": {
         "program": "Programa",
-        "balance": "Saldo"
+        "balance": "Saldo",
+        "referencePrice": "Preço de referência / 1 mil",
+        "currentValue": "Valor atual / 1 mil",
+        "currency": "Moeda"
       }
     }
   },

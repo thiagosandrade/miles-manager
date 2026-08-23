@@ -88,7 +88,7 @@ export class CreateProgramDialogComponent implements OnInit {
         }
 
         this.loading = true;
-        console.log(this.data.operation)
+
         if(this.data?.operation === 'update' && this.data?.programId) {
             const request: ProgramUpdateRequest = {
                 id: this.data.programId!,

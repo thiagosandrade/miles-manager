@@ -6,5 +6,6 @@ export interface ProgramBalance {
   referencePricePerThousand: number;
   balance: number;
   currentValue: number;
+  currencyCode: string;
 }
 

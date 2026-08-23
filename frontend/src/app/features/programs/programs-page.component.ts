@@ -23,9 +23,9 @@ import { TokenStorageService } from '../../core/services/token-storage.service';
     MatIconModule,
     MatInputModule,
     MatTableModule,
-    AppTableComponent,
-    TranslatePipe
-  ],
+    TranslatePipe,
+    AppTableComponent
+],
   templateUrl: './programs-page.component.html',
   styleUrls: ['./programs-page.component.scss']
 })
@@ -41,7 +41,9 @@ export class ProgramsPageComponent implements OnInit {
   isRateLimitReached = signal(false);
 
   displayedColumns = [
-    'name',
+    'name',  
+    'referencePricePerThousand',
+    'currencyCode',
     'isActive',
   ];
 

@@ -1,1 +1,466 @@
 @use '../../../styles/pages';
+
+
+/* ==========================================================
+   Desktop Table
+========================================================== */
+
+.desktop-table {
+
+  display: block;
+
+  width: 100%;
+
+  overflow-x: auto;
+
+}
+
+
+.desktop-table table {
+
+  width: 100%;
+
+}
+
+
+.mat-column-name {
+
+  min-width: 220px;
+
+}
+
+
+.mat-column-referencePricePerThousand {
+
+  min-width: 160px;
+
+  white-space: nowrap;
+
+}
+
+
+.mat-column-currencyCode {
+
+  width: 100px;
+
+  min-width: 100px;
+
+}
+
+
+.mat-column-isActive {
+
+  min-width: 120px;
+
+  white-space: nowrap;
+
+}
+
+
+.mat-column-actions {
+
+  width: 100px;
+
+  min-width: 100px;
+
+  text-align: right;
+
+}
+
+
+/* ==========================================================
+   Currency
+========================================================== */
+
+.currency-pill {
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  background: rgba(21, 101, 192, .08);
+
+  color: var(--mm-primary);
+
+  font-size: .75rem;
+
+  font-weight: 700;
+
+  letter-spacing: .03em;
+
+}
+
+
+/* ==========================================================
+   Mobile Programs
+========================================================== */
+
+.mobile-programs {
+
+  display: none;
+
+}
+
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 768px) {
+
+
+  /* --------------------------------------------------------
+     Completely remove desktop table
+  -------------------------------------------------------- */
+
+  .desktop-table {
+
+    display: none;
+
+  }
+
+
+  /* --------------------------------------------------------
+     Show mobile cards
+  -------------------------------------------------------- */
+
+  .mobile-programs {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    width: 100%;
+
+  }
+
+
+  /* --------------------------------------------------------
+     Card
+  -------------------------------------------------------- */
+
+  .program-card {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 16px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    background: var(--panel);
+
+    box-shadow: var(--shadow-sm);
+
+  }
+
+
+  /* --------------------------------------------------------
+     Header
+  -------------------------------------------------------- */
+
+  .program-card-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+  }
+
+
+  .program-card-header .user-info {
+
+    min-width: 0;
+
+    flex: 1;
+
+  }
+
+
+  .program-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-shrink: 0;
+
+  }
+
+
+  /* --------------------------------------------------------
+     Reference Price
+  -------------------------------------------------------- */
+
+  .program-reference {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    margin-top: 18px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid var(--border);
+
+  }
+
+
+  .program-reference strong {
+
+    color: var(--ink);
+
+    font-size: 1.05rem;
+
+    font-weight: 700;
+
+  }
+
+
+  /* --------------------------------------------------------
+     Meta
+  -------------------------------------------------------- */
+
+  .program-meta {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+    margin-top: 16px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid var(--border);
+
+  }
+
+
+  .program-meta-item {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 5px;
+
+    min-width: 0;
+
+  }
+
+
+  .program-label {
+
+    color: var(--muted);
+
+    font-size: .72rem;
+
+    font-weight: 500;
+
+  }
+
+
+  /* --------------------------------------------------------
+     User
+  -------------------------------------------------------- */
+
+  .user-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+
+  }
+
+
+  .avatar {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+      135deg,
+      var(--mm-primary),
+      var(--mm-secondary)
+    );
+
+    color: white;
+
+    font-weight: 700;
+
+  }
+
+
+  .user-details {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    min-width: 0;
+
+  }
+
+
+  .user-details strong {
+
+    font-size: .9rem;
+
+    color: var(--ink);
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+  }
+
+
+  .user-details span {
+
+    color: var(--muted);
+
+    font-size: .75rem;
+
+  }
+
+
+  /* --------------------------------------------------------
+     Status
+  -------------------------------------------------------- */
+
+  .status-pill {
+
+    font-size: .72rem;
+
+    padding: 5px 9px;
+
+  }
+
+
+  /* --------------------------------------------------------
+     Currency
+  -------------------------------------------------------- */
+
+  .currency-pill {
+
+    font-size: .72rem;
+
+    padding: 5px 9px;
+
+  }
+
+}
+
+
+/* ==========================================================
+   Small Phones
+========================================================== */
+
+@media (max-width: 480px) {
+
+  .program-card {
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+  }
+
+
+  .program-meta {
+
+    gap: 10px;
+
+  }
+
+
+  .program-reference {
+
+    margin-top: 16px;
+
+    padding-top: 14px;
+
+  }
+
+
+  .program-reference strong {
+
+    font-size: 1rem;
+
+  }
+
+
+  .avatar {
+
+    width: 38px;
+
+    height: 38px;
+
+    font-size: .85rem;
+
+  }
+
+
+  .user-details strong {
+
+    font-size: .85rem;
+
+  }
+
+
+  .user-details span {
+
+    font-size: .7rem;
+
+  }
+
+
+  .program-actions .icon-button {
+
+    width: 36px;
+
+    height: 36px;
+
+  }
+
+}   

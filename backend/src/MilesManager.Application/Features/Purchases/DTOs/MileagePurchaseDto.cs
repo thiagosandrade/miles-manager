@@ -10,6 +10,7 @@ public sealed class MileagePurchaseDto
     public string? Partner { get; init; }
     public string? Description { get; init; }
     public decimal AmountPaid { get; init; }
+    public string CurrencyCode { get; set; } = string.Empty;
     public decimal MilesPurchased { get; init; }
     public decimal BonusPercentage { get; init; }
     public DateOnly PurchaseDate { get; init; }

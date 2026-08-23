@@ -17,7 +17,9 @@ public sealed class GetMileagePurchaseByIdHandler(IApplicationDbContext context,
     {
         var loggedUserId = currentUser.UserId;
 
-        var item = await _context.MileagePurchases.AsNoTracking()
+        var item = await _context.MileagePurchases
+            .Include(x => x.Program)
+            .AsNoTracking()
             .Where(p => p.Id == request.Id && p.UserId == loggedUserId)
             .ProjectTo<DTOs.MileagePurchaseDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);

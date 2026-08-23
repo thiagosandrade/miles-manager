@@ -200,7 +200,9 @@
       "loyaltyProgram": "Treueprogramm",
       "columns": {
         "program": "Programm",
-        "status": "Status"
+        "status": "Status",
+        "referencePrice": "Referenzpreis / 1.000",
+        "currency": "Währung"
       }
     },
     "dialog": {
@@ -244,14 +246,17 @@
       "averageBalance": "Durchschnittssaldo"
     },
     "table": {
-      "title": "Salden",
+      "title": "Guthaben",
       "subtitle": "Programme",
-      "emptyTitle": "Keine Salden gefunden",
-      "emptyDescription": "Die Salden deiner Treueprogramme werden hier angezeigt.",
+      "emptyTitle": "Keine Guthaben gefunden",
+      "emptyDescription": "Die Guthaben Ihrer Treueprogramme werden hier angezeigt.",
       "loyaltyProgram": "Treueprogramm",
       "columns": {
         "program": "Programm",
-        "balance": "Saldo"
+        "balance": "Guthaben",
+        "referencePrice": "Referenzpreis / 1.000",
+        "currentValue": "Aktueller Wert / 1.000",
+        "currency": "Währung"
       }
     }
   },
