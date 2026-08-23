@@ -66,9 +66,7 @@
       </header>
 
 
-      <!-- =================================================
-           Desktop Program Table
-      ================================================== -->
+      <!-- Desktop -->
 
       <div class="desktop-program-table">
 
@@ -106,9 +104,7 @@
           <div class="program-name">
 
             <div class="avatar">
-
               {{ program.programName.charAt(0) | uppercase }}
-
             </div>
 
             <div class="program-details">
@@ -129,9 +125,7 @@
           <!-- Miles -->
 
           <strong class="program-number">
-
             {{ formatMiles(program.miles) }}
-
           </strong>
 
 
@@ -159,7 +153,7 @@
                 program.currencyCode
               )
             }}
- 
+
           </div>
 
 
@@ -215,9 +209,7 @@
       </div>
 
 
-      <!-- =================================================
-           Mobile Program Cards
-      ================================================== -->
+      <!-- Mobile -->
 
       <div class="mobile-program-cards">
 
@@ -230,9 +222,7 @@
             <div class="program-name">
 
               <div class="avatar">
-
                 {{ program.programName.charAt(0) | uppercase }}
-
               </div>
 
               <div class="program-details">
@@ -289,7 +279,6 @@
               </strong>
 
             </div>
-
 
             <div>
 
@@ -379,263 +368,278 @@
          Recent Activity
     ====================================================== -->
 
-    <section class="dashboard-grid">
+    <section class="activity-section">
 
 
       <!-- =================================================
-           Recent Purchases
+           Purchases
       ================================================== -->
 
-      <article class="dashboard-card">
+      <div class="activity-group">
 
-        <header class="dashboard-card-header">
+        <header class="section-header">
 
-          <h2>
-            {{ 'dashboard.cards.recentPurchases' | translate }}
-          </h2>
+          <div>
+
+            <h2>
+              {{ 'dashboard.cards.recentPurchases' | translate }}
+            </h2>
+
+          </div>
 
         </header>
 
-        <div class="dashboard-card-content">
 
-          <div class="dashboard-list">
+        <div class="activity-grid">
 
-            <div
-              class="dashboard-list-item"
-              *ngFor="let purchase of stats()?.recentPurchases">
+          <article
+            class="activity-card"
+            *ngFor="let purchase of stats()?.recentPurchases">
 
-              <div class="activity-main">
+            <div class="activity-icon">
+              <mat-icon>shopping_cart</mat-icon>
+            </div>
 
-                <strong>
-                  {{ purchase.programName }}
-                </strong>
+            <div class="activity-content">
 
-                <span *ngIf="purchase.partner">
-                  {{ purchase.partner }}
-                </span>
+              <strong>
+                {{ purchase.programName }}
+              </strong>
 
-              </div>
+              <span *ngIf="purchase.partner">
+                {{ purchase.partner }}
+              </span>
 
-              <div class="activity-value">
-
-                <strong>
-
-                  {{
-                    formatCurrency(
-                      purchase.amountPaid,
-                      purchase.currencyCode
-                    )
-                  }}
-
-                </strong>
-
-                <small>
-
-                  {{ purchase.purchaseDate | date:'mediumDate' }}
-
-                </small>
-
-              </div>
+              <span>
+                {{ purchase.purchaseDate | date:'mediumDate' }}
+              </span>
 
             </div>
 
+            <div class="activity-value">
 
-            <div
-              class="activity-empty"
-              *ngIf="stats() && !stats()?.recentPurchases?.length">
+              <strong>
 
-              {{ 'dashboard.activity.noPurchases' | translate }}
+                {{
+                  formatCurrency(
+                    purchase.amountPaid,
+                    purchase.currencyCode
+                  )
+                }}
+
+              </strong>
 
             </div>
+
+          </article>
+
+
+          <div
+            class="activity-empty"
+            *ngIf="stats() && !stats()?.recentPurchases?.length">
+
+            {{ 'dashboard.activity.noPurchases' | translate }}
 
           </div>
 
         </div>
 
-      </article>
+      </div>
 
 
       <!-- =================================================
-           Recent Transfers
+           Transfers
       ================================================== -->
 
-      <article class="dashboard-card">
+      <div class="activity-group">
 
-        <header class="dashboard-card-header">
+        <header class="section-header">
 
-          <h2>
-            {{ 'dashboard.cards.recentTransfers' | translate }}
-          </h2>
+          <div>
+
+            <h2>
+              {{ 'dashboard.cards.recentTransfers' | translate }}
+            </h2>
+
+          </div>
 
         </header>
 
-        <div class="dashboard-card-content">
 
-          <div class="dashboard-list">
+        <div class="activity-grid">
 
-            <div
-              class="dashboard-list-item"
-              *ngFor="let transfer of stats()?.recentTransfers">
+          <article
+            class="activity-card"
+            *ngFor="let transfer of stats()?.recentTransfers">
 
-              <div class="activity-main">
+            <div class="activity-icon">
+              <mat-icon>swap_horiz</mat-icon>
+            </div>
 
-                <strong>
+            <div class="activity-content">
 
+              <strong class="activity-route">
+
+                <span>
                   {{ transfer.originProgram }}
-
-                  <mat-icon>
-                    arrow_forward
-                  </mat-icon>
-
-                  {{ transfer.destinationProgram }}
-
-                </strong>
-
-                <span>
-
-                  {{
-                    formatCurrency(
-                      transfer.costPerThousandOrigin,
-                      transfer.currencyCodeOrigin
-                    )
-                  }}
-
-                  /
-
-                  {{
-                    formatCurrency(
-                      transfer.costPerThousandDestination,
-                      transfer.currencyCodeDestination
-                    )
-                  }}
-
-                  {{ 'dashboard.programs.costPerThousand' | translate }}
-
                 </span>
 
-              </div>
+                <mat-icon>
+                  arrow_forward
+                </mat-icon>
 
-              <div class="activity-value">
+                <span>
+                  {{ transfer.destinationProgram }}
+                </span>
 
-                <strong>
+              </strong>
 
-                  {{ formatMiles(transfer.milesReceived) }}
+              <span>
 
-                </strong>
+                {{
+                  formatCurrency(
+                    transfer.costPerThousandOrigin,
+                    transfer.currencyCodeOrigin
+                  )
+                }}
 
-                <small>
+                /
 
-                  {{ transfer.transferDate | date:'mediumDate' }}
+                {{
+                  formatCurrency(
+                    transfer.costPerThousandDestination,
+                    transfer.currencyCodeDestination
+                  )
+                }}
 
-                </small>
+                {{ 'dashboard.programs.costPerThousand' | translate }}
 
-              </div>
+              </span>
+
+              <span>
+                {{ transfer.transferDate | date:'mediumDate' }}
+              </span>
 
             </div>
 
+            <div class="activity-value">
 
-            <div
-              class="activity-empty"
-              *ngIf="stats() && !stats()?.recentTransfers?.length">
-
-              {{ 'dashboard.activity.noTransfers' | translate }}
+              <strong>
+                {{ formatMiles(transfer.milesReceived) }}
+              </strong>
 
             </div>
+
+          </article>
+
+
+          <div
+            class="activity-empty"
+            *ngIf="stats() && !stats()?.recentTransfers?.length">
+
+            {{ 'dashboard.activity.noTransfers' | translate }}
 
           </div>
 
         </div>
 
-      </article>
+      </div>
 
 
       <!-- =================================================
-           Recent Redemptions
+           Redemptions
       ================================================== -->
 
-      <article class="dashboard-card">
+      <div class="activity-group">
 
-        <header class="dashboard-card-header">
+        <header class="section-header">
 
-          <h2>
-            {{ 'dashboard.cards.recentRedemptions' | translate }}
-          </h2>
+          <div>
+
+            <h2>
+              {{ 'dashboard.cards.recentRedemptions' | translate }}
+            </h2>
+
+          </div>
 
         </header>
 
-        <div class="dashboard-card-content">
 
-          <div class="dashboard-list">
+        <div class="activity-grid">
 
-            <div
-              class="dashboard-list-item"
-              *ngFor="let redemption of stats()?.recentRedemptions">
+          <article
+            class="activity-card"
+            *ngFor="let redemption of stats()?.recentRedemptions">
 
-              <div class="activity-main">
+            <div class="activity-icon">
+              <mat-icon>redeem</mat-icon>
+            </div>
 
-                <strong>
-                  {{ redemption.program }}
-                </strong>
+            <div class="activity-content">
+
+              <strong class="activity-route">
 
                 <span>
-
                   {{ redemption.originAirport }}
-
-                  <mat-icon>
-                    arrow_forward
-                  </mat-icon>
-
-                  {{ redemption.destinationAirport }}
-
                 </span>
 
-              </div>
+                <mat-icon>
+                  arrow_forward
+                </mat-icon>
 
-              <div class="activity-value">
+                <span>
+                  {{ redemption.destinationAirport }}
+                </span>
 
-                <strong>
+              </strong>
 
-                  {{
-                    formatCurrency(
-                      redemption.cashPrice,
-                      redemption.currencyCode
-                    )
-                  }}
+              <span>
+                {{ redemption.program }}
+              </span>
 
-                </strong>
-
-                <small>
-
-                  {{
-                    formatMiles(redemption.milesUsed)
-                  }}
-
-                  {{ 'dashboard.redemption-miles' | translate }}
-
-                  ·
-
-                  {{ redemption.flightDate | date:'mediumDate' }}
-
-                </small>
-
-              </div>
+              <span>
+                {{ redemption.flightDate | date:'mediumDate' }}
+              </span>
 
             </div>
 
+            <div class="activity-value">
 
-            <div
-              class="activity-empty"
-              *ngIf="stats() && !stats()?.recentRedemptions?.length">
+              <strong>
 
-              {{ 'dashboard.activity.noRedemptions' | translate }}
+                {{
+                  formatCurrency(
+                    redemption.cashPrice,
+                    redemption.currencyCode
+                  )
+                }}
+
+              </strong>
+
+              <small>
+
+                {{ formatMiles(redemption.milesUsed) }}
+
+                {{ 'dashboard.redemption-miles' | translate }}
+
+              </small>
 
             </div>
+
+          </article>
+
+
+          <div
+            class="activity-empty"
+            *ngIf="stats() && !stats()?.recentRedemptions?.length">
+
+            {{ 'dashboard.activity.noRedemptions' | translate }}
 
           </div>
 
         </div>
 
-      </article>
+      </div>
 
     </section>
 
