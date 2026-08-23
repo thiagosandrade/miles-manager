@@ -217,7 +217,8 @@
       "referencePrice": "Reference Price per 1,000 Miles",
       "active": "Active",
       "createButton": "Create Program",
-      "updateButton": "Update Program"
+      "updateButton": "Update Program",
+      "currencyCode": "Currency Code"
     },
     "types": {
       "airline": "Airline",

@@ -216,7 +216,8 @@
       "referencePrice": "Referenzpreis pro 1.000 Meilen",
       "active": "Aktiv",
       "createButton": "Programm erstellen",
-      "updateButton": "Programm aktualisieren"
+      "updateButton": "Programm aktualisieren",
+      "currencyCode": "Währungscode"
     },
     "types": {
       "airline": "Airline",

@@ -216,7 +216,8 @@
       "referencePrice": "Prix de référence par 1 000 miles",
       "active": "Actif",
       "createButton": "Créer un programme",
-      "updateButton": "Mettre à jour le programme"
+      "updateButton": "Mettre à jour le programme",
+      "currencyCode": "Code devise"
     },
     "types": {
       "airline": "Compagnie aérienne",

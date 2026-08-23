@@ -216,7 +216,8 @@
       "referencePrice": "Precio de referencia por 1.000 millas",
       "active": "Activo",
       "createButton": "Crear programa",
-      "updateButton": "Actualizar programa"
+      "updateButton": "Actualizar programa",
+      "currencyCode": "Código de moneda"
     },
     "types": {
       "airline": "Aerolínea",
