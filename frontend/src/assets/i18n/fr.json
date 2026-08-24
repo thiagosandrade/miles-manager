@@ -165,7 +165,14 @@
       "password": "Mot de passe",
       "passwordPlaceholder": "Mot de passe",
       "createButton": "Créer un utilisateur",
-      "updateButton": "Mettre à jour l'utilisateur"
+      "updateButton": "Mettre à jour l'utilisateur",
+      "newPassword": "Nouveau mot de passe",
+      "newPasswordPlaceholder": "Laissez vide pour conserver le mot de passe actuel",
+      "active": "Actif",
+      "accountInformation": "Informations du compte",
+      "createdAt": "Créé le",
+      "updatedAt": "Dernière mise à jour",
+      "lastLoginAt": "Dernière connexion"
     },
     "validation": {
       "fullNameRequired": "Le nom complet est requis.",

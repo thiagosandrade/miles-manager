@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 
 import { UserApiService } from '../user/user-api.service';
-import { UserSummary } from '../user/models/user.models';
+import { UserDetails } from '../user/models/user.models';
 
 import { EditUserRolesDialogComponent } from './edit-user-roles-dialog.component';
 
@@ -37,7 +37,7 @@ export class UserRolesComponent implements OnInit {
 
   readonly loading = signal(true);
 
-  readonly data = signal<UserSummary[]>([]);
+  readonly data = signal<UserDetails[]>([]);
 
   readonly displayedColumns = [
     'fullName',
@@ -86,7 +86,7 @@ export class UserRolesComponent implements OnInit {
 
   }
 
-  openUpdateDialog(user: UserSummary): void {
+  openUpdateDialog(user: UserDetails): void {
 
     const dialogRef = this.dialog.open(
       EditUserRolesDialogComponent,

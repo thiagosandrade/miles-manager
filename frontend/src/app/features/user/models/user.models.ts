@@ -1,17 +1,14 @@
 import { UserRole } from "../../user-roles/models/user-roles.models";
 
-export interface UserSummary {
+export interface UserDetails {
   id: string;
   email: string;
   fullName: string;
   isActive: boolean;
   createdAtUtc: string;
-  roles: UserRole[];
-}
-
-export interface UserDetails extends UserSummary {
   updatedAtUtc: string | null;
   lastLoginAtUtc: string | null;
+  roles: UserRole[];
 }
 
 export interface IssuedToken {
@@ -21,7 +18,7 @@ export interface IssuedToken {
 
 export interface AuthSession {
   token: IssuedToken;
-  user: UserSummary;
+  user: UserDetails;
 }
 
 export interface LoginRequest {
@@ -33,4 +30,12 @@ export interface CreateUserRequest {
   email: string;
   fullName: string;
   password: string;
+}
+
+export interface UpdateUserRequest {
+  id: string;
+  email: string;
+  fullName: string;
+  password: string;
+  isActive: boolean;
 }

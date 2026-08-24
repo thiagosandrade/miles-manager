@@ -6,15 +6,15 @@ using MilesManager.Domain.Users;
 
 namespace MilesManager.Application.Features.Users.Queries.GetUsers;
 
-public sealed class GetUsersHandler(IUserRepository userRepository, IMapper mapper) : IRequestHandler<GetUsersQuery, IReadOnlyList<UserDTO>>
+public sealed class GetUsersHandler(IUserRepository userRepository, IMapper mapper) : IRequestHandler<GetUsersQuery, IReadOnlyList<UserDetailsDTO>>
 {
     private readonly IUserRepository _userRepository = userRepository;
 
-    public async Task<IReadOnlyList<UserDTO>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<UserDetailsDTO>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
         var users = await _userRepository.ListAsync(cancellationToken);
 
-        var usersDTO = mapper.Map<IReadOnlyList<AppUser>, IReadOnlyList<UserDTO>>(users);
+        var usersDTO = mapper.Map<IReadOnlyList<AppUser>, IReadOnlyList<UserDetailsDTO>>(users);
 
         return usersDTO;
     }

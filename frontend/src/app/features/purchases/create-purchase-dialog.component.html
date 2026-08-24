@@ -74,6 +74,15 @@
         {{ 'purchases.dialog.amountPaid' | translate }}
       </mat-label>
 
+      <span
+        matTextPrefix
+        class="currency-prefix"
+        *ngIf="form.get('programId')?.value">
+
+        {{ getCurrencySymbol() }}&nbsp;
+
+      </span>
+
       <input
         matInput
         type="number"

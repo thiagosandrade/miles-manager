@@ -165,7 +165,14 @@
       "password": "Senha",
       "passwordPlaceholder": "Senha",
       "createButton": "Criar usuário",
-      "updateButton": "Atualizar usuário"
+      "updateButton": "Atualizar usuário",
+      "newPassword": "Nova senha",
+      "newPasswordPlaceholder": "Deixe em branco para manter a senha atual",
+      "active": "Ativo",
+      "accountInformation": "Informações da conta",
+      "createdAt": "Criado em",
+      "updatedAt": "Última atualização",
+      "lastLoginAt": "Último acesso"
     },
     "validation": {
       "fullNameRequired": "O nome completo é obrigatório.",

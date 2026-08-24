@@ -33,14 +33,14 @@ public sealed class UsersController(ISender sender) : ApiController(sender)
 
     [HttpGet]
     [Authorize(Roles = "Administrator")]
-    public async Task<ActionResult<IReadOnlyList<UserDTO>>> GetUsers()
+    public async Task<ActionResult<IReadOnlyList<UserDetailsDTO>>> GetUsers()
     {
         var result = await Sender.Send(new GetUsersQuery());
         return Ok(result);
     }
 
     [HttpGet("{id:guid}")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult<UserDetailsDTO>> GetById(Guid id)
     {
         var user = await Sender.Send(new GetUserByIdQuery(id));

@@ -13,7 +13,7 @@ import { catchError } from 'rxjs/operators';
 import { AppTableComponent } from '../../shared/components/app-table/app-table.component';
 
 import { UserApiService } from './user-api.service';
-import { UserSummary, CreateUserRequest } from './models/user.models';
+import { UserDetails, CreateUserRequest, UpdateUserRequest } from './models/user.models';
 import { CreateUserDialogComponent } from './create-user-dialog.component';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -49,7 +49,7 @@ export class UserManagementComponent implements OnInit {
     'actions'
   ];
 
-  data: UserSummary[] = [];
+  data: UserDetails[] = [];
 
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -101,7 +101,11 @@ export class UserManagementComponent implements OnInit {
   openCreateUserDialog(): void {
 
     const dialogRef = this.dialog.open(CreateUserDialogComponent, {
-      width: '450px'
+      width: '450px',
+      maxWidth: 'calc(100vw - 32px)',
+      data: {
+        operation: 'create'
+      }
     });
 
     dialogRef.afterClosed().subscribe((result: CreateUserRequest | undefined) => {
@@ -113,7 +117,7 @@ export class UserManagementComponent implements OnInit {
       this.api.createUser(result).subscribe({
 
         next: () => {
-          this.snackbarService.error('User created succesfully.', 3000);
+          this.snackbarService.success('User created succesfully.', 3000);
           this.loadUsers();
         },
 
@@ -127,7 +131,40 @@ export class UserManagementComponent implements OnInit {
 
   }
 
-  deleteUser(user: UserSummary): void {
+  openEditUserDialog(user: UserDetails): void {
+    const dialogRef = this.dialog.open(CreateUserDialogComponent, {
+      width: '450px',
+      maxWidth: 'calc(100vw - 32px)',
+      data: {
+        operation: 'update',
+        user
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: UpdateUserRequest | undefined) => {
+
+      if (!result) {
+        return;
+      }
+
+      this.api.updateUser(result).subscribe({
+
+        next: () => {
+          this.snackbarService.success('User updated succesfully.', 3000);
+          this.loadUsers();
+        },
+
+        error: () => {
+          this.snackbarService.error('Could not updated user.', 3000);
+        }
+
+      });
+
+    });
+
+  }
+
+  deleteUser(user: UserDetails): void {
 
     this.api.deleteUser(user.id).subscribe({
 

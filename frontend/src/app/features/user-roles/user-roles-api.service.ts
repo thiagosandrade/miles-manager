@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 
-import { UserDetails, UserSummary } from '../user/models/user.models';
+import { UserDetails } from '../user/models/user.models';
 import { Role, UserRole, UserRoleRequest } from './models/user-roles.models';
 
 

@@ -165,7 +165,14 @@
       "password": "Palavra-passe",
       "passwordPlaceholder": "Palavra-passe",
       "createButton": "Criar utilizador",
-      "updateButton": "Atualizar utilizador"
+      "updateButton": "Atualizar utilizador",
+      "newPassword": "Nova palavra-passe",
+      "newPasswordPlaceholder": "Deixe em branco para manter a palavra-passe atual",
+      "active": "Ativo",
+      "accountInformation": "Informações da conta",
+      "createdAt": "Criado em",
+      "updatedAt": "Última atualização",
+      "lastLoginAt": "Último acesso"
     },
     "validation": {
       "fullNameRequired": "O nome completo é obrigatório.",

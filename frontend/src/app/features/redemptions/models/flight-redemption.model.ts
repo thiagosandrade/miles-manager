@@ -11,6 +11,7 @@ export interface FlightRedemption {
   isRoundTrip: boolean;
   milesUsed: number;
   taxes: number;
+  currencyCode: string;
   cashPrice: number;
   effectiveCostPerThousand: number;
 }

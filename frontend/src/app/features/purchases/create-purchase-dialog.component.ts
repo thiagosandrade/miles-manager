@@ -155,4 +155,30 @@ export class CreatePurchaseDialogComponent implements OnInit {
     }
 
   }
+
+  getSelectedCurrencyCode(): string {
+    const programId = this.form.get('programId')?.value;
+
+    const program = this.programs.find(
+      p => p.id === programId
+    );
+
+    return program?.currencyCode ?? 'USD';
+  }
+
+  getCurrencySymbol(): string {
+    const currencyCode = this.getSelectedCurrencyCode();
+
+    return new Intl.NumberFormat(
+      'en-US',
+      {
+        style: 'currency',
+        currency: currencyCode,
+        currencyDisplay: 'narrowSymbol'
+      }
+    )
+      .formatToParts(0)
+      .find(part => part.type === 'currency')
+      ?.value ?? currencyCode;
+  }
 }

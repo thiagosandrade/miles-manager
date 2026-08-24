@@ -9,11 +9,7 @@ internal sealed class UserProfile : Profile
 {
     public UserProfile()
     {
-        CreateMap<AppUser, UserDTO>()
-            .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.UserRoles));
-
         CreateMap<AppUser, UserDetailsDTO>()
             .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.UserRoles));
-            
     }
 }

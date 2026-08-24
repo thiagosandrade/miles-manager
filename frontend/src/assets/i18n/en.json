@@ -165,7 +165,14 @@
       "password": "Password",
       "passwordPlaceholder": "Password",
       "createButton": "Create User",
-      "updateButton": "Update User"
+      "updateButton": "Update User",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Leave blank to keep the current password",
+      "active": "Active",
+      "accountInformation": "Account Information",
+      "createdAt": "Created",
+      "updatedAt": "Last Updated",
+      "lastLoginAt": "Last Login"
     },
     "validation": {
       "fullNameRequired": "Full name is required.",

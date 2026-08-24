@@ -13,7 +13,10 @@ export const USER_ROLES_ROUTES: Routes = [
   },
   {
     path: ':id',
-    canActivate: [AuthGuard],
+    canActivate: [
+      AuthGuard,
+      AdminGuard
+    ],
     loadComponent: () => import('./edit-user-roles-dialog.component').then(c => c.EditUserRolesDialogComponent)
   }
 ];

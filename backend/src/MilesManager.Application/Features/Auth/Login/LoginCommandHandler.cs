@@ -6,7 +6,7 @@ using MilesManager.Application.Features.Users.DTOs;
 
 namespace MilesManager.Application.Features.Auth.Login;
 
-public sealed class LoginHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IJwtTokenService tokenService) : IRequestHandler<LoginCommand, Result<AuthSession>>
+public sealed class LoginCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IJwtTokenService tokenService) : IRequestHandler<LoginCommand, Result<AuthSession>>
 {
     public async Task<Result<AuthSession>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {

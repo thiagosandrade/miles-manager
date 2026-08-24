@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateUserRequest, UserDetails, UserSummary } from './models/user.models';
+import { CreateUserRequest, UpdateUserRequest, UserDetails } from './models/user.models';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -13,8 +13,8 @@ export class UserApiService {
 
   constructor(private readonly http: HttpClient) {}
 
-  listUsers(): Observable<UserSummary[]> {
-    return this.http.get<UserSummary[]>(`${this.apiBaseUrl}`);
+  listUsers(): Observable<UserDetails[]> {
+    return this.http.get<UserDetails[]>(`${this.apiBaseUrl}`);
   }
 
   getUser(id: string): Observable<UserDetails> {
@@ -23,6 +23,10 @@ export class UserApiService {
 
   createUser(request: CreateUserRequest): Observable<UserDetails> {
     return this.http.post<UserDetails>(`${this.apiBaseUrl}`, request);
+  }
+
+  updateUser(request: UpdateUserRequest): Observable<UserDetails> {
+    return this.http.put<UserDetails>(`${this.apiBaseUrl}/${request.id}`, request);
   }
 
   deleteUser(id: string): Observable<void> {

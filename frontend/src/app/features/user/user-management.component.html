@@ -224,6 +224,7 @@
 
         <!-- Actions -->
 
+
         <ng-container matColumnDef="actions">
 
           <th
@@ -236,6 +237,17 @@
             mat-cell
             *matCellDef="let user"
             class="actions-column">
+
+            <button
+              class="icon-button"
+              type="button"
+              [attr.aria-label]="'users.actions.edit' | translate"
+              (click)="openEditUserDialog(user)"
+              [disabled]="isLoadingResults">
+
+              <mat-icon>edit</mat-icon>
+
+            </button>
 
             <button
               class="icon-button danger"
@@ -300,6 +312,19 @@
 
           </div>
 
+          <div class="user-card-actions">
+
+          <button
+            class="icon-button"
+            type="button"
+            [attr.aria-label]="'users.actions.edit' | translate"
+            (click)="openEditUserDialog(user)"
+            [disabled]="isLoadingResults">
+
+            <mat-icon>edit</mat-icon>
+
+          </button>
+
           <button
             class="icon-button danger"
             type="button"
@@ -310,6 +335,8 @@
             <mat-icon>delete</mat-icon>
 
           </button>
+
+        </div>
 
         </div>
 

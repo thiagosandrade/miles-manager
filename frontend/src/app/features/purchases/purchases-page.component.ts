@@ -225,4 +225,5 @@ import { TranslatePipe } from '@ngx-translate/core';
         } 
       });
     }
+
   }

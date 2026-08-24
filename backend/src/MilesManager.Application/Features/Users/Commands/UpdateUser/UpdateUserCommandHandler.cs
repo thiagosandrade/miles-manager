@@ -7,7 +7,7 @@ using MilesManager.Domain.Users;
 
 namespace MilesManager.Application.Features.Users.Commands.UpdateUser;
 
-public sealed class UpdateUserHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IMapper mapper) : IRequestHandler<UpdateUserCommand, Result<UserDetailsDTO>>
+public sealed class UpdateUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IMapper mapper) : IRequestHandler<UpdateUserCommand, Result<UserDetailsDTO>>
 {
     public async Task<Result<UserDetailsDTO>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {

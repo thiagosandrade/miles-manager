@@ -10,7 +10,6 @@ using MilesManager.Application.Features.Users.DTOs;
 
 namespace MilesManager.Api.Controllers;
 
-[ApiController]
 [Authorize(Roles = "Administrator")]
 [Route("api/v{version:apiVersion}/user-roles")]
 [ApiVersion("1.0")]

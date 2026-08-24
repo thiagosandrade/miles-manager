@@ -18,16 +18,6 @@ public sealed record OperationResult<T>(OperationStatus Status, T? Value = defau
     public static OperationResult<T> Unauthorized() => new(OperationStatus.Unauthorized);
 }
 
-public sealed class UserDTO 
-{
-    public Guid Id { get; set; } 
-    public string Email { get; set; } = string.Empty;
-    public string FullName { get; set; } = string.Empty;
-    public bool IsActive { get; set; }
-    public DateTimeOffset CreatedAtUtc { get; set; }
-    public ICollection<UserRoleDTO>? Roles { get; set; } = [];
-}
-
 public sealed class UserDetailsDTO
 {
     public Guid Id { get; set; }

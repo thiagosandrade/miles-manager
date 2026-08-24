@@ -4,14 +4,22 @@
 
     <div class="dialog-icon">
 
-      <mat-icon>person_add</mat-icon>
+      <mat-icon>
+        {{ isCreate ? 'person_add' : 'edit' }}
+      </mat-icon>
 
     </div>
 
     <div>
 
       <h2>
-        {{ 'users.dialog.createTitle' | translate }}
+
+        {{
+          isCreate
+            ? ('users.dialog.createTitle' | translate)
+            : ('users.dialog.updateTitle' | translate)
+        }}
+
       </h2>
 
       <p>
@@ -24,11 +32,14 @@
 
 </h2>
 
+
 <form
   [formGroup]="form"
   (ngSubmit)="save()">
 
   <div mat-dialog-content>
+
+    <!-- Full Name -->
 
     <mat-form-field
       appearance="outline"
@@ -38,20 +49,26 @@
         {{ 'users.dialog.fullName' | translate }}
       </mat-label>
 
-      <mat-icon matPrefix>badge</mat-icon>
+      <mat-icon matPrefix>
+        badge
+      </mat-icon>
 
       <input
         matInput
         formControlName="fullName"
         [placeholder]="'users.dialog.fullNamePlaceholder' | translate">
 
-      <mat-error *ngIf="form.get('fullName')?.hasError('required')">
+      <mat-error
+        *ngIf="form.get('fullName')?.hasError('required')">
 
         {{ 'users.validation.fullNameRequired' | translate }}
 
       </mat-error>
 
     </mat-form-field>
+
+
+    <!-- Email -->
 
     <mat-form-field
       appearance="outline"
@@ -61,20 +78,25 @@
         {{ 'users.dialog.email' | translate }}
       </mat-label>
 
-      <mat-icon matPrefix>mail</mat-icon>
+      <mat-icon matPrefix>
+        mail
+      </mat-icon>
 
       <input
         matInput
+        type="email"
         formControlName="email"
         [placeholder]="'users.dialog.emailPlaceholder' | translate">
 
-      <mat-error *ngIf="form.get('email')?.hasError('required')">
+      <mat-error
+        *ngIf="form.get('email')?.hasError('required')">
 
         {{ 'users.validation.emailRequired' | translate }}
 
       </mat-error>
 
-      <mat-error *ngIf="form.get('email')?.hasError('email')">
+      <mat-error
+        *ngIf="form.get('email')?.hasError('email')">
 
         {{ 'users.validation.emailInvalid' | translate }}
 
@@ -82,23 +104,39 @@
 
     </mat-form-field>
 
+
+    <!-- Password -->
+
     <mat-form-field
       appearance="outline"
       class="full-width">
 
       <mat-label>
-        {{ 'users.dialog.password' | translate }}
+
+        {{
+          isCreate
+            ? ('users.dialog.password' | translate)
+            : ('users.dialog.newPassword' | translate)
+        }}
+
       </mat-label>
 
-      <mat-icon matPrefix>lock</mat-icon>
+      <mat-icon matPrefix>
+        lock
+      </mat-icon>
 
       <input
         matInput
         type="password"
         formControlName="password"
-        [placeholder]="'users.dialog.passwordPlaceholder' | translate">
+        [placeholder]="
+          isCreate
+            ? ('users.dialog.passwordPlaceholder' | translate)
+            : ('users.dialog.newPasswordPlaceholder' | translate)
+        ">
 
-      <mat-error *ngIf="form.get('password')?.hasError('required')">
+      <mat-error
+        *ngIf="form.get('password')?.hasError('required')">
 
         {{ 'users.validation.passwordRequired' | translate }}
 
@@ -106,7 +144,80 @@
 
     </mat-form-field>
 
+
+    <!-- Active -->
+
+    <mat-slide-toggle
+      *ngIf="!isCreate"
+      formControlName="isActive"
+      class="active-toggle">
+
+      {{ 'users.dialog.active' | translate }}
+
+    </mat-slide-toggle>
+
+
+    <!-- Account Information -->
+
+    <div
+      *ngIf="!isCreate && user"
+      class="account-info">
+
+      <div class="account-info-title">
+
+        <mat-icon>
+          info
+        </mat-icon>
+
+        <span>
+          {{ 'users.dialog.accountInformation' | translate }}
+        </span>
+
+      </div>
+
+
+      <div class="account-info-row">
+
+        <span class="account-info-label">
+          {{ 'users.dialog.createdAt' | translate }}
+        </span>
+
+        <span class="account-info-value">
+          {{ formatDate(user.createdAtUtc) }}
+        </span>
+
+      </div>
+
+
+      <div class="account-info-row">
+
+        <span class="account-info-label">
+          {{ 'users.dialog.updatedAt' | translate }}
+        </span>
+
+        <span class="account-info-value">
+          {{ formatDate(user.updatedAtUtc) }}
+        </span>
+
+      </div>
+
+
+      <div class="account-info-row">
+
+        <span class="account-info-label">
+          {{ 'users.dialog.lastLoginAt' | translate }}
+        </span>
+
+        <span class="account-info-value">
+          {{ formatDate(user.lastLoginAtUtc) }}
+        </span>
+
+      </div>
+
+    </div>
+
   </div>
+
 
   <mat-dialog-actions align="end">
 
@@ -119,15 +230,22 @@
 
     </button>
 
+
     <button
       mat-flat-button
       color="primary"
       type="submit"
       [disabled]="form.invalid">
 
-      <mat-icon>check</mat-icon>
+      <mat-icon>
+        {{ isCreate ? 'check' : 'save' }}
+      </mat-icon>
 
-      {{ 'users.dialog.createButton' | translate }}
+      {{
+        isCreate
+          ? ('users.dialog.createButton' | translate)
+          : ('users.dialog.updateButton' | translate)
+      }}
 
     </button>
 
