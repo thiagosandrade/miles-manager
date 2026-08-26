@@ -38,20 +38,11 @@ public static class SeedData
         await SeedAirportsAsync(context, cancellationToken);
         await SeedReferenceMileagePricesAsync(context, cancellationToken);
 
-        var adminUser = await SeedUsersAsync(
-            context,
-            hasher,
-            cancellationToken);
+        var adminUser = await SeedUsersAsync(context, hasher, cancellationToken);
 
-        var administratorRole = await SeedRolesAsync(
-            context,
-            cancellationToken);
+        var administratorRole = await SeedRolesAsync(context, cancellationToken);
 
-        await AssignAdministratorRoleAsync(
-            context,
-            adminUser.Id,
-            administratorRole.Id,
-            cancellationToken);
+        await AssignAdministratorRoleAsync(context, adminUser.Id, administratorRole.Id, cancellationToken);
     }
 
     private static async Task SeedProgramsAsync(
@@ -64,42 +55,36 @@ public static class SeedData
             {
                 Name = "Smiles",
                 ProgramCode = "SMLS",
-                ReferencePricePerThousand = 20m,
                 CurrencyCode = "BRL"
             },
             new Domain.Programs.LoyaltyProgram
             {
                 Name = "LATAM Pass",
                 ProgramCode = "LTAM",
-                ReferencePricePerThousand = 22m,
                 CurrencyCode = "BRL"
             },
             new Domain.Programs.LoyaltyProgram
             {
                 Name = "Livelo",
                 ProgramCode = "LIV",
-                ReferencePricePerThousand = 18m,
                 CurrencyCode = "BRL"
             },
             new Domain.Programs.LoyaltyProgram
             {
                 Name = "Esfera",
                 ProgramCode = "ESF",
-                ReferencePricePerThousand = 15m,
                 CurrencyCode = "BRL"
             },
             new Domain.Programs.LoyaltyProgram
             {
                 Name = "Azul Fidelidade",
                 ProgramCode = "AZL",
-                ReferencePricePerThousand = 19m,
                 CurrencyCode = "BRL"
             },
             new Domain.Programs.LoyaltyProgram
             {
                 Name = "TAP Miles&Go",
                 ProgramCode = "TAP",
-                ReferencePricePerThousand = 25m,
                 CurrencyCode = "BRL"
             }
         };
@@ -214,15 +199,20 @@ public static class SeedData
     }
 
     private static async Task SeedReferenceMileagePricesAsync(
-        IApplicationDbContext context,
-        CancellationToken cancellationToken)
+       IApplicationDbContext context,
+       CancellationToken cancellationToken)
     {
         var referencePrices = new Dictionary<string, decimal>
         {
             ["SMLS"] = 20m,
             ["LTAM"] = 22m,
-            ["LIV"] = 18m
+            ["LIV"] = 18m,
+            ["ESF"] = 18m,
+            ["AZL"] = 20m,
+            ["TAP"] = 25m
         };
+
+        var effectiveDate = DateOnly.FromDateTime(DateTime.UtcNow);
 
         foreach (var referencePrice in referencePrices)
         {
@@ -231,12 +221,10 @@ public static class SeedData
                     x => x.ProgramCode == referencePrice.Key,
                     cancellationToken);
 
-            if (program == null)
+            if (program is null)
             {
                 continue;
             }
-
-            var effectiveDate = DateOnly.FromDateTime(DateTime.UtcNow);
 
             var exists = await context.ReferenceMileagePrices
                 .AnyAsync(

@@ -13,7 +13,7 @@ export class ProgramsApiService {
 
   constructor(private http: HttpClient) {}
 
-  async listPrograms(params?: { page?: number; pageSize?: number; sort?: string; filter?: string }): Promise<ProgramListResponse> {
+  async getPrograms(params?: { page?: number; pageSize?: number; sort?: string; filter?: string }): Promise<ProgramListResponse> {
     let httpParams = new HttpParams();
     if (params?.page !== undefined) httpParams = httpParams.set('page', params.page.toString());
     if (params?.pageSize !== undefined) httpParams = httpParams.set('pageSize', params.pageSize.toString());

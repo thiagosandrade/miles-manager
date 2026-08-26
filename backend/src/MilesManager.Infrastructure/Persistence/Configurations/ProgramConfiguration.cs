@@ -14,7 +14,6 @@ internal sealed class ProgramConfiguration : IEntityTypeConfiguration<Domain.Pro
         builder.Property(x => x.ProgramType).IsRequired();
         builder.Property(x => x.Website).HasMaxLength(512);
         builder.Property(x => x.Logo).HasMaxLength(512);
-        builder.Property(x => x.ReferencePricePerThousand).HasPrecision(18, 4);
         builder.Property(x => x.IsActive).HasDefaultValue(true);
     }
 }

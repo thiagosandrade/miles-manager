@@ -468,5 +468,64 @@
       "subtitle": "Weisen Sie diesem Benutzer Rollen zu oder entfernen Sie sie.",
       "roles": "Rollen"
     }
+  },
+  "calculator": {
+    "page": {
+      "eyebrow": "Flugrechner",
+      "title": "Flugvergleich",
+      "subtitle": "Vergleichen Sie die Zahlung in bar mit der Nutzung von Meilen für Ihren Flug."
+    },
+    "form": {
+      "title": "Flugoptionen vergleichen",
+      "subtitle": "Geben Sie die Bar- und Meilenoptionen für Ihren Flug ein.",
+      "program": "Treueprogramm",
+      "cashPrice": "Ticketpreis",
+      "milesRequired": "Benötigte Meilen",
+      "taxes": "Steuern",
+      "compare": "Vergleichen",
+      "comparing": "Vergleich läuft...",
+      "reset": "Zurücksetzen"
+    },
+    "validation": {
+      "programRequired": "Bitte wählen Sie ein Treueprogramm aus.",
+      "cashPriceRequired": "Der Ticketpreis ist erforderlich.",
+      "cashPriceInvalid": "Der Ticketpreis darf nicht negativ sein.",
+      "milesRequired": "Die Anzahl der Meilen ist erforderlich.",
+      "milesInvalid": "Die Anzahl der Meilen muss größer als null sein.",
+      "taxesRequired": "Die Steuern sind erforderlich.",
+      "taxesInvalid": "Die Steuern dürfen nicht negativ sein."
+    },
+    "result": {
+      "title": "Vergleichsergebnis",
+      "subtitle": "Vergleichen Sie den Wert der Meilennutzung mit dem Barpreis des Fluges.",
+      "emptyTitle": "Noch kein Vergleich",
+      "emptyDescription": "Geben Sie den Flugpreis, die benötigten Meilen und die Steuern ein, um die Optionen zu vergleichen.",
+      "milesBetter": "Meilen zu verwenden ist besser",
+      "milesBetterDescription": "Die Meilenoption bietet einen besseren Wert als die Zahlung in bar.",
+      "cashBetter": "Barzahlung ist besser",
+      "cashBetterDescription": "Die Barzahlung ist günstiger als die Nutzung von Meilen zum aktuellen Referenzwert.",
+      "cashOption": "Barzahlung",
+      "milesOption": "Meilen + Steuern",
+      "vs": "VS",
+      "savings": "Ersparnis",
+      "miles": "Benötigte Meilen",
+      "taxes": "Steuern",
+      "referencePrice": "Referenzpreis",
+      "milesValue": "Wert der Meilen",
+      "effectiveValue": "Effektiver Meilenwert",
+      "perThousand": "pro 1.000 Meilen",
+      "recommendation": "Empfehlung",
+      "payCash": "Bar bezahlen",
+      "program": "Treueprogramm",
+      "cashDescription": "Bezahlen Sie den vollständigen Ticketpreis in bar.",
+      "milesDescription": "Verwenden Sie Meilen und zahlen Sie die anfallenden Steuern.",
+      "milesRequired": "Benötigte Meilen",
+      "extraCost": "Zusätzliche Kosten",
+      "useMiles": "Meilen verwenden"
+    },
+    "empty": {
+      "title": "Vergleichen Sie Ihren Flug",
+      "description": "Wählen Sie ein Treueprogramm und geben Sie die Flugdaten ein, um zu sehen, welche Option den besseren Wert bietet."
+    }
   }
 }

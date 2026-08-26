@@ -114,7 +114,7 @@ export class CreateRedemptionDialogComponent {
       this.airports = result;
     });
 
-    this.programsApi.listPrograms({
+    this.programsApi.getPrograms({
       page: 1,
       pageSize: 1000
     }).then(result => {

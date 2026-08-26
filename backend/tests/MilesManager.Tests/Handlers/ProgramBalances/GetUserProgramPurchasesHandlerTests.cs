@@ -30,15 +30,13 @@ public class GetUserProgramPurchasesHandlerTests
                 {
                     Id = programOneId,
                     Name = "Program One",
-                    ProgramCode = "P1",
-                    ReferencePricePerThousand = 12m
+                    ProgramCode = "P1"
                 },
                 new LoyaltyProgram
                 {
                     Id = programTwoId,
                     Name = "Program Two",
-                    ProgramCode = "P2",
-                    ReferencePricePerThousand = 8m
+                    ProgramCode = "P2"
                 });
 
             context.ReferenceMileagePrices.AddRange(

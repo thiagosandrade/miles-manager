@@ -1,0 +1,682 @@
+<section class="page">
+
+  <!-- ======================================================
+       Header
+  ======================================================= -->
+
+  <header class="page-header">
+
+    <div>
+
+      <p class="eyebrow">
+        {{ 'calculator.page.eyebrow' | translate }}
+      </p>
+
+      <h1>
+        {{ 'calculator.page.title' | translate }}
+      </h1>
+
+      <p class="subtitle">
+        {{ 'calculator.page.subtitle' | translate }}
+      </p>
+
+    </div>
+
+  </header>
+
+
+  <!-- ======================================================
+       Calculator Layout
+  ======================================================= -->
+
+  <section class="calculator-layout">
+
+
+    <!-- ====================================================
+         Input Card
+    ===================================================== -->
+
+    <mat-card class="calculator-card">
+
+      <mat-card-header>
+
+        <div class="card-header-content">
+
+          <div class="card-icon">
+
+            <mat-icon>
+              calculate
+            </mat-icon>
+
+          </div>
+
+          <div>
+
+            <mat-card-title>
+              {{ 'calculator.form.title' | translate }}
+            </mat-card-title>
+
+            <mat-card-subtitle>
+              {{ 'calculator.form.subtitle' | translate }}
+            </mat-card-subtitle>
+
+          </div>
+
+        </div>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <form
+          class="calculator-form"
+          [formGroup]="form"
+          (ngSubmit)="compare()">
+
+
+          <!-- Program -->
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>
+              {{ 'calculator.form.program' | translate }}
+            </mat-label>
+
+            <mat-select
+              formControlName="programId"
+              (selectionChange)="onProgramChange($event.value)">
+
+              <mat-option
+                *ngFor="let program of programs()"
+                [value]="program.id">
+
+                {{ program.name }}
+
+                <span class="program-currency">
+                  ({{ program.currencyCode }})
+                </span>
+
+              </mat-option>
+
+            </mat-select>
+
+            <mat-error
+              *ngIf="form.controls.programId.hasError('required')">
+
+              {{ 'calculator.validation.programRequired' | translate }}
+
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <!-- Cash Price -->
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>
+              {{ 'calculator.form.cashPrice' | translate }}
+            </mat-label>
+
+            <span
+              matTextPrefix
+              *ngIf="selectedCurrency()">
+
+              {{ getCurrencySymbol(selectedCurrency()!) }}&nbsp;
+
+            </span>
+
+            <input
+              matInput
+              type="number"
+              formControlName="cashPrice"
+              min="0">
+
+            <mat-error
+              *ngIf="form.controls.cashPrice.hasError('required')">
+
+              {{ 'calculator.validation.cashPriceRequired' | translate }}
+
+            </mat-error>
+
+            <mat-error
+              *ngIf="form.controls.cashPrice.hasError('min')">
+
+              {{ 'calculator.validation.cashPriceInvalid' | translate }}
+
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <!-- Miles Required -->
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>
+              {{ 'calculator.form.milesRequired' | translate }}
+            </mat-label>
+
+            <mat-icon matPrefix>
+              flight
+            </mat-icon>
+
+            <input
+              matInput
+              type="number"
+              min="1"
+              step="1"
+              formControlName="milesRequired">
+
+            <mat-error
+              *ngIf="form.controls.milesRequired.hasError('required')">
+
+              {{ 'calculator.validation.milesRequired' | translate }}
+
+            </mat-error>
+
+            <mat-error
+              *ngIf="form.controls.milesRequired.hasError('min')">
+
+              {{ 'calculator.validation.milesMin' | translate }}
+
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <!-- Taxes -->
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>
+              {{ 'calculator.form.taxes' | translate }}
+            </mat-label>
+
+            <mat-icon matPrefix>
+              receipt_long
+            </mat-icon>
+
+            <input
+              matInput
+              type="number"
+              min="0"
+              step="0.01"
+              formControlName="taxes">
+
+            <mat-error
+              *ngIf="form.controls.taxes.hasError('required')">
+
+              {{ 'calculator.validation.taxesRequired' | translate }}
+
+            </mat-error>
+
+            <mat-error
+              *ngIf="form.controls.taxes.hasError('min')">
+
+              {{ 'calculator.validation.taxesMin' | translate }}
+
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <!-- Actions -->
+
+          <div class="calculator-actions">
+
+            <button
+              mat-stroked-button
+              type="button"
+              (click)="reset()"
+              [disabled]="loading()">
+
+              <mat-icon>
+                refresh
+              </mat-icon>
+
+              {{ 'calculator.form.reset' | translate }}
+
+            </button>
+
+
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="loading() || form.invalid">
+
+              <mat-icon>
+                calculate
+              </mat-icon>
+
+              <span *ngIf="!loading()">
+                {{ 'calculator.form.compare' | translate }}
+              </span>
+
+              <span *ngIf="loading()">
+                {{ 'calculator.form.comparing' | translate }}
+              </span>
+
+            </button>
+
+          </div>
+
+        </form>
+
+
+        <!-- Error -->
+
+        <div
+          class="calculator-error"
+          *ngIf="error()">
+
+          <mat-icon>
+            error
+          </mat-icon>
+
+          <span>
+            {{ error() }}
+          </span>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+
+    <!-- ====================================================
+         Result Card
+    ===================================================== -->
+
+    <mat-card class="calculator-card result-card">
+
+      <mat-card-header>
+
+        <div class="card-header-content">
+
+          <div class="card-icon result-icon">
+
+            <mat-icon>
+              analytics
+            </mat-icon>
+
+          </div>
+
+          <div>
+
+            <mat-card-title>
+              {{ 'calculator.result.title' | translate }}
+            </mat-card-title>
+
+            <mat-card-subtitle>
+              {{ 'calculator.result.subtitle' | translate }}
+            </mat-card-subtitle>
+
+          </div>
+
+        </div>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+
+        <!-- ==================================================
+             Empty State
+        =================================================== -->
+
+        <div
+          class="result-empty"
+          *ngIf="!result() && !loading()">
+
+          <div class="result-empty-icon">
+
+            <mat-icon>
+              compare_arrows
+            </mat-icon>
+
+          </div>
+
+          <strong>
+            {{ 'calculator.result.emptyTitle' | translate }}
+          </strong>
+
+          <span>
+            {{ 'calculator.result.emptyDescription' | translate }}
+          </span>
+
+        </div>
+
+
+        <!-- ==================================================
+             Loading
+        =================================================== -->
+
+        <div
+          class="result-loading"
+          *ngIf="loading()">
+
+          <mat-icon class="loading-icon">
+            sync
+          </mat-icon>
+
+          <span>
+            {{ 'calculator.form.comparing' | translate }}
+          </span>
+
+        </div>
+
+
+        <!-- ==================================================
+             Result
+        =================================================== -->
+
+        <div
+          class="result-content"
+          *ngIf="result() as comparison">
+
+
+          <!-- Verdict -->
+
+          <div
+            class="result-verdict"
+            [class.miles-better]="comparison.isMilesBetter"
+            [class.cash-better]="!comparison.isMilesBetter">
+
+            <div class="verdict-icon">
+
+              <mat-icon>
+                {{ comparison.isMilesBetter
+                  ? 'flight'
+                  : 'payments' }}
+              </mat-icon>
+
+            </div>
+
+            <div class="verdict-content">
+
+              <span class="verdict-label">
+                {{ 'calculator.result.recommendation' | translate }}
+              </span>
+
+              <strong>
+
+                {{
+                  comparison.isMilesBetter
+                    ? ('calculator.result.useMiles' | translate)
+                    : ('calculator.result.payCash' | translate)
+                }}
+
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- Program -->
+
+          <div class="result-program">
+
+            <span class="result-label">
+              {{ 'calculator.result.program' | translate }}
+            </span>
+
+            <strong>
+              {{ comparison.programName }}
+            </strong>
+
+          </div>
+
+
+          <!-- Main Comparison -->
+
+          <div class="comparison-grid">
+
+
+            <!-- Cash -->
+
+            <div class="comparison-option">
+
+              <div class="comparison-option-header">
+
+                <mat-icon>
+                  payments
+                </mat-icon>
+
+                <span>
+                  {{ 'calculator.result.cashOption' | translate }}
+                </span>
+
+              </div>
+
+              <strong class="comparison-value">
+
+                {{
+                  formatCurrency(
+                    comparison.cashPrice,
+                    comparison.currencyCode
+                  )
+                }}
+
+              </strong>
+
+              <span class="comparison-description">
+                {{ 'calculator.result.cashDescription' | translate }}
+              </span>
+
+            </div>
+
+
+            <!-- Miles -->
+
+            <div class="comparison-option">
+
+              <div class="comparison-option-header">
+
+                <mat-icon>
+                  flight
+                </mat-icon>
+
+                <span>
+                  {{ 'calculator.result.milesOption' | translate }}
+                </span>
+
+              </div>
+
+              <strong class="comparison-value">
+
+                {{
+                  formatCurrency(
+                    comparison.totalMilesCost,
+                    comparison.currencyCode
+                  )
+                }}
+
+              </strong>
+
+              <span class="comparison-description">
+                {{ 'calculator.result.milesDescription' | translate }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- Details -->
+
+          <div class="result-details">
+
+
+            <!-- Miles Required -->
+
+            <div class="result-detail">
+
+              <span>
+                {{ 'calculator.result.milesRequired' | translate }}
+              </span>
+
+              <strong>
+                {{ comparison.milesRequired | number }}
+              </strong>
+
+            </div>
+
+
+            <!-- Taxes -->
+
+            <div class="result-detail">
+
+              <span>
+                {{ 'calculator.result.taxes' | translate }}
+              </span>
+
+              <strong>
+
+                {{
+                  formatCurrency(
+                    comparison.taxes,
+                    comparison.currencyCode
+                  )
+                }}
+
+              </strong>
+
+            </div>
+
+
+            <!-- Reference Value -->
+
+            <div class="result-detail">
+
+              <span>
+                {{ 'calculator.result.referencePrice' | translate }}
+              </span>
+
+              <strong>
+
+                {{
+                  formatCurrency(
+                    comparison.referencePricePerThousand,
+                    comparison.currencyCode
+                  )
+                }}
+
+                <small>
+                  / 1,000
+                </small>
+
+              </strong>
+
+            </div>
+
+
+            <!-- Miles Value -->
+
+            <div class="result-detail">
+
+              <span>
+                {{ 'calculator.result.milesValue' | translate }}
+              </span>
+
+              <strong>
+
+                {{
+                  formatCurrency(
+                    comparison.milesValue,
+                    comparison.currencyCode
+                  )
+                }}
+
+              </strong>
+
+            </div>
+
+
+            <!-- Effective Value -->
+
+            <div class="result-detail">
+
+              <span>
+                {{ 'calculator.result.effectiveValue' | translate }}
+              </span>
+
+              <strong>
+
+                {{
+                  formatCurrency(
+                    comparison.effectiveValuePerThousand,
+                    comparison.currencyCode
+                  )
+                }}
+
+                <small>
+                  / 1,000
+                </small>
+
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- Savings -->
+
+          <div
+            class="savings"
+            [class.negative]="comparison.savings < 0">
+
+            <div>
+
+              <span>
+                {{
+                  comparison.savings >= 0
+                    ? ('calculator.result.savings' | translate)
+                    : ('calculator.result.extraCost' | translate)
+                }}
+              </span>
+
+              <strong>
+
+                {{
+                  formatCurrency(
+                    Math.abs(comparison.savings),
+                    comparison.currencyCode
+                  )
+                }}
+
+              </strong>
+
+            </div>
+
+            <mat-icon>
+              {{ comparison.savings >= 0
+                ? 'trending_up'
+                : 'trending_down' }}
+            </mat-icon>
+
+          </div>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </section>
+
+</section>

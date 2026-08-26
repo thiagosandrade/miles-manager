@@ -93,6 +93,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
       path: '/redemptions',
       label: 'sidebar.redemptions',
       icon: 'redeem'
+    },
+    {
+      path: '/calculator',
+      label: 'sidebar.calculator',
+      icon: 'calculate'
     }
   ];
 

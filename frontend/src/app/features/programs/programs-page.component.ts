@@ -71,7 +71,7 @@ export class ProgramsPageComponent implements OnInit {
 
     try {
 
-      await this.programsService.listPrograms({
+      await this.programsService.getPrograms({
         page: pageIndex + 1,
         pageSize,
         sort: sortField

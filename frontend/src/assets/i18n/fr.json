@@ -468,5 +468,64 @@
       "subtitle": "Attribuez ou supprimez des rôles pour cet utilisateur.",
       "roles": "Rôles"
     }
+  },
+  "calculator": {
+    "page": {
+      "eyebrow": "Calculateur de Vol",
+      "title": "Comparateur de Vols",
+      "subtitle": "Comparez le paiement en espèces avec l’utilisation de miles pour votre vol."
+    },
+    "form": {
+      "title": "Comparer les options de vol",
+      "subtitle": "Saisissez les options de paiement en espèces et en miles pour votre vol.",
+      "program": "Programme de Fidélité",
+      "cashPrice": "Prix du Billet",
+      "milesRequired": "Miles Nécessaires",
+      "taxes": "Taxes",
+      "compare": "Comparer",
+      "comparing": "Comparaison...",
+      "reset": "Réinitialiser"
+    },
+    "validation": {
+      "programRequired": "Veuillez sélectionner un programme de fidélité.",
+      "cashPriceRequired": "Le prix du billet est obligatoire.",
+      "cashPriceInvalid": "Le prix du billet ne peut pas être négatif.",
+      "milesRequired": "Le nombre de miles est obligatoire.",
+      "milesInvalid": "Le nombre de miles doit être supérieur à zéro.",
+      "taxesRequired": "Les taxes sont obligatoires.",
+      "taxesInvalid": "Les taxes ne peuvent pas être négatives."
+    },
+    "result": {
+      "title": "Résultat de la Comparaison",
+      "subtitle": "Comparez la valeur de l’utilisation des miles avec le prix du vol en espèces.",
+      "emptyTitle": "Aucune comparaison pour le moment",
+      "emptyDescription": "Saisissez le prix du vol, les miles nécessaires et les taxes pour comparer les options.",
+      "milesBetter": "Utiliser des miles est plus avantageux",
+      "milesBetterDescription": "L’option avec des miles offre une meilleure valeur que le paiement en espèces.",
+      "cashBetter": "Payer en espèces est plus avantageux",
+      "cashBetterDescription": "Payer en espèces est moins cher qu’utiliser des miles selon la valeur de référence actuelle.",
+      "cashOption": "Billet en Espèces",
+      "milesOption": "Miles + Taxes",
+      "vs": "VS",
+      "savings": "Économie",
+      "miles": "Miles Nécessaires",
+      "taxes": "Taxes",
+      "referencePrice": "Prix de Référence",
+      "milesValue": "Valeur des Miles",
+      "effectiveValue": "Valeur Effective des Miles",
+      "perThousand": "pour 1 000 miles",
+      "recommendation": "Recommandation",
+      "payCash": "Payer en espèces",
+      "program": "Programme de Fidélité",
+      "cashDescription": "Payez le prix total du billet en espèces.",
+      "milesDescription": "Utilisez des miles et payez les taxes applicables.",
+      "milesRequired": "Miles Nécessaires",
+      "extraCost": "Coût Supplémentaire",
+      "useMiles": "Utiliser des miles"
+    },
+    "empty": {
+      "title": "Comparez votre vol",
+      "description": "Sélectionnez un programme de fidélité et saisissez les détails du vol pour déterminer quelle option offre la meilleure valeur."
+    }
   }
 }

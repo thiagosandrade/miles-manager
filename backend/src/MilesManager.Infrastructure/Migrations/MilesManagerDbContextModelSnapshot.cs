@@ -22,55 +22,6 @@ namespace MilesManager.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("MilesManager.Domain.Accounts.MileageAccount", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("AccountNumber")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
-                    b.Property<DateTimeOffset>("CreatedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("CurrentBalanceMiles")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<DateOnly?>("ExpirationDate")
-                        .HasColumnType("date");
-
-                    b.Property<decimal>("PendingMiles")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
-
-                    b.Property<Guid>("ProgramId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTimeOffset?>("UpdatedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProgramId");
-
-                    b.ToTable("mileage_accounts", (string)null);
-                });
-
             modelBuilder.Entity("MilesManager.Domain.Lookups.Airport", b =>
                 {
                     b.Property<Guid>("Id")
@@ -218,10 +169,6 @@ namespace MilesManager.Infrastructure.Migrations
 
                     b.Property<int>("ProgramType")
                         .HasColumnType("integer");
-
-                    b.Property<decimal>("ReferencePricePerThousand")
-                        .HasPrecision(18, 4)
-                        .HasColumnType("numeric(18,4)");
 
                     b.Property<DateTimeOffset?>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
@@ -700,15 +647,6 @@ namespace MilesManager.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasDiscriminator().HasValue("TransferTransaction");
-                });
-
-            modelBuilder.Entity("MilesManager.Domain.Accounts.MileageAccount", b =>
-                {
-                    b.HasOne("MilesManager.Domain.Programs.LoyaltyProgram", null)
-                        .WithMany()
-                        .HasForeignKey("ProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("MilesManager.Domain.Pricing.ReferenceMileagePrice", b =>

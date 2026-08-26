@@ -32,7 +32,7 @@ public sealed class GetUserProgramPurchasesHandler(IApplicationDbContext context
                     .Where(r => r.ProgramId == program.Id)
                     .OrderByDescending(r => r.EffectiveDate)
                     .Select(r => (decimal?)r.PricePerThousand)
-                    .FirstOrDefault() ?? program.ReferencePricePerThousand
+                    .FirstOrDefault() ?? 0
             })
             .Select(x => new UserProgramPurchaseDto
             {

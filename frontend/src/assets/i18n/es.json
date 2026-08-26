@@ -468,5 +468,64 @@
       "subtitle": "Asigne o elimine roles para este usuario.",
       "roles": "Roles"
     }
+  },
+  "calculator": {
+    "page": {
+      "eyebrow": "Calculadora de Vuelos",
+      "title": "Comparador de Vuelos",
+      "subtitle": "Compara pagar en efectivo con usar millas para tu vuelo."
+    },
+    "form": {
+      "title": "Comparar opciones de vuelo",
+      "subtitle": "Introduce las opciones en efectivo y con millas para tu vuelo.",
+      "program": "Programa de Fidelización",
+      "cashPrice": "Precio del Billete",
+      "milesRequired": "Millas Necesarias",
+      "taxes": "Tasas",
+      "compare": "Comparar",
+      "comparing": "Comparando...",
+      "reset": "Restablecer"
+    },
+    "validation": {
+      "programRequired": "Selecciona un programa de fidelización.",
+      "cashPriceRequired": "El precio del billete es obligatorio.",
+      "cashPriceInvalid": "El precio del billete no puede ser negativo.",
+      "milesRequired": "Las millas son obligatorias.",
+      "milesInvalid": "Las millas deben ser mayores que cero.",
+      "taxesRequired": "Las tasas son obligatorias.",
+      "taxesInvalid": "Las tasas no pueden ser negativas."
+    },
+    "result": {
+      "title": "Resultado de la Comparación",
+      "subtitle": "Compara el valor de usar millas con el precio del vuelo en efectivo.",
+      "emptyTitle": "Aún no hay ninguna comparación",
+      "emptyDescription": "Introduce el precio del vuelo, las millas necesarias y las tasas para comparar las opciones.",
+      "milesBetter": "Usar millas es mejor",
+      "milesBetterDescription": "La opción con millas ofrece un mejor valor que pagar en efectivo.",
+      "cashBetter": "Pagar en efectivo es mejor",
+      "cashBetterDescription": "Pagar en efectivo es más barato que usar millas con el valor de referencia actual.",
+      "cashOption": "Billete en Efectivo",
+      "milesOption": "Millas + Tasas",
+      "vs": "VS",
+      "savings": "Ahorro",
+      "miles": "Millas Necesarias",
+      "taxes": "Tasas",
+      "referencePrice": "Precio de Referencia",
+      "milesValue": "Valor de las Millas",
+      "effectiveValue": "Valor Efectivo de las Millas",
+      "perThousand": "por 1.000 millas",
+      "recommendation": "Recomendación",
+      "payCash": "Pagar en efectivo",
+      "program": "Programa de Fidelización",
+      "cashDescription": "Paga el precio total del billete en efectivo.",
+      "milesDescription": "Usa millas y paga las tasas aplicables.",
+      "milesRequired": "Millas Necesarias",
+      "extraCost": "Coste Adicional",
+      "useMiles": "Usar millas"
+    },
+    "empty": {
+      "title": "Compara tu vuelo",
+      "description": "Selecciona un programa de fidelización e introduce los detalles del vuelo para descubrir qué opción ofrece el mejor valor."
+    }
   }
 }

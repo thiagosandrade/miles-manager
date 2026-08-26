@@ -8,7 +8,6 @@ using MilesManager.Domain.Pricing;
 using MilesManager.Domain.Lookups;
 using Microsoft.EntityFrameworkCore;
 using MilesManager.Domain.Partners;
-using MilesManager.Domain.Accounts;
 using MilesManager.Domain.Transactions;
 
 namespace MilesManager.Infrastructure.Persistence;
@@ -25,7 +24,6 @@ public sealed class MilesManagerDbContext(DbContextOptions<MilesManagerDbContext
     public DbSet<TransferRoute> TransferRoutes => Set<TransferRoute>();
     public DbSet<MileageTransfer> MileageTransfers => Set<MileageTransfer>();
     public DbSet<Partner> Partners => Set<Partner>();
-    public DbSet<MileageAccount> MileageAccounts => Set<MileageAccount>();
     public DbSet<Transaction> Transactions => Set<Transaction>();
     public DbSet<EarnTransaction> EarnTransactions => Set<EarnTransaction>();
     public DbSet<ExpirationTransaction> ExpirationTransactions => Set<ExpirationTransaction>();

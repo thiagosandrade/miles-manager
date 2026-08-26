@@ -37,10 +37,6 @@ export const routes: Routes = [
       },
       {
         path: 'user-roles',
-        canActivate: [
-          AuthGuard,
-          AdminGuard
-        ],
         loadChildren: () =>
           import('./features/user-roles/user-roles.routes').then(
             (m) => m.USER_ROLES_ROUTES),
@@ -79,6 +75,12 @@ export const routes: Routes = [
           import('./features/redemptions/redemptions.routes').then(
             (m) => m.REDEMPTIONS_ROUTES
           ),
+      },
+      {
+        path: 'calculator',
+        loadChildren: () =>
+          import('./features/calculator/calculator.routes').then(
+            (m) => m.CALCULATOR_ROUTES)
       }
     ],
   },

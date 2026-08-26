@@ -1,36 +1,51 @@
 using MediatR;
-using MilesManager.Application.Common;
 using MilesManager.Application.Abstractions;
+using MilesManager.Application.Common;
 using Microsoft.EntityFrameworkCore;
+using MilesManager.Domain.Pricing;
+using MilesManager.Domain.Programs;
 
 namespace MilesManager.Application.Features.Programs.Commands.CreateProgram;
 
-public sealed class CreateProgramHandler(IApplicationDbContext context) : IRequestHandler<CreateProgramCommand, Result<Guid>>
+public sealed class CreateProgramHandler(IApplicationDbContext context)
+    : IRequestHandler<CreateProgramCommand, Result<Guid>>
 {
-    private readonly IApplicationDbContext _context = context;
-
     public async Task<Result<Guid>> Handle(CreateProgramCommand request, CancellationToken cancellationToken)
     {
-        var exists = await _context.Programs.AsNoTracking().FirstOrDefaultAsync(p => p.ProgramCode == request.ProgramCode, cancellationToken);
-        if (exists is not null)
+        var exists = await context.Programs
+            .AsNoTracking()
+            .AnyAsync(
+                p => p.ProgramCode == request.ProgramCode,
+                cancellationToken);
+
+        if (exists)
         {
             return Result<Guid>.Conflict("Program code already exists.");
         }
 
-        var program = new Domain.Programs.LoyaltyProgram
+        var program = new LoyaltyProgram
         {
             Name = request.Name?.Trim() ?? string.Empty,
             ProgramCode = request.ProgramCode?.Trim() ?? string.Empty,
             ProgramType = request.ProgramType,
             Website = request.Website,
             Logo = request.Logo,
-            ReferencePricePerThousand = request.ReferencePricePerThousand,
             IsActive = request.IsActive,
             CurrencyCode = request.CurrencyCode
         };
 
-        await _context.Programs.AddAsync(program, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.Programs.AddAsync(program, cancellationToken);
+
+        var referencePrice = new ReferenceMileagePrice
+        {
+            Program = program,
+            PricePerThousand = request.ReferencePricePerThousand,
+            EffectiveDate = DateOnly.FromDateTime(DateTime.UtcNow)
+        };
+
+        await context.ReferenceMileagePrices.AddAsync(referencePrice, cancellationToken);
+
+        await context.SaveChangesAsync(cancellationToken);
 
         return Result<Guid>.Success(program.Id);
     }

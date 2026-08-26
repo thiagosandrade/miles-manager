@@ -13,7 +13,6 @@ public class LoyaltyProgram : Entity
     public string? Logo { get; set; }
     public ProgramType ProgramType { get; set; }
     public string CurrencyCode { get; set; } = "EUR";
-    public decimal ReferencePricePerThousand { get; set; }
     public bool IsActive { get; set; } = true;
 
     public string? Description { get; set; }
