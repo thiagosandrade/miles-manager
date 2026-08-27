@@ -3,7 +3,9 @@
   {{
     data.operation === 'create'
       ? ('purchases.dialog.createTitle' | translate)
-      : ('purchases.dialog.updateTitle' | translate)
+      : data.operation === 'clone'
+        ? 'Clone Purchase'
+        : ('purchases.dialog.updateTitle' | translate)
   }}
 
 </h2>
@@ -174,7 +176,9 @@
     {{
       data.operation === 'create'
         ? ('purchases.dialog.createButton' | translate)
-        : ('purchases.dialog.updateButton' | translate)
+        : data.operation === 'clone'
+          ? 'Clone Purchase'
+          : ('purchases.dialog.updateButton' | translate)
     }}
 
   </button>

@@ -16,7 +16,7 @@ import { PurchasesApiService } from "./purchases-api.service";
 import { TranslatePipe } from "@ngx-translate/core";
 
 interface PurchaseDialogData {
-  operation: 'create' | 'update';
+  operation: 'create' | 'update' | 'clone';
   purchaseId?: string;
 }
 
@@ -74,7 +74,7 @@ export class CreatePurchaseDialogComponent implements OnInit {
 
       this.programs = result.programs.filter(p => p.isActive);
 
-      if (this.data.operation === 'update' && this.data.purchaseId) {
+      if ((this.data.operation === 'update' || this.data.operation === 'clone') && this.data.purchaseId) {
 
         this.purchasesApi.getPurchase(this.data.purchaseId).subscribe({
 
@@ -89,8 +89,20 @@ export class CreatePurchaseDialogComponent implements OnInit {
               milesPurchased: purchase.milesPurchased,
               bonusPercentage: purchase.bonusPercentage,
               purchaseStatus: purchase.purchaseStatus,
-              purchaseDate: new Date(purchase.purchaseDate)
+              purchaseDate: this.data.operation === 'clone'
+                ? new Date()
+                : new Date(purchase.purchaseDate)
             });
+
+            if (this.data.operation === 'clone') {
+              this.form.get('programId')?.disable();
+              this.form.get('partner')?.disable();
+              this.form.get('description')?.disable();
+              this.form.get('amountPaid')?.disable();
+              this.form.get('milesPurchased')?.disable();
+              this.form.get('bonusPercentage')?.disable();
+              this.form.get('purchaseStatus')?.disable();
+            }
 
           }
 

@@ -190,6 +190,51 @@ import { TranslatePipe } from '@ngx-translate/core';
 
     }
 
+    clonePurchase(purchase: MileagePurchase): void {
+
+      const dialogRef = this.dialog.open(CreatePurchaseDialogComponent, {
+        width: '600px',
+        maxWidth: '95vw',
+        data: {
+          operation: 'clone',
+          purchaseId: purchase.id
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+
+        if (!result) {
+          return;
+        }
+
+        const request: PurchaseCreateRequest = {
+          userId: this.storageService.getUser().id,
+          programId: result.programId,
+          partner: result.partner,
+          description: result.description,
+          amountPaid: Number(result.amountPaid),
+          milesPurchased: Number(result.milesPurchased),
+          bonusPercentage: 0,
+          purchaseStatus: PurchaseStatus.Completed,
+          purchaseDate: result.purchaseDate.toISOString().split('T')[0]
+        };
+
+        this.purchasesService.createPurchase(request).subscribe({
+          next: () => {
+            this.snackbarService.success('Purchase created succesfully.', 3000);
+            this.loadPurchases();
+            this.loading.set(false)
+          },
+          error: () => {
+            this.snackbarService.error('Could not create purchase.', 3000);
+            this.loading.set(false)
+          } 
+        });
+
+      });
+
+    }
+
     getPurchaseStatus(status: PurchaseStatus): string {
 
       switch (status) {
