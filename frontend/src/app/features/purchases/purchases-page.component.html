@@ -125,6 +125,11 @@
 
       [emptyDescription]="'purchases.table.emptyDescription' | translate">
 
+
+      <!-- ========================================================
+          Toolbar
+      ========================================================= -->
+
       <div table-toolbar class="purchases-toolbar">
 
         <mat-form-field appearance="outline">
@@ -142,6 +147,11 @@
 
       </div>
 
+
+      <!-- ========================================================
+          Empty State
+      ========================================================= -->
+
       <button
         empty-action
         class="primary-button"
@@ -156,11 +166,17 @@
 
       </button>
 
+
+      <!-- ========================================================
+          Desktop Table
+      ========================================================= -->
+
       <div class="desktop-table">
 
         <table
           mat-table
           [dataSource]="data()">
+
 
           <!-- Program -->
 
@@ -196,6 +212,7 @@
 
           </ng-container>
 
+
           <!-- Amount Paid -->
 
           <ng-container matColumnDef="amountPaid">
@@ -209,6 +226,7 @@
             </td>
 
           </ng-container>
+
 
           <!-- Miles Purchased -->
 
@@ -285,7 +303,9 @@
                 [attr.aria-label]="'purchases.actions.edit' | translate"
                 (click)="openEditPurchaseDialog(purchase)">
 
-                <mat-icon>edit</mat-icon>
+                <mat-icon>
+                  edit
+                </mat-icon>
 
               </button>
 
@@ -294,7 +314,9 @@
                 [attr.aria-label]="'purchases.actions.delete' | translate"
                 (click)="deletePurchase(purchase)">
 
-                <mat-icon>delete</mat-icon>
+                <mat-icon>
+                  delete
+                </mat-icon>
 
               </button>
 
@@ -316,13 +338,19 @@
 
       </div>
 
-      <!-- Mobile Cards -->
+
+      <!-- ========================================================
+          Mobile Cards
+      ========================================================= -->
 
       <div class="mobile-purchases">
 
         <article
           class="purchase-card"
           *ngFor="let purchase of data()">
+
+
+          <!-- Header -->
 
           <div class="purchase-header">
 
@@ -346,6 +374,7 @@
 
             </div>
 
+
             <div class="purchase-actions">
 
               <button
@@ -353,7 +382,9 @@
                 [attr.aria-label]="'purchases.actions.edit' | translate"
                 (click)="openEditPurchaseDialog(purchase)">
 
-                <mat-icon>edit</mat-icon>
+                <mat-icon>
+                  edit
+                </mat-icon>
 
               </button>
 
@@ -362,13 +393,18 @@
                 [attr.aria-label]="'purchases.actions.delete' | translate"
                 (click)="deletePurchase(purchase)">
 
-                <mat-icon>delete</mat-icon>
+                <mat-icon>
+                  delete
+                </mat-icon>
 
               </button>
 
             </div>
 
           </div>
+
+
+          <!-- Status -->
 
           <div class="purchase-status">
 
@@ -387,6 +423,9 @@
 
           </div>
 
+
+          <!-- Details -->
+
           <div class="purchase-details">
 
             <div class="purchase-detail">
@@ -396,10 +435,11 @@
               </span>
 
               <strong>
-                {{ purchase.amountPaid | currency:purchase.currencyCode }}
+                {{ purchase.amountPaid | currency:purchase.currencyCode  }}
               </strong>
 
             </div>
+
 
             <div class="purchase-detail">
 
@@ -412,6 +452,7 @@
               </strong>
 
             </div>
+
 
             <div class="purchase-detail">
 
@@ -444,7 +485,9 @@
     </strong>
 
     <span>
+
       {{ 'purchases.messages.loadError' | translate }}
+
     </span>
 
   </div>
