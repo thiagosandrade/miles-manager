@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MilesManager.Application.Abstractions;
 using MilesManager.Application.Common;
 using MilesManager.Application.Features.ProgramBalances.DTOs;
+using MilesManager.Domain.Common.Enums;
 
 namespace MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramPurchases;
 
@@ -15,36 +16,77 @@ public sealed class GetUserProgramPurchasesHandler(IApplicationDbContext context
         GetUserProgramPurchasesQuery request,
         CancellationToken cancellationToken)
     {
-        var items = await _context.Programs
+        var purchases = await _context.MileagePurchases
             .AsNoTracking()
-            .Select(program => new
+            .Where(p =>
+                p.UserId == request.UserId &&
+                p.PurchaseStatus == PurchaseStatus.Confirmed)
+            .GroupBy(p => p.ProgramId)
+            .Select(g => new
             {
-                program.Id,
-                program.Name,
-                program.CurrencyCode,
-                TotalMilesPurchased = _context.MileagePurchases
-                    .AsNoTracking()
-                    .Where(p => p.UserId == request.UserId && p.ProgramId == program.Id)
-                    .Select(p => (decimal?)p.MilesPurchased)
-                    .Sum() ?? 0m,
-                CurrentPricePerThousand = _context.ReferenceMileagePrices
-                    .AsNoTracking()
-                    .Where(r => r.ProgramId == program.Id)
-                    .OrderByDescending(r => r.EffectiveDate)
-                    .Select(r => (decimal?)r.PricePerThousand)
-                    .FirstOrDefault() ?? 0
+                ProgramId = g.Key,
+                TotalMilesPurchased = g.Sum(p => p.MilesPurchased),
+                TotalAmountPaid = g.Sum(p => p.AmountPaid)
             })
-            .Select(x => new UserProgramPurchaseDto
+            .ToDictionaryAsync(x => x.ProgramId, cancellationToken);
+
+        var latestReferencePrices = await _context.ReferenceMileagePrices
+            .AsNoTracking()
+            .GroupBy(x => x.ProgramId)
+            .Select(g => g
+                .OrderByDescending(x => x.EffectiveDate)
+                .Select(x => new
+                {
+                    x.ProgramId,
+                    x.PricePerThousand
+                })
+                .First())
+            .ToDictionaryAsync(x => x.ProgramId, x => x.PricePerThousand, cancellationToken);
+
+        var items = await _context.ProgramBalances
+            .AsNoTracking()
+            .Where(x => x.UserId == request.UserId)
+            .Include(x => x.Program)
+            .Select(x => new
             {
-                ProgramId = x.Id,
-                ProgramName = x.Name,
-                Balance = x.TotalMilesPurchased,
-                ReferencePricePerThousand = x.CurrentPricePerThousand,
-                CurrentValue = (x.TotalMilesPurchased / 1000m) * x.CurrentPricePerThousand,
-                CurrencyCode = x.CurrencyCode
+                x.ProgramId,
+                ProgramName = x.Program.Name,
+                x.Balance,
+                x.Program.CurrencyCode
             })
             .ToListAsync(cancellationToken);
 
-        return Result<IReadOnlyList<UserProgramPurchaseDto>>.Success(items);
+        var result = items
+            .Select(x =>
+            {
+                purchases.TryGetValue(x.ProgramId, out var purchaseStats);
+
+                var totalMilesPurchased = purchaseStats?.TotalMilesPurchased ?? 0m;
+                var totalAmountPaid = purchaseStats?.TotalAmountPaid ?? 0m;
+
+                var actualCostPerThousand = totalMilesPurchased > 0m
+                    ? totalAmountPaid / (totalMilesPurchased / 1000m)
+                    : 0m;
+
+                var referencePricePerThousand = latestReferencePrices.TryGetValue(
+                    x.ProgramId,
+                    out var referencePrice)
+                    ? referencePrice
+                    : 0m;
+
+                return new UserProgramPurchaseDto
+                {
+                    ProgramId = x.ProgramId,
+                    ProgramName = x.ProgramName,
+                    Balance = x.Balance,
+                    ReferencePricePerThousand = referencePricePerThousand,
+                    CurrentValue = actualCostPerThousand * (x.Balance / 1000m),
+                    CurrencyCode = x.CurrencyCode
+                };
+            })
+            .OrderBy(x => x.ProgramName)
+            .ToList();
+
+        return Result<IReadOnlyList<UserProgramPurchaseDto>>.Success(result);
     }
 }
