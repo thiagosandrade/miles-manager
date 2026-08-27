@@ -101,10 +101,7 @@ export class CreateRedemptionDialogComponent {
     ],
     cashPrice: [
       0,
-      [
-        Validators.required,
-        Validators.min(0)
-      ]
+      Validators.min(0)
     ]
   });
 
@@ -154,7 +151,12 @@ export class CreateRedemptionDialogComponent {
 
     }
 
-    this.dialogRef.close(this.form.getRawValue());
+    const value = this.form.getRawValue();
+
+    this.dialogRef.close({
+      ...value,
+      cashPrice: value.cashPrice ?? 0
+    });
 
   }
 
