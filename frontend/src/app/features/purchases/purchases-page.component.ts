@@ -47,7 +47,6 @@ import { TranslatePipe } from '@ngx-translate/core';
       'programName',
       'amountPaid',
       'milesPurchased',
-      'bonusPercentage',
       'purchaseDate',
       'purchaseStatus',
       'actions'
@@ -125,7 +124,7 @@ import { TranslatePipe } from '@ngx-translate/core';
           description: result.description,
           amountPaid: Number(result.amountPaid),
           milesPurchased: Number(result.milesPurchased),
-          bonusPercentage: Number(result.bonusPercentage),
+          bonusPercentage: purchase.bonusPercentage,
           purchaseStatus: PurchaseStatus.Completed,
           purchaseDate: result.purchaseDate.toISOString().split('T')[0]
         };
@@ -170,7 +169,7 @@ import { TranslatePipe } from '@ngx-translate/core';
           description: result.description,
           amountPaid: Number(result.amountPaid),
           milesPurchased: Number(result.milesPurchased),
-          bonusPercentage: Number(result.bonusPercentage),
+          bonusPercentage: 0,
           purchaseStatus: PurchaseStatus.Completed,
           purchaseDate: result.purchaseDate.toISOString().split('T')[0]
         };
