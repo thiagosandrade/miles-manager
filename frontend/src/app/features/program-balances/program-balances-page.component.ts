@@ -32,7 +32,6 @@ export class ProgramBalancesPageComponent implements OnInit {
 
   displayedColumns = [
     'program',
-    'referencePricePerThousand',
     'currentValue',
     'currencyCode',
     'balance'

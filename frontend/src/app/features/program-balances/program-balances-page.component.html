@@ -197,32 +197,6 @@
 
 
         <!-- ================================================
-             Reference Price
-        ================================================= -->
-
-        <ng-container matColumnDef="referencePricePerThousand">
-
-          <th
-            mat-header-cell
-            *matHeaderCellDef>
-
-            {{ 'balances.table.columns.referencePrice' | translate }}
-
-          </th>
-
-          <td
-            mat-cell
-            *matCellDef="let balance">
-
-            {{ balance.referencePricePerThousand
-              | currency:balance.currencyCode }}
-
-          </td>
-
-        </ng-container>
-
-
-        <!-- ================================================
              Current Value
         ================================================= -->
 
@@ -372,26 +346,6 @@
         =============================================== -->
 
         <div class="balance-card-values">
-
-
-          <!-- Reference -->
-
-          <div class="balance-value-item">
-
-            <span class="balance-label">
-
-              {{ 'balances.table.columns.referencePrice' | translate }}
-
-            </span>
-
-            <strong>
-
-              {{ balance.referencePricePerThousand
-                | currency:balance.currencyCode }}
-
-            </strong>
-
-          </div>
 
 
           <!-- Current -->
