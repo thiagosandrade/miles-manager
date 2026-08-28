@@ -151,7 +151,11 @@ export class CalculatorComponent implements OnInit {
 
   }
 
-  onProgramChange(programId: string): void {
+  onProgramChange(programId: unknown): void {
+
+    if (typeof programId !== 'string') {
+      return;
+    }
 
     const program = this.programs().find(
       x => x.id === programId
