@@ -8,10 +8,7 @@ import {
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
 
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -25,6 +22,11 @@ import { ProgramsApiService } from '../programs/programs-api.service';
 import { Program } from '../programs/models/program.model';
 
 import { firstValueFrom } from 'rxjs';
+import {
+  MoneyInputComponent,
+  NumberInputComponent,
+  SelectComponent
+} from '../../shared/components/form-fields';
 
 @Component({
   selector: 'app-calculator',
@@ -34,10 +36,10 @@ import { firstValueFrom } from 'rxjs';
     ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatIconModule,
-    MatSelectModule,
+    MoneyInputComponent,
+    NumberInputComponent,
+    SelectComponent,
     TranslatePipe
   ],
   templateUrl: './calculator.component.html',
@@ -101,6 +103,13 @@ export class CalculatorComponent implements OnInit {
     ]
 
   });
+
+  get programOptions(): Array<{ value: string; viewValue: string }> {
+    return this.programs().map(program => ({
+      value: program.id,
+      viewValue: `${program.name} (${program.currencyCode})`
+    }));
+  }
 
   // -----------------------------
   // Lifecycle
