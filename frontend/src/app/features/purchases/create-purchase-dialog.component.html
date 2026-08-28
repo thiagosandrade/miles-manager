@@ -27,19 +27,11 @@
       [label]="'purchases.dialog.partner' | translate">
     </app-text-input>
 
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'purchases.dialog.description' | translate }}
-      </mat-label>
-
-      <textarea
-        matInput
-        rows="3"
-        formControlName="description">
-      </textarea>
-
-    </mat-form-field>
+    <app-textarea-input
+      formControlName="description"
+      [label]="'purchases.dialog.description' | translate"
+      [rows]="3">
+    </app-textarea-input>
 
     <app-money-input
       formControlName="amountPaid"
