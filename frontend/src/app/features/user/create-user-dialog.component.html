@@ -41,7 +41,9 @@
       [label]="'users.dialog.fullName' | translate"
       [placeholder]="'users.dialog.fullNamePlaceholder' | translate"
       icon="badge"
-      [errorMessage]="'users.validation.fullNameRequired' | translate">
+      [errors]="{
+        required: 'users.validation.fullNameRequired'
+      }">
     </app-text-input>
 
     <app-text-input
@@ -50,9 +52,10 @@
       [label]="'users.dialog.email' | translate"
       [placeholder]="'users.dialog.emailPlaceholder' | translate"
       icon="mail"
-      [errorMessage]="form.controls.email.hasError('required')
-        ? ('users.validation.emailRequired' | translate)
-        : ('users.validation.emailInvalid' | translate)">
+      [errors]="{
+        required: 'users.validation.emailRequired',
+        email: 'users.validation.emailInvalid'
+      }">
     </app-text-input>
 
     <app-text-input
@@ -65,7 +68,9 @@
         ? ('users.dialog.passwordPlaceholder' | translate)
         : ('users.dialog.newPasswordPlaceholder' | translate)"
       icon="lock"
-      [errorMessage]="'users.validation.passwordRequired' | translate">
+      [errors]="{
+        required: 'users.validation.passwordRequired'
+      }">
     </app-text-input>
 
     <mat-slide-toggle
