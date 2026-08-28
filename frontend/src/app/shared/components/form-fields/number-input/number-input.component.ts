@@ -1,0 +1,71 @@
+import { CommonModule } from '@angular/common';
+import { Component, forwardRef, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+
+@Component({
+  standalone: true,
+  selector: 'app-number-input',
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, MatIconModule],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => NumberInputComponent),
+    multi: true
+  }],
+  styles: [`
+    :host { display: block; }
+    .full-width { width: 100%; }
+  `],
+  template: `
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ label }}</mat-label>
+      <mat-icon *ngIf="icon" matPrefix>{{ icon }}</mat-icon>
+      <input
+        matInput
+        type="number"
+        [placeholder]="placeholder"
+        [value]="value ?? ''"
+        [disabled]="disabled"
+        [min]="min"
+        [max]="max"
+        [step]="step"
+        (input)="onInput($event)"
+        (blur)="onBlur()">
+      <mat-error *ngIf="errorMessage && touched">{{ errorMessage }}</mat-error>
+    </mat-form-field>
+  `
+})
+export class NumberInputComponent implements ControlValueAccessor {
+  @Input() label = '';
+  @Input() placeholder = '';
+  @Input() icon = '';
+  @Input() errorMessage = 'Invalid number';
+  @Input() min: number | null = null;
+  @Input() max: number | null = null;
+  @Input() step: number | 'any' = 'any';
+
+  value: number | null = null;
+  disabled = false;
+  touched = false;
+
+  private onChange: (value: number | null) => void = () => {};
+  private onTouched: () => void = () => {};
+
+  writeValue(value: number | null): void { this.value = value; }
+  registerOnChange(fn: (value: number | null) => void): void { this.onChange = fn; }
+  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
+  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+
+  onInput(event: Event): void {
+    const rawValue = (event.target as HTMLInputElement).value;
+    this.value = rawValue === '' ? null : Number(rawValue);
+    this.onChange(this.value);
+  }
+
+  onBlur(): void {
+    this.touched = true;
+    this.onTouched();
+  }
+}
