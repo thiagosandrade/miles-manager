@@ -51,6 +51,7 @@ export class CreatePurchaseDialogComponent implements OnInit {
   private purchasesApi = inject(PurchasesApiService);
   readonly data = inject<PurchaseDialogData>(MAT_DIALOG_DATA);
   programs: Program[] = [];
+  programOptions: SelectOption<string>[] = [];
 
   form = this.fb.group({
     id: [''],
@@ -76,6 +77,10 @@ export class CreatePurchaseDialogComponent implements OnInit {
       pageSize: 1000
     }).then(result => {
       this.programs = result.programs.filter(p => p.isActive);
+      this.programOptions = this.programs.map(p => ({
+        value: p.id,
+        label: p.name
+      }));
 
       if ((this.data.operation === 'update' || this.data.operation === 'clone') && this.data.purchaseId) {
         this.purchasesApi.getPurchase(this.data.purchaseId).subscribe({
@@ -102,13 +107,6 @@ export class CreatePurchaseDialogComponent implements OnInit {
     value: status.value,
     label: `common.${status.label.toLowerCase()}`
   }));
-
-  get programOptions(): SelectOption<string>[] {
-    return this.programs.map(p => ({
-      value: p.id,
-      label: p.name
-    }));
-  }
 
   save(): void {
     if (this.form.invalid) {

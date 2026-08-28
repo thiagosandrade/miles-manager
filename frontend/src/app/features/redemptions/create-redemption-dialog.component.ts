@@ -55,10 +55,18 @@ export class CreateRedemptionDialogComponent {
 
   readonly data = inject<RedemptionDialogData>(MAT_DIALOG_DATA);
   airports: AirportsDTO[] = [];
+  airportOptions: SelectOption<string>[] = [];
 
   private dialogRef = inject(MatDialogRef<CreateRedemptionDialogComponent>);
 
   programs: Program[] = [];
+  programOptions: SelectOption<string>[] = [];
+  readonly cabinClassOptions: SelectOption<number>[] = [
+    { value: 0, label: 'redemptions.cabin.economy' },
+    { value: 1, label: 'redemptions.cabin.premiumEconomy' },
+    { value: 2, label: 'redemptions.cabin.business' },
+    { value: 3, label: 'redemptions.cabin.first' }
+  ];
 
   readonly form = this.fb.group({
     id: [''],
@@ -78,6 +86,10 @@ export class CreateRedemptionDialogComponent {
 
     this.dataAppService.getAirports().then(result => {
       this.airports = result;
+      this.airportOptions = this.airports.map(airport => ({
+        value: airport.iataCode,
+        label: `${airport.name} (${airport.iataCode})`
+      }));
     });
 
     this.programsApi.getPrograms({
@@ -85,6 +97,10 @@ export class CreateRedemptionDialogComponent {
       pageSize: 1000
     }).then(result => {
       this.programs = result.programs.filter(p => p.isActive);
+      this.programOptions = this.programs.map(program => ({
+        value: program.id,
+        label: program.name
+      }));
 
       if (this.data.operation === 'update' && this.data.redemptionId) {
 
@@ -108,29 +124,6 @@ export class CreateRedemptionDialogComponent {
       }
     });
 
-  }
-
-  get programOptions(): SelectOption<string>[] {
-    return this.programs.map(program => ({
-      value: program.id,
-      label: program.name
-    }));
-  }
-
-  get airportOptions(): SelectOption<string>[] {
-    return this.airports.map(airport => ({
-      value: airport.iataCode,
-      label: `${airport.name} (${airport.iataCode})`
-    }));
-  }
-
-  get cabinClassOptions(): SelectOption<number>[] {
-    return [
-      { value: 0, label: 'redemptions.cabin.economy' },
-      { value: 1, label: 'redemptions.cabin.premiumEconomy' },
-      { value: 2, label: 'redemptions.cabin.business' },
-      { value: 3, label: 'redemptions.cabin.first' }
-    ];
   }
 
   save(): void {

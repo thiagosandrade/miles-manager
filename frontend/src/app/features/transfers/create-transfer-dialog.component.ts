@@ -56,6 +56,7 @@ export class CreateTransferDialogComponent implements OnInit {
   data = inject<TransferDialogData>(MAT_DIALOG_DATA);
 
   programs: Program[] = [];
+  programOptions: SelectOption<string>[] = [];
 
   readonly form = this.fb.group({
     id: [''],
@@ -76,6 +77,10 @@ export class CreateTransferDialogComponent implements OnInit {
     }).then(result => {
 
       this.programs = result.programs.filter(x => x.isActive);
+      this.programOptions = this.programs.map(program => ({
+        value: program.id,
+        label: program.name
+      }));
 
     });
 
@@ -98,13 +103,6 @@ export class CreateTransferDialogComponent implements OnInit {
     } else {
       this.form.reset();
     }
-  }
-
-  get programOptions(): SelectOption<string>[] {
-    return this.programs.map(program => ({
-      value: program.id,
-      label: program.name
-    }));
   }
 
   save(): void {
