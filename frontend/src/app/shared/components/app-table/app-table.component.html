@@ -72,12 +72,14 @@
 
   <!-- Paginator -->
 
-  <mat-paginator
+  <app-pagination
     *ngIf="showPaginator && dataSource.length > 0"
     [length]="length"
     [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions"
+    [showPaginator]="showPaginator"
+    [dataSource]="dataSource"
     (page)="onPageChange($event)">
-  </mat-paginator>
+  </app-pagination>
 
 </section>
