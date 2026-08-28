@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, EventEmitter, forwardRef, inject, Input, Output } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -28,19 +28,32 @@ import { MatSelectModule } from '@angular/material/select';
           {{ option.viewValue }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="errorMessage && touched">{{ errorMessage }}</mat-error>
+      <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
     </mat-form-field>
   `
 })
 export class SelectComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() options: Array<{ value: unknown; viewValue: string }> = [];
-  @Input() errorMessage = 'Invalid selection';
+  @Input() errors: Record<string, string> = {};
   @Output() selectionChange = new EventEmitter<unknown>();
 
   value: unknown = null;
   disabled = false;
   touched = false;
+
+  private readonly ngControl = inject(NgControl, { self: true, optional: true });
+
+  get errorMessage(): string | null {
+    if (!this.touched && !this.ngControl?.control?.touched) {
+      return null;
+    }
+
+    const controlErrors = this.ngControl?.control?.errors ?? {};
+    const errorKey = Object.keys(controlErrors).find(key => this.errors[key]);
+
+    return errorKey ? this.errors[errorKey] : null;
+  }
 
   private onChange: (value: unknown) => void = () => {};
   private onTouched: () => void = () => {};

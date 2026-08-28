@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, forwardRef, inject, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
@@ -28,7 +28,7 @@ import { MatInputModule } from '@angular/material/input';
         [disabled]="disabled"
         (input)="onInput($event)"
         (blur)="onBlur()"></textarea>
-      <mat-error *ngIf="errorMessage && touched">{{ errorMessage }}</mat-error>
+      <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
     </mat-form-field>
   `
 })
@@ -36,11 +36,24 @@ export class TextareaInputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() placeholder = '';
   @Input() rows = 3;
-  @Input() errorMessage = 'Invalid input';
+  @Input() errors: Record<string, string> = {};
 
   value = '';
   disabled = false;
   touched = false;
+
+  private readonly ngControl = inject(NgControl, { self: true, optional: true });
+
+  get errorMessage(): string | null {
+    if (!this.touched && !this.ngControl?.control?.touched) {
+      return null;
+    }
+
+    const controlErrors = this.ngControl?.control?.errors ?? {};
+    const errorKey = Object.keys(controlErrors).find(key => this.errors[key]);
+
+    return errorKey ? this.errors[errorKey] : null;
+  }
 
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, forwardRef, inject, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -33,7 +33,7 @@ import { MatInputModule } from '@angular/material/input';
         [step]="step"
         (input)="onInput($event)"
         (blur)="onBlur()">
-      <mat-error *ngIf="errorMessage && touched">{{ errorMessage }}</mat-error>
+      <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
     </mat-form-field>
   `
 })
@@ -41,7 +41,7 @@ export class NumberInputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() placeholder = '';
   @Input() icon = '';
-  @Input() errorMessage = 'Invalid number';
+  @Input() errors: Record<string, string> = {};
   @Input() min: number | null = null;
   @Input() max: number | null = null;
   @Input() step: number | 'any' = 'any';
@@ -49,6 +49,19 @@ export class NumberInputComponent implements ControlValueAccessor {
   value: number | null = null;
   disabled = false;
   touched = false;
+
+  private readonly ngControl = inject(NgControl, { self: true, optional: true });
+
+  get errorMessage(): string | null {
+    if (!this.touched && !this.ngControl?.control?.touched) {
+      return null;
+    }
+
+    const controlErrors = this.ngControl?.control?.errors ?? {};
+    const errorKey = Object.keys(controlErrors).find(key => this.errors[key]);
+
+    return errorKey ? this.errors[errorKey] : null;
+  }
 
   private onChange: (value: number | null) => void = () => {};
   private onTouched: () => void = () => {};
