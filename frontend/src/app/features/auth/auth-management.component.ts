@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthApiService } from './auth-api.service';
 import { TokenStorageService } from '../../core/services/token-storage.service';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
+import { TextInputComponent } from '../../shared/components/form-fields';
 
 @Component({
   standalone: true,
@@ -17,10 +16,14 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './auth-management.component.html',
   styleUrls: ['./auth-management.component.scss'],
   imports: [
-    CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, 
-    MatCardModule, MatSnackBarModule, MatIconModule,
+    CommonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatSnackBarModule,
+    TextInputComponent,
     TranslatePipe
-],
+  ]
 })
 export class AuthManagementComponent {
   private fb = inject(FormBuilder);
@@ -34,7 +37,7 @@ export class AuthManagementComponent {
   constructor() {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -43,7 +46,6 @@ export class AuthManagementComponent {
       this.loading = true;
       this.authApi.login(this.form.value).subscribe({
         next: (res) => {
-
           this.tokenStorage.saveToken(res.token);
           this.snackBar.open('Login successful', 'Close', { duration: 3000 });
           this.router.navigate(['/dashboard']);
@@ -54,7 +56,7 @@ export class AuthManagementComponent {
         },
         complete: () => {
           this.loading = false;
-        },
+        }
       });
     }
   }
