@@ -24,9 +24,10 @@
         [label]="'auth.email' | translate"
         placeholder="john.doe@email.com"
         icon="mail"
-        [errorMessage]="form.controls.email.hasError('required')
-          ? ('auth.email-required' | translate)
-          : ('auth.email-invalid' | translate)">
+        [errors]="{
+          required: 'auth.email-required',
+          email: 'auth.email-invalid'
+        }">
       </app-text-input>
 
       <app-text-input
@@ -35,7 +36,9 @@
         [label]="'auth.password' | translate"
         placeholder="Password"
         icon="lock"
-        [errorMessage]="'auth.password-required' | translate">
+        [errors]="{
+          required: 'auth.password-required'
+        }">
       </app-text-input>
 
       <button
