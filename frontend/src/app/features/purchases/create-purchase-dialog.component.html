@@ -16,43 +16,16 @@
     class="dialog-form"
     [formGroup]="form">
 
-    <!-- Program -->
+    <app-select
+      formControlName="programId"
+      [label]="'purchases.dialog.program' | translate"
+      [options]="programs.map(p => ({ value: p.id, viewValue: p.name }))">
+    </app-select>
 
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'purchases.dialog.program' | translate }}
-      </mat-label>
-
-      <mat-select formControlName="programId">
-
-        <mat-option
-          *ngFor="let program of programs"
-          [value]="program.id">
-
-          {{ program.name }}
-
-        </mat-option>
-
-      </mat-select>
-
-    </mat-form-field>
-
-    <!-- Partner -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'purchases.dialog.partner' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        formControlName="partner">
-
-    </mat-form-field>
-
-    <!-- Description -->
+    <app-text-input
+      formControlName="partner"
+      [label]="'purchases.dialog.partner' | translate">
+    </app-text-input>
 
     <mat-form-field appearance="outline">
 
@@ -68,88 +41,28 @@
 
     </mat-form-field>
 
-    <!-- Amount Paid -->
+    <app-money-input
+      formControlName="amountPaid"
+      [label]="'purchases.dialog.amountPaid' | translate"
+      [currency]="getSelectedCurrencyCode()">
+    </app-money-input>
 
-    <mat-form-field appearance="outline">
+    <app-number-input
+      formControlName="milesPurchased"
+      [label]="'purchases.dialog.milesPurchased' | translate"
+      [min]="1">
+    </app-number-input>
 
-      <mat-label>
-        {{ 'purchases.dialog.amountPaid' | translate }}
-      </mat-label>
+    <app-select
+      formControlName="purchaseStatus"
+      [label]="'purchases.dialog.purchaseStatus' | translate"
+      [options]="purchaseStatuses.map(status => ({ value: status.value, viewValue: ('common.' + status.label.toLowerCase()) | translate }))">
+    </app-select>
 
-      <span
-        matTextPrefix
-        class="currency-prefix"
-        *ngIf="form.get('programId')?.value">
-
-        {{ getCurrencySymbol() }}&nbsp;
-
-      </span>
-
-      <input
-        matInput
-        type="number"
-        formControlName="amountPaid">
-
-    </mat-form-field>
-
-    <!-- Miles Purchased -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'purchases.dialog.milesPurchased' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        type="number"
-        formControlName="milesPurchased">
-
-    </mat-form-field>
-
-    <!-- Purchase Status -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'purchases.dialog.purchaseStatus' | translate }}
-      </mat-label>
-
-      <mat-select formControlName="purchaseStatus">
-
-        <mat-option
-          *ngFor="let status of purchaseStatuses"
-          [value]="status.value">
-
-          {{ ('common.' + status.label.toLowerCase()) | translate }}
-
-        </mat-option>
-
-      </mat-select>
-
-    </mat-form-field>
-
-    <!-- Purchase Date -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'purchases.dialog.purchaseDate' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        [matDatepicker]="picker"
-        formControlName="purchaseDate">
-
-      <mat-datepicker-toggle
-        matIconSuffix
-        [for]="picker">
-      </mat-datepicker-toggle>
-
-      <mat-datepicker #picker></mat-datepicker>
-
-    </mat-form-field>
+    <app-date-input
+      formControlName="purchaseDate"
+      [label]="'purchases.dialog.purchaseDate' | translate">
+    </app-date-input>
 
   </form>
 
