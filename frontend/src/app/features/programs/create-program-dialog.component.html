@@ -12,110 +12,48 @@
 
   <mat-dialog-content>
 
-    <mat-form-field appearance="outline">
+    <app-text-input
+      formControlName="programCode"
+      [label]="'programs.dialog.programCode' | translate">
+    </app-text-input>
 
-      <mat-label>
-        {{ 'programs.dialog.programCode' | translate }}
-      </mat-label>
+    <app-text-input
+      formControlName="name"
+      [label]="'programs.dialog.name' | translate">
+    </app-text-input>
 
-      <input
-        matInput
-        formControlName="programCode">
+    <app-select
+      formControlName="programType"
+      [label]="'programs.dialog.programType' | translate"
+      [options]="programTypeOptions">
+    </app-select>
 
-    </mat-form-field>
+    <app-text-input
+      formControlName="website"
+      [label]="'programs.dialog.website' | translate">
+    </app-text-input>
 
-    <mat-form-field appearance="outline">
+    <app-text-input
+      formControlName="logo"
+      [label]="'programs.dialog.logoUrl' | translate">
+    </app-text-input>
 
-      <mat-label>
-        {{ 'programs.dialog.name' | translate }}
-      </mat-label>
+    <app-number-input
+      formControlName="referencePricePerThousand"
+      [label]="'programs.dialog.referencePrice' | translate"
+      [min]="0">
+    </app-number-input>
 
-      <input
-        matInput
-        formControlName="name">
+    <app-select
+      formControlName="currencyCode"
+      [label]="'programs.dialog.currencyCode' | translate"
+      [options]="currencyOptions">
+    </app-select>
 
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'programs.dialog.programType' | translate }}
-      </mat-label>
-
-      <mat-select formControlName="programType">
-
-        <mat-option [value]="0">
-          {{ 'programs.types.airline' | translate }}
-        </mat-option>
-
-        <mat-option [value]="1">
-          {{ 'programs.types.hotel' | translate }}
-        </mat-option>
-
-        <mat-option [value]="2">
-          {{ 'programs.types.bank' | translate }}
-        </mat-option>
-
-        <mat-option [value]="3">
-          {{ 'programs.types.creditCard' | translate }}
-        </mat-option>
-
-      </mat-select>
-
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'programs.dialog.website' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        formControlName="website">
-
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'programs.dialog.logoUrl' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        formControlName="logo">
-
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'programs.dialog.referencePrice' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        type="number"
-        formControlName="referencePricePerThousand">
-
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>{{ 'programs.dialog.currencyCode' | translate }}</mat-label>
-
-      <mat-select formControlName="currencyCode">
-        <mat-option value="BRL">BRL</mat-option>
-        <mat-option value="EUR">EUR</mat-option>
-        <mat-option value="USD">USD</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-checkbox formControlName="isActive">
-
-      {{ 'programs.dialog.active' | translate }}
-
-    </mat-checkbox>
+    <app-checkbox
+      formControlName="isActive"
+      [label]="'programs.dialog.active' | translate">
+    </app-checkbox>
 
   </mat-dialog-content>
 
@@ -125,9 +63,7 @@
       mat-button
       type="button"
       (click)="close()">
-
       {{ 'common.cancel' | translate }}
-
     </button>
 
     <button
@@ -135,13 +71,11 @@
       color="primary"
       type="submit"
       [disabled]="form.invalid || loading">
-
       {{
         data.operation === 'create'
           ? ('common.create' | translate)
           : ('common.update' | translate)
       }}
-
     </button>
 
   </mat-dialog-actions>
