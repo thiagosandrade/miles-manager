@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MilesManager.Api.Common;
-using MilesManager.Application.Features.Dashboard.Queries.GetDashboard;
 using MilesManager.Application.Features.ProgramBalances.DTOs;
 using MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramPurchases;
 
@@ -22,10 +21,10 @@ public sealed class ProgramBalancesController(ISender sender) : ApiController(se
     /// Gets program balances summary from the dashboard.
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<UserProgramPurchaseDto>>> Get(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<UserProgramBalancesDto>>> Get(CancellationToken cancellationToken)
     {
         var userId = GetUserId();
-        var result = await Sender.Send(new GetUserProgramPurchasesQuery(userId), cancellationToken);
+        var result = await Sender.Send(new GetUserProgramBalancesQuery(userId), cancellationToken);
         return Ok(result.Value);
     }
 }

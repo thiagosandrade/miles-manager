@@ -206,6 +206,14 @@
               receipt_long
             </mat-icon>
 
+            <span
+              matTextPrefix
+              *ngIf="selectedCurrency()">
+
+              {{ getCurrencySymbol(selectedCurrency()!) }}&nbsp;
+
+            </span>
+            
             <input
               matInput
               type="number"

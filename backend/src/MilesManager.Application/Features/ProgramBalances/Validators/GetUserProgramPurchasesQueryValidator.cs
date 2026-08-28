@@ -3,7 +3,7 @@ using MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramPu
 
 namespace MilesManager.Application.Features.ProgramBalances.Validators;
 
-public sealed class GetUserProgramPurchasesQueryValidator : AbstractValidator<GetUserProgramPurchasesQuery>
+public sealed class GetUserProgramPurchasesQueryValidator : AbstractValidator<GetUserProgramBalancesQuery>
 {
     public GetUserProgramPurchasesQueryValidator()
     {

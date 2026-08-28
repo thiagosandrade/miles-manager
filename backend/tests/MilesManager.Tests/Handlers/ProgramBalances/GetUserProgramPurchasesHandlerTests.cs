@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MilesManager.Application.Common;
+using MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramBalances;
 using MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramPurchases;
 using MilesManager.Domain.Pricing;
 using MilesManager.Domain.Programs;
@@ -88,9 +89,9 @@ public class GetUserProgramPurchasesHandlerTests
 
         await using (var context = new MilesManagerDbContext(options))
         {
-            var handler = new GetUserProgramPurchasesHandler(context);
+            var handler = new GetUserProgramBalancesHandler(context);
 
-            var result = await handler.Handle(new GetUserProgramPurchasesQuery(userId), CancellationToken.None);
+            var result = await handler.Handle(new GetUserProgramBalancesQuery(userId), CancellationToken.None);
 
             result.Status.Should().Be(ResultStatus.Success);
             result.Value.Should().NotBeNull();
@@ -98,12 +99,10 @@ public class GetUserProgramPurchasesHandlerTests
 
             var programOne = result.Value.Single(x => x.ProgramId == programOneId);
             programOne.Balance.Should().Be(1500m);
-            programOne.ReferencePricePerThousand.Should().Be(15m);
             programOne.CurrentValue.Should().Be(22.5m);
 
             var programTwo = result.Value.Single(x => x.ProgramId == programTwoId);
             programTwo.Balance.Should().Be(0m);
-            programTwo.ReferencePricePerThousand.Should().Be(8m);
             programTwo.CurrentValue.Should().Be(0m);
         }
     }

@@ -14,7 +14,6 @@ internal sealed class MileagePurchaseConfiguration : IEntityTypeConfiguration<Mi
         builder.Property(x => x.Description).HasMaxLength(500);
         builder.Property(x => x.AmountPaid).HasPrecision(18, 2);
         builder.Property(x => x.MilesPurchased).HasPrecision(18, 2);
-        builder.Property(x => x.BonusPercentage).HasPrecision(5, 2);
         builder.Property(x => x.PurchaseDate).HasColumnType("date");
         builder.Property(x => x.PurchaseStatus).IsRequired();
         builder.HasOne(x => x.Program)

@@ -15,11 +15,11 @@
         routerLinkActive="active-link"
         (click)="onNavigationClick()">
 
-        <mat-icon>
+        <mat-icon matListItemIcon>
           {{ item.icon }}
         </mat-icon>
 
-        <span>
+        <span matListItemTitle>
           {{ item.label | translate }}
         </span>
 

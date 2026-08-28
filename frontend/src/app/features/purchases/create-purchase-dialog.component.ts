@@ -87,22 +87,11 @@ export class CreatePurchaseDialogComponent implements OnInit {
               description: purchase.description,
               amountPaid: purchase.amountPaid,
               milesPurchased: purchase.milesPurchased,
-              bonusPercentage: purchase.bonusPercentage,
               purchaseStatus: purchase.purchaseStatus,
               purchaseDate: this.data.operation === 'clone'
                 ? new Date()
                 : new Date(purchase.purchaseDate)
             });
-
-            if (this.data.operation === 'clone') {
-              this.form.get('programId')?.disable();
-              this.form.get('partner')?.disable();
-              this.form.get('description')?.disable();
-              this.form.get('amountPaid')?.disable();
-              this.form.get('milesPurchased')?.disable();
-              this.form.get('bonusPercentage')?.disable();
-              this.form.get('purchaseStatus')?.disable();
-            }
 
           }
 

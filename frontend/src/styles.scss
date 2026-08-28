@@ -512,3 +512,31 @@ select {
 .info-snackbar .mat-mdc-snack-bar-label {
   color: white !important;
 }
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+app-table {
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  .table-wrap table {
+    width: 100%;
+  }
+
+  .table-wrap .actions-column {
+    width: 1%;
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .table-wrap .actions-column button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+}

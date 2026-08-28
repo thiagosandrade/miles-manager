@@ -23,23 +23,12 @@
 
 
 /* ==========================================================
-   Navigation List
-========================================================== */
-
-.mat-mdc-nav-list {
-  padding: 16px 12px;
-}
-
-
-/* ==========================================================
    Navigation Items
 ========================================================== */
 
 .mat-mdc-list-item {
   margin-bottom: 6px;
-
   border-radius: 12px;
-
   color: var(--ink);
 
   transition:
@@ -57,9 +46,7 @@
 
 .active-link {
   background: rgba(21, 101, 192, .12);
-
   color: var(--mm-primary);
-
   font-weight: 600;
 }
 

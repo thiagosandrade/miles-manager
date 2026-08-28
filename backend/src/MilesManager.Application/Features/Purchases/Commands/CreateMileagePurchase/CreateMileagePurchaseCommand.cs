@@ -12,6 +12,5 @@ public sealed class CreateMileagePurchaseCommand : IRequest<Result<Guid>>
     public string? Description { get; init; }
     public decimal AmountPaid { get; init; }
     public decimal MilesPurchased { get; init; }
-    public decimal BonusPercentage { get; init; }
     public DateOnly PurchaseDate { get; init; }
 }

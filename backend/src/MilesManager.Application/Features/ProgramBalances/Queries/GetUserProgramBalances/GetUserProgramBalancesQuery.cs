@@ -4,4 +4,4 @@ using MilesManager.Application.Features.ProgramBalances.DTOs;
 
 namespace MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramPurchases;
 
-public sealed record GetUserProgramPurchasesQuery(Guid UserId) : IRequest<Result<IReadOnlyList<UserProgramPurchaseDto>>>;
+public sealed record GetUserProgramBalancesQuery(Guid UserId) : IRequest<Result<IReadOnlyList<UserProgramBalancesDto>>>;

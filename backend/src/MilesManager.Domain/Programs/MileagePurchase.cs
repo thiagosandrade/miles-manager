@@ -12,7 +12,6 @@ public class MileagePurchase : Entity
     public string? Description { get; set; }
     public decimal AmountPaid { get; set; }
     public decimal MilesPurchased { get; set; }
-    public decimal BonusPercentage { get; set; }
     public DateOnly PurchaseDate { get; set; }
     public PurchaseStatus PurchaseStatus { get; set; }
 

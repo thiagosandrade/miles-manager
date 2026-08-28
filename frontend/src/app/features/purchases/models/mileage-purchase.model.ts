@@ -6,7 +6,6 @@ export interface MileagePurchase {
   amountPaid: number;
   currencyCode: string;
   milesPurchased: number;
-  bonusPercentage: number;
   purchaseDate: string; 
   purchaseStatus: number;
 }
@@ -18,7 +17,6 @@ export interface PurchaseCreateRequest {
   description?: string;
   amountPaid: number;
   milesPurchased: number;
-  bonusPercentage: number;
   purchaseDate: string; 
   purchaseStatus: number;
 }
@@ -31,7 +29,6 @@ export interface PurchaseUpdateRequest {
   description?: string;
   amountPaid: number;
   milesPurchased: number;
-  bonusPercentage: number;
   purchaseDate: string; 
   purchaseStatus: number;
 }

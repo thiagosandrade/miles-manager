@@ -33,7 +33,6 @@ public sealed class UpdateMileagePurchaseHandler(IApplicationDbContext context) 
         purchase.Description = request.Description;
         purchase.AmountPaid = request.AmountPaid;
         purchase.MilesPurchased = request.MilesPurchased;
-        purchase.BonusPercentage = request.BonusPercentage;
         purchase.PurchaseDate = request.PurchaseDate;
 
         if (milesDelta != 0)

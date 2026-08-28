@@ -3,17 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using MilesManager.Application.Abstractions;
 using MilesManager.Application.Common;
 using MilesManager.Application.Features.ProgramBalances.DTOs;
+using MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramPurchases;
 using MilesManager.Domain.Common.Enums;
 
-namespace MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramPurchases;
+namespace MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramBalances;
 
-public sealed class GetUserProgramPurchasesHandler(IApplicationDbContext context)
-    : IRequestHandler<GetUserProgramPurchasesQuery, Result<IReadOnlyList<UserProgramPurchaseDto>>>
+public sealed class GetUserProgramBalancesHandler(IApplicationDbContext context)
+    : IRequestHandler<GetUserProgramBalancesQuery, Result<IReadOnlyList<UserProgramBalancesDto>>>
 {
     private readonly IApplicationDbContext _context = context;
 
-    public async Task<Result<IReadOnlyList<UserProgramPurchaseDto>>> Handle(
-        GetUserProgramPurchasesQuery request,
+    public async Task<Result<IReadOnlyList<UserProgramBalancesDto>>> Handle(
+        GetUserProgramBalancesQuery request,
         CancellationToken cancellationToken)
     {
         var purchases = await _context.MileagePurchases
@@ -68,25 +69,18 @@ public sealed class GetUserProgramPurchasesHandler(IApplicationDbContext context
                     ? totalAmountPaid / (totalMilesPurchased / 1000m)
                     : 0m;
 
-                var referencePricePerThousand = latestReferencePrices.TryGetValue(
-                    x.ProgramId,
-                    out var referencePrice)
-                    ? referencePrice
-                    : 0m;
-
-                return new UserProgramPurchaseDto
+                return new UserProgramBalancesDto
                 {
                     ProgramId = x.ProgramId,
                     ProgramName = x.ProgramName,
                     Balance = x.Balance,
-                    ReferencePricePerThousand = referencePricePerThousand,
-                    CurrentValue = actualCostPerThousand * (x.Balance / 1000m),
+                    CurrentValue = actualCostPerThousand,
                     CurrencyCode = x.CurrencyCode
                 };
             })
             .OrderBy(x => x.ProgramName)
             .ToList();
 
-        return Result<IReadOnlyList<UserProgramPurchaseDto>>.Success(result);
+        return Result<IReadOnlyList<UserProgramBalancesDto>>.Success(result);
     }
 }

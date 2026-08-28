@@ -55,7 +55,6 @@ public sealed class MileagePurchasesController(ISender sender) : ApiController(s
             Description = command.Description,
             AmountPaid = command.AmountPaid,
             MilesPurchased = command.MilesPurchased,
-            BonusPercentage = command.BonusPercentage,
             PurchaseDate = command.PurchaseDate
         };
         var result = await Sender.Send(created, cancellationToken);
@@ -78,7 +77,6 @@ public sealed class MileagePurchasesController(ISender sender) : ApiController(s
             Description = command.Description,
             AmountPaid = command.AmountPaid,
             MilesPurchased = command.MilesPurchased,
-            BonusPercentage = command.BonusPercentage,
             PurchaseDate = command.PurchaseDate
         };
         var result = await Sender.Send(updated, cancellationToken);

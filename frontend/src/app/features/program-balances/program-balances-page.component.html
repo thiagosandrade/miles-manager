@@ -80,39 +80,6 @@
     </article>
 
 
-    <!-- Average Balance -->
-
-    <article class="metric-card">
-
-      <div class="metric-icon">
-        <mat-icon>analytics</mat-icon>
-      </div>
-
-      <div>
-
-        <span>
-          {{ 'balances.metrics.averageBalance' | translate }}
-        </span>
-
-        <strong>
-          {{
-            (
-              balances().length
-                ? (
-                    balances().reduce(
-                      (sum, b) => sum + b.balance,
-                      0
-                    ) / balances().length
-                  )
-                : 0
-            ) | number:'1.2-2'
-          }}
-        </strong>
-
-      </div>
-
-    </article>
-
   </section>
 
 

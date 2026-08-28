@@ -35,7 +35,6 @@ public sealed class CreateMileagePurchaseHandler(IApplicationDbContext context) 
             Description = request.Description,
             AmountPaid = request.AmountPaid,
             MilesPurchased = request.MilesPurchased,
-            BonusPercentage = request.BonusPercentage,
             PurchaseDate = request.PurchaseDate,
             PurchaseStatus = MilesManager.Domain.Common.Enums.PurchaseStatus.Confirmed
         };
