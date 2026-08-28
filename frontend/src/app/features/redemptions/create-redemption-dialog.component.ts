@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Program } from '../programs/models/program.model';
 import { ProgramsApiService } from '../programs/programs-api.service';
 import { FlightRedemptionService } from './flight-redemption.service';
+import { FlightRedemption } from './models/flight-redemption.model';
 import { AirportsDTO, LookupService } from '../../core/services/dataapp-api.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import {
@@ -26,6 +27,7 @@ import {
 export interface RedemptionDialogData {
   operation: 'create' | 'update';
   redemptionId?: string;
+  redemption?: FlightRedemption;
 }
 
 @Component({
@@ -103,27 +105,33 @@ export class CreateRedemptionDialogComponent {
       }));
 
       if (this.data.operation === 'update' && this.data.redemptionId) {
+        if (this.data.redemption) {
+          this.patchRedemption(this.data.redemption);
+          return;
+        }
 
         this.redemptionService.getFlightRedemption(this.data.redemptionId).subscribe({
-          next: redemption => {
-            this.form.patchValue({
-              id: redemption.id,
-              programId: this.programs.find(p => p.name === redemption.program)?.id,
-              originAirportCode: redemption.originAirportCode,
-              destinationAirportCode: redemption.destinationAirportCode,
-              flightDate: new Date(redemption.flightDate),
-              cabinClass: redemption.cabinClass,
-              passengers: redemption.passengers,
-              isRoundTrip: redemption.isRoundTrip,
-              milesUsed: redemption.milesUsed,
-              taxes: redemption.taxes,
-              cashPrice: redemption.cashPrice
-            });
-          }
+          next: redemption => this.patchRedemption(redemption)
         });
       }
     });
 
+  }
+
+  private patchRedemption(redemption: FlightRedemption): void {
+    this.form.patchValue({
+      id: redemption.id,
+      programId: this.programs.find(p => p.name === redemption.program)?.id,
+      originAirportCode: redemption.originAirportCode,
+      destinationAirportCode: redemption.destinationAirportCode,
+      flightDate: new Date(redemption.flightDate),
+      cabinClass: redemption.cabinClass,
+      passengers: redemption.passengers,
+      isRoundTrip: redemption.isRoundTrip,
+      milesUsed: redemption.milesUsed,
+      taxes: redemption.taxes,
+      cashPrice: redemption.cashPrice
+    });
   }
 
   save(): void {

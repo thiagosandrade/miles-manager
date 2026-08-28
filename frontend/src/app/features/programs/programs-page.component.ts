@@ -108,7 +108,8 @@ export class ProgramsPageComponent implements OnInit {
       width: '500px',
       data: {
         operation: 'update',
-        programId: program.id
+        programId: program.id,
+        program
       }
     });
 

@@ -106,7 +106,8 @@ import { TranslatePipe } from '@ngx-translate/core';
         maxWidth: '95vw',
         data: {
           operation: 'update',
-          purchaseId: purchase.id
+          purchaseId: purchase.id,
+          purchase
         }
       });
 
@@ -195,7 +196,8 @@ import { TranslatePipe } from '@ngx-translate/core';
         maxWidth: '95vw',
         data: {
           operation: 'clone',
-          purchaseId: purchase.id
+          purchaseId: purchase.id,
+          purchase
         }
       });
 

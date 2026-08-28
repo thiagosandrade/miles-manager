@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ProgramsApiService } from '../programs/programs-api.service';
 import { Program } from '../programs/models/program.model';
+import { MileagePurchase } from './models/mileage-purchase.model';
 import { PurchaseStatus } from '../../core/enums/purchase-status.enum';
 import { PurchasesApiService } from './purchases-api.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -22,6 +23,7 @@ import {
 interface PurchaseDialogData {
   operation: 'create' | 'update' | 'clone';
   purchaseId?: string;
+  purchase?: MileagePurchase;
 }
 
 @Component({
@@ -83,21 +85,13 @@ export class CreatePurchaseDialogComponent implements OnInit {
       }));
 
       if ((this.data.operation === 'update' || this.data.operation === 'clone') && this.data.purchaseId) {
+        if (this.data.purchase) {
+          this.patchPurchase(this.data.purchase);
+          return;
+        }
+
         this.purchasesApi.getPurchase(this.data.purchaseId).subscribe({
-          next: purchase => {
-            this.form.patchValue({
-              id: purchase.id,
-              programId: this.programs.find(p => p.name === purchase.programName)?.id,
-              partner: purchase.partner,
-              description: purchase.description,
-              amountPaid: purchase.amountPaid,
-              milesPurchased: purchase.milesPurchased,
-              purchaseStatus: purchase.purchaseStatus,
-              purchaseDate: this.data.operation === 'clone'
-                ? new Date()
-                : new Date(purchase.purchaseDate)
-            });
-          }
+          next: purchase => this.patchPurchase(purchase)
         });
       }
     });
@@ -107,6 +101,20 @@ export class CreatePurchaseDialogComponent implements OnInit {
     value: status.value,
     label: `common.${status.label.toLowerCase()}`
   }));
+
+  private patchPurchase(purchase: MileagePurchase): void {
+    this.form.patchValue({
+      id: purchase.id,
+      programId: this.programs.find(p => p.name === purchase.programName)?.id,
+      partner: purchase.partner,
+      description: purchase.description,
+      amountPaid: purchase.amountPaid,
+      milesPurchased: purchase.milesPurchased,
+      bonusPercentage: purchase.bonusPercentage,
+      purchaseStatus: purchase.purchaseStatus,
+      purchaseDate: this.data.operation === 'clone' ? new Date() : new Date(purchase.purchaseDate)
+    });
+  }
 
   save(): void {
     if (this.form.invalid) {

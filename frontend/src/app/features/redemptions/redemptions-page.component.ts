@@ -129,7 +129,8 @@ export class RedemptionsPageComponent implements OnInit {
       width: '700px',
       data: {
         operation: 'update',
-        redemptionId: redemption.id
+        redemptionId: redemption.id,
+        redemption
       }
     });
 

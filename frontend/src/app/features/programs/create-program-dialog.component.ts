@@ -14,7 +14,7 @@ import {
 
 import { MatButtonModule } from '@angular/material/button';
 import { ProgramsApiService } from './programs-api.service';
-import { ProgramCreateRequest, ProgramUpdateRequest } from './models/program.model';
+import { Program, ProgramCreateRequest, ProgramUpdateRequest } from './models/program.model';
 import { TranslatePipe } from '@ngx-translate/core';
 import {
   TextInputComponent,
@@ -26,6 +26,7 @@ import {
 interface ProgramDialogData {
   operation: 'create' | 'update';
   programId?: string;
+  program?: Program;
 }
 
 @Component({
@@ -81,6 +82,11 @@ export class CreateProgramDialogComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data?.operation === 'update' && this.data?.programId) {
+      if (this.data.program) {
+        this.form.patchValue(this.data.program);
+        return;
+      }
+
       this.api.getProgram(this.data.programId).subscribe({
         next: program => this.form.patchValue(program)
       });
