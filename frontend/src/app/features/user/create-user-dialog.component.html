@@ -13,13 +13,11 @@
     <div>
 
       <h2>
-
         {{
           isCreate
             ? ('users.dialog.createTitle' | translate)
             : ('users.dialog.updateTitle' | translate)
         }}
-
       </h2>
 
       <p>
@@ -32,192 +30,90 @@
 
 </h2>
 
-
 <form
   [formGroup]="form"
   (ngSubmit)="save()">
 
   <div mat-dialog-content>
 
-    <!-- Full Name -->
+    <app-text-input
+      formControlName="fullName"
+      [label]="'users.dialog.fullName' | translate"
+      [placeholder]="'users.dialog.fullNamePlaceholder' | translate"
+      icon="badge"
+      [errorMessage]="'users.validation.fullNameRequired' | translate">
+    </app-text-input>
 
-    <mat-form-field
-      appearance="outline"
-      class="full-width">
+    <app-text-input
+      formControlName="email"
+      type="email"
+      [label]="'users.dialog.email' | translate"
+      [placeholder]="'users.dialog.emailPlaceholder' | translate"
+      icon="mail"
+      [errorMessage]="form.controls.email.hasError('required')
+        ? ('users.validation.emailRequired' | translate)
+        : ('users.validation.emailInvalid' | translate)">
+    </app-text-input>
 
-      <mat-label>
-        {{ 'users.dialog.fullName' | translate }}
-      </mat-label>
-
-      <mat-icon matPrefix>
-        badge
-      </mat-icon>
-
-      <input
-        matInput
-        formControlName="fullName"
-        [placeholder]="'users.dialog.fullNamePlaceholder' | translate">
-
-      <mat-error
-        *ngIf="form.get('fullName')?.hasError('required')">
-
-        {{ 'users.validation.fullNameRequired' | translate }}
-
-      </mat-error>
-
-    </mat-form-field>
-
-
-    <!-- Email -->
-
-    <mat-form-field
-      appearance="outline"
-      class="full-width">
-
-      <mat-label>
-        {{ 'users.dialog.email' | translate }}
-      </mat-label>
-
-      <mat-icon matPrefix>
-        mail
-      </mat-icon>
-
-      <input
-        matInput
-        type="email"
-        formControlName="email"
-        [placeholder]="'users.dialog.emailPlaceholder' | translate">
-
-      <mat-error
-        *ngIf="form.get('email')?.hasError('required')">
-
-        {{ 'users.validation.emailRequired' | translate }}
-
-      </mat-error>
-
-      <mat-error
-        *ngIf="form.get('email')?.hasError('email')">
-
-        {{ 'users.validation.emailInvalid' | translate }}
-
-      </mat-error>
-
-    </mat-form-field>
-
-
-    <!-- Password -->
-
-    <mat-form-field
-      appearance="outline"
-      class="full-width">
-
-      <mat-label>
-
-        {{
-          isCreate
-            ? ('users.dialog.password' | translate)
-            : ('users.dialog.newPassword' | translate)
-        }}
-
-      </mat-label>
-
-      <mat-icon matPrefix>
-        lock
-      </mat-icon>
-
-      <input
-        matInput
-        type="password"
-        formControlName="password"
-        [placeholder]="
-          isCreate
-            ? ('users.dialog.passwordPlaceholder' | translate)
-            : ('users.dialog.newPasswordPlaceholder' | translate)
-        ">
-
-      <mat-error
-        *ngIf="form.get('password')?.hasError('required')">
-
-        {{ 'users.validation.passwordRequired' | translate }}
-
-      </mat-error>
-
-    </mat-form-field>
-
-
-    <!-- Active -->
+    <app-text-input
+      formControlName="password"
+      type="password"
+      [label]="isCreate
+        ? ('users.dialog.password' | translate)
+        : ('users.dialog.newPassword' | translate)"
+      [placeholder]="isCreate
+        ? ('users.dialog.passwordPlaceholder' | translate)
+        : ('users.dialog.newPasswordPlaceholder' | translate)"
+      icon="lock"
+      [errorMessage]="'users.validation.passwordRequired' | translate">
+    </app-text-input>
 
     <mat-slide-toggle
       *ngIf="!isCreate"
       formControlName="isActive"
       class="active-toggle">
-
       {{ 'users.dialog.active' | translate }}
-
     </mat-slide-toggle>
-
-
-    <!-- Account Information -->
 
     <div
       *ngIf="!isCreate && user"
       class="account-info">
 
       <div class="account-info-title">
-
-        <mat-icon>
-          info
-        </mat-icon>
-
-        <span>
-          {{ 'users.dialog.accountInformation' | translate }}
-        </span>
-
+        <mat-icon>info</mat-icon>
+        <span>{{ 'users.dialog.accountInformation' | translate }}</span>
       </div>
 
-
       <div class="account-info-row">
-
         <span class="account-info-label">
           {{ 'users.dialog.createdAt' | translate }}
         </span>
-
         <span class="account-info-value">
           {{ formatDate(user.createdAtUtc) }}
         </span>
-
       </div>
 
-
       <div class="account-info-row">
-
         <span class="account-info-label">
           {{ 'users.dialog.updatedAt' | translate }}
         </span>
-
         <span class="account-info-value">
           {{ formatDate(user.updatedAtUtc) }}
         </span>
-
       </div>
 
-
       <div class="account-info-row">
-
         <span class="account-info-label">
           {{ 'users.dialog.lastLoginAt' | translate }}
         </span>
-
         <span class="account-info-value">
           {{ formatDate(user.lastLoginAtUtc) }}
         </span>
-
       </div>
 
     </div>
 
   </div>
-
 
   <mat-dialog-actions align="end">
 
@@ -225,11 +121,8 @@
       mat-stroked-button
       type="button"
       (click)="cancel()">
-
       {{ 'common.cancel' | translate }}
-
     </button>
-
 
     <button
       mat-flat-button
