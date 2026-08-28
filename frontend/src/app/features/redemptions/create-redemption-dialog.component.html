@@ -12,191 +12,68 @@
     class="dialog-form"
     [formGroup]="form">
 
-    <!-- Program -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'redemptions.dialog.program' | translate }}
-      </mat-label>
-
-      <mat-select formControlName="programId">
-
-        <mat-option
-          *ngFor="let program of programs"
-          [value]="program.id">
-
-          {{ program.name }}
-
-        </mat-option>
-
-      </mat-select>
-
-    </mat-form-field>
-
-    <!-- Origin -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'redemptions.dialog.originAirport' | translate }}
-      </mat-label>
-
-      <mat-select formControlName="originAirportCode">
-
-        <mat-option
-          *ngFor="let airport of airports"
-          [value]="airport.iataCode">
-
-          {{ airport.name }} ({{ airport.iataCode }})
-
-        </mat-option>
-
-      </mat-select>
-
-    </mat-form-field>
-
-    <!-- Destination -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'redemptions.dialog.destinationAirport' | translate }}
-      </mat-label>
-
-      <mat-select formControlName="destinationAirportCode">
-
-        <mat-option
-          *ngFor="let airport of airports"
-          [value]="airport.iataCode">
-
-          {{ airport.name }} ({{ airport.iataCode }})
-
-        </mat-option>
-
-      </mat-select>
-
-    </mat-form-field>
-
-    <!-- Flight Date -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'redemptions.dialog.flightDate' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        [matDatepicker]="picker"
-        formControlName="flightDate">
-
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="picker">
-      </mat-datepicker-toggle>
-
-      <mat-datepicker #picker></mat-datepicker>
-
-    </mat-form-field>
-
-    <!-- Cabin -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'redemptions.dialog.cabinClass' | translate }}
-      </mat-label>
-
-      <mat-select formControlName="cabinClass">
-
-        <mat-option [value]="0">
-          {{ 'redemptions.cabin.economy' | translate }}
-        </mat-option>
-
-        <mat-option [value]="1">
-          {{ 'redemptions.cabin.premiumEconomy' | translate }}
-        </mat-option>
-
-        <mat-option [value]="2">
-          {{ 'redemptions.cabin.business' | translate }}
-        </mat-option>
-
-        <mat-option [value]="3">
-          {{ 'redemptions.cabin.first' | translate }}
-        </mat-option>
-
-      </mat-select>
-
-    </mat-form-field>
-
-    <!-- Passengers -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'redemptions.dialog.passengers' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        type="number"
-        formControlName="passengers">
-
-    </mat-form-field>
-
-    <!-- Miles -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'redemptions.dialog.milesUsed' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        type="number"
-        formControlName="milesUsed">
-
-    </mat-form-field>
-
-    <!-- Taxes -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'redemptions.dialog.taxes' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        type="number"
-        formControlName="taxes">
-
-    </mat-form-field>
-
-    <!-- Cash Price -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'redemptions.dialog.cashPrice' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        type="number"
-        formControlName="cashPrice">
-
-    </mat-form-field>
-
-    <!-- Round Trip -->
-
-    <mat-checkbox formControlName="isRoundTrip">
-
-      {{ 'redemptions.dialog.roundTrip' | translate }}
-
-    </mat-checkbox>
+    <app-select
+      formControlName="programId"
+      [label]="'redemptions.dialog.program' | translate"
+      [options]="programs.map(p => ({ value: p.id, viewValue: p.name }))">
+    </app-select>
+
+    <app-select
+      formControlName="originAirportCode"
+      [label]="'redemptions.dialog.originAirport' | translate"
+      [options]="airports.map(a => ({ value: a.iataCode, viewValue: a.name + ' (' + a.iataCode + ')' }))">
+    </app-select>
+
+    <app-select
+      formControlName="destinationAirportCode"
+      [label]="'redemptions.dialog.destinationAirport' | translate"
+      [options]="airports.map(a => ({ value: a.iataCode, viewValue: a.name + ' (' + a.iataCode + ')' }))">
+    </app-select>
+
+    <app-date-input
+      formControlName="flightDate"
+      [label]="'redemptions.dialog.flightDate' | translate">
+    </app-date-input>
+
+    <app-select
+      formControlName="cabinClass"
+      [label]="'redemptions.dialog.cabinClass' | translate"
+      [options]="[
+        { value: 0, viewValue: ('redemptions.cabin.economy' | translate) },
+        { value: 1, viewValue: ('redemptions.cabin.premiumEconomy' | translate) },
+        { value: 2, viewValue: ('redemptions.cabin.business' | translate) },
+        { value: 3, viewValue: ('redemptions.cabin.first' | translate) }
+      ]">
+    </app-select>
+
+    <app-number-input
+      formControlName="passengers"
+      [label]="'redemptions.dialog.passengers' | translate"
+      [min]="1">
+    </app-number-input>
+
+    <app-number-input
+      formControlName="milesUsed"
+      [label]="'redemptions.dialog.milesUsed' | translate"
+      [min]="1">
+    </app-number-input>
+
+    <app-money-input
+      formControlName="taxes"
+      [label]="'redemptions.dialog.taxes' | translate"
+      [currency]="'EUR'">
+    </app-money-input>
+
+    <app-money-input
+      formControlName="cashPrice"
+      [label]="'redemptions.dialog.cashPrice' | translate"
+      [currency]="'EUR'">
+    </app-money-input>
+
+    <app-checkbox
+      formControlName="isRoundTrip"
+      [label]="'redemptions.dialog.roundTrip' | translate">
+    </app-checkbox>
 
   </form>
 
