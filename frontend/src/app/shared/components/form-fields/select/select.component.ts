@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -36,6 +36,7 @@ export class SelectComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() options: Array<{ value: unknown; viewValue: string }> = [];
   @Input() errorMessage = 'Invalid selection';
+  @Output() selectionChange = new EventEmitter<unknown>();
 
   value: unknown = null;
   disabled = false;
@@ -54,5 +55,6 @@ export class SelectComponent implements ControlValueAccessor {
     this.onChange(value);
     this.onTouched();
     this.touched = true;
+    this.selectionChange.emit(value);
   }
 }
