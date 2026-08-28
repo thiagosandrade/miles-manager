@@ -110,7 +110,6 @@ export class CreatePurchaseDialogComponent implements OnInit {
       description: purchase.description,
       amountPaid: purchase.amountPaid,
       milesPurchased: purchase.milesPurchased,
-      bonusPercentage: purchase.bonusPercentage,
       purchaseStatus: purchase.purchaseStatus,
       purchaseDate: this.data.operation === 'clone' ? new Date() : new Date(purchase.purchaseDate)
     });

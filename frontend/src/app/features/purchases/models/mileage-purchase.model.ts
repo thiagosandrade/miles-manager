@@ -6,7 +6,6 @@ export interface MileagePurchase {
   amountPaid: number;
   currencyCode: string;
   milesPurchased: number;
-  bonusPercentage: number;
   purchaseDate: string; 
   purchaseStatus: number;
 }
