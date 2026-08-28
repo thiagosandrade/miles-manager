@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, inject, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { Component, inject, Input } from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
@@ -8,11 +8,6 @@ import { MatInputModule } from '@angular/material/input';
   standalone: true,
   selector: 'app-money-input',
   imports: [CommonModule, MatFormFieldModule, MatInputModule],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => MoneyInputComponent),
-    multi: true
-  }],
   styles: [`
     :host { display: block; }
     .full-width { width: 100%; }
@@ -50,6 +45,12 @@ export class MoneyInputComponent implements ControlValueAccessor {
   touched = false;
 
   private readonly ngControl = inject(NgControl, { self: true, optional: true });
+
+  constructor() {
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
 
   get currencySymbol(): string {
     return new Intl.NumberFormat(this.locale, {

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, forwardRef, inject, Input, Output } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -14,11 +14,6 @@ export interface SelectOption<T = string> {
   standalone: true,
   selector: 'app-select',
   imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslatePipe],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SelectComponent),
-    multi: true
-  }],
   styles: [`
     :host { display: block; }
     .full-width { width: 100%; }
@@ -49,6 +44,12 @@ export class SelectComponent<T = string> implements ControlValueAccessor {
   touched = false;
 
   private readonly ngControl = inject(NgControl, { self: true, optional: true });
+
+  constructor() {
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
 
   get errorMessage(): string | null {
     if (!this.touched && !this.ngControl?.control?.touched) {
