@@ -12,146 +12,54 @@
     class="dialog-form"
     [formGroup]="form">
 
-    <!-- Origin -->
+    <app-select
+      formControlName="originProgramId"
+      [label]="'transfers.dialog.originProgram' | translate"
+      [options]="programs.map(p => ({ value: p.id, viewValue: p.name }))">
+    </app-select>
 
-    <mat-form-field appearance="outline">
+    <app-select
+      formControlName="destinationProgramId"
+      [label]="'transfers.dialog.destinationProgram' | translate"
+      [options]="programs.map(p => ({ value: p.id, viewValue: p.name }))">
+    </app-select>
 
-      <mat-label>
-        {{ 'transfers.dialog.originProgram' | translate }}
-      </mat-label>
+    <app-number-input
+      formControlName="milesSent"
+      [label]="'transfers.dialog.milesSent' | translate"
+      [min]="1">
+    </app-number-input>
 
-      <mat-select formControlName="originProgramId">
+    <app-number-input
+      formControlName="bonusPercentage"
+      [label]="'transfers.dialog.bonusPercentage' | translate"
+      [min]="0">
+    </app-number-input>
 
-        <mat-option
-          *ngFor="let program of programs"
-          [value]="program.id">
+    <app-number-input
+      formControlName="milesReceived"
+      [label]="'transfers.dialog.milesReceived' | translate"
+      [min]="1">
+    </app-number-input>
 
-          {{ program.name }}
+    <app-date-input
+      formControlName="transferDate"
+      [label]="'transfers.dialog.transferDate' | translate">
+    </app-date-input>
 
-        </mat-option>
+    <app-number-input
+      formControlName="costPerThousandOrigin"
+      [label]="'transfers.dialog.costPerThousandOrigin' | translate"
+      [min]="1"
+      [step]="0.01">
+    </app-number-input>
 
-      </mat-select>
-
-    </mat-form-field>
-
-    <!-- Destination -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'transfers.dialog.destinationProgram' | translate }}
-      </mat-label>
-
-      <mat-select formControlName="destinationProgramId">
-
-        <mat-option
-          *ngFor="let program of programs"
-          [value]="program.id">
-
-          {{ program.name }}
-
-        </mat-option>
-
-      </mat-select>
-
-    </mat-form-field>
-
-    <!-- Miles Sent -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'transfers.dialog.milesSent' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        type="number"
-        formControlName="milesSent">
-
-    </mat-form-field>
-
-    <!-- Bonus Percentage -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'transfers.dialog.bonusPercentage' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        type="number"
-        formControlName="bonusPercentage">
-
-    </mat-form-field>
-
-    <!-- Miles Received -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'transfers.dialog.milesReceived' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        type="number"
-        formControlName="milesReceived">
-
-    </mat-form-field>
-
-    <!-- Transfer Date -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'transfers.dialog.transferDate' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        [matDatepicker]="picker"
-        formControlName="transferDate">
-
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="picker">
-      </mat-datepicker-toggle>
-
-      <mat-datepicker #picker></mat-datepicker>
-
-    </mat-form-field>
-
-    <!-- Cost Per Thousand Origin -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'transfers.dialog.costPerThousandOrigin' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        type="number"
-        formControlName="costPerThousandOrigin">
-
-    </mat-form-field>
-
-    <!-- Cost Per Thousand Destination -->
-
-    <mat-form-field appearance="outline">
-
-      <mat-label>
-        {{ 'transfers.dialog.costPerThousandDestination' | translate }}
-      </mat-label>
-
-      <input
-        matInput
-        type="number"
-        formControlName="costPerThousandDestination">
-
-    </mat-form-field>
+    <app-number-input
+      formControlName="costPerThousandDestination"
+      [label]="'transfers.dialog.costPerThousandDestination' | translate"
+      [min]="1"
+      [step]="0.01">
+    </app-number-input>
 
   </form>
 
