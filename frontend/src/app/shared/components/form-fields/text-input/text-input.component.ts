@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -41,6 +41,7 @@ export class TextInputComponent implements ControlValueAccessor {
   touched = false;
 
   private readonly ngControl = inject(NgControl, { self: true, optional: true });
+  private readonly changeDetector = inject(ChangeDetectorRef);
 
   constructor() {
     if (this.ngControl) {
@@ -62,10 +63,16 @@ export class TextInputComponent implements ControlValueAccessor {
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
 
-  writeValue(value: string | null): void { this.value = value ?? ''; }
+  writeValue(value: string | null): void {
+    this.value = value ?? '';
+    this.changeDetector.markForCheck();
+  }
   registerOnChange(fn: (value: string) => void): void { this.onChange = fn; }
   registerOnTouched(fn: () => void): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.changeDetector.markForCheck();
+  }
 
   onInput(event: Event): void {
     this.value = (event.target as HTMLInputElement).value;

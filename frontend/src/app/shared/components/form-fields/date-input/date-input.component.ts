@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -45,6 +45,7 @@ export class DateInputComponent implements ControlValueAccessor {
   touched = false;
 
   private readonly ngControl = inject(NgControl, { self: true, optional: true });
+  private readonly changeDetector = inject(ChangeDetectorRef);
 
   constructor() {
     if (this.ngControl) {
@@ -66,10 +67,16 @@ export class DateInputComponent implements ControlValueAccessor {
   private onChange: (value: Date | null) => void = () => {};
   private onTouched: () => void = () => {};
 
-  writeValue(value: Date | string | null): void { this.value = value ? new Date(value) : null; }
+  writeValue(value: Date | string | null): void {
+    this.value = value ? new Date(value) : null;
+    this.changeDetector.markForCheck();
+  }
   registerOnChange(fn: (value: Date | null) => void): void { this.onChange = fn; }
   registerOnTouched(fn: () => void): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.changeDetector.markForCheck();
+  }
 
   onDateChange(value: Date | null): void {
     this.value = value;

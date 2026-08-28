@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -45,6 +45,7 @@ export class MoneyInputComponent implements ControlValueAccessor {
   touched = false;
 
   private readonly ngControl = inject(NgControl, { self: true, optional: true });
+  private readonly changeDetector = inject(ChangeDetectorRef);
 
   constructor() {
     if (this.ngControl) {
@@ -74,10 +75,16 @@ export class MoneyInputComponent implements ControlValueAccessor {
   private onChange: (value: number | null) => void = () => {};
   private onTouched: () => void = () => {};
 
-  writeValue(value: number | null): void { this.value = value; }
+  writeValue(value: number | null): void {
+    this.value = value;
+    this.changeDetector.markForCheck();
+  }
   registerOnChange(fn: (value: number | null) => void): void { this.onChange = fn; }
   registerOnTouched(fn: () => void): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.changeDetector.markForCheck();
+  }
 
   onInput(event: Event): void {
     const rawValue = (event.target as HTMLInputElement).value;

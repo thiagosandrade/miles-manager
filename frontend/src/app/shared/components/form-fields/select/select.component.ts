@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -44,6 +44,7 @@ export class SelectComponent<T = string> implements ControlValueAccessor {
   touched = false;
 
   private readonly ngControl = inject(NgControl, { self: true, optional: true });
+  private readonly changeDetector = inject(ChangeDetectorRef);
 
   constructor() {
     if (this.ngControl) {
@@ -65,10 +66,16 @@ export class SelectComponent<T = string> implements ControlValueAccessor {
   private onChange: (value: T) => void = () => {};
   private onTouched: () => void = () => {};
 
-  writeValue(value: T | null): void { this.value = value; }
+  writeValue(value: T | null): void {
+    this.value = value;
+    this.changeDetector.markForCheck();
+  }
   registerOnChange(fn: (value: T) => void): void { this.onChange = fn; }
   registerOnTouched(fn: () => void): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.changeDetector.markForCheck();
+  }
 
   onSelectionChange(value: T): void {
     this.value = value;
