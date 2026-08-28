@@ -59,6 +59,7 @@ export class CalculatorComponent implements OnInit {
   // -----------------------------
 
   readonly programs = signal<Program[]>([]);
+  programOptions: SelectOption<string>[] = [];
 
   readonly loading = signal(false);
   readonly loadingPrograms = signal(false);
@@ -105,13 +106,6 @@ export class CalculatorComponent implements OnInit {
 
   });
 
-  get programOptions(): SelectOption<string>[] {
-    return this.programs().map(program => ({
-      value: program.id,
-      label: `${program.name} (${program.currencyCode})`
-    }));
-  }
-
   // -----------------------------
   // Lifecycle
   // -----------------------------
@@ -136,6 +130,10 @@ export class CalculatorComponent implements OnInit {
         );
 
         this.programs.set(activePrograms);
+        this.programOptions = activePrograms.map(program => ({
+          value: program.id,
+          label: `${program.name} (${program.currencyCode})`
+        }));
 
         this.loadingPrograms.set(false);
 
