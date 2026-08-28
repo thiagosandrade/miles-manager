@@ -1,19 +1,23 @@
-import { CommonModule } from "@angular/common";
-import { Component, OnInit, inject } from "@angular/core";
-import { ReactiveFormsModule, FormBuilder, Validators } from "@angular/forms";
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
-import { MatButtonModule } from "@angular/material/button";
-import { MatNativeDateModule } from "@angular/material/core";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { MatSelectModule } from "@angular/material/select";
-import { ProgramsApiService } from "../programs/programs-api.service";
-import { Program } from "../programs/models/program.model";
-import { PurchaseStatus } from "../../core/enums/purchase-status.enum";
-import { PurchasesApiService } from "./purchases-api.service";
-import { TranslatePipe } from "@ngx-translate/core";
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ProgramsApiService } from '../programs/programs-api.service';
+import { Program } from '../programs/models/program.model';
+import { PurchaseStatus } from '../../core/enums/purchase-status.enum';
+import { PurchasesApiService } from './purchases-api.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import {
+  DateInputComponent,
+  MoneyInputComponent,
+  NumberInputComponent,
+  SelectComponent,
+  TextInputComponent
+} from '../../shared/components/form-fields/form-fields';
 
 interface PurchaseDialogData {
   operation: 'create' | 'update' | 'clone';
@@ -29,10 +33,12 @@ interface PurchaseDialogData {
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
     MatButtonModule,
+    TextInputComponent,
+    NumberInputComponent,
+    MoneyInputComponent,
+    DateInputComponent,
+    SelectComponent,
     TranslatePipe
   ],
   templateUrl: './create-purchase-dialog.component.html',
