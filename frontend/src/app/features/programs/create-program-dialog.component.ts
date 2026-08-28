@@ -55,16 +55,16 @@ export class CreateProgramDialogComponent implements OnInit {
   loading = false;
 
   readonly programTypeOptions = [
-    { value: 0, viewValue: 'Airline' },
-    { value: 1, viewValue: 'Hotel' },
-    { value: 2, viewValue: 'Bank' },
-    { value: 3, viewValue: 'Credit Card' }
+    { value: 0, label: 'Airline' },
+    { value: 1, label: 'Hotel' },
+    { value: 2, label: 'Bank' },
+    { value: 3, label: 'Credit Card' }
   ];
 
   readonly currencyOptions = [
-    { value: 'BRL', viewValue: 'BRL' },
-    { value: 'EUR', viewValue: 'EUR' },
-    { value: 'USD', viewValue: 'USD' }
+    { value: 'BRL', label: 'BRL' },
+    { value: 'EUR', label: 'EUR' },
+    { value: 'USD', label: 'USD' }
   ];
 
   readonly form = this.fb.group({

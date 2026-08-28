@@ -19,13 +19,13 @@
     <app-select
       formControlName="programId"
       [label]="'purchases.dialog.program' | translate"
-      [options]="programs.map(p => ({ value: p.id, viewValue: p.name }))">
+      [options]="programOptions">
     </app-select>
 
-    <app-text-input
+    <app-input
       formControlName="partner"
       [label]="'purchases.dialog.partner' | translate">
-    </app-text-input>
+    </app-input>
 
     <app-textarea-input
       formControlName="description"
@@ -47,8 +47,8 @@
 
     <app-select
       formControlName="purchaseStatus"
-      [label]="'purchases.dialog.purchaseStatus' | translate"
-      [options]="purchaseStatuses.map(status => ({ value: status.value, viewValue: ('common.' + status.label.toLowerCase()) | translate }))">
+      [label]="'purchases.dialog.status' | translate"
+      [options]="purchaseStatusOptions">
     </app-select>
 
     <app-date-input

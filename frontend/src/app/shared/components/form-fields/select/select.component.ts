@@ -3,11 +3,17 @@ import { Component, EventEmitter, forwardRef, inject, Input, Output } from '@ang
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { TranslatePipe } from '@ngx-translate/core';
+
+export interface SelectOption<T = string> {
+  value: T;
+  label: string;
+}
 
 @Component({
   standalone: true,
   selector: 'app-select',
-  imports: [CommonModule, MatFormFieldModule, MatSelectModule],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslatePipe],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => SelectComponent),
@@ -25,20 +31,20 @@ import { MatSelectModule } from '@angular/material/select';
         [disabled]="disabled"
         (selectionChange)="onSelectionChange($event.value)">
         <mat-option *ngFor="let option of options" [value]="option.value">
-          {{ option.viewValue }}
+          {{ option.label | translate }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
     </mat-form-field>
   `
 })
-export class SelectComponent implements ControlValueAccessor {
+export class SelectComponent<T = string> implements ControlValueAccessor {
   @Input() label = '';
-  @Input() options: Array<{ value: unknown; viewValue: string }> = [];
+  @Input() options: SelectOption<T>[] = [];
   @Input() errors: Record<string, string> = {};
-  @Output() selectionChange = new EventEmitter<unknown>();
+  @Output() selectionChange = new EventEmitter<T>();
 
-  value: unknown = null;
+  value: T | null = null;
   disabled = false;
   touched = false;
 
@@ -55,15 +61,15 @@ export class SelectComponent implements ControlValueAccessor {
     return errorKey ? this.errors[errorKey] : null;
   }
 
-  private onChange: (value: unknown) => void = () => {};
+  private onChange: (value: T) => void = () => {};
   private onTouched: () => void = () => {};
 
-  writeValue(value: unknown): void { this.value = value; }
-  registerOnChange(fn: (value: unknown) => void): void { this.onChange = fn; }
+  writeValue(value: T | null): void { this.value = value; }
+  registerOnChange(fn: (value: T) => void): void { this.onChange = fn; }
   registerOnTouched(fn: () => void): void { this.onTouched = fn; }
   setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
 
-  onSelectionChange(value: unknown): void {
+  onSelectionChange(value: T): void {
     this.value = value;
     this.onChange(value);
     this.onTouched();

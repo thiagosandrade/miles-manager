@@ -36,7 +36,7 @@
 
   <div mat-dialog-content>
 
-    <app-text-input
+    <app-input
       formControlName="fullName"
       [label]="'users.dialog.fullName' | translate"
       [placeholder]="'users.dialog.fullNamePlaceholder' | translate"
@@ -44,9 +44,9 @@
       [errors]="{
         required: 'users.validation.fullNameRequired'
       }">
-    </app-text-input>
+    </app-input>
 
-    <app-text-input
+    <app-input
       formControlName="email"
       type="email"
       [label]="'users.dialog.email' | translate"
@@ -56,9 +56,9 @@
         required: 'users.validation.emailRequired',
         email: 'users.validation.emailInvalid'
       }">
-    </app-text-input>
+    </app-input>
 
-    <app-text-input
+    <app-input
       formControlName="password"
       type="password"
       [label]="isCreate
@@ -71,7 +71,7 @@
       [errors]="{
         required: 'users.validation.passwordRequired'
       }">
-    </app-text-input>
+    </app-input>
 
     <mat-slide-toggle
       *ngIf="!isCreate"

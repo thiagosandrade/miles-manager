@@ -19,7 +19,8 @@ import {
   DateInputComponent,
   MoneyInputComponent,
   NumberInputComponent,
-  SelectComponent
+  SelectComponent,
+  type SelectOption
 } from '../../shared/components/form-fields/form-fields';
 
 export interface RedemptionDialogData {
@@ -107,6 +108,29 @@ export class CreateRedemptionDialogComponent {
       }
     });
 
+  }
+
+  get programOptions(): SelectOption<string>[] {
+    return this.programs.map(program => ({
+      value: program.id,
+      label: program.name
+    }));
+  }
+
+  get airportOptions(): SelectOption<string>[] {
+    return this.airports.map(airport => ({
+      value: airport.iataCode,
+      label: `${airport.name} (${airport.iataCode})`
+    }));
+  }
+
+  get cabinClassOptions(): SelectOption<number>[] {
+    return [
+      { value: 0, label: 'redemptions.cabin.economy' },
+      { value: 1, label: 'redemptions.cabin.premiumEconomy' },
+      { value: 2, label: 'redemptions.cabin.business' },
+      { value: 3, label: 'redemptions.cabin.first' }
+    ];
   }
 
   save(): void {

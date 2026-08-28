@@ -18,7 +18,7 @@
       (ngSubmit)="submit()"
       class="login-form">
 
-      <app-text-input
+      <app-input
         formControlName="email"
         type="email"
         [label]="'auth.email' | translate"
@@ -28,9 +28,9 @@
           required: 'auth.email-required',
           email: 'auth.email-invalid'
         }">
-      </app-text-input>
+      </app-input>
 
-      <app-text-input
+      <app-input
         formControlName="password"
         type="password"
         [label]="'auth.password' | translate"
@@ -39,7 +39,7 @@
         [errors]="{
           required: 'auth.password-required'
         }">
-      </app-text-input>
+      </app-input>
 
       <button
         class="login-button"

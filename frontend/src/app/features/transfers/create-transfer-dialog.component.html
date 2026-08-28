@@ -15,13 +15,13 @@
     <app-select
       formControlName="originProgramId"
       [label]="'transfers.dialog.originProgram' | translate"
-      [options]="programs.map(p => ({ value: p.id, viewValue: p.name }))">
+      [options]="programOptions">
     </app-select>
 
     <app-select
       formControlName="destinationProgramId"
       [label]="'transfers.dialog.destinationProgram' | translate"
-      [options]="programs.map(p => ({ value: p.id, viewValue: p.name }))">
+      [options]="programOptions">
     </app-select>
 
     <app-number-input

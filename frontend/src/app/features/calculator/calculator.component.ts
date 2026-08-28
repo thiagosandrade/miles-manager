@@ -25,7 +25,8 @@ import { firstValueFrom } from 'rxjs';
 import {
   MoneyInputComponent,
   NumberInputComponent,
-  SelectComponent
+  SelectComponent,
+  type SelectOption
 } from '../../shared/components/form-fields';
 
 @Component({
@@ -104,10 +105,10 @@ export class CalculatorComponent implements OnInit {
 
   });
 
-  get programOptions(): Array<{ value: string; viewValue: string }> {
+  get programOptions(): SelectOption<string>[] {
     return this.programs().map(program => ({
       value: program.id,
-      viewValue: `${program.name} (${program.currencyCode})`
+      label: `${program.name} (${program.currencyCode})`
     }));
   }
 
@@ -151,11 +152,7 @@ export class CalculatorComponent implements OnInit {
 
   }
 
-  onProgramChange(programId: unknown): void {
-
-    if (typeof programId !== 'string') {
-      return;
-    }
+  onProgramChange(programId: string): void {
 
     const program = this.programs().find(
       x => x.id === programId

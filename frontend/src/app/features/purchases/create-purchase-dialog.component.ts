@@ -14,6 +14,7 @@ import {
   MoneyInputComponent,
   NumberInputComponent,
   SelectComponent,
+  type SelectOption,
   TextareaInputComponent,
   TextInputComponent
 } from '../../shared/components/form-fields';
@@ -63,7 +64,7 @@ export class CreatePurchaseDialogComponent implements OnInit {
     purchaseStatus: [PurchaseStatus.Completed, Validators.required]
   });
 
-  purchaseStatuses = [
+  readonly purchaseStatuses = [
     { value: PurchaseStatus.Pending, label: 'Pending' },
     { value: PurchaseStatus.Completed, label: 'Completed' },
     { value: PurchaseStatus.Canceled, label: 'Canceled' }
@@ -95,6 +96,18 @@ export class CreatePurchaseDialogComponent implements OnInit {
         });
       }
     });
+  }
+
+  readonly purchaseStatusOptions: SelectOption<PurchaseStatus>[] = this.purchaseStatuses.map(status => ({
+    value: status.value,
+    label: `common.${status.label.toLowerCase()}`
+  }));
+
+  get programOptions(): SelectOption<string>[] {
+    return this.programs.map(p => ({
+      value: p.id,
+      label: p.name
+    }));
   }
 
   save(): void {

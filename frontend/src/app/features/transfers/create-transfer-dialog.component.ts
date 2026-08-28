@@ -21,7 +21,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import {
   DateInputComponent,
   NumberInputComponent,
-  SelectComponent
+  SelectComponent,
+  type SelectOption
 } from '../../shared/components/form-fields/form-fields';
 
 interface TransferDialogData {
@@ -97,6 +98,13 @@ export class CreateTransferDialogComponent implements OnInit {
     } else {
       this.form.reset();
     }
+  }
+
+  get programOptions(): SelectOption<string>[] {
+    return this.programs.map(program => ({
+      value: program.id,
+      label: program.name
+    }));
   }
 
   save(): void {

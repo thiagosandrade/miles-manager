@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
   standalone: true,
-  selector: 'app-text-input',
+  selector: 'app-input',
   imports: [CommonModule, MatFormFieldModule, MatInputModule, MatIconModule],
   providers: [{
     provide: NG_VALUE_ACCESSOR,

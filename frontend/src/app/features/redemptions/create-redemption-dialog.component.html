@@ -15,19 +15,19 @@
     <app-select
       formControlName="programId"
       [label]="'redemptions.dialog.program' | translate"
-      [options]="programs.map(p => ({ value: p.id, viewValue: p.name }))">
+      [options]="programOptions">
     </app-select>
 
     <app-select
       formControlName="originAirportCode"
       [label]="'redemptions.dialog.originAirport' | translate"
-      [options]="airports.map(a => ({ value: a.iataCode, viewValue: a.name + ' (' + a.iataCode + ')' }))">
+      [options]="airportOptions">
     </app-select>
 
     <app-select
       formControlName="destinationAirportCode"
       [label]="'redemptions.dialog.destinationAirport' | translate"
-      [options]="airports.map(a => ({ value: a.iataCode, viewValue: a.name + ' (' + a.iataCode + ')' }))">
+      [options]="airportOptions">
     </app-select>
 
     <app-date-input
@@ -38,12 +38,7 @@
     <app-select
       formControlName="cabinClass"
       [label]="'redemptions.dialog.cabinClass' | translate"
-      [options]="[
-        { value: 0, viewValue: ('redemptions.cabin.economy' | translate) },
-        { value: 1, viewValue: ('redemptions.cabin.premiumEconomy' | translate) },
-        { value: 2, viewValue: ('redemptions.cabin.business' | translate) },
-        { value: 3, viewValue: ('redemptions.cabin.first' | translate) }
-      ]">
+      [options]="cabinClassOptions">
     </app-select>
 
     <app-number-input
