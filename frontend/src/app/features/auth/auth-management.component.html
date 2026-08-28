@@ -3,7 +3,6 @@
   <mat-card class="login-card">
 
     <div class="login-header">
-
       <img
         src="assets/logo-icon.png"
         alt="Miles Manager"
@@ -11,10 +10,7 @@
 
       <h1>{{ 'auth.welcome' | translate }}</h1>
 
-      <p>
-        {{ 'auth.top-definition' | translate }}
-      </p>
-
+      <p>{{ 'auth.top-definition' | translate }}</p>
     </div>
 
     <form
@@ -22,47 +18,25 @@
       (ngSubmit)="submit()"
       class="login-form">
 
-      <mat-form-field
-        appearance="outline">
+      <app-text-input
+        formControlName="email"
+        type="email"
+        [label]="'auth.email' | translate"
+        placeholder="john.doe@email.com"
+        icon="mail"
+        [errorMessage]="form.controls.email.hasError('required')
+          ? ('auth.email-required' | translate)
+          : ('auth.email-invalid' | translate)">
+      </app-text-input>
 
-        <mat-label>{{ 'auth.email' | translate }}</mat-label>
-
-        <input
-          matInput
-          type="email"
-          placeholder="john.doe@email.com"
-          formControlName="email">
-
-        <mat-icon matPrefix>mail</mat-icon>
-
-        <mat-error *ngIf="form.get('email')?.hasError('required')">
-          {{ 'auth.email-required' | translate }}
-        </mat-error>
-
-        <mat-error *ngIf="form.get('email')?.hasError('email')">
-          {{ 'auth.email-invalid' | translate }}
-        </mat-error>
-
-      </mat-form-field>
-
-      <mat-form-field
-        appearance="outline">
-
-        <mat-label>{{ 'auth.password' | translate }}</mat-label>
-
-        <input
-          matInput
-          type="password"
-          placeholder="Password"
-          formControlName="password">
-
-        <mat-icon matPrefix>lock</mat-icon>
-
-        <mat-error *ngIf="form.get('password')?.hasError('required')">
-          {{ 'auth.password-required' | translate }}
-        </mat-error>
-
-      </mat-form-field>
+      <app-text-input
+        formControlName="password"
+        type="password"
+        [label]="'auth.password' | translate"
+        placeholder="Password"
+        icon="lock"
+        [errorMessage]="'auth.password-required' | translate">
+      </app-text-input>
 
       <button
         class="login-button"
@@ -70,15 +44,11 @@
         [disabled]="loading || form.invalid">
 
         <span *ngIf="!loading">
-
           {{ 'auth.signin' | translate }}
-
         </span>
 
         <span *ngIf="loading">
-
           {{ 'auth.logging' | translate }}
-
         </span>
 
       </button>
@@ -86,13 +56,9 @@
     </form>
 
     <div class="login-footer">
-
       {{ 'auth.footer' | translate }}
-
       <span>•</span>
-
       {{ 'auth.version' | translate }}
-
     </div>
 
   </mat-card>
