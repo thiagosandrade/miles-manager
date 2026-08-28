@@ -1,10 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import {
   MAT_DIALOG_DATA,
@@ -12,18 +8,19 @@ import {
   MatDialogRef
 } from '@angular/material/dialog';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Program } from '../programs/models/program.model';
 import { ProgramsApiService } from '../programs/programs-api.service';
 import { FlightRedemptionService } from './flight-redemption.service';
 import { AirportsDTO, LookupService } from '../../core/services/dataapp-api.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import {
+  CheckboxComponent,
+  DateInputComponent,
+  MoneyInputComponent,
+  NumberInputComponent,
+  SelectComponent
+} from '../../shared/components/form-fields/form-fields';
 
 export interface RedemptionDialogData {
   operation: 'create' | 'update';
@@ -39,13 +36,12 @@ export interface RedemptionDialogData {
     CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    MatCheckboxModule,
+    SelectComponent,
+    DateInputComponent,
+    NumberInputComponent,
+    MoneyInputComponent,
+    CheckboxComponent,
     TranslatePipe
   ]
 })
@@ -57,10 +53,9 @@ export class CreateRedemptionDialogComponent {
   private dataAppService = inject(LookupService);
 
   readonly data = inject<RedemptionDialogData>(MAT_DIALOG_DATA);
-  airports : AirportsDTO[] = [];
+  airports: AirportsDTO[] = [];
 
-  private dialogRef =
-    inject(MatDialogRef<CreateRedemptionDialogComponent>);
+  private dialogRef = inject(MatDialogRef<CreateRedemptionDialogComponent>);
 
   programs: Program[] = [];
 
@@ -69,40 +64,13 @@ export class CreateRedemptionDialogComponent {
     programId: ['', Validators.required],
     originAirportCode: ['', Validators.required],
     destinationAirportCode: ['', Validators.required],
-    flightDate: [
-      new Date(),
-      Validators.required
-    ],
-    cabinClass: [
-      0,
-      Validators.required
-    ],
-    passengers: [
-      1,
-      [
-        Validators.required,
-        Validators.min(1)
-      ]
-    ],
+    flightDate: [new Date(), Validators.required],
+    cabinClass: [0, Validators.required],
+    passengers: [1, [Validators.required, Validators.min(1)]],
     isRoundTrip: false,
-    milesUsed: [
-      0,
-      [
-        Validators.required,
-        Validators.min(1)
-      ]
-    ],
-    taxes: [
-      0,
-      [
-        Validators.required,
-        Validators.min(0)
-      ]
-    ],
-    cashPrice: [
-      0,
-      Validators.min(0)
-    ]
+    milesUsed: [0, [Validators.required, Validators.min(1)]],
+    taxes: [0, [Validators.required, Validators.min(0)]],
+    cashPrice: [0, Validators.min(0)]
   });
 
   ngOnInit(): void {
@@ -120,7 +88,7 @@ export class CreateRedemptionDialogComponent {
       if (this.data.operation === 'update' && this.data.redemptionId) {
 
         this.redemptionService.getFlightRedemption(this.data.redemptionId).subscribe({
-          next: (redemption) => {
+          next: redemption => {
             this.form.patchValue({
               id: redemption.id,
               programId: this.programs.find(p => p.name === redemption.program)?.id,
@@ -136,11 +104,11 @@ export class CreateRedemptionDialogComponent {
             });
           }
         });
-      }   
+      }
     });
 
   }
-  
+
   save(): void {
 
     if (this.form.invalid) {
