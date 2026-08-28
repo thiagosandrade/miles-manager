@@ -4,8 +4,6 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { ProgramsApiService } from '../programs/programs-api.service';
 import { Program } from '../programs/models/program.model';
 import { PurchaseStatus } from '../../core/enums/purchase-status.enum';
@@ -16,8 +14,9 @@ import {
   MoneyInputComponent,
   NumberInputComponent,
   SelectComponent,
+  TextareaInputComponent,
   TextInputComponent
-} from '../../shared/components/form-fields/form-fields';
+} from '../../shared/components/form-fields';
 
 interface PurchaseDialogData {
   operation: 'create' | 'update' | 'clone';
@@ -31,10 +30,9 @@ interface PurchaseDialogData {
     CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
     TextInputComponent,
+    TextareaInputComponent,
     NumberInputComponent,
     MoneyInputComponent,
     DateInputComponent,
@@ -72,20 +70,15 @@ export class CreatePurchaseDialogComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-
     this.programsApi.getPrograms({
       page: 1,
       pageSize: 1000
     }).then(result => {
-
       this.programs = result.programs.filter(p => p.isActive);
 
       if ((this.data.operation === 'update' || this.data.operation === 'clone') && this.data.purchaseId) {
-
         this.purchasesApi.getPurchase(this.data.purchaseId).subscribe({
-
           next: purchase => {
-
             this.form.patchValue({
               id: purchase.id,
               programId: this.programs.find(p => p.name === purchase.programName)?.id,
@@ -98,25 +91,18 @@ export class CreatePurchaseDialogComponent implements OnInit {
                 ? new Date()
                 : new Date(purchase.purchaseDate)
             });
-
           }
-
         });
-
       }
-
     });
-
   }
 
   save(): void {
-
     if (this.form.invalid) {
       return;
     }
 
     this.dialogRef.close(this.form.getRawValue());
-
   }
 
   cancel(): void {
@@ -124,66 +110,44 @@ export class CreatePurchaseDialogComponent implements OnInit {
   }
 
   getPurchaseStatusName(status: PurchaseStatus): string {
-
     switch (status) {
-
       case PurchaseStatus.Pending:
         return 'Pending';
-
       case PurchaseStatus.Completed:
         return 'Completed';
-
       case PurchaseStatus.Canceled:
         return 'Canceled';
-
       default:
         return 'Unknown';
-
     }
-
   }
 
   getPurchaseStatusClass(status: PurchaseStatus): string {
-
     switch (status) {
-
       case PurchaseStatus.Completed:
         return 'success';
-
       case PurchaseStatus.Pending:
         return 'warning';
-
       case PurchaseStatus.Canceled:
         return 'danger';
-
       default:
         return '';
-
     }
-
   }
 
   getSelectedCurrencyCode(): string {
     const programId = this.form.get('programId')?.value;
-
-    const program = this.programs.find(
-      p => p.id === programId
-    );
-
+    const program = this.programs.find(p => p.id === programId);
     return program?.currencyCode ?? 'USD';
   }
 
   getCurrencySymbol(): string {
     const currencyCode = this.getSelectedCurrencyCode();
-
-    return new Intl.NumberFormat(
-      'en-US',
-      {
-        style: 'currency',
-        currency: currencyCode,
-        currencyDisplay: 'narrowSymbol'
-      }
-    )
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currencyCode,
+      currencyDisplay: 'narrowSymbol'
+    })
       .formatToParts(0)
       .find(part => part.type === 'currency')
       ?.value ?? currencyCode;
