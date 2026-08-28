@@ -94,9 +94,10 @@
     [title]="'users.table.title' | translate"
     [subtitle]="'users.table.subtitle' | translate"
     [loading]="isLoadingResults"
-    [dataSource]="data"
+    [dataSource]="pagedData"
     [length]="data.length"
-    [showPaginator]="false"
+    (page)="onPageChange($event)"
+    [showPaginator]="true"
     emptyIcon="group_off"
     [emptyTitle]="'users.table.emptyTitle' | translate"
     [emptyDescription]="'users.table.emptyDescription' | translate">
@@ -126,7 +127,7 @@
 
       <table
         mat-table
-        [dataSource]="data">
+        [dataSource]="pagedData">
 
         <!-- User -->
 
@@ -288,7 +289,7 @@
 
       <article
         class="user-card"
-        *ngFor="let user of data">
+        *ngFor="let user of pagedData">
 
         <div class="user-card-header">
 

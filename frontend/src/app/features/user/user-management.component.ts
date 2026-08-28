@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { PageEvent } from '@angular/material/paginator';
 
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -50,6 +51,9 @@ export class UserManagementComponent implements OnInit {
   ];
 
   data: UserDetails[] = [];
+  pagedData: UserDetails[] = [];
+  private pageIndex = 0;
+  private pageSize = 5;
 
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -88,6 +92,7 @@ export class UserManagementComponent implements OnInit {
       .subscribe(users => {
 
         this.data = users;
+        this.updatePagedData();
 
         this.isLoadingResults = false;
         this.isRateLimitReached = false;
@@ -96,6 +101,17 @@ export class UserManagementComponent implements OnInit {
 
       });
 
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updatePagedData();
+  }
+
+  private updatePagedData(): void {
+    const start = this.pageIndex * this.pageSize;
+    this.pagedData = this.data.slice(start, start + this.pageSize);
   }
 
   openCreateUserDialog(): void {
