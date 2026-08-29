@@ -45,7 +45,6 @@ public sealed class UpdateFlightRedemptionHandler(IApplicationDbContext context)
         redemption.MilesUsed = request.MilesUsed;
         redemption.Taxes = request.Taxes;
         redemption.CashPrice = request.CashPrice;
-        redemption.EffectiveCostPerThousand = request.MilesUsed > 0 ? (request.CashPrice + request.Taxes) / (request.MilesUsed / 1000m) : 0m;
 
         await _context.SaveChangesAsync(cancellationToken);
 

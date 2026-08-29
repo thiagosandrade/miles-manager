@@ -37,8 +37,7 @@ public sealed class CreateRedemptionHandler(IApplicationDbContext context) : IRe
             IsRoundTrip = request.IsRoundTrip,
             MilesUsed = request.MilesUsed,
             Taxes = request.Taxes,
-            CashPrice = request.CashPrice,
-            EffectiveCostPerThousand = request.MilesUsed > 0 ? (request.CashPrice + request.Taxes) / (request.MilesUsed / 1000m) : 0m
+            CashPrice = request.CashPrice
         };
 
         await _context.FlightRedemptions.AddAsync(redemption, cancellationToken);

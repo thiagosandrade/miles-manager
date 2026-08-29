@@ -51,7 +51,6 @@ export class RedemptionsPageComponent implements OnInit {
     'milesUsed',
     'taxes',
     'cashPrice',
-    'effectiveCostPerThousand',
     'actions'
   ];
   

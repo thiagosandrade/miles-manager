@@ -70,6 +70,7 @@
     "title": "Miles Manager",
     "menu": "Menú de la aplicación",
     "profile": "Perfil",
+    "theme": "Claro/Oscuro",
     "language": "Idioma",
     "logout": "Cerrar sesión",
     "currentLanguage": "Idioma actual"
@@ -83,7 +84,8 @@
     "transfers": "Transferencias",
     "redemptions": "Canjes",
     "settings": "Configuración",
-    "user-roles": "Roles de Usuario"  
+    "user-roles": "Roles de Usuario",
+    "calculator": "Comparador"
   },
   "dashboard": {
     "eyebrow": "Resumen",

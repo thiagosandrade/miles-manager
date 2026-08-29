@@ -70,6 +70,7 @@
     "title": "Miles Manager",
     "menu": "Menu do aplicativo",
     "profile": "Perfil",
+    "theme": "Claro/Escuro",
     "language": "Idioma",
     "logout": "Sair",
     "currentLanguage": "Idioma atual"
@@ -81,9 +82,10 @@
     "programBalances": "Saldos de Programas",
     "purchases": "Compras",
     "transfers": "Transferências",
-    "redemptions": "Resgates",
+    "redemptions": "Emissões",
     "settings": "Configurações",
-    "user-roles": "Funções de Usuário"  
+    "user-roles": "Funções de Usuário",
+    "calculator": "Comparador"
   },
   "dashboard": {
     "eyebrow": "Visão geral",
@@ -95,7 +97,7 @@
       "programs": "programas",
       "recentPurchases": "Compras recentes",
       "recentTransfers": "Transferências recentes",
-      "recentRedemptions": "Resgates recentes"
+      "recentRedemptions": "Emissões recentes"
     },
     "programs": {
       "program": "Programa",
@@ -382,15 +384,15 @@
   "redemptions": {
     "page": {
       "eyebrow": "Recompensas",
-      "title": "Resgates",
+      "title": "Emissões",
       "subtitle": "Visualize e gerencie resgates de milhas.",
-      "newRedemption": "Novo resgate"
+      "newRedemption": "Nova Emissão"
     },
     "metrics": {
-      "totalRedemptions": "Total de resgates"
+      "totalRedemptions": "Total de Emissões"
     },
     "table": {
-      "title": "Resgates",
+      "title": "Emissões",
       "subtitle": "Histórico",
       "emptyTitle": "Nenhum resgate encontrado",
       "emptyDescription": "Crie seu primeiro resgate.",
@@ -419,7 +421,7 @@
       "program": "Programa",
       "originAirport": "Aeroporto de origem",
       "destinationAirport": "Aeroporto de destino",
-      "flightDate": "Data do voo",
+      "flightDate": "Data do vôo",
       "cabinClass": "Classe da cabine",
       "passengers": "Passageiros",
       "milesUsed": "Milhas usadas",
@@ -472,8 +474,8 @@
   },
   "calculator": {
     "page": {
-      "eyebrow": "Calculadora de Voos",
-      "title": "Comparador de Voos",
+      "eyebrow": "Calculadora de Vôos",
+      "title": "Comparador de Vôos",
       "subtitle": "Compare pagar em dinheiro com usar milhas no seu voo."
     },
     "form": {

@@ -70,6 +70,7 @@
     "title": "Miles Manager",
     "menu": "Anwendungsmenü",
     "profile": "Profil",
+    "theme": "Hell/Dunkel",
     "language": "Sprache",
     "logout": "Abmelden",
     "currentLanguage": "Aktuelle Sprache"
@@ -83,7 +84,8 @@
     "transfers": "Transfers",
     "redemptions": "Einlösungen",
     "settings": "Einstellungen",
-    "user-roles": "Benutzerrollen"
+    "user-roles": "Benutzerrollen",
+    "calculator": "Vergleichsrechner"
   },
   "dashboard": {
     "eyebrow": "Übersicht",

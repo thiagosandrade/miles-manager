@@ -70,6 +70,7 @@
     "title": "Miles Manager",
     "menu": "Application Menu",
     "profile": "Profile",
+    "theme": "Light/Dark",
     "language": "Language",
     "logout": "Logout",
     "currentLanguage": "Current language"

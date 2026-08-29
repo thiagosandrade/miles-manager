@@ -70,6 +70,7 @@
     "title": "Miles Manager",
     "menu": "Menu da aplicação",
     "profile": "Perfil",
+    "theme": "Claro/Escuro",
     "language": "Idioma",
     "logout": "Terminar sessão",
     "currentLanguage": "Idioma atual"
@@ -472,8 +473,8 @@
   },
   "calculator": {
     "page": {
-      "eyebrow": "Calculadora de Voos",
-      "title": "Comparador de Voos",
+      "eyebrow": "Calculadora de Vôos",
+      "title": "Comparador de Vôos",
       "subtitle": "Compare pagar em dinheiro com utilizar milhas no seu voo."
     },
     "form": {

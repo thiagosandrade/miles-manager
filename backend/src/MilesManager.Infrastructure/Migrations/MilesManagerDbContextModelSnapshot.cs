@@ -282,10 +282,6 @@ namespace MilesManager.Infrastructure.Migrations
                         .HasMaxLength(3)
                         .HasColumnType("character varying(3)");
 
-                    b.Property<decimal>("EffectiveCostPerThousand")
-                        .HasPrecision(18, 4)
-                        .HasColumnType("numeric(18,4)");
-
                     b.Property<DateOnly>("FlightDate")
                         .HasColumnType("date");
 

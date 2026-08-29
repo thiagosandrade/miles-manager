@@ -26,6 +26,7 @@ import { AuthApiService } from '../../features/auth/auth-api.service';
 import { TokenStorageService } from '../../core/services/token-storage.service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ThemeService } from '../../core/services/theme.service';
 
 @Component({
   standalone: true,
@@ -48,6 +49,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   private readonly tokenStorage = inject(TokenStorageService);
   private readonly router = inject(Router);
   private readonly breakpointObserver = inject(BreakpointObserver);
+  private readonly themeService = inject(ThemeService)
 
   private breakpointSubscription?: Subscription;
 
@@ -55,6 +57,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   sidenavToggle = new EventEmitter<void>();
 
   readonly user = this.tokenStorage.getUser();
+  readonly isDarkTheme = this.themeService.isDarkTheme;
 
   languageService = inject(LanguageService);
 
@@ -147,5 +150,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     this.languageService.changeLanguage(language);
 
+  }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
   }
 }

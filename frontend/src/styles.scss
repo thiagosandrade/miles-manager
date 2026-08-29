@@ -75,7 +75,7 @@ html.dark-theme {
   --mat-menu-container-color: var(--panel);
 
   --mat-toolbar-container-background-color: var(--mm-primary);
-  --mat-toolbar-container-text-color: white;
+  --mat-toolbar-container-text-color: #fff;
 }
 
 /* ==========================================================================
@@ -101,11 +101,12 @@ html.dark-theme {
 
   --mat-menu-container-color: var(--panel);
 
-  --mat-toolbar-container-background-color: #0F172A;
-
   --mm-primary: #3B82F6;
 
   --mm-primary-hover: #60A5FA;
+
+  --mat-toolbar-container-background-color: var(--panel);
+  --mat-toolbar-container-text-color: var(--ink);
 }
 
 /* ==========================================================================

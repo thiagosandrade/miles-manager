@@ -318,21 +318,6 @@
         </ng-container>
 
 
-        <!-- CPM -->
-
-        <ng-container matColumnDef="effectiveCostPerThousand">
-
-          <th mat-header-cell *matHeaderCellDef>
-            {{ 'redemptions.table.columns.effectiveCostPerThousand' | translate }}
-          </th>
-
-          <td mat-cell *matCellDef="let redemption">
-            {{ redemption.effectiveCostPerThousand | number:'1.2-2' }}
-          </td>
-
-        </ng-container>
-
-
         <!-- Actions -->
 
         <ng-container matColumnDef="actions">
@@ -603,19 +588,6 @@
               <strong>
                 {{ redemption.cashPrice | currency:redemption.currencyCode }}
               </strong>
-            </strong>
-
-          </div>
-
-
-          <div class="redemption-detail highlight">
-
-            <span class="field-label">
-              {{ 'redemptions.table.columns.effectiveCostPerThousand' | translate }}
-            </span>
-
-            <strong>
-              {{ redemption.effectiveCostPerThousand | number:'1.2-2' }}
             </strong>
 
           </div>

@@ -13,7 +13,6 @@ export interface FlightRedemption {
   taxes: number;
   currencyCode: string;
   cashPrice: number;
-  effectiveCostPerThousand: number;
 }
 
   export interface FlightRedemptionCreateRequest {

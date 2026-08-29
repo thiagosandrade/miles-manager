@@ -135,6 +135,22 @@
 
   </mat-menu>
 
+  
+  <!-- Theme -->
+     <button
+    mat-menu-item
+    (click)="toggleTheme()">
+
+    <mat-icon>
+      {{ isDarkTheme() ? 'light_mode' : 'dark_mode' }}
+    </mat-icon>
+
+    <span>
+      {{ 'toolbar.theme' | translate }}
+    </span>
+
+  </button>
+
 
   <mat-divider></mat-divider>
 
