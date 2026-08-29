@@ -15,6 +15,7 @@ public sealed class GetLookupQueryHandler(IApplicationDbContext context, IMapper
     public async Task<LookupDto> Handle(GetLookupQuery request, CancellationToken cancellationToken)
     {
         var airports = await _context.Airports.AsNoTracking()
+            .OrderBy(x => x.City)
             .ProjectTo<AirportDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
