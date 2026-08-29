@@ -8,8 +8,6 @@ export interface MileageTransfer {
   milesSent: number;
   bonusPercentage: number;
   milesReceived: number;
-  costPerThousandOrigin: number;
-  costPerThousandDestination: number;
   transferDate: string;
 }
 
@@ -20,8 +18,6 @@ export interface TransferCreateRequest {
   milesSent: number;
   bonusPercentage: number;
   milesReceived: number;
-  costPerThousandOrigin: number;
-  costPerThousandDestination: number;
   transferDate: string;
   originProgram?: Program;
   destinationProgram?: Program;
@@ -35,8 +31,6 @@ export interface TransferUpdateRequest {
   milesSent: number;
   bonusPercentage: number;
   milesReceived: number;
-  costPerThousandOrigin: number;
-  costPerThousandDestination: number;
   transferDate: string;
   originProgram?: Program;
   destinationProgram?: Program;

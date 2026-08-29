@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -18,6 +18,7 @@ import { ProgramsApiService } from '../programs/programs-api.service';
 import { Program } from '../programs/models/program.model';
 import { TransfersApiService } from './transfers-api.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   DateInputComponent,
   NumberInputComponent,
@@ -52,6 +53,7 @@ export class CreateTransferDialogComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<CreateTransferDialogComponent>);
   private programsApi = inject(ProgramsApiService);
   private transfersApi = inject(TransfersApiService);
+  private destroyRef = inject(DestroyRef);
 
   data = inject<TransferDialogData>(MAT_DIALOG_DATA);
 
@@ -66,11 +68,17 @@ export class CreateTransferDialogComponent implements OnInit {
     bonusPercentage: [0, [Validators.required, Validators.min(0)]],
     milesReceived: [0, [Validators.required, Validators.min(1)]],
     transferDate: [new Date(), Validators.required],
-    costPerThousandOrigin: [0, [Validators.required, Validators.min(1)]],
-    costPerThousandDestination: [0, [Validators.required, Validators.min(1)]]
   });
 
   ngOnInit(): void {
+    this.form.controls.milesSent.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.updateMilesReceived());
+    this.form.controls.bonusPercentage.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.updateMilesReceived());
+    this.updateMilesReceived();
+
     this.programsApi.getPrograms().then(result => {
 
       this.programs = result.programs.filter(x => x.isActive);
@@ -88,15 +96,21 @@ export class CreateTransferDialogComponent implements OnInit {
               destinationProgramId: this.programs.find(p => p.name === transfer.destinationProgram)?.id,
               milesSent: transfer.milesSent,
               bonusPercentage: transfer.bonusPercentage,
-              milesReceived: transfer.milesReceived,
-              transferDate: new Date(transfer.transferDate),
-              costPerThousandOrigin: transfer.costPerThousandOrigin,
-              costPerThousandDestination: transfer.costPerThousandDestination
-            });
+              transferDate: new Date(transfer.transferDate)
+            }, { emitEvent: false });
+            this.updateMilesReceived();
           }
         });
       }
     });
+  }
+
+  private updateMilesReceived(): void {
+    const milesSent = Number(this.form.controls.milesSent.value) || 0;
+    const bonusPercentage = Number(this.form.controls.bonusPercentage.value) || 0;
+    const milesReceived = milesSent * (1 + bonusPercentage / 100);
+
+    this.form.controls.milesReceived.setValue(milesReceived, { emitEvent: false });
   }
 
   save(): void {

@@ -11,8 +11,6 @@ public class MileageTransfer : Entity
     public decimal MilesSent { get; set; }
     public decimal BonusPercentage { get; set; }
     public decimal MilesReceived { get; set; }
-    public decimal CostPerThousandOrigin { get; set; }
-    public decimal CostPerThousandDestination { get; set; }
     public DateOnly TransferDate { get; set; }
 
     public virtual Programs.LoyaltyProgram OriginProgram { get; set; } = null!;

@@ -50,8 +50,6 @@ public sealed class CreateTransferHandler(IApplicationDbContext context) : IRequ
             MilesSent = request.MilesSent,
             BonusPercentage = request.BonusPercentage,
             MilesReceived = request.MilesReceived,
-            CostPerThousandOrigin = request.CostPerThousandOrigin,
-            CostPerThousandDestination = request.CostPerThousandDestination,
             TransferDate = request.TransferDate
         };
 

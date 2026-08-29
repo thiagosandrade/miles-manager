@@ -10,9 +10,4 @@ public sealed class MileageTransferDto
     public decimal BonusPercentage { get; init; }
     public decimal MilesReceived { get; init; }
     public DateOnly TransferDate { get; init; }
-    public decimal CostPerThousandOrigin { get; init; }
-    public decimal CostPerThousandDestination { get; init; }
-    public string CurrencyCodeOrigin { get; set; } = string.Empty;
-    public string CurrencyCodeDestination { get; set; } = string.Empty;
-
 }

@@ -11,9 +11,7 @@ internal sealed class TransferProfile : Profile
     {
         CreateMap<MileageTransfer, MileageTransferDto>()
             .ForMember(dest => dest.OriginProgram, opt => opt.MapFrom(src => src.OriginProgram.Name))
-            .ForMember(dest => dest.DestinationProgram, opt => opt.MapFrom(src => src.DestinationProgram.Name))
-            .ForMember(dest => dest.CurrencyCodeOrigin, opt => opt.MapFrom(src => src.DestinationProgram.CurrencyCode))
-            .ForMember(dest => dest.CurrencyCodeDestination, opt => opt.MapFrom(src => src.DestinationProgram.CurrencyCode));
+            .ForMember(dest => dest.DestinationProgram, opt => opt.MapFrom(src => src.DestinationProgram.Name));
         
     }
 }

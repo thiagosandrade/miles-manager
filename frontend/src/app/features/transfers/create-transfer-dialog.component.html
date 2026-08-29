@@ -39,27 +39,14 @@
     <app-number-input
       formControlName="milesReceived"
       [label]="'transfers.dialog.milesReceived' | translate"
-      [min]="1">
+      [min]="1"
+      [readonly]="true">
     </app-number-input>
 
     <app-date-input
       formControlName="transferDate"
       [label]="'transfers.dialog.transferDate' | translate">
     </app-date-input>
-
-    <app-number-input
-      formControlName="costPerThousandOrigin"
-      [label]="'transfers.dialog.costPerThousandOrigin' | translate"
-      [min]="1"
-      [step]="0.01">
-    </app-number-input>
-
-    <app-number-input
-      formControlName="costPerThousandDestination"
-      [label]="'transfers.dialog.costPerThousandDestination' | translate"
-      [min]="1"
-      [step]="0.01">
-    </app-number-input>
 
   </form>
 

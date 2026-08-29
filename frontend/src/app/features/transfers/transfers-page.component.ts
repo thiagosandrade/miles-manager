@@ -173,9 +173,7 @@ export class TransfersPageComponent implements OnInit {
         milesSent: Number(result.milesSent),
         bonusPercentage: Number(result.bonusPercentage),
         milesReceived: Number(result.milesReceived),
-        transferDate: result.transferDate.toISOString().split('T')[0],
-        costPerThousandOrigin: Number(result.costPerThousandOrigin),
-        costPerThousandDestination: Number(result.costPerThousandDestination)
+        transferDate: result.transferDate.toISOString().split('T')[0]
       };
 
       this.api.updateTransfer(result.id, request).subscribe({
@@ -216,9 +214,7 @@ export class TransfersPageComponent implements OnInit {
         milesSent: Number(result.milesSent),
         bonusPercentage: Number(result.bonusPercentage),
         milesReceived: Number(result.milesReceived),
-        transferDate: result.transferDate.toISOString().split('T')[0],
-        costPerThousandOrigin: Number(result.costPerThousandOrigin),
-        costPerThousandDestination: Number(result.costPerThousandDestination)
+        transferDate: result.transferDate.toISOString().split('T')[0]
       };
 
       this.api.createTransfer(request).subscribe({

@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
         [placeholder]="placeholder"
         [value]="value ?? ''"
         [disabled]="disabled"
+        [readonly]="readonly"
         [min]="min"
         [max]="max"
         [step]="step"
@@ -40,6 +41,7 @@ export class NumberInputComponent implements ControlValueAccessor {
   @Input() min: number | null = null;
   @Input() max: number | null = null;
   @Input() step: number | 'any' = 'any';
+  @Input() readonly = false;
 
   value: number | null = null;
   disabled = false;

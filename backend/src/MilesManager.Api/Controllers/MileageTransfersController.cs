@@ -55,8 +55,6 @@ public sealed class MileageTransfersController(ISender sender) : ApiController(s
             MilesSent = command.MilesSent,
             BonusPercentage = command.BonusPercentage,
             MilesReceived = command.MilesReceived,
-            CostPerThousandOrigin = command.CostPerThousandOrigin,
-            CostPerThousandDestination = command.CostPerThousandDestination,
             TransferDate = command.TransferDate
         };
         var result = await Sender.Send(created, cancellationToken);
@@ -79,8 +77,6 @@ public sealed class MileageTransfersController(ISender sender) : ApiController(s
             MilesSent = command.MilesSent,
             BonusPercentage = command.BonusPercentage,
             MilesReceived = command.MilesReceived,
-            CostPerThousandOrigin = command.CostPerThousandOrigin,
-            CostPerThousandDestination = command.CostPerThousandDestination,
             TransferDate = command.TransferDate
         };
         var result = await Sender.Send(updated, cancellationToken);

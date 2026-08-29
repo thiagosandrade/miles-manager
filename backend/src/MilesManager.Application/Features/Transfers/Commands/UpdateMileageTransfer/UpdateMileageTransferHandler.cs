@@ -43,8 +43,6 @@ public sealed class UpdateMileageTransferHandler(IApplicationDbContext context) 
         transfer.MilesSent = request.MilesSent;
         transfer.BonusPercentage = request.BonusPercentage;
         transfer.MilesReceived = request.MilesReceived;
-        transfer.CostPerThousandOrigin = request.CostPerThousandOrigin;
-        transfer.CostPerThousandDestination = request.CostPerThousandDestination;
         transfer.TransferDate = request.TransferDate;
 
         await _context.SaveChangesAsync(cancellationToken);
