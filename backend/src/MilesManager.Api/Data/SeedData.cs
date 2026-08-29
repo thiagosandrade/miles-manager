@@ -35,7 +35,6 @@ public static class SeedData
             .GetRequiredService<IPasswordHasher>();
 
         await SeedProgramsAsync(context, cancellationToken);
-        await SeedAirportsAsync(context, cancellationToken);
         await SeedReferenceMileagePricesAsync(context, cancellationToken);
 
         var adminUser = await SeedUsersAsync(context, hasher, cancellationToken);
@@ -100,97 +99,6 @@ public static class SeedData
             {
                 await context.Programs.AddAsync(
                     program,
-                    cancellationToken);
-            }
-        }
-
-        await context.SaveChangesAsync(cancellationToken);
-    }
-
-    private static async Task SeedAirportsAsync(
-        IApplicationDbContext context,
-        CancellationToken cancellationToken)
-    {
-        var airports = new[]
-        {
-            new Airport
-            {
-                IataCode = "GRU",
-                Name = "São Paulo-Guarulhos"
-            },
-            new Airport
-            {
-                IataCode = "CGH",
-                Name = "São Paulo-Congonhas"
-            },
-            new Airport
-            {
-                IataCode = "VCP",
-                Name = "Campinas"
-            },
-            new Airport
-            {
-                IataCode = "GIG",
-                Name = "Rio de Janeiro-Galeão"
-            },
-            new Airport
-            {
-                IataCode = "SDU",
-                Name = "Rio de Janeiro-Santos Dumont"
-            },
-            new Airport
-            {
-                IataCode = "LIS",
-                Name = "Lisbon"
-            },
-            new Airport
-            {
-                IataCode = "MAD",
-                Name = "Madrid"
-            },
-            new Airport
-            {
-                IataCode = "JFK",
-                Name = "New York-JFK"
-            },
-            new Airport
-            {
-                IataCode = "MIA",
-                Name = "Miami"
-            },
-            new Airport
-            {
-                IataCode = "LHR",
-                Name = "London-Heathrow"
-            },
-            new Airport
-            {
-                IataCode = "CDG",
-                Name = "Paris-Charles de Gaulle"
-            },
-            new Airport
-            {
-                IataCode = "LUX",
-                Name = "Luxembourg"
-            },
-            new Airport
-            {
-                IataCode = "BSB",
-                Name = "Brasília"
-            }
-        };
-
-        foreach (var airport in airports)
-        {
-            var exists = await context.Airports
-                .AnyAsync(
-                    x => x.IataCode == airport.IataCode,
-                    cancellationToken);
-
-            if (!exists)
-            {
-                await context.Airports.AddAsync(
-                    airport,
                     cancellationToken);
             }
         }

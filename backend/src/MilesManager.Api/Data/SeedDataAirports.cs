@@ -184,8 +184,15 @@ public static class SeedDataAirports
             new Airport { IataCode = "CMN", Name = "Casablanca", City = "Casablanca", Country = "Morocco" }
         };
 
-        if (!await context.Airports.AnyAsync(cancellationToken))
-            foreach (var a in airports) await context.Airports.AddAsync(a, cancellationToken);
+        foreach (var airport in airports)
+        {
+            var exists = await context.Airports.AnyAsync(x => x.IataCode == airport.IataCode, cancellationToken);
+
+            if (!exists)
+            {
+                await context.Airports.AddAsync(airport, cancellationToken);
+            }
+        }
 
         await context.SaveChangesAsync(cancellationToken);
     }
