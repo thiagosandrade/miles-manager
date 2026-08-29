@@ -25,7 +25,7 @@ import {
 } from '../../shared/components/form-fields/form-fields';
 
 export interface RedemptionDialogData {
-  operation: 'create' | 'update';
+  operation: 'create' | 'update' | 'clone';
   redemptionId?: string;
   redemption?: FlightRedemption;
 }
@@ -101,7 +101,7 @@ export class CreateRedemptionDialogComponent {
         label: program.name
       }));
 
-      if (this.data.operation === 'update' && this.data.redemptionId) {
+      if ((this.data.operation === 'update' || this.data.operation === 'clone') && this.data.redemptionId) {
         if (this.data.redemption) {
           this.patchRedemption(this.data.redemption);
           return;
@@ -117,11 +117,11 @@ export class CreateRedemptionDialogComponent {
 
   private patchRedemption(redemption: FlightRedemption): void {
     this.form.patchValue({
-      id: redemption.id,
+      id: this.data.operation === 'clone' ? '' : redemption.id,
       programId: this.programs.find(p => p.name === redemption.program)?.id,
       originAirportCode: redemption.originAirportCode,
       destinationAirportCode: redemption.destinationAirportCode,
-      flightDate: new Date(redemption.flightDate),
+      flightDate: this.data.operation === 'clone' ? new Date() : new Date(redemption.flightDate),
       cabinClass: redemption.cabinClass,
       passengers: redemption.passengers,
       isRoundTrip: redemption.isRoundTrip,

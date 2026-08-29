@@ -360,6 +360,17 @@
             </button>
 
             <button
+              class="icon-button"
+              [attr.aria-label]="'redemptions.actions.clone' | translate"
+              (click)="openCloneRedemptionDialog(redemption)">
+
+              <mat-icon>
+                content_copy
+              </mat-icon>
+
+            </button>
+
+            <button
               class="icon-button danger"
               [attr.aria-label]="'redemptions.actions.delete' | translate"
               (click)="deleteRedemption(redemption)">
@@ -434,6 +445,17 @@
 
               <mat-icon>
                 edit
+              </mat-icon>
+
+            </button>
+
+            <button
+              class="icon-button"
+              [attr.aria-label]="'redemptions.actions.clone' | translate"
+              (click)="openCloneRedemptionDialog(redemption)">
+
+              <mat-icon>
+                content_copy
               </mat-icon>
 
             </button>

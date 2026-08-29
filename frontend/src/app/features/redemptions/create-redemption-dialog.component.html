@@ -2,6 +2,8 @@
   {{
     data.operation === 'create'
       ? ('redemptions.dialog.createTitle' | translate)
+      : data.operation === 'clone'
+        ? 'Clone Redemption'
       : ('redemptions.dialog.updateTitle' | translate)
   }}
 </h2>

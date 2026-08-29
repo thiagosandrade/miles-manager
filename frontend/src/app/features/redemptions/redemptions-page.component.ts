@@ -7,7 +7,7 @@ import { FlightRedemption, FlightRedemptionCreateRequest, FlightRedemptionUpdate
 import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
-import { CreateRedemptionDialogComponent } from './create-redemption-dialog.component';
+import { CreateRedemptionDialogComponent, RedemptionDialogData } from './create-redemption-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -110,14 +110,12 @@ export class RedemptionsPageComponent implements OnInit {
 
   }
 
-  openCreateRedemptionDialog(): void {
+  openCreateRedemptionDialog(data: RedemptionDialogData = { operation: 'create' }): void {
 
     const dialogRef = this.dialog.open(CreateRedemptionDialogComponent, {
        width: '500px',
       maxWidth: '95vw',
-      data: {
-        operation: 'create'
-      }
+      data
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -156,6 +154,14 @@ export class RedemptionsPageComponent implements OnInit {
 
     });
 
+  }
+
+  openCloneRedemptionDialog(redemption: FlightRedemption): void {
+    this.openCreateRedemptionDialog({
+      operation: 'clone',
+      redemptionId: redemption.id,
+      redemption
+    });
   }
 
   openEditRedemptionDialog(redemption: FlightRedemption): void {
