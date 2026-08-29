@@ -597,26 +597,41 @@
 
             </div>
 
-            <div class="activity-value">
+            <div class="activity-value" *ngIf="redemption.milesUsed > 0">
+
+              <strong>
+
+                 {{ formatMiles(redemption.milesUsed) }}
+                  
+                 {{ 'dashboard.redemption-miles' | translate }}
+                
+              </strong>
+
+              <small>
+               
+                {{
+                  formatCurrency(
+                    redemption.taxes,
+                    redemption.currencyCode
+                  )
+                }}
+
+              </small>
+
+            </div>
+
+            <div class="activity-value" *ngIf="redemption.milesUsed === 0">
 
               <strong>
 
                 {{
                   formatCurrency(
-                    (redemption.cashPrice + redemption.taxes),
+                    redemption.cashPrice,
                     redemption.currencyCode
                   )
                 }}
 
               </strong>
-
-              <small>
-
-                {{ formatMiles(redemption.milesUsed) }}
-
-                {{ 'dashboard.redemption-miles' | translate }}
-
-              </small>
 
             </div>
 

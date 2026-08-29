@@ -56,5 +56,4 @@ export interface RedemptionDto {
   taxes: number;
   cashPrice: number;
   currencyCode: string;
-  effectiveCostPerThousand: number;
 }
