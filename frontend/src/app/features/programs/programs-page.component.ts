@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { PageEvent } from '@angular/material/paginator';
 
 import { AppTableComponent } from '../../shared/components/app-table/app-table.component';
 
@@ -37,6 +38,9 @@ export class ProgramsPageComponent implements OnInit {
   readonly isAdministrator = this.storage.isAdministrator();
   
   data = signal<Program[]>([]);
+  pagedData = signal<Program[]>([]);
+  private pageIndex = 0;
+  private pageSize = 10;
   loading = signal(false);
   isRateLimitReached = signal(false);
 
@@ -80,6 +84,7 @@ export class ProgramsPageComponent implements OnInit {
         filter: this.filter
       }).then(result => {
         this.data.set(result.programs);
+        this.updatePagedData();
       });
 
     } catch {
@@ -93,6 +98,18 @@ export class ProgramsPageComponent implements OnInit {
 
     }
 
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updatePagedData();
+  }
+
+  private updatePagedData(): void {
+    const values = this.data();
+    const start = this.pageIndex * this.pageSize;
+    this.pagedData.set(values.slice(start, start + this.pageSize));
   }
 
   applyFilter(filter: string): void {

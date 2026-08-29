@@ -94,9 +94,10 @@
 
     [loading]="loading()"
 
-    [dataSource]="balances()"
+    [dataSource]="pagedBalances()"
 
     [length]="balances().length"
+    (page)="onPageChange($event)"
 
     [showPaginator]="false"
 
@@ -115,7 +116,7 @@
 
       <table
         mat-table
-        [dataSource]="balances()">
+        [dataSource]="pagedBalances()">
 
 
         <!-- ================================================
@@ -274,7 +275,7 @@
 
       <article
         class="balance-card"
-        *ngFor="let balance of balances()">
+        *ngFor="let balance of pagedBalances()">
 
 
         <!-- ==============================================

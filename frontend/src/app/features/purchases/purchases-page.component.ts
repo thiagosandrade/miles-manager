@@ -4,7 +4,8 @@
   import { MatIconModule } from '@angular/material/icon';
   import { MatInputModule } from '@angular/material/input';
   import { MatTableModule } from '@angular/material/table';
-  import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { PageEvent } from '@angular/material/paginator';
 
   import { AppTableComponent } from '../../shared/components/app-table/app-table.component';
 
@@ -35,6 +36,9 @@ import { TranslatePipe } from '@ngx-translate/core';
   export class PurchasesPageComponent implements OnInit {
 
     data = signal<MileagePurchase[]>([]);
+    pagedData = signal<MileagePurchase[]>([]);
+    private pageIndex = 0;
+    private pageSize = 5;
     loading = signal(false);
     isRateLimitReached = signal(false);
     dialog = inject(MatDialog);
@@ -69,6 +73,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
         next: purchases => {
           this.data.set(purchases);
+          this.updatePagedData();
           this.loading.set(false);
         },
 
@@ -79,9 +84,21 @@ import { TranslatePipe } from '@ngx-translate/core';
 
         }
 
-      });
+    });
 
-    }
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updatePagedData();
+  }
+
+  private updatePagedData(): void {
+    const values = this.data();
+    const start = this.pageIndex * this.pageSize;
+    this.pagedData.set(values.slice(start, start + this.pageSize));
+  }
 
     get averagePurchase(): number {
       if (!this.data().length) {

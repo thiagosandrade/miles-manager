@@ -64,9 +64,10 @@
 
     [loading]="loading()"
 
-    [dataSource]="data()"
+    [dataSource]="pagedData()"
 
     [length]="data().length"
+    (page)="onPageChange($event)"
 
     [showPaginator]="false"
 
@@ -85,7 +86,7 @@
 
       <table
         mat-table
-        [dataSource]="data()">
+        [dataSource]="pagedData()">
 
         <!-- User -->
 
@@ -236,7 +237,7 @@
 
       <article
         class="user-role-card"
-        *ngFor="let user of data()">
+        *ngFor="let user of pagedData()">
 
 
         <!-- Header -->

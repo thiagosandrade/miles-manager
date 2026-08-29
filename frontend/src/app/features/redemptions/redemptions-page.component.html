@@ -74,9 +74,10 @@
 
     [loading]="loading()"
 
-    [dataSource]="redemptions()"
+    [dataSource]="pagedRedemptions()"
 
     [length]="redemptions().length"
+    (page)="onPageChange($event)"
 
     [showPaginator]="false"
 
@@ -114,7 +115,7 @@
 
       <table
         mat-table
-        [dataSource]="redemptions()">
+        [dataSource]="pagedRedemptions()">
 
 
         <!-- Program -->
@@ -365,7 +366,7 @@
 
       <article
         class="redemption-card"
-        *ngFor="let redemption of redemptions()">
+        *ngFor="let redemption of pagedRedemptions()">
 
 
         <!-- Header -->

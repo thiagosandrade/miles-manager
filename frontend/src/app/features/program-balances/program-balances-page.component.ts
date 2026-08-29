@@ -9,6 +9,7 @@ import { AppTableComponent } from '../../shared/components/app-table/app-table.c
 import { ProgramBalanceService } from './program-balance.service';
 import { ProgramBalance } from './models/program-balance.model';
 import { MatInputModule } from '@angular/material/input';
+import { PageEvent } from '@angular/material/paginator';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -28,6 +29,9 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class ProgramBalancesPageComponent implements OnInit {
 
   balances = signal<ProgramBalance[]>([]);
+  pagedBalances = signal<ProgramBalance[]>([]);
+  private pageIndex = 0;
+  private pageSize = 5;
   loading = signal(false);
 
   displayedColumns = [
@@ -54,6 +58,7 @@ export class ProgramBalancesPageComponent implements OnInit {
       next: balances => {
 
         this.balances.set(balances);
+        this.updatePagedBalances();
         this.loading.set(false);
 
       },
@@ -66,6 +71,18 @@ export class ProgramBalancesPageComponent implements OnInit {
 
     });
 
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updatePagedBalances();
+  }
+
+  private updatePagedBalances(): void {
+    const values = this.balances();
+    const start = this.pageIndex * this.pageSize;
+    this.pagedBalances.set(values.slice(start, start + this.pageSize));
   }
 
 }

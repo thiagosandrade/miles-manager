@@ -134,9 +134,10 @@
 
     [loading]="loading()"
 
-    [dataSource]="data()"
+    [dataSource]="pagedData()"
 
     [length]="data().length"
+    (page)="onPageChange($event)"
 
     [showPaginator]="false"
 
@@ -205,7 +206,7 @@
 
       <table
         mat-table
-        [dataSource]="data()">
+        [dataSource]="pagedData()">
 
 
         <!-- ===============================================
@@ -421,7 +422,7 @@
 
       <article
         class="program-card"
-        *ngFor="let program of data()">
+        *ngFor="let program of pagedData()">
 
 
         <!-- =============================================

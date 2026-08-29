@@ -6,6 +6,7 @@ import { FlightRedemptionService } from './flight-redemption.service';
 import { FlightRedemption, FlightRedemptionCreateRequest, FlightRedemptionUpdateRequest } from './models/flight-redemption.model';
 import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from '@angular/material/table';
+import { PageEvent } from '@angular/material/paginator';
 import { CreateRedemptionDialogComponent } from './create-redemption-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../core/services/snackbar.service';
@@ -30,6 +31,9 @@ export class RedemptionsPageComponent implements OnInit {
   private snackbarService = inject(SnackbarService);
 
   redemptions = signal<FlightRedemption[]>([]);
+  pagedRedemptions = signal<FlightRedemption[]>([]);
+  private pageIndex = 0;
+  private pageSize = 5;
   loading = signal<boolean>(false);
   
   displayedColumns = [
@@ -61,6 +65,7 @@ export class RedemptionsPageComponent implements OnInit {
       next: data => {
 
         this.redemptions.set(data);
+        this.updatePagedRedemptions();
         this.loading.set(false);
 
       },
@@ -73,6 +78,18 @@ export class RedemptionsPageComponent implements OnInit {
 
     });
 
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updatePagedRedemptions();
+  }
+
+  private updatePagedRedemptions(): void {
+    const values = this.redemptions();
+    const start = this.pageIndex * this.pageSize;
+    this.pagedRedemptions.set(values.slice(start, start + this.pageSize));
   }
 
   openCreateRedemptionDialog(): void {

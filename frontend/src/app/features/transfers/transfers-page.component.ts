@@ -60,6 +60,9 @@ export class TransfersPageComponent implements OnInit {
 
   loading = signal<boolean>(false);
   data: MileageTransfer[] | undefined; 
+  pagedData: MileageTransfer[] = [];
+  private pageIndex = 0;
+  private pageSize = 10;
   resultsLength = 0;
   isRateLimitReached = false;
 
@@ -96,12 +99,25 @@ export class TransfersPageComponent implements OnInit {
       .subscribe((result) => {
         if (result) {
           this.data = result;
+          this.updatePagedData();
           this.resultsLength = result.length;
           this.loading.set(false);
           this.isRateLimitReached = false;
           this.cd.detectChanges();
         }
       });
+  }
+
+  onPageChange(event: import('@angular/material/paginator').PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updatePagedData();
+  }
+
+  private updatePagedData(): void {
+    const values = this.data ?? [];
+    const start = this.pageIndex * this.pageSize;
+    this.pagedData = values.slice(start, start + this.pageSize);
   }
 
   get totalPrograms(): number {

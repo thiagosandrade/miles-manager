@@ -107,9 +107,10 @@
 
     [loading]="loading()"
 
-    [dataSource]="data ?? []"
+    [dataSource]="pagedData"
 
     [length]="data?.length ?? 0"
+    (page)="onPageChange($event)"
 
     [showPaginator]="false"
 
@@ -171,7 +172,7 @@
 
       <table
         mat-table
-        [dataSource]="data ?? []">
+        [dataSource]="pagedData">
 
 
         <!-- Origin -->
@@ -369,7 +370,7 @@
 
       <article
         class="transfer-card"
-        *ngFor="let transfer of data ?? []">
+        *ngFor="let transfer of pagedData">
 
 
         <!-- Route -->

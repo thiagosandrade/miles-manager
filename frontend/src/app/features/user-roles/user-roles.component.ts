@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 
@@ -38,6 +39,9 @@ export class UserRolesComponent implements OnInit {
   readonly loading = signal(true);
 
   readonly data = signal<UserDetails[]>([]);
+  readonly pagedData = signal<UserDetails[]>([]);
+  private pageIndex = 0;
+  private pageSize = 5;
 
   readonly displayedColumns = [
     'fullName',
@@ -62,6 +66,7 @@ export class UserRolesComponent implements OnInit {
       next: users => {
 
         this.data.set(users);
+        this.updatePagedData();
 
         this.loading.set(false);
 
@@ -84,6 +89,18 @@ export class UserRolesComponent implements OnInit {
 
     });
 
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updatePagedData();
+  }
+
+  private updatePagedData(): void {
+    const values = this.data();
+    const start = this.pageIndex * this.pageSize;
+    this.pagedData.set(values.slice(start, start + this.pageSize));
   }
 
   openUpdateDialog(user: UserDetails): void {
