@@ -14,6 +14,7 @@ import { EditUserRolesDialogComponent } from './edit-user-roles-dialog.component
 
 import { TranslatePipe } from '@ngx-translate/core';
 import { AppTableComponent } from "../../shared/components/app-table/app-table.component";
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-user-roles',
@@ -25,6 +26,7 @@ import { AppTableComponent } from "../../shared/components/app-table/app-table.c
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    MatInputModule,
     MatDialogModule,
     TranslatePipe,
     AppTableComponent
@@ -38,7 +40,9 @@ export class UserRolesComponent implements OnInit {
 
   readonly loading = signal(true);
 
+  readonly allData = signal<UserDetails[]>([]);
   readonly data = signal<UserDetails[]>([]);
+
   readonly pagedData = signal<UserDetails[]>([]);
   private pageIndex = 0;
   private pageSize = 5;
@@ -65,6 +69,7 @@ export class UserRolesComponent implements OnInit {
 
       next: users => {
 
+        this.allData.set(users);
         this.data.set(users);
         this.updatePagedData();
 
@@ -101,6 +106,19 @@ export class UserRolesComponent implements OnInit {
     const values = this.data();
     const start = this.pageIndex * this.pageSize;
     this.pagedData.set(values.slice(start, start + this.pageSize));
+  }
+
+    applyFilter(filter: string): void {
+
+    const normalizedFilter = filter.trim().toLowerCase();
+
+    const filtered = this.allData().filter(item =>
+      item.fullName?.toLowerCase().includes(normalizedFilter) ?? false
+    );
+
+    this.data.set(filtered);
+    this.updatePagedData();
+
   }
 
   openUpdateDialog(user: UserDetails): void {

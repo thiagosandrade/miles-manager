@@ -16,12 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ProgramsApiService } from './programs-api.service';
 import { Program, ProgramCreateRequest, ProgramUpdateRequest } from './models/program.model';
 import { TranslatePipe } from '@ngx-translate/core';
-import {
-  TextInputComponent,
-  NumberInputComponent,
-  SelectComponent,
-  CheckboxComponent
-} from '../../shared/components/form-fields/form-fields';
+import { TextInputComponent, TextareaInputComponent, NumberInputComponent, MoneyInputComponent, DateInputComponent, SelectComponent, CheckboxComponent } from '../../shared/components/form-fields';
 
 interface ProgramDialogData {
   operation: 'create' | 'update';
@@ -41,7 +36,9 @@ interface ProgramDialogData {
     TextInputComponent,
     NumberInputComponent,
     SelectComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    TranslatePipe
+
   ],
   templateUrl: './create-program-dialog.component.html',
   styleUrls: ['./create-program-dialog.component.scss']

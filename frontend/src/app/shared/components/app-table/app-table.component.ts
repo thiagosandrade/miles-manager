@@ -9,6 +9,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 
 import { AppLoadingSpinnerComponent } from '../app-loading-spinner/app-loading-spinner.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-table',
@@ -19,7 +20,8 @@ import { AppLoadingSpinnerComponent } from '../app-loading-spinner/app-loading-s
     CommonModule,
     MatPaginatorModule,
     MatIconModule,
-    AppLoadingSpinnerComponent
+    AppLoadingSpinnerComponent,
+    PaginationComponent
   ]
 })
 export class AppTableComponent {
@@ -39,8 +41,8 @@ export class AppTableComponent {
 
   @Input() showPaginator = false;
   @Input() length = 0;
-  @Input() pageSize = 10;
-  @Input() pageSizeOptions = [10, 25, 50];
+  @Input() pageSize = 5;
+  @Input() pageSizeOptions = [5, 10, 25, 50];
 
   @Output() page = new EventEmitter<PageEvent>();
 

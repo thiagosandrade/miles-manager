@@ -11,7 +11,7 @@ public sealed class UpdateMileagePurchaseCommandValidator : AbstractValidator<Up
         RuleFor(x => x.Id).NotEmpty();
         RuleFor(x => x.UserId).NotEmpty();
         RuleFor(x => x.ProgramId).NotEmpty();
-        RuleFor(x => x.AmountPaid).GreaterThan(0).WithMessage("AmountPaid must be greater than 0.");
+        RuleFor(x => x.AmountPaid).GreaterThanOrEqualTo(0).WithMessage("AmountPaid must be greater than 0.");
         RuleFor(x => x.MilesPurchased).GreaterThan(0).WithMessage("MilesPurchased must be greater than 0.");
         RuleFor(x => x.PurchaseDate).NotEmpty();
     }

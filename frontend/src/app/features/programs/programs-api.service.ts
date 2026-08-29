@@ -13,14 +13,9 @@ export class ProgramsApiService {
 
   constructor(private http: HttpClient) {}
 
-  async getPrograms(params?: { page?: number; pageSize?: number; sort?: string; filter?: string }): Promise<ProgramListResponse> {
-    let httpParams = new HttpParams();
-    if (params?.page !== undefined) httpParams = httpParams.set('page', params.page.toString());
-    if (params?.pageSize !== undefined) httpParams = httpParams.set('pageSize', params.pageSize.toString());
-    if (params?.sort) httpParams = httpParams.set('sort', params.sort);
-    if (params?.filter) httpParams = httpParams.set('filter', params.filter);
+  async getPrograms(): Promise<ProgramListResponse> {
 
-    const list = await firstValueFrom(this.http.get<Program[]>(`${this.apiBaseUrl}`, { params: httpParams }));
+    const list = await firstValueFrom(this.http.get<Program[]>(`${this.apiBaseUrl}`));
     return { programs: list, totalCount: list.length };
   }
 

@@ -108,7 +108,9 @@
   <!-- Table -->
 
     <app-table
+      
       [title]="'purchases.table.title' | translate"
+      
       [subtitle]="'purchases.table.subtitle' | translate"
 
       [loading]="loading()"
@@ -118,7 +120,9 @@
       [length]="data().length"
       (page)="onPageChange($event)"
 
-      [showPaginator]="false"
+      [showPaginator]="true"
+
+      [showToolbar]="true"
 
       emptyIcon="shopping_cart"
 
@@ -131,14 +135,20 @@
           Toolbar
       ========================================================= -->
 
-      <div table-toolbar class="purchases-toolbar">
+      <div table-toolbar>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field 
+          appearance="outline"
+          class="search-field">
 
           <mat-label>
             {{ 'purchases.table.search' | translate }}
           </mat-label>
 
+          <mat-icon matPrefix>
+            search
+          </mat-icon>
+          
           <input
             matInput
             [placeholder]="'purchases.table.searchPlaceholder' | translate"

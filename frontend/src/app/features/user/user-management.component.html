@@ -91,17 +91,56 @@
   <!-- Table -->
 
   <app-table
+    
     [title]="'users.table.title' | translate"
+    
     [subtitle]="'users.table.subtitle' | translate"
+    
     [loading]="isLoadingResults"
+    
     [dataSource]="pagedData"
+    
     [length]="data.length"
+    
     (page)="onPageChange($event)"
+    
     [showPaginator]="true"
+    
+    [showToolbar]="true"
+
     emptyIcon="group_off"
+    
     [emptyTitle]="'users.table.emptyTitle' | translate"
+    
     [emptyDescription]="'users.table.emptyDescription' | translate">
 
+    <!-- ===================================================
+         Toolbar
+    ==================================================== -->
+
+    <div table-toolbar>
+
+      <mat-form-field
+        appearance="outline"
+        class="search-field">
+
+        <mat-label>
+          {{ 'programs.table.search' | translate }}
+        </mat-label>
+
+        <mat-icon matPrefix>
+          search
+        </mat-icon>
+
+        <input
+          matInput
+          [placeholder]="'programs.table.searchPlaceholder' | translate"
+          (input)="applyFilter($any($event.target).value)">
+
+      </mat-form-field>
+
+    </div>
+    
     <!-- Empty State -->
 
     <button

@@ -94,10 +94,7 @@ export class CreateRedemptionDialogComponent {
       }));
     });
 
-    this.programsApi.getPrograms({
-      page: 1,
-      pageSize: 1000
-    }).then(result => {
+    this.programsApi.getPrograms().then(result => {
       this.programs = result.programs.filter(p => p.isActive);
       this.programOptions = this.programs.map(program => ({
         value: program.id,

@@ -56,10 +56,10 @@
 
   <!-- Table -->
 
-  <!-- Table -->
-
   <app-table
+    
     [title]="'userRoles.table.title' | translate"
+    
     [subtitle]="'userRoles.table.subtitle' | translate"
 
     [loading]="loading()"
@@ -67,9 +67,12 @@
     [dataSource]="pagedData()"
 
     [length]="data().length"
+    
     (page)="onPageChange($event)"
 
-    [showPaginator]="false"
+    [showPaginator]="true"
+
+    [showToolbar]="true"
 
     emptyIcon="groups"
 
@@ -77,6 +80,32 @@
 
     [emptyDescription]="'userRoles.table.emptyDescription' | translate">
 
+    <!-- ===================================================
+         Toolbar
+    ==================================================== -->
+
+    <div table-toolbar>
+
+      <mat-form-field
+        appearance="outline"
+        class="search-field">
+
+        <mat-label>
+          {{ 'programs.table.search' | translate }}
+        </mat-label>
+
+        <mat-icon matPrefix>
+          search
+        </mat-icon>
+
+        <input
+          matInput
+          [placeholder]="'programs.table.searchPlaceholder' | translate"
+          (input)="applyFilter($any($event.target).value)">
+
+      </mat-form-field>
+
+    </div>
 
     <!-- ========================================================
         Desktop Table

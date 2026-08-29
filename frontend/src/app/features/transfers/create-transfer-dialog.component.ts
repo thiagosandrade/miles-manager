@@ -71,10 +71,7 @@ export class CreateTransferDialogComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.programsApi.getPrograms({
-      page: 1,
-      pageSize: 1000
-    }).then(result => {
+    this.programsApi.getPrograms().then(result => {
 
       this.programs = result.programs.filter(x => x.isActive);
       this.programOptions = this.programs.map(program => ({

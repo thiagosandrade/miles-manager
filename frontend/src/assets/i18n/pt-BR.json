@@ -57,7 +57,7 @@
     "taxes": "Taxas",
     "cashPrice": "Preço em dinheiro",
     "price": "Preço",
-    "referencePrice": "Preço de referência",
+    "referencePrice": "Valor do Milheiro",
     "website": "Site",
     "logoUrl": "URL do logo",
     "programCode": "Código do programa",
@@ -100,8 +100,8 @@
     "programs": {
       "program": "Programa",
       "miles": "Milhas",
-      "costPerThousand": "Custo / 1.000",
-      "referencePrice": "Referência / 1.000",
+      "costPerThousand": "Custo / Milheiro",
+      "referencePrice": "Valor do Milheiro",
       "profitLoss": "Lucro / Prejuízo",
       "empty": "Nenhum dado de programa disponível."
     },
@@ -216,7 +216,7 @@
       "columns": {
         "program": "Programa",
         "status": "Status",
-        "referencePrice": "Preço de referência / 1 mil",
+        "referencePrice": "Valor do Milheiro",
         "currency": "Moeda"
       }
     },
@@ -228,7 +228,7 @@
       "programType": "Tipo de programa",
       "website": "Site",
       "logoUrl": "URL do logo",
-      "referencePrice": "Preço de referência por 1.000 milhas",
+      "referencePrice": "Valor do Milheiro",
       "active": "Ativo",
       "createButton": "Criar programa",
       "updateButton": "Atualizar programa",
@@ -270,7 +270,7 @@
       "columns": {
         "program": "Programa",
         "balance": "Saldo",
-        "referencePrice": "Preço de referência / 1 mil",
+        "referencePrice": "Valor do Milheiro",
         "currentValue": "Valor atual / 1 mil",
         "currency": "Moeda"
       }
@@ -403,7 +403,7 @@
         "milesUsed": "Milhas usadas",
         "taxes": "Taxas",
         "cashPrice": "Preço em dinheiro",
-        "effectiveCostPerThousand": "Custo / 1.000 milhas"
+        "effectiveCostPerThousand": "Custo / Milheiro"
       }
     },
     "cabin": {
@@ -424,7 +424,7 @@
       "milesUsed": "Milhas usadas",
       "taxes": "Taxas",
       "cashPrice": "Preço em dinheiro",
-      "effectiveCostPerThousand": "Custo / 1.000 milhas",
+      "effectiveCostPerThousand": "Custo / Milheiro",
       "createButton": "Criar resgate",
       "updateButton": "Atualizar resgate",
       "roundTrip": "Ida e volta"
@@ -503,14 +503,14 @@
       "milesBetter": "Usar milhas é melhor",
       "milesBetterDescription": "A opção com milhas oferece um valor melhor do que pagar em dinheiro.",
       "cashBetter": "Pagar em dinheiro é melhor",
-      "cashBetterDescription": "Pagar em dinheiro é mais barato do que usar milhas com o valor de referência atual.",
+      "cashBetterDescription": "Pagar em dinheiro é mais barato do que usar milhas com o valor do milheiro atual.",
       "cashOption": "Passagem em Dinheiro",
       "milesOption": "Milhas + Taxas",
       "vs": "VS",
       "savings": "Economia",
       "miles": "Milhas Necessárias",
       "taxes": "Taxas",
-      "referencePrice": "Preço de Referência",
+      "referencePrice": "Valor do Milheiro",
       "milesValue": "Valor das Milhas",
       "effectiveValue": "Valor Efetivo das Milhas",
       "perThousand": "por 1.000 milhas",

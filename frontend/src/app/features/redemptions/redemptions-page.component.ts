@@ -11,6 +11,7 @@ import { CreateRedemptionDialogComponent } from './create-redemption-dialog.comp
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-redemptions-page',
@@ -18,6 +19,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   imports: [
     CommonModule, 
     MatCardModule, 
+    MatInputModule,
     AppTableComponent, 
     MatIconModule, 
     MatTableModule,
@@ -30,8 +32,10 @@ export class RedemptionsPageComponent implements OnInit {
   private dialog = inject(MatDialog);
   private snackbarService = inject(SnackbarService);
 
-  redemptions = signal<FlightRedemption[]>([]);
-  pagedRedemptions = signal<FlightRedemption[]>([]);
+  readonly allData = signal<FlightRedemption[]>([]);
+  readonly data = signal<FlightRedemption[]>([]);
+  
+  pagedData = signal<FlightRedemption[]>([]);
   private pageIndex = 0;
   private pageSize = 5;
   loading = signal<boolean>(false);
@@ -64,8 +68,9 @@ export class RedemptionsPageComponent implements OnInit {
 
       next: data => {
 
-        this.redemptions.set(data);
-        this.updatePagedRedemptions();
+        this.allData.set(data);
+        this.data.set(data);
+        this.updatePagedData();
         this.loading.set(false);
 
       },
@@ -83,13 +88,26 @@ export class RedemptionsPageComponent implements OnInit {
   onPageChange(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.updatePagedRedemptions();
+    this.updatePagedData();
   }
 
-  private updatePagedRedemptions(): void {
-    const values = this.redemptions();
+  private updatePagedData(): void {
+    const values = this.data();
     const start = this.pageIndex * this.pageSize;
-    this.pagedRedemptions.set(values.slice(start, start + this.pageSize));
+    this.pagedData.set(values.slice(start, start + this.pageSize));
+  }
+
+  applyFilter(filter: string): void {
+
+    const normalizedFilter = filter.trim().toLowerCase();
+
+    const filtered = this.allData().filter(item =>
+      item.program?.toLowerCase().includes(normalizedFilter) ?? false
+    );
+
+    this.data.set(filtered);
+    this.updatePagedData();
+
   }
 
   openCreateRedemptionDialog(): void {

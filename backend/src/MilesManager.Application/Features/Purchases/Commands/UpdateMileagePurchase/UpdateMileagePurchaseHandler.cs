@@ -17,7 +17,7 @@ public sealed class UpdateMileagePurchaseHandler(IApplicationDbContext context) 
             return Result<Guid>.NotFound();
         }
 
-        if (request.AmountPaid <= 0)
+        if (request.AmountPaid < 0)
         {
             return Result<Guid>.ValidationFailed("AmountPaid must be positive.");
         }

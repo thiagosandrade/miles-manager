@@ -58,8 +58,10 @@ export class TransfersPageComponent implements OnInit {
     'actions'
   ];
 
+  allData = signal<MileageTransfer[]>([]);
+  data = signal<MileageTransfer[]>([]);
   loading = signal<boolean>(false);
-  data: MileageTransfer[] | undefined; 
+
   pagedData: MileageTransfer[] = [];
   private pageIndex = 0;
   private pageSize = 10;
@@ -98,7 +100,8 @@ export class TransfersPageComponent implements OnInit {
       )
       .subscribe((result) => {
         if (result) {
-          this.data = result;
+          this.allData.set(result);
+          this.data.set(result);
           this.updatePagedData();
           this.resultsLength = result.length;
           this.loading.set(false);
@@ -117,13 +120,13 @@ export class TransfersPageComponent implements OnInit {
   private updatePagedData(): void {
     const values = this.data ?? [];
     const start = this.pageIndex * this.pageSize;
-    this.pagedData = values.slice(start, start + this.pageSize);
+    this.pagedData = values().slice(start, start + this.pageSize);
   }
 
   get totalPrograms(): number {
 
     return new Set(
-      (this.data ?? []).flatMap(t => [
+      (this.data() ?? []).flatMap(t => [
         t.originProgram,
         t.destinationProgram
       ])
@@ -131,9 +134,18 @@ export class TransfersPageComponent implements OnInit {
 
   }
 
-  applyFilter(filterValue: string) {
-    this.filter = filterValue.trim().toLowerCase();
-    this.loadTransfers();
+  applyFilter(filter: string): void {
+
+    const normalizedFilter = filter.trim().toLowerCase();
+
+    const filtered = this.allData().filter(item =>
+      (item.originProgram?.toLowerCase().includes(normalizedFilter)
+      || item.destinationProgram?.toLowerCase().includes(normalizedFilter)) ?? false
+    );
+
+    this.data.set(filtered);
+    this.updatePagedData();
+
   }
 
   openEditTransferDialog(transfer: MileageTransfer): void {
@@ -229,7 +241,7 @@ export class TransfersPageComponent implements OnInit {
     
     this.api.deleteTransfer(transfer.id).subscribe({
       next: () => {
-        this.snackbarService.success('Transfer updated succesfully.', 3000);
+        this.snackbarService.success('Transfer deleted succesfully.', 3000);
         this.loadTransfers();
         this.loading.set(false)
       },

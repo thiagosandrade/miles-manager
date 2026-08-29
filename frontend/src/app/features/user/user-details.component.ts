@@ -8,7 +8,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 import { UserApiService } from './user-api.service';
 import { UserDetails } from './models/user.models';
-import { AppLoadingSpinnerComponent } from '../../shared/components/app-loading-spinner/app-loading-spinner.component';
 
 @Component({
   standalone: true,
@@ -20,7 +19,6 @@ import { AppLoadingSpinnerComponent } from '../../shared/components/app-loading-
     MatCardModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    AppLoadingSpinnerComponent,
     TranslatePipe
   ]
 })

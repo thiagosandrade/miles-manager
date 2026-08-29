@@ -37,10 +37,12 @@ export class ProgramsPageComponent implements OnInit {
   private readonly storage = inject(TokenStorageService);
   readonly isAdministrator = this.storage.isAdministrator();
   
-  data = signal<Program[]>([]);
+  readonly allData = signal<Program[]>([]);
+  readonly data = signal<Program[]>([]);
+
   pagedData = signal<Program[]>([]);
   private pageIndex = 0;
-  private pageSize = 10;
+  private pageSize = 5;
   loading = signal(false);
   isRateLimitReached = signal(false);
 
@@ -63,26 +65,15 @@ export class ProgramsPageComponent implements OnInit {
     this.loadPrograms();
   }
 
-  async loadPrograms(
-    pageIndex = 0,
-    pageSize = 10,
-    sortField = '',
-    sortDirection = ''
-  ): Promise<void> {
+  async loadPrograms(): Promise<void> {
 
     this.loading.set(true);
     this.isRateLimitReached.set(false);
 
     try {
 
-      await this.programsService.getPrograms({
-        page: pageIndex + 1,
-        pageSize,
-        sort: sortField
-          ? `${sortDirection === 'asc' ? '' : '-'}${sortField}`
-          : undefined,
-        filter: this.filter
-      }).then(result => {
+      await this.programsService.getPrograms().then(result => {
+        this.allData.set(result.programs);
         this.data.set(result.programs);
         this.updatePagedData();
       });
@@ -114,9 +105,14 @@ export class ProgramsPageComponent implements OnInit {
 
   applyFilter(filter: string): void {
 
-    this.filter = filter.trim().toLowerCase();
+    const normalizedFilter = filter.trim().toLowerCase();
 
-    this.loadPrograms();
+    const filtered = this.allData().filter(item =>
+      item.name?.toLowerCase().includes(normalizedFilter) ?? false
+    );
+
+    this.data.set(filtered);
+    this.updatePagedData();
 
   }
 

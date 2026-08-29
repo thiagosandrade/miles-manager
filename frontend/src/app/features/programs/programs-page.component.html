@@ -137,9 +137,10 @@
     [dataSource]="pagedData()"
 
     [length]="data().length"
+    
     (page)="onPageChange($event)"
 
-    [showPaginator]="false"
+    [showPaginator]="true"
 
     [showToolbar]="true"
 

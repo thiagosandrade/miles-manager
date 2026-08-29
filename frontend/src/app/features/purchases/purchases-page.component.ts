@@ -4,8 +4,8 @@
   import { MatIconModule } from '@angular/material/icon';
   import { MatInputModule } from '@angular/material/input';
   import { MatTableModule } from '@angular/material/table';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { PageEvent } from '@angular/material/paginator';
+  import { MatFormFieldModule } from '@angular/material/form-field';
+  import { PageEvent } from '@angular/material/paginator';
 
   import { AppTableComponent } from '../../shared/components/app-table/app-table.component';
 
@@ -15,8 +15,8 @@ import { PageEvent } from '@angular/material/paginator';
   import { CreatePurchaseDialogComponent } from './create-purchase-dialog.component';
   import { TokenStorageService } from '../../core/services/token-storage.service';
   import { PurchaseStatus } from '../../core/enums/purchase-status.enum';
-import { SnackbarService } from '../../core/services/snackbar.service';
-import { TranslatePipe } from '@ngx-translate/core';
+  import { SnackbarService } from '../../core/services/snackbar.service';
+  import { TranslatePipe } from '@ngx-translate/core';
 
   @Component({
     selector: 'app-purchases-page',
@@ -35,7 +35,9 @@ import { TranslatePipe } from '@ngx-translate/core';
   })
   export class PurchasesPageComponent implements OnInit {
 
-    data = signal<MileagePurchase[]>([]);
+    readonly allData = signal<MileagePurchase[]>([]);
+    readonly data = signal<MileagePurchase[]>([]);
+
     pagedData = signal<MileagePurchase[]>([]);
     private pageIndex = 0;
     private pageSize = 5;
@@ -72,6 +74,7 @@ import { TranslatePipe } from '@ngx-translate/core';
       this.purchasesService.listPurchases().subscribe({
 
         next: purchases => {
+          this.allData.set(purchases);
           this.data.set(purchases);
           this.updatePagedData();
           this.loading.set(false);
@@ -110,9 +113,16 @@ import { TranslatePipe } from '@ngx-translate/core';
 
     applyFilter(filter: string): void {
 
-      filter = filter.trim().toLowerCase();
+      const normalizedFilter = filter.trim().toLowerCase();
 
-      // TODO: implement filtering
+      const filtered = this.allData().filter(item =>
+        (item.programName?.toLowerCase().includes(normalizedFilter)
+        || item.description?.toLowerCase().includes(normalizedFilter)
+        || item.partner?.toLowerCase().includes(normalizedFilter)) ?? false
+      );
+
+      this.data.set(filtered);
+      this.updatePagedData();
 
     }
 

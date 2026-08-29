@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatTableModule } from '@angular/material/table';
@@ -18,6 +18,8 @@ import { UserDetails, CreateUserRequest, UpdateUserRequest } from './models/user
 import { CreateUserDialogComponent } from './create-user-dialog.component';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-user-management',
@@ -30,8 +32,10 @@ import { TranslatePipe } from '@ngx-translate/core';
     MatDialogModule,
     MatSnackBarModule,
     AppTableComponent,
-    TranslatePipe
-  ],
+    TranslatePipe,
+    MatInputModule
+
+],
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.scss']
 })
@@ -50,7 +54,9 @@ export class UserManagementComponent implements OnInit {
     'actions'
   ];
 
-  data: UserDetails[] = [];
+  readonly allData = signal<UserDetails[]>([]);
+  readonly data = signal<UserDetails[]>([]);
+  
   pagedData: UserDetails[] = [];
   private pageIndex = 0;
   private pageSize = 5;
@@ -67,7 +73,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   get activeUsers(): number {
-    return this.data.filter(x => x.isActive).length;
+    return this.data().filter(x => x.isActive).length;
   }
 
   loadUsers(): void {
@@ -91,7 +97,8 @@ export class UserManagementComponent implements OnInit {
       )
       .subscribe(users => {
 
-        this.data = users;
+        this.allData.set(users);
+        this.data.set(users);
         this.updatePagedData();
 
         this.isLoadingResults = false;
@@ -111,7 +118,20 @@ export class UserManagementComponent implements OnInit {
 
   private updatePagedData(): void {
     const start = this.pageIndex * this.pageSize;
-    this.pagedData = this.data.slice(start, start + this.pageSize);
+    this.pagedData = this.data().slice(start, start + this.pageSize);
+  }
+
+  applyFilter(filter: string): void {
+
+    const normalizedFilter = filter.trim().toLowerCase();
+
+    const filtered = this.allData().filter(item =>
+      item.fullName?.toLowerCase().includes(normalizedFilter) ?? false
+    );
+
+    this.data.set(filtered);
+    this.updatePagedData();
+
   }
 
   openCreateUserDialog(): void {

@@ -46,7 +46,7 @@
         </span>
 
         <strong>
-          {{ balances().length }}
+          {{ data().length }}
         </strong>
 
       </div>
@@ -70,7 +70,7 @@
 
         <strong>
           {{
-            balances().reduce((sum, b) => sum + b.balance, 0)
+            data().reduce((sum, b) => sum + b.balance, 0)
               | number:'1.0-0'
           }}
         </strong>
@@ -90,16 +90,20 @@
   <app-table
 
     [title]="'balances.table.title' | translate"
+    
     [subtitle]="'balances.table.subtitle' | translate"
 
     [loading]="loading()"
 
-    [dataSource]="pagedBalances()"
+    [dataSource]="pagedData()"
 
-    [length]="balances().length"
+    [length]="data().length"
+    
     (page)="onPageChange($event)"
 
-    [showPaginator]="false"
+    [showPaginator]="true"
+
+    [showToolbar]="true"
 
     emptyIcon="account_balance_wallet"
 
@@ -107,6 +111,32 @@
 
     [emptyDescription]="'balances.table.emptyDescription' | translate">
 
+    <!-- ===================================================
+         Toolbar
+    ==================================================== -->
+
+    <div table-toolbar>
+
+      <mat-form-field
+        appearance="outline"
+        class="search-field">
+
+        <mat-label>
+          {{ 'programs.table.search' | translate }}
+        </mat-label>
+
+        <mat-icon matPrefix>
+          search
+        </mat-icon>
+
+        <input
+          matInput
+          [placeholder]="'programs.table.searchPlaceholder' | translate"
+          (input)="applyFilter($any($event.target).value)">
+
+      </mat-form-field>
+
+    </div>
 
     <!-- ===================================================
          Desktop Table
@@ -116,7 +146,7 @@
 
       <table
         mat-table
-        [dataSource]="pagedBalances()">
+        [dataSource]="pagedData()">
 
 
         <!-- ================================================
@@ -275,7 +305,7 @@
 
       <article
         class="balance-card"
-        *ngFor="let balance of pagedBalances()">
+        *ngFor="let balance of pagedData()">
 
 
         <!-- ==============================================

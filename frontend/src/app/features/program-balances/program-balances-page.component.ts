@@ -28,8 +28,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class ProgramBalancesPageComponent implements OnInit {
 
-  balances = signal<ProgramBalance[]>([]);
-  pagedBalances = signal<ProgramBalance[]>([]);
+  readonly allData = signal<ProgramBalance[]>([]);
+  readonly data = signal<ProgramBalance[]>([]);
+
+  pagedData = signal<ProgramBalance[]>([]);
   private pageIndex = 0;
   private pageSize = 5;
   loading = signal(false);
@@ -56,9 +58,9 @@ export class ProgramBalancesPageComponent implements OnInit {
     this.programBalanceService.getProgramBalances().subscribe({
 
       next: balances => {
-
-        this.balances.set(balances);
-        this.updatePagedBalances();
+        this.allData.set(balances);
+        this.data.set(balances);
+        this.updatePagedData();
         this.loading.set(false);
 
       },
@@ -76,13 +78,25 @@ export class ProgramBalancesPageComponent implements OnInit {
   onPageChange(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.updatePagedBalances();
+    this.updatePagedData();
   }
 
-  private updatePagedBalances(): void {
-    const values = this.balances();
+  private updatePagedData(): void {
+    const values = this.data();
     const start = this.pageIndex * this.pageSize;
-    this.pagedBalances.set(values.slice(start, start + this.pageSize));
+    this.pagedData.set(values.slice(start, start + this.pageSize));
   }
 
+  applyFilter(filter: string): void {
+
+    const normalizedFilter = filter.trim().toLowerCase();
+
+    const filtered = this.allData().filter(item =>
+      item.programName?.toLowerCase().includes(normalizedFilter) ?? false
+    );
+
+    this.data.set(filtered);
+    this.updatePagedData();
+
+  }
 }

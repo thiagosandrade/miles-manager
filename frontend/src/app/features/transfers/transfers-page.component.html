@@ -49,7 +49,7 @@
 
         <span>{{ 'transfers.metrics.totalTransfers' | translate }}</span>
 
-        <strong>{{ data?.length ?? 0 }}</strong>
+        <strong>{{ data().length }}</strong>
 
       </div>
 
@@ -69,7 +69,7 @@
 
         <strong>
 
-          {{ data?.reduce((sum, t) => sum + t.milesSent, 0) ?? 0 | number }}
+          {{ data().reduce((sum, t) => sum + t.milesSent, 0) | number }}
 
         </strong>
 
@@ -109,10 +109,10 @@
 
     [dataSource]="pagedData"
 
-    [length]="data?.length ?? 0"
+    [length]="data.length"
     (page)="onPageChange($event)"
 
-    [showPaginator]="false"
+    [showPaginator]="true"
 
     [showToolbar]="true"
 
