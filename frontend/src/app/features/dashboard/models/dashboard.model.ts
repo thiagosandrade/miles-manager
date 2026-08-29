@@ -41,10 +41,6 @@ export interface TransferDto {
   milesReceived: number;
   bonusPercentage: number;
   transferDate: string;
-  costPerThousandOrigin: number;
-  costPerThousandDestination: number;
-  currencyCodeOrigin: string;
-  currencyCodeDestination: string;
 }
 
 

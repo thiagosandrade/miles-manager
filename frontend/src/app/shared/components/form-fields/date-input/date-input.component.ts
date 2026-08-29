@@ -5,6 +5,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { parseDateOnly } from '../../../date-utils';
 
 @Component({
   standalone: true,
@@ -68,7 +69,7 @@ export class DateInputComponent implements ControlValueAccessor {
   private onTouched: () => void = () => {};
 
   writeValue(value: Date | string | null): void {
-    this.value = value ? new Date(value) : null;
+    this.value = parseDateOnly(value);
     this.changeDetector.markForCheck();
   }
   registerOnChange(fn: (value: Date | null) => void): void { this.onChange = fn; }

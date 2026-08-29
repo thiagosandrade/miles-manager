@@ -100,6 +100,7 @@
     "programs": {
       "program": "Programm",
       "miles": "Meilen",
+      "milesSent": "Gesendete Meilen + Bonus",
       "costPerThousand": "Kosten / 1.000",
       "referencePrice": "Referenz / 1.000",
       "profitLoss": "Gewinn / Verlust",

@@ -16,7 +16,8 @@
   import { TokenStorageService } from '../../core/services/token-storage.service';
   import { PurchaseStatus } from '../../core/enums/purchase-status.enum';
   import { SnackbarService } from '../../core/services/snackbar.service';
-  import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import { formatDateOnly } from '../../shared/date-utils';
 
   @Component({
     selector: 'app-purchases-page',
@@ -153,7 +154,7 @@
           amountPaid: Number(result.amountPaid),
           milesPurchased: Number(result.milesPurchased),
           purchaseStatus: PurchaseStatus.Completed,
-          purchaseDate: result.purchaseDate.toISOString().split('T')[0]
+          purchaseDate: formatDateOnly(result.purchaseDate)
         };
 
         this.loading.set(true);
@@ -197,7 +198,7 @@
           amountPaid: Number(result.amountPaid),
           milesPurchased: Number(result.milesPurchased),
           purchaseStatus: PurchaseStatus.Completed,
-          purchaseDate: result.purchaseDate.toISOString().split('T')[0]
+          purchaseDate: formatDateOnly(result.purchaseDate)
         };
 
         this.purchasesService.createPurchase(request).subscribe({
@@ -242,7 +243,7 @@
           amountPaid: Number(result.amountPaid),
           milesPurchased: Number(result.milesPurchased),
           purchaseStatus: PurchaseStatus.Completed,
-          purchaseDate: result.purchaseDate.toISOString().split('T')[0]
+          purchaseDate: formatDateOnly(result.purchaseDate)
         };
 
         this.purchasesService.createPurchase(request).subscribe({

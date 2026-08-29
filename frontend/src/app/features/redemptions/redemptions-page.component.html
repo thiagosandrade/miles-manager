@@ -224,7 +224,7 @@
           </th>
 
           <td mat-cell *matCellDef="let redemption">
-            {{ redemption.flightDate | date:'mediumDate' }}
+            {{ redemption.flightDate | date:'mediumDate':'UTC' }}
           </td>
 
         </ng-container>
@@ -522,7 +522,7 @@
             </span>
 
             <strong>
-              {{ redemption.flightDate | date:'mediumDate' }}
+              {{ redemption.flightDate | date:'mediumDate':'UTC' }}
             </strong>
 
           </div>

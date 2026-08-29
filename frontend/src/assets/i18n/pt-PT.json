@@ -100,7 +100,8 @@
     "programs": {
       "program": "Programa",
       "miles": "Milhas",
-      "costPerThousand": "Custo / 1 000",
+      "milesSent": "Milhas Enviadas + Bonus",
+      "costPerThousand": "Custo / Milheiro",
       "referencePrice": "Referência / 1 000",
       "profitLoss": "Lucro / Prejuízo",
       "empty": "Não existem dados de programas disponíveis."

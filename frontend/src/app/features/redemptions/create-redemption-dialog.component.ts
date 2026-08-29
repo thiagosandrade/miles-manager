@@ -15,6 +15,7 @@ import { FlightRedemptionService } from './flight-redemption.service';
 import { FlightRedemption } from './models/flight-redemption.model';
 import { AirportsDTO, LookupService } from '../../core/services/dataapp-api.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { parseDateOnly } from '../../shared/date-utils';
 import {
   CheckboxComponent,
   DateInputComponent,
@@ -121,7 +122,7 @@ export class CreateRedemptionDialogComponent {
       programId: this.programs.find(p => p.name === redemption.program)?.id,
       originAirportCode: redemption.originAirportCode,
       destinationAirportCode: redemption.destinationAirportCode,
-      flightDate: this.data.operation === 'clone' ? new Date() : new Date(redemption.flightDate),
+      flightDate: this.data.operation === 'clone' ? new Date() : parseDateOnly(redemption.flightDate),
       cabinClass: redemption.cabinClass,
       passengers: redemption.passengers,
       isRoundTrip: redemption.isRoundTrip,

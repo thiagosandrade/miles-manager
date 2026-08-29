@@ -108,7 +108,7 @@ export class CreateTransferDialogComponent implements OnInit {
   private updateMilesReceived(): void {
     const milesSent = Number(this.form.controls.milesSent.value) || 0;
     const bonusPercentage = Number(this.form.controls.bonusPercentage.value) || 0;
-    const milesReceived = milesSent * (1 + bonusPercentage / 100);
+    const milesReceived = Math.ceil(milesSent * (1 + bonusPercentage / 100));
 
     this.form.controls.milesReceived.setValue(milesReceived, { emitEvent: false });
   }

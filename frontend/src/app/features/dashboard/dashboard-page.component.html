@@ -429,6 +429,13 @@
 
               </strong>
 
+              <small>
+
+                {{ formatMiles(purchase.milesPurchased) }}
+
+                {{ 'dashboard.redemption-miles' | translate }}
+
+              </small>
             </div>
 
           </article>
@@ -496,24 +503,15 @@
 
               <span>
 
-                {{
-                  formatCurrency(
-                    transfer.costPerThousandOrigin,
-                    transfer.currencyCodeOrigin
-                  )
-                }}
+                {{ formatMiles(transfer.milesSent) }}
 
-                /
+                +
 
-                {{
-                  formatCurrency(
-                    transfer.costPerThousandDestination,
-                    transfer.currencyCodeDestination
-                  )
-                }}
+                {{ formatMiles(transfer.bonusPercentage) }}
 
-                {{ 'dashboard.programs.costPerThousand' | translate }}
-
+                (
+                  {{ 'dashboard.programs.milesSent' | translate }}
+                )
               </span>
 
               <span>

@@ -10,6 +10,7 @@ import { MileagePurchase } from './models/mileage-purchase.model';
 import { PurchaseStatus } from '../../core/enums/purchase-status.enum';
 import { PurchasesApiService } from './purchases-api.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { parseDateOnly } from '../../shared/date-utils';
 import {
   DateInputComponent,
   MoneyInputComponent,
@@ -108,7 +109,7 @@ export class CreatePurchaseDialogComponent implements OnInit {
       amountPaid: purchase.amountPaid,
       milesPurchased: purchase.milesPurchased,
       purchaseStatus: purchase.purchaseStatus,
-      purchaseDate: this.data.operation === 'clone' ? new Date() : new Date(purchase.purchaseDate)
+      purchaseDate: this.data.operation === 'clone' ? new Date() : parseDateOnly(purchase.purchaseDate)
     });
   }
 

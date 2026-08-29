@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
+import { formatDateOnly } from '../../shared/date-utils';
 
 @Component({
   selector: 'app-redemptions-page',
@@ -129,7 +130,7 @@ export class RedemptionsPageComponent implements OnInit {
         programId: result.programId,
         originAirportCode: result.originAirportCode,
         destinationAirportCode: result.destinationAirportCode,
-        flightDate: result.flightDate.toISOString().split('T')[0],
+        flightDate: formatDateOnly(result.flightDate),
         cabinClass: Number(result.cabinClass),
         passengers: Number(result.passengers),
         isRoundTrip: result.isRoundTrip,
@@ -187,7 +188,7 @@ export class RedemptionsPageComponent implements OnInit {
         programId: result.programId,
         originAirportCode: result.originAirportCode,
         destinationAirportCode: result.destinationAirportCode,
-        flightDate: result.flightDate.toISOString().split('T')[0],
+        flightDate: formatDateOnly(result.flightDate),
         cabinClass: Number(result.cabinClass),
         passengers: Number(result.passengers),
         isRoundTrip: result.isRoundTrip,

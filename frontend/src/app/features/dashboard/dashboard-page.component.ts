@@ -98,18 +98,32 @@ export class DashboardPageComponent implements OnInit {
 
   formatCurrency(
     value: number,
-    currencyCode: string
+    currencyCode?: string
   ): string {
 
-    return new Intl.NumberFormat(
-      undefined,
-      {
-        style: 'currency',
-        currency: currencyCode,
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }
-    ).format(value);
+    const currency = currencyCode?.trim() || 'USD';
+
+    try {
+      return new Intl.NumberFormat(
+        undefined,
+        {
+          style: 'currency',
+          currency,
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      ).format(value);
+    } catch {
+      return new Intl.NumberFormat(
+        undefined,
+        {
+          style: 'currency',
+          currency: 'USD',
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      ).format(value);
+    }
 
   }
 
