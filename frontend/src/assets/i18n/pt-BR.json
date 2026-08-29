@@ -272,7 +272,7 @@
         "program": "Programa",
         "balance": "Saldo",
         "referencePrice": "Valor do Milheiro",
-        "currentValue": "Valor atual / 1 mil",
+        "currentValue": "Valor do Milheiro Atual",
         "currency": "Moeda"
       }
     }

@@ -15,7 +15,7 @@ import { catchError, startWith } from 'rxjs/operators';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MileageTransfer, TransferCreateRequest, TransferUpdateRequest } from './models/mileage-transfer.model';
 import { AppTableComponent } from "../../shared/components/app-table/app-table.component";
-import { CreateTransferDialogComponent } from './create-transfer-dialog.component';
+import { CreateTransferDialogComponent, TransferDialogData } from './create-transfer-dialog.component';
 import { TokenStorageService } from '../../core/services/token-storage.service';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -151,7 +151,7 @@ export class TransfersPageComponent implements OnInit {
   openEditTransferDialog(transfer: MileageTransfer): void {
 
     const dialogRef = this.dialog.open(CreateTransferDialogComponent, {
-       width: '500px',
+      width: '500px',
       maxWidth: '95vw',
       data: {
         operation: 'update',
@@ -192,13 +192,19 @@ export class TransfersPageComponent implements OnInit {
 
   }
 
-  openCreateTransferDialog(): void {
+  openCloneTransferDialog(transfer: MileageTransfer): void {
+    this.openCreateTransferDialog({
+      operation: 'clone',
+      transferId: transfer.id,
+      transfer
+    });
+  }
+
+  openCreateTransferDialog(data: TransferDialogData = { operation: 'create' }): void {
 
     const dialogRef = this.dialog.open(CreateTransferDialogComponent, {
       width: '600px',
-      data: {
-        operation: 'create'
-      }
+      data
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -219,7 +225,7 @@ export class TransfersPageComponent implements OnInit {
 
       this.api.createTransfer(request).subscribe({
           next: () => {
-            this.snackbarService.success('Transfer updated succesfully.', 3000);
+            this.snackbarService.success('Transfer created succesfully.', 3000);
             this.loadTransfers();
             this.loading.set(false)
           },

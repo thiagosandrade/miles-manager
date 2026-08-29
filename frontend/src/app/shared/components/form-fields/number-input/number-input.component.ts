@@ -24,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
         [value]="value ?? ''"
         [disabled]="disabled"
         [readonly]="readonly"
+        [disabled]="readonly"
         [min]="min"
         [max]="max"
         [step]="step"

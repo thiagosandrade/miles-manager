@@ -332,6 +332,17 @@
             </button>
 
             <button
+              class="icon-button"
+              [attr.aria-label]="'redemptions.actions.clone' | translate"
+              (click)="openCloneTransferDialog(transfer)">
+
+              <mat-icon>
+                content_copy
+              </mat-icon>
+
+            </button>
+
+            <button
               class="icon-button danger"
               [attr.aria-label]="'transfers.actions.delete' | translate"
               (click)="deleteTransfer(transfer)">
@@ -495,6 +506,17 @@
 
             <mat-icon>
               edit
+            </mat-icon>
+
+          </button>
+
+          <button
+            class="icon-button"
+            [attr.aria-label]="'transfers.actions.clone' | translate"
+            (click)="openCloneTransferDialog(transfer)">
+
+            <mat-icon>
+              content_copy
             </mat-icon>
 
           </button>

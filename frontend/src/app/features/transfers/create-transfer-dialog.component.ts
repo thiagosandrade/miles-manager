@@ -25,10 +25,12 @@ import {
   SelectComponent,
   type SelectOption
 } from '../../shared/components/form-fields/form-fields';
+import { MileageTransfer } from './models/mileage-transfer.model';
 
-interface TransferDialogData {
-  operation: 'create' | 'update';
+export interface TransferDialogData {
+  operation: 'create' | 'update' | 'clone';
   transferId?: string;
+  transfer?: MileageTransfer;
 }
 
 @Component({
@@ -87,7 +89,7 @@ export class CreateTransferDialogComponent implements OnInit {
         label: program.name
       }));
 
-      if (this.data?.operation === 'update' && this.data?.transferId) {
+      if ((this.data?.operation === 'update'  || this.data.operation === 'clone') && this.data?.transferId) {
         this.transfersApi.getTransfer(this.data.transferId).subscribe({
           next: transfer => {
             this.form.patchValue({
@@ -108,7 +110,7 @@ export class CreateTransferDialogComponent implements OnInit {
   private updateMilesReceived(): void {
     const milesSent = Number(this.form.controls.milesSent.value) || 0;
     const bonusPercentage = Number(this.form.controls.bonusPercentage.value) || 0;
-    const milesReceived = Math.ceil(milesSent * (1 + bonusPercentage / 100));
+    const milesReceived = Math.round(milesSent * (1 + bonusPercentage / 100));
 
     this.form.controls.milesReceived.setValue(milesReceived, { emitEvent: false });
   }

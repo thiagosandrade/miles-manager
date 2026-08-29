@@ -114,7 +114,7 @@ export class RedemptionsPageComponent implements OnInit {
   openCreateRedemptionDialog(data: RedemptionDialogData = { operation: 'create' }): void {
 
     const dialogRef = this.dialog.open(CreateRedemptionDialogComponent, {
-       width: '500px',
+      width: '500px',
       maxWidth: '95vw',
       data
     });
