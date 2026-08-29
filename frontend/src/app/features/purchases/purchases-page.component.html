@@ -311,21 +311,21 @@
 
               <button
                 class="icon-button"
-                [attr.aria-label]="'purchases.actions.clone' | translate"
-                (click)="clonePurchase(purchase)">
-
-                <mat-icon>content_copy</mat-icon>
-
-              </button>
-
-              <button
-                class="icon-button"
                 [attr.aria-label]="'purchases.actions.edit' | translate"
                 (click)="openEditPurchaseDialog(purchase)">
 
                 <mat-icon>
                   edit
                 </mat-icon>
+
+              </button>
+
+              <button
+                class="icon-button"
+                [attr.aria-label]="'purchases.actions.clone' | translate"
+                (click)="clonePurchase(purchase)">
+
+                <mat-icon>content_copy</mat-icon>
 
               </button>
 
@@ -399,15 +399,6 @@
 
               <button
                 class="icon-button"
-                [attr.aria-label]="'purchases.actions.clone' | translate"
-                (click)="clonePurchase(purchase)">
-
-                <mat-icon>content_copy</mat-icon>
-
-              </button>
-
-              <button
-                class="icon-button"
                 [attr.aria-label]="'purchases.actions.edit' | translate"
                 (click)="openEditPurchaseDialog(purchase)">
 
@@ -417,6 +408,15 @@
 
               </button>
 
+              <button
+                class="icon-button"
+                [attr.aria-label]="'purchases.actions.clone' | translate"
+                (click)="clonePurchase(purchase)">
+
+                <mat-icon>content_copy</mat-icon>
+
+              </button>
+              
               <button
                 class="icon-button danger"
                 [attr.aria-label]="'purchases.actions.delete' | translate"
