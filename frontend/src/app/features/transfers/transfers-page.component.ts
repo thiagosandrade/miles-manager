@@ -223,8 +223,8 @@ export class TransfersPageComponent implements OnInit {
             this.loadTransfers();
             this.loading.set(false)
           },
-          error: () => {
-            this.snackbarService.error('Could not create transfer.', 3000);
+          error: (ex) => {
+            this.snackbarService.error(`Could not create transfer. ${ex.error.title}`, 3000);
             this.loading.set(false)
           } 
         });
@@ -241,8 +241,8 @@ export class TransfersPageComponent implements OnInit {
         this.loadTransfers();
         this.loading.set(false)
       },
-      error: () => {
-        this.snackbarService.error('Could not create transfer.', 3000);
+      error: (ex) => {
+        this.snackbarService.error(`Could not create transfer. ${ex.error.title}`, 3000);
         this.loading.set(false)
       } 
     });

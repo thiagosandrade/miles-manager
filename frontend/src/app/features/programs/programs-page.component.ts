@@ -164,8 +164,8 @@ export class ProgramsPageComponent implements OnInit {
             this.loadPrograms();
             this.loading.set(false)
           },
-          error: () => {
-            this.snackbarService.error('Could not create program.', 3000);
+          error: (ex) => {
+            this.snackbarService.error(`Could not create program. ${ex.error.title}`, 3000);
             this.loading.set(false)
           } 
         });

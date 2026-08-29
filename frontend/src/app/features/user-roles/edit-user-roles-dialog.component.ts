@@ -19,6 +19,7 @@ import { UserRolesApiService } from './user-roles-api.service';
 import { Role } from './models/user-roles.models';
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   standalone: true,
@@ -47,6 +48,8 @@ export class EditUserRolesDialogComponent implements OnInit {
   private readonly userRolesApi =
     inject(UserRolesApiService);
 
+  private snackbarService = inject(SnackbarService);
+    
   readonly loading = signal(false);
 
   readonly allRoles = signal<Role[]>([]);
@@ -148,13 +151,33 @@ export class EditUserRolesDialogComponent implements OnInit {
         this.userRolesApi.assignRole({
           userId: this.data.userId,
           roleId
-        })),
+        }).subscribe({
+            next: () => {
+              this.snackbarService.success('User role added succesfully.', 3000);
+              this.loading.set(false)
+            },
+            error: (ex) => {
+              this.snackbarService.error(`Could not add user role. ${ex.error.title}`, 3000);
+              this.loading.set(false)
+            } 
+          })
+      ),
 
       ...removed.map(roleId =>
         this.userRolesApi.removeRole({
           userId: this.data.userId,
           roleId
-        }))
+        }).subscribe({
+            next: () => {
+              this.snackbarService.success('User role removed succesfully.', 3000);
+              this.loading.set(false)
+            },
+            error: (ex) => {
+              this.snackbarService.error(`Could not remove user role. ${ex.error.title}`, 3000);
+              this.loading.set(false)
+            } 
+          })
+      )
 
     ];
 

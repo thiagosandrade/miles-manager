@@ -165,8 +165,8 @@ import { formatDateOnly } from '../../shared/date-utils';
             this.loadPurchases();
             this.loading.set(false)
           },
-          error: () => {
-            this.snackbarService.error('Could not create purchase.', 3000);
+          error: (ex) => {
+            this.snackbarService.error(`Could not create purchase. ${ex.error.title}`, 3000);
             this.loading.set(false)
           } 
         });
@@ -207,8 +207,8 @@ import { formatDateOnly } from '../../shared/date-utils';
             this.loadPurchases();
             this.loading.set(false)
           },
-          error: () => {
-            this.snackbarService.error('Could not create purchase.', 3000);
+          error: (ex) => {
+            this.snackbarService.error(`Could not create purchase. ${ex.error.title}`, 3000);
             this.loading.set(false)
           } 
         });

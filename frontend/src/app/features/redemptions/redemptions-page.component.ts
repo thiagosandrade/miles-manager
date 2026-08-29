@@ -143,12 +143,12 @@ export class RedemptionsPageComponent implements OnInit {
 
       this.redemptionService.createFlightRedemption(request).subscribe({
           next: () => {
-            this.snackbarService.success('Redemption updated succesfully.', 3000);
+            this.snackbarService.success('Redemption created succesfully.', 3000);
             this.loadRedemptions();
             this.loading.set(false)
           },
-          error: () => {
-            this.snackbarService.error('Could not create redemption.', 3000);
+          error: (ex) => {
+            this.snackbarService.error(`Could not create redemption. ${ex.error.title}`, 3000);
             this.loading.set(false)
           } 
         });
@@ -206,8 +206,8 @@ export class RedemptionsPageComponent implements OnInit {
           this.loadRedemptions();
           this.loading.set(false);
         },
-        error: () => {
-          this.snackbarService.error('Could not update redemption.', 3000);
+        error: (ex) => {
+          this.snackbarService.error(`Could not update redemption. ${ex.error.title}`, 3000);
           this.loading.set(false);
         } 
       });

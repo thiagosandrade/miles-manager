@@ -157,8 +157,8 @@ export class UserManagementComponent implements OnInit {
           this.loadUsers();
         },
 
-        error: () => {
-          this.snackbarService.error('Could not create user.', 3000);
+        error: (ex) => {
+          this.snackbarService.error(`Could not create user. ${ex.error.title}`, 3000);
         }
 
       });
@@ -190,8 +190,8 @@ export class UserManagementComponent implements OnInit {
           this.loadUsers();
         },
 
-        error: () => {
-          this.snackbarService.error('Could not updated user.', 3000);
+        error: (ex) => {
+          this.snackbarService.error(`Could not update user. ${ex.error.title}`, 3000);
         }
 
       });
@@ -205,12 +205,12 @@ export class UserManagementComponent implements OnInit {
     this.api.deleteUser(user.id).subscribe({
 
       next: () => {
-        this.snackbarService.error('User deleted succesfully.', 3000);
+        this.snackbarService.success('User deleted succesfully.', 3000);
         this.loadUsers();
       },
 
-      error: () => {
-        this.snackbarService.error('Could not delete user.', 3000);
+      error: (ex) => {
+        this.snackbarService.error(`Could not delete user. ${ex.error.title}`, 3000);
       }
     });
 

@@ -17,6 +17,7 @@ import { ProgramsApiService } from './programs-api.service';
 import { Program, ProgramCreateRequest, ProgramUpdateRequest } from './models/program.model';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TextInputComponent, TextareaInputComponent, NumberInputComponent, MoneyInputComponent, DateInputComponent, SelectComponent, CheckboxComponent } from '../../shared/components/form-fields';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 interface ProgramDialogData {
   operation: 'create' | 'update';
@@ -49,6 +50,7 @@ export class CreateProgramDialogComponent implements OnInit {
   readonly api = inject(ProgramsApiService);
   readonly dialogRef = inject(MatDialogRef<CreateProgramDialogComponent>);
   readonly data = inject<ProgramDialogData>(MAT_DIALOG_DATA);
+  snackbarService = inject(SnackbarService);
 
   loading = false;
 
@@ -117,8 +119,13 @@ export class CreateProgramDialogComponent implements OnInit {
         next: () => {
           this.loading = false;
           this.dialogRef.close(true);
+          this.snackbarService.success(`Program updated succesfully.`, 3000);
         },
-        error: () => this.loading = false
+        error: (ex) => {
+          this.loading = false
+          this.snackbarService.error(`Could not update program. ${ex.error.title}`, 3000);
+        }
+
       });
       return;
     }
@@ -138,8 +145,12 @@ export class CreateProgramDialogComponent implements OnInit {
       next: () => {
         this.loading = false;
         this.dialogRef.close(true);
+        this.snackbarService.success(`Program created succesfully.`, 3000);
       },
-      error: () => this.loading = false
+      error: (ex) => {
+        this.loading = false
+        this.snackbarService.error(`Could not create program. ${ex.error.title}`, 3000);
+      }
     });
   }
 

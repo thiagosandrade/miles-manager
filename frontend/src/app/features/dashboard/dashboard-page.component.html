@@ -411,7 +411,7 @@
               </span>
 
               <span>
-                {{ purchase.purchaseDate | date:'mediumDate' }}
+                {{ purchase.purchaseDate | date:'mediumDate':'UTC' }}
               </span>
 
             </div>
@@ -515,7 +515,7 @@
               </span>
 
               <span>
-                {{ transfer.transferDate | date:'mediumDate' }}
+                {{ transfer.transferDate | date:'mediumDate':'UTC' }}
               </span>
 
             </div>
@@ -592,7 +592,7 @@
               </span>
 
               <span>
-                {{ redemption.flightDate | date:'mediumDate' }}
+                {{ redemption.flightDate | date:'mediumDate':'UTC' }}
               </span>
 
             </div>

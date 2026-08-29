@@ -92,7 +92,7 @@
 
           <strong>
 
-            {{ user.createdAtUtc | date:'mediumDate' }}
+            {{ user.createdAtUtc | date:'mediumDate':'UTC' }}
 
           </strong>
 
@@ -120,7 +120,7 @@
 
           <strong>
 
-            {{ user.lastLoginAtUtc | date:'mediumDate' }}
+            {{ user.lastLoginAtUtc | date:'mediumDate':'UTC' }}
 
           </strong>
 
