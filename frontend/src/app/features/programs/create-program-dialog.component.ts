@@ -56,7 +56,8 @@ export class CreateProgramDialogComponent implements OnInit {
     { value: 0, label: 'Airline' },
     { value: 1, label: 'Hotel' },
     { value: 2, label: 'Bank' },
-    { value: 3, label: 'Credit Card' }
+    { value: 3, label: 'Credit Card' },
+    { value: 4, label: 'Other'}
   ];
 
   readonly currencyOptions = [
