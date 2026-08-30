@@ -46,7 +46,8 @@ public sealed class UpdateProgramFactorHandler(IApplicationDbContext context)
 
         transferRoute.OriginProgramId = request.OriginProgramId;
         transferRoute.DestinationProgramId = request.DestinationProgramId;
-        transferRoute.TransferFactor = request.TransferFactor;
+        transferRoute.FromAmount = request.FromAmount;
+        transferRoute.ToAmount = request.ToAmount;
 
         await context.SaveChangesAsync(cancellationToken);
 
