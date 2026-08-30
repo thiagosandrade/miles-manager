@@ -27,7 +27,10 @@ export class ProgramFactorsApiService {
   }
 
   update(id: string, request: ProgramFactorRequest): Observable<unknown> {
-    return this.http.put<unknown>(`${this.apiBaseUrl}/${id}`, request);
+    return this.http.put<unknown>(`${this.apiBaseUrl}/${id}`, {
+      id,
+      ...request
+    });
   }
 
   delete(id: string): Observable<unknown> {
