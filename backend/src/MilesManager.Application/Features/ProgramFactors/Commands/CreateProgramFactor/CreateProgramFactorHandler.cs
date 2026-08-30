@@ -40,8 +40,8 @@ public sealed class CreateProgramFactorHandler(IApplicationDbContext context)
         {
             OriginProgramId = request.OriginProgramId,
             DestinationProgramId = request.DestinationProgramId,
-            TransferFactor = request.TransferFactor,
-            IsActive = true
+            FromAmount = request.FromAmount,
+            ToAmount = request.ToAmount
         };
 
         await context.TransferRoutes.AddAsync(transferRoute, cancellationToken);
