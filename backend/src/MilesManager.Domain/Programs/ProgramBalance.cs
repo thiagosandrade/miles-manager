@@ -8,6 +8,7 @@ public class ProgramBalance : Entity
     public Guid UserId { get; set; }
     public Guid ProgramId { get; set; }
     public decimal Balance { get; set; }
+    public decimal AllocatedCost { get; set; }
 
     public virtual LoyaltyProgram Program { get; set; } = null!;
 }
