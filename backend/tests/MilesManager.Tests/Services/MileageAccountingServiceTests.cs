@@ -1,5 +1,6 @@
 using MilesManager.Application.Abstractions;
 using MilesManager.Application.Services;
+using Xunit;
 
 namespace MilesManager.Tests.Services;
 
@@ -32,6 +33,14 @@ public class MileageAccountingServiceTests
     }
 
     [Fact]
+    public void CalculateBaseDestinationPoints_ShouldUseOneToOneForInvalidFactor()
+    {
+        var result = _service.CalculateBaseDestinationPoints(4_000m, 0m, 1m);
+
+        Assert.Equal(4_000m, result);
+    }
+
+    [Fact]
     public void CalculateBonusPoints_ShouldApplyPercentageToBasePoints()
     {
         var result = _service.CalculateBonusPoints(2_000m, 100m);
@@ -45,5 +54,21 @@ public class MileageAccountingServiceTests
         var result = _service.CalculateTotalDestinationPoints(2_000m, 2_000m);
 
         Assert.Equal(4_000m, result);
+    }
+
+    [Fact]
+    public void CalculateProportionalCost_ShouldReturnZeroForZeroBalance()
+    {
+        var result = _service.CalculateProportionalCost(1_000m, 0m, 100m);
+
+        Assert.Equal(0m, result);
+    }
+
+    [Fact]
+    public void CalculateDestinationCostPerThousand_ShouldIncludeBonusMiles()
+    {
+        var result = _service.CalculateCostPerThousand(4_000m, 120m);
+
+        Assert.Equal(30m, result);
     }
 }
