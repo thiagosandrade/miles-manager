@@ -20,7 +20,7 @@ public class CreateMileagePurchaseHandlerTests
 
         await using var context = new MilesManagerDbContext(options);
         context.Programs.Add(new LoyaltyProgram { Id = programId, Name = "Livelo", ProgramCode = "LIVELO" });
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = new CreateMileagePurchaseHandler(context);
         var result = await handler.Handle(new CreateMileagePurchaseCommand
@@ -32,10 +32,10 @@ public class CreateMileagePurchaseHandlerTests
             AmountPaid = 300m,
             MilesPurchased = 10_000m,
             PurchaseDate = new DateOnly(2026, 8, 30)
-        }, CancellationToken.None);
+        }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
-        var balance = await context.ProgramBalances.SingleAsync();
+        var balance = await context.ProgramBalances.SingleAsync(TestContext.Current.CancellationToken);
         balance.Balance.Should().Be(10_000m);
         balance.AllocatedCost.Should().Be(300m);
         (await context.MileagePurchases.CountAsync()).Should().Be(1);
@@ -58,7 +58,7 @@ public class CreateMileagePurchaseHandlerTests
             Balance = 5_000m,
             AllocatedCost = 150m
         });
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = new CreateMileagePurchaseHandler(context);
         var result = await handler.Handle(new CreateMileagePurchaseCommand
@@ -71,7 +71,7 @@ public class CreateMileagePurchaseHandlerTests
         }, CancellationToken.None);
 
         result.Status.Should().Be(ResultStatus.Success);
-        var balance = await context.ProgramBalances.SingleAsync();
+        var balance = await context.ProgramBalances.SingleAsync(TestContext.Current.CancellationToken);
         balance.Balance.Should().Be(10_000m);
         balance.AllocatedCost.Should().Be(300m);
     }
