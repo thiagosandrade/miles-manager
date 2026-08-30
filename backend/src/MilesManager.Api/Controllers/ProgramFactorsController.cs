@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MilesManager.Api.Common;
 using MilesManager.Application.Features.ProgramFactors.Commands.CreateProgramFactor;
 using MilesManager.Application.Features.ProgramFactors.Commands.UpdateProgramFactor;
+using MilesManager.Application.Features.ProgramFactors.Commands.DeleteProgramFactor;
 
 namespace MilesManager.Api.Controllers;
 
@@ -43,6 +44,16 @@ public sealed class ProgramFactorsController(ISender sender) : ApiController(sen
         };
 
         var result = await Sender.Send(command, cancellationToken);
+        return Convert(result);
+    }
+
+    /// <summary>
+    /// Deletes a transfer factor between two mileage programs.
+    /// </summary>
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await Sender.Send(new DeleteProgramFactorCommand { Id = id }, cancellationToken);
         return Convert(result);
     }
 }
