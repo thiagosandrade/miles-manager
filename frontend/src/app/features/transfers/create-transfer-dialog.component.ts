@@ -26,6 +26,8 @@ import {
   type SelectOption
 } from '../../shared/components/form-fields/form-fields';
 import { MileageTransfer } from './models/mileage-transfer.model';
+import { ProgramFactorsApiService } from '../program-factors/program-factors-api.service';
+import { ProgramFactor } from '../program-factors/models/program-factor.model';
 
 export interface TransferDialogData {
   operation: 'create' | 'update' | 'clone';
@@ -55,12 +57,17 @@ export class CreateTransferDialogComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<CreateTransferDialogComponent>);
   private programsApi = inject(ProgramsApiService);
   private transfersApi = inject(TransfersApiService);
+  private factorsApi = inject(ProgramFactorsApiService);
   private destroyRef = inject(DestroyRef);
 
   data = inject<TransferDialogData>(MAT_DIALOG_DATA);
 
   programs: Program[] = [];
   programOptions: SelectOption<string>[] = [];
+  originProgramOptions: SelectOption<string>[] = [];
+  destinationProgramOptions: SelectOption<string>[] = [];
+  programFactors: ProgramFactor[] = [];
+  selectedFactor: ProgramFactor | null = null;
 
   readonly form = this.fb.group({
     id: [''],
@@ -76,47 +83,111 @@ export class CreateTransferDialogComponent implements OnInit {
     this.form.controls.milesSent.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.updateMilesReceived());
+
     this.form.controls.bonusPercentage.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.updateMilesReceived());
-    this.updateMilesReceived();
+
+    this.form.controls.originProgramId.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.onProgramSelectionChanged());
+
+    this.form.controls.destinationProgramId.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.onProgramSelectionChanged());
 
     this.programsApi.getPrograms().then(result => {
-
       this.programs = result.programs.filter(x => x.isActive);
       this.programOptions = this.programs.map(program => ({
         value: program.id,
         label: program.name
       }));
+      this.updateProgramOptions();
 
-      if ((this.data?.operation === 'update'  || this.data.operation === 'clone') && this.data?.transferId) {
+      this.factorsApi.getAll().then(factors => {
+        this.programFactors = factors;
+        this.updateSelectedFactor();
+      });
+
+      if ((this.data?.operation === 'update' || this.data.operation === 'clone') && this.data?.transferId) {
         this.transfersApi.getTransfer(this.data.transferId).subscribe({
           next: transfer => {
             this.form.patchValue({
-              id: transfer.id,
+              id: this.data.operation === 'clone' ? '' : transfer.id,
               originProgramId: this.programs.find(p => p.name === transfer.originProgram)?.id,
               destinationProgramId: this.programs.find(p => p.name === transfer.destinationProgram)?.id,
               milesSent: transfer.milesSent,
               bonusPercentage: transfer.bonusPercentage,
               transferDate: new Date(transfer.transferDate)
             }, { emitEvent: false });
+            this.updateProgramOptions();
+            this.updateSelectedFactor();
             this.updateMilesReceived();
           }
         });
+      } else {
+        this.updateMilesReceived();
       }
     });
+  }
+
+  private onProgramSelectionChanged(): void {
+    this.updateProgramOptions();
+    this.updateSelectedFactor();
+    this.updateMilesReceived();
+  }
+
+  private updateProgramOptions(): void {
+    const originId = this.form.controls.originProgramId.value;
+    const destinationId = this.form.controls.destinationProgramId.value;
+
+    this.originProgramOptions = this.programOptions.filter(option => option.value !== destinationId);
+    this.destinationProgramOptions = this.programOptions.filter(option => option.value !== originId);
+
+    if (originId && destinationId && originId === destinationId) {
+      this.form.controls.destinationProgramId.setErrors({ sameProgram: true });
+    } else if (this.form.controls.destinationProgramId.hasError('sameProgram')) {
+      this.form.controls.destinationProgramId.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+    }
+  }
+
+  private updateSelectedFactor(): void {
+    const originId = this.form.controls.originProgramId.value;
+    const destinationId = this.form.controls.destinationProgramId.value;
+
+    this.selectedFactor = originId && destinationId
+      ? this.programFactors.find(factor =>
+          factor.originProgramId === originId &&
+          factor.destinationProgramId === destinationId
+        ) ?? null
+      : null;
   }
 
   private updateMilesReceived(): void {
     const milesSent = Number(this.form.controls.milesSent.value) || 0;
     const bonusPercentage = Number(this.form.controls.bonusPercentage.value) || 0;
-    const milesReceived = Math.round(milesSent * (1 + bonusPercentage / 100));
 
-    this.form.controls.milesReceived.setValue(milesReceived, { emitEvent: false });
+    const milesAfterBonus = milesSent * (1 + bonusPercentage / 100);
+
+    if (!this.selectedFactor) {
+      this.form.controls.milesReceived.setValue(
+        Math.round(milesAfterBonus),
+        { emitEvent: false }
+      );
+      return;
+    }
+
+    const milesReceived =
+      milesAfterBonus * (this.selectedFactor.toAmount / this.selectedFactor.fromAmount);
+
+    this.form.controls.milesReceived.setValue(
+      Math.round(milesReceived),
+      { emitEvent: false }
+    );
   }
 
   save(): void {
-    if (this.form.invalid) {
+    if (this.form.invalid || !this.selectedFactor) {
       this.form.markAllAsTouched();
       return;
     }
