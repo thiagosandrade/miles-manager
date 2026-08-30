@@ -10,6 +10,15 @@
         {{ 'programFactors.page.subtitle' | translate }}
       </p>
     </div>
+
+    <button
+      mat-flat-button
+      class="create-button"
+      type="button"
+      (click)="openCreateProgramFactorDialog()">
+      <mat-icon>add</mat-icon>
+      {{ 'common.create' | translate }}
+    </button>
   </header>
 
   <app-table
