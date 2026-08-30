@@ -8,5 +8,6 @@ public sealed class UpdateProgramFactorCommand : IRequest<Result<Guid>>
     public Guid Id { get; init; }
     public Guid OriginProgramId { get; init; }
     public Guid DestinationProgramId { get; init; }
-    public decimal TransferFactor { get; init; }
+    public decimal FromAmount { get; init; }
+    public decimal ToAmount { get; init; }
 }
