@@ -15,14 +15,27 @@
     <app-select
       formControlName="originProgramId"
       [label]="'transfers.dialog.originProgram' | translate"
-      [options]="programOptions">
+      [options]="originProgramOptions">
     </app-select>
 
     <app-select
       formControlName="destinationProgramId"
       [label]="'transfers.dialog.destinationProgram' | translate"
-      [options]="programOptions">
+      [options]="destinationProgramOptions">
     </app-select>
+
+    <div class="factor-display" *ngIf="selectedFactor as factor">
+      <span class="factor-label">
+        {{ 'transfers.dialog.transferFactor' | translate }}
+      </span>
+      <span class="factor-value">
+        {{ factor.fromAmount }} : {{ factor.toAmount }}
+      </span>
+    </div>
+
+    <div class="factor-missing" *ngIf="form.controls.originProgramId.value && form.controls.destinationProgramId.value && !selectedFactor">
+      {{ 'transfers.dialog.noTransferFactor' | translate }}
+    </div>
 
     <app-number-input
       formControlName="milesSent"
@@ -68,7 +81,7 @@
     color="primary"
     type="button"
     (click)="save()"
-    [disabled]="form.invalid">
+    [disabled]="form.invalid || !selectedFactor">
 
     {{
       data.operation === 'create'
