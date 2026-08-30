@@ -12,6 +12,7 @@ internal sealed class ProgramBalanceConfiguration : IEntityTypeConfiguration<Pro
         builder.HasKey(x => x.Id);
         builder.HasIndex(x => new { x.UserId, x.ProgramId }).IsUnique();
         builder.Property(x => x.Balance).HasPrecision(18, 2);
+        builder.Property(x => x.AllocatedCost).HasPrecision(18, 2);
         builder.HasOne(x => x.Program)
             .WithMany(p => p.ProgramBalances)
             .HasForeignKey(x => x.ProgramId)
