@@ -85,7 +85,8 @@
     "redemptions": "Emissões",
     "settings": "Configurações",
     "user-roles": "Funções de Usuário",
-    "calculator": "Comparador"
+    "calculator": "Comparador",
+    "programFactors" : "Fatores de Transferência"
   },
   "dashboard": {
     "eyebrow": "Visão geral",

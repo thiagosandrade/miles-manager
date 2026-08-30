@@ -84,7 +84,8 @@
     "transfers": "Transferências",
     "redemptions": "Resgates",
     "settings": "Definições",
-    "user-roles": "Funções de Utilizador"
+    "user-roles": "Funções de Utilizador",
+    "programFactors" : "Fatores de Transferência"
   },
   "dashboard": {
     "eyebrow": "Visão geral",

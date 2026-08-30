@@ -18,7 +18,7 @@ public interface IApplicationDbContext
     DbSet<LoyaltyProgram> Programs { get; }
     DbSet<ProgramBalance> ProgramBalances { get; }
     DbSet<MileagePurchase> MileagePurchases { get; }
-    DbSet<TransferRoute> TransferRoutes { get; }
+    DbSet<ProgramFactor> TransferRoutes { get; }
     DbSet<MileageTransfer> MileageTransfers { get; }
     DbSet<FlightRedemption> FlightRedemptions { get; }
     DbSet<ReferenceMileagePrice> ReferenceMileagePrices { get; }

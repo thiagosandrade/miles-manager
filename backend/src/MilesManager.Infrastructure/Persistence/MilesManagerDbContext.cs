@@ -21,7 +21,7 @@ public sealed class MilesManagerDbContext(DbContextOptions<MilesManagerDbContext
     public DbSet<LoyaltyProgram> Programs => Set<LoyaltyProgram>();
     public DbSet<ProgramBalance> ProgramBalances => Set<ProgramBalance>();
     public DbSet<MileagePurchase> MileagePurchases => Set<MileagePurchase>();
-    public DbSet<TransferRoute> TransferRoutes => Set<TransferRoute>();
+    public DbSet<ProgramFactor> TransferRoutes => Set<ProgramFactor>();
     public DbSet<MileageTransfer> MileageTransfers => Set<MileageTransfer>();
     public DbSet<Partner> Partners => Set<Partner>();
     public DbSet<Transaction> Transactions => Set<Transaction>();

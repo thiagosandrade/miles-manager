@@ -23,6 +23,6 @@ public class LoyaltyProgram : Entity
     public virtual ICollection<MileagePurchase> MileagePurchases { get; set; } = new List<MileagePurchase>();
     public virtual ICollection<FlightRedemption> FlightRedemptions { get; set; } = new List<FlightRedemption>();
     public virtual ICollection<ReferenceMileagePrice> ReferenceMileagePrices { get; set; } = new List<ReferenceMileagePrice>();
-    public virtual ICollection<TransferRoute> OriginTransfers { get; set; } = new List<TransferRoute>();
-    public virtual ICollection<TransferRoute> DestinationTransfers { get; set; } = new List<TransferRoute>();
+    public virtual ICollection<ProgramFactor> OriginTransfers { get; set; } = new List<ProgramFactor>();
+    public virtual ICollection<ProgramFactor> DestinationTransfers { get; set; } = new List<ProgramFactor>();
 }

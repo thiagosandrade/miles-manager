@@ -1,9 +1,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MilesManager.Api.Common;
+using MilesManager.Application.Features.ProgramBalances.DTOs;
 using MilesManager.Application.Features.ProgramFactors.Commands.CreateProgramFactor;
-using MilesManager.Application.Features.ProgramFactors.Commands.UpdateProgramFactor;
 using MilesManager.Application.Features.ProgramFactors.Commands.DeleteProgramFactor;
+using MilesManager.Application.Features.ProgramFactors.Commands.UpdateProgramFactor;
+using MilesManager.Application.Features.ProgramFactors.DTOs;
 using MilesManager.Application.Features.ProgramFactors.Queries.GetAllProgramFactors;
 
 namespace MilesManager.Api.Controllers;
@@ -63,7 +65,7 @@ public sealed class ProgramFactorsController(ISender sender) : ApiController(sen
     /// Gets all transfer factors.
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<ProgramFactorDto>>> GetAll(CancellationToken cancellationToken)
     {
         var result = await Sender.Send(new GetAllProgramFactorsQuery(), cancellationToken);
         return Convert(result);

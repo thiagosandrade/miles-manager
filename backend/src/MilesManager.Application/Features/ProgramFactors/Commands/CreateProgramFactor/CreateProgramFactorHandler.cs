@@ -36,7 +36,7 @@ public sealed class CreateProgramFactorHandler(IApplicationDbContext context)
             return Result<Guid>.Conflict("A transfer factor already exists for this program pair.");
         }
 
-        var transferRoute = new TransferRoute
+        var transferRoute = new ProgramFactor
         {
             OriginProgramId = request.OriginProgramId,
             DestinationProgramId = request.DestinationProgramId,

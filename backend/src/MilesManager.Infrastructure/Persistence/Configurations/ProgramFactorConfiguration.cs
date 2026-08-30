@@ -4,11 +4,11 @@ using MilesManager.Domain.Transfers;
 
 namespace MilesManager.Infrastructure.Persistence.Configurations;
 
-internal sealed class TransferRouteConfiguration : IEntityTypeConfiguration<TransferRoute>
+internal sealed class ProgramFactorConfiguration : IEntityTypeConfiguration<ProgramFactor>
 {
-    public void Configure(EntityTypeBuilder<TransferRoute> builder)
+    public void Configure(EntityTypeBuilder<ProgramFactor> builder)
     {
-        builder.ToTable("transfer_routes");
+        builder.ToTable("program_factor");
         builder.HasKey(x => x.Id);
         builder.HasIndex(x => new { x.OriginProgramId, x.DestinationProgramId }).IsUnique();
         builder.Property(x => x.FromAmount).HasPrecision(18, 4);

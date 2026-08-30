@@ -415,7 +415,7 @@ namespace MilesManager.Infrastructure.Migrations
                     b.ToTable("mileage_transfers", (string)null);
                 });
 
-            modelBuilder.Entity("MilesManager.Domain.Transfers.TransferRoute", b =>
+            modelBuilder.Entity("MilesManager.Domain.Transfers.ProgramFactor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -427,17 +427,16 @@ namespace MilesManager.Infrastructure.Migrations
                     b.Property<Guid>("DestinationProgramId")
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
+                    b.Property<decimal>("FromAmount")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
 
                     b.Property<Guid>("OriginProgramId")
                         .HasColumnType("uuid");
 
-                    b.Property<decimal>("TransferFactor")
-                        .HasPrecision(10, 4)
-                        .HasColumnType("numeric(10,4)");
+                    b.Property<decimal>("ToAmount")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
 
                     b.Property<DateTimeOffset?>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
@@ -449,7 +448,7 @@ namespace MilesManager.Infrastructure.Migrations
                     b.HasIndex("OriginProgramId", "DestinationProgramId")
                         .IsUnique();
 
-                    b.ToTable("transfer_routes", (string)null);
+                    b.ToTable("program_factor", (string)null);
                 });
 
             modelBuilder.Entity("MilesManager.Domain.Trips.Trip", b =>
@@ -696,7 +695,7 @@ namespace MilesManager.Infrastructure.Migrations
                     b.Navigation("OriginProgram");
                 });
 
-            modelBuilder.Entity("MilesManager.Domain.Transfers.TransferRoute", b =>
+            modelBuilder.Entity("MilesManager.Domain.Transfers.ProgramFactor", b =>
                 {
                     b.HasOne("MilesManager.Domain.Programs.LoyaltyProgram", "DestinationProgram")
                         .WithMany("DestinationTransfers")

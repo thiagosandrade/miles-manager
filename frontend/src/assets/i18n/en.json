@@ -85,7 +85,8 @@
     "transfers": "Transfers",
     "redemptions": "Redemptions",
     "settings": "Settings",
-    "calculator": "Flight Calculator"
+    "calculator": "Flight Calculator",
+    "programFactors" : "Transfer Rates"
   },
   "dashboard": {
     "eyebrow": "Overview",
@@ -254,6 +255,20 @@
     "messages": {
       "loadError": "Could not load programs. Please try again later."
     }
+  },
+  "programFactors":{
+    "page":{
+      "eyebrow":"Transfer Rates",
+      "title":"Transfer rates between programs",
+      "subtitle":"Add new Transfer rates between programs"
+    },
+    "table":{
+      "title":"Transfer Rates",
+      "subtitle":"Directory",
+      "emptyTitle":"No transfer rates yet.",
+      "emptyDescription":"Create your first transfer rate between program."
+    }
+
   },
   "balances": {
     "eyebrow": "Programs",

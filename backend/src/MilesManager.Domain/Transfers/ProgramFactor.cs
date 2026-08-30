@@ -3,7 +3,7 @@ using MilesManager.Domain.Common;
 
 namespace MilesManager.Domain.Transfers;
 
-public class TransferRoute : Entity
+public class ProgramFactor : Entity
 {
     public Guid OriginProgramId { get; set; }
     public Guid DestinationProgramId { get; set; }
