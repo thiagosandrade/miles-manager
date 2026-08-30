@@ -372,7 +372,8 @@
       "milesReceived": "Miles reçus",
       "transferDate": "Date du transfert",
       "costPerThousandOrigin": "Coût par mille (origine)",
-      "costPerThousandDestination": "Coût par mille (destination)"
+      "costPerThousandDestination": "Coût par mille (destination)",
+      "transferFactor": "Taux de transfert"
     },
     "actions": {
       "edit": "Modifier le transfert",

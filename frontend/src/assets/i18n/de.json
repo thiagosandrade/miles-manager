@@ -372,7 +372,8 @@
       "milesReceived": "Empfangene Meilen",
       "transferDate": "Transferdatum",
       "costPerThousandOrigin": "Kosten pro Tausend (Ursprung)",
-      "costPerThousandDestination": "Kosten pro Tausend (Ziel)"
+      "costPerThousandDestination": "Kosten pro Tausend (Ziel)",
+      "transferFactor": "Transferrate"
     },
     "actions": {
       "edit": "Transfer bearbeiten",

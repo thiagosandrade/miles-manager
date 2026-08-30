@@ -12,13 +12,17 @@
     </div>
 
     <button
-      mat-flat-button
-      class="create-button"
+      class="primary-button"
       type="button"
       (click)="openCreateProgramFactorDialog()">
       <mat-icon>add</mat-icon>
-      {{ 'common.create' | translate }}
+  
+      <span>
+        {{ 'common.create' | translate }}
+      </span>
+
     </button>
+
   </header>
 
   <app-table
@@ -71,6 +75,17 @@
             {{ 'common.actions' | translate }}
           </th>
           <td mat-cell *matCellDef="let factor" class="actions-column">
+            <button
+              class="icon-button"
+              type="button"
+              [attr.aria-label]="'programs.actions.edit' | translate"
+              (click)="openEditProgramFactorDialog(factor)">
+
+              <mat-icon>
+                edit
+              </mat-icon>
+
+            </button>
             <button
               class="icon-button danger"
               type="button"
