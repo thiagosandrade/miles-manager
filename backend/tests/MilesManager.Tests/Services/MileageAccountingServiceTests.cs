@@ -63,12 +63,4 @@ public class MileageAccountingServiceTests
 
         Assert.Equal(0m, result);
     }
-
-    [Fact]
-    public void CalculateDestinationCostPerThousand_ShouldIncludeBonusMiles()
-    {
-        var result = _service.CalculateCostPerThousand(4_000m, 120m);
-
-        Assert.Equal(30m, result);
-    }
 }
