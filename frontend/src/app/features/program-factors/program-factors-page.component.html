@@ -1,0 +1,106 @@
+<section class="page">
+
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">
+        {{ 'programFactors.page.eyebrow' | translate }}
+      </p>
+      <h1>
+        {{ 'programFactors.page.title' | translate }}
+      </h1>
+      <p class="subtitle">
+        {{ 'programFactors.page.subtitle' | translate }}
+      </p>
+    </div>
+  </header>
+
+  <app-table
+    [title]="'programFactors.table.title' | translate"
+    [subtitle]="'programFactors.table.subtitle' | translate"
+    [loading]="loading()"
+    [dataSource]="pagedData()"
+    [length]="data().length"
+    [showPaginator]="true"
+    [showToolbar]="false"
+    emptyIcon="compare_arrows"
+    [emptyTitle]="'programFactors.table.emptyTitle' | translate"
+    [emptyDescription]="'programFactors.table.emptyDescription' | translate"
+    (page)="onPageChange($event)">
+
+    <div class="desktop-table">
+      <table mat-table [dataSource]="pagedData()">
+
+        <ng-container matColumnDef="originProgram">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'programFactors.table.columns.originProgram' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let factor">
+            <strong>{{ factor.originProgramName }}</strong>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="destinationProgram">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'programFactors.table.columns.destinationProgram' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let factor">
+            <strong>{{ factor.destinationProgramName }}</strong>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="factor">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'programFactors.table.columns.factor' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let factor">
+            <span class="factor-pill">
+              {{ factor.fromAmount }} : {{ factor.toAmount }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      </table>
+    </div>
+
+    <div class="mobile-factors">
+      <article class="factor-card" *ngFor="let factor of pagedData()">
+        <div class="factor-programs">
+          <div>
+            <span class="factor-label">
+              {{ 'programFactors.table.columns.originProgram' | translate }}
+            </span>
+            <strong>{{ factor.originProgramName }}</strong>
+          </div>
+
+          <mat-icon>arrow_forward</mat-icon>
+
+          <div>
+            <span class="factor-label">
+              {{ 'programFactors.table.columns.destinationProgram' | translate }}
+            </span>
+            <strong>{{ factor.destinationProgramName }}</strong>
+          </div>
+        </div>
+
+        <div class="factor-value">
+          <span class="factor-label">
+            {{ 'programFactors.table.columns.factor' | translate }}
+          </span>
+          <span class="factor-pill">
+            {{ factor.fromAmount }} : {{ factor.toAmount }}
+          </span>
+        </div>
+      </article>
+    </div>
+
+  </app-table>
+
+  <div class="feedback" *ngIf="hasError()">
+    <strong>{{ 'common.error' | translate }}</strong>
+    <span>{{ 'programFactors.messages.loadError' | translate }}</span>
+  </div>
+
+</section>
