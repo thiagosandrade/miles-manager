@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>
+  {{ (data.operation === 'update'
+    ? 'programFactors.dialog.editTitle'
+    : 'programFactors.dialog.createTitle') | translate }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="form">
+
+    <app-select
+      formControlName="originProgramId"
+      [label]="'programFactors.dialog.originProgram' | translate"
+      [options]="programOptions">
+    </app-select>
+
+    <app-select
+      formControlName="destinationProgramId"
+      [label]="'programFactors.dialog.destinationProgram' | translate"
+      [options]="programOptions">
+    </app-select>
+
+    <div class="factor-inputs">
+      <app-number-input
+        formControlName="fromAmount"
+        [label]="'programFactors.dialog.fromAmount' | translate"
+        [step]="'any'"
+        [min]="0.0001">
+      </app-number-input>
+
+      <span class="separator">:</span>
+
+      <app-number-input
+        formControlName="toAmount"
+        [label]="'programFactors.dialog.toAmount' | translate"
+        [step]="'any'"
+        [min]="0.0001">
+      </app-number-input>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()" [disabled]="loading">
+    {{ 'common.cancel' | translate }}
+  </button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="button"
+    (click)="save()"
+    [disabled]="loading">
+    {{ 'common.save' | translate }}
+  </button>
+</mat-dialog-actions>
