@@ -13,6 +13,7 @@ internal sealed class MileageTransferConfiguration : IEntityTypeConfiguration<Mi
         builder.Property(x => x.MilesSent).HasPrecision(18, 2);
         builder.Property(x => x.BonusPercentage).HasPrecision(5, 2);
         builder.Property(x => x.MilesReceived).HasPrecision(18, 2);
+        builder.Property(x => x.TransferredCost).HasPrecision(18, 2);
         builder.Property(x => x.TransferDate).HasColumnType("date");
         builder.HasOne(x => x.OriginProgram)
             .WithMany()
