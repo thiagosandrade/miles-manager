@@ -7,5 +7,6 @@ public sealed class ProgramFactorDto
     public string OriginProgramName { get; init; } = string.Empty;
     public Guid DestinationProgramId { get; init; }
     public string DestinationProgramName { get; init; } = string.Empty;
-    public decimal TransferFactor { get; init; }
+    public decimal FromAmount { get; init; }
+    public decimal ToAmount { get; init; }
 }
