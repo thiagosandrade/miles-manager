@@ -41,7 +41,8 @@ public sealed class ProgramFactorsController(ISender sender) : ApiController(sen
             Id = id,
             OriginProgramId = command.OriginProgramId,
             DestinationProgramId = command.DestinationProgramId,
-            TransferFactor = command.TransferFactor
+            FromAmount = command.FromAmount,
+            ToAmount = command.ToAmount
         };
 
         var result = await Sender.Send(command, cancellationToken);
