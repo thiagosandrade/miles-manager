@@ -22,11 +22,15 @@ export class ProgramFactorsApiService {
     return firstValueFrom(this.http.get<ProgramFactor[]>(this.apiBaseUrl));
   }
 
-  create(request: ProgramFactorRequest): Observable<ProgramFactor> {
-    return this.http.post<ProgramFactor>(this.apiBaseUrl, request);
+  create(request: ProgramFactorRequest): Observable<unknown> {
+    return this.http.post<unknown>(this.apiBaseUrl, request);
   }
 
-  update(id: string, request: ProgramFactorRequest): Observable<ProgramFactor> {
-    return this.http.put<ProgramFactor>(`${this.apiBaseUrl}/${id}`, request);
+  update(id: string, request: ProgramFactorRequest): Observable<unknown> {
+    return this.http.put<unknown>(`${this.apiBaseUrl}/${id}`, request);
+  }
+
+  delete(id: string): Observable<unknown> {
+    return this.http.delete<unknown>(`${this.apiBaseUrl}/${id}`);
   }
 }
