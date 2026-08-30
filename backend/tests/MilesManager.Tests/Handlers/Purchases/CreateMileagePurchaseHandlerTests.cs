@@ -23,9 +23,16 @@ public class CreateMileagePurchaseHandlerTests
         await context.SaveChangesAsync();
 
         var handler = new CreateMileagePurchaseHandler(context);
-        var result = await handler.Handle(new CreateMileagePurchaseCommand(
-            userId, programId, "Partner", "Purchase", 300m, 10_000m,
-            new DateOnly(2026, 8, 30)), CancellationToken.None);
+        var result = await handler.Handle(new CreateMileagePurchaseCommand
+        {
+            UserId = userId,
+            ProgramId = programId,
+            Partner = "Partner",
+            Description = "Purchase",
+            AmountPaid = 300m,
+            MilesPurchased = 10_000m,
+            PurchaseDate = new DateOnly(2026, 8, 30)
+        }, CancellationToken.None);
 
         result.Status.Should().Be(ResultStatus.Success);
         var balance = await context.ProgramBalances.SingleAsync();
@@ -54,9 +61,14 @@ public class CreateMileagePurchaseHandlerTests
         await context.SaveChangesAsync();
 
         var handler = new CreateMileagePurchaseHandler(context);
-        var result = await handler.Handle(new CreateMileagePurchaseCommand(
-            userId, programId, null, null, 150m, 5_000m,
-            new DateOnly(2026, 8, 30)), CancellationToken.None);
+        var result = await handler.Handle(new CreateMileagePurchaseCommand
+        {
+            UserId = userId,
+            ProgramId = programId,
+            AmountPaid = 150m,
+            MilesPurchased = 5_000m,
+            PurchaseDate = new DateOnly(2026, 8, 30)
+        }, CancellationToken.None);
 
         result.Status.Should().Be(ResultStatus.Success);
         var balance = await context.ProgramBalances.SingleAsync();
@@ -72,9 +84,14 @@ public class CreateMileagePurchaseHandlerTests
         await using var context = new MilesManagerDbContext(options);
         var handler = new CreateMileagePurchaseHandler(context);
 
-        var result = await handler.Handle(new CreateMileagePurchaseCommand(
-            Guid.NewGuid(), Guid.NewGuid(), null, null, 100m, 1_000m,
-            new DateOnly(2026, 8, 30)), CancellationToken.None);
+        var result = await handler.Handle(new CreateMileagePurchaseCommand
+        {
+            UserId = Guid.NewGuid(),
+            ProgramId = Guid.NewGuid(),
+            AmountPaid = 100m,
+            MilesPurchased = 1_000m,
+            PurchaseDate = new DateOnly(2026, 8, 30)
+        }, CancellationToken.None);
 
         result.Status.Should().Be(ResultStatus.NotFound);
     }
