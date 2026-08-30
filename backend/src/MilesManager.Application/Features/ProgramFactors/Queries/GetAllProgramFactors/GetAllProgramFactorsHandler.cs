@@ -28,7 +28,8 @@ public sealed class GetAllProgramFactorsHandler(IApplicationDbContext context)
                 OriginProgramName = x.OriginProgram.Name,
                 DestinationProgramId = x.DestinationProgramId,
                 DestinationProgramName = x.DestinationProgram.Name,
-                TransferFactor = x.TransferFactor
+                FromAmount = x.FromAmount,
+                ToAmount = x.ToAmount
             })
             .ToListAsync(cancellationToken);
 
