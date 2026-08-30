@@ -1,10 +1,11 @@
-using MilesManager.Application.Common;
+using MilesManager.Application.Abstractions;
+using MilesManager.Application.Services;
 
 namespace MilesManager.Tests.Services;
 
 public class MileageAccountingServiceTests
 {
-    private readonly MileageAccountingService _service = new();
+    private readonly IMileageAccountingService _service = new MileageAccountingService();
 
     [Fact]
     public void CalculateCostPerPoint_ShouldReturnAllocatedCostPerPoint()
