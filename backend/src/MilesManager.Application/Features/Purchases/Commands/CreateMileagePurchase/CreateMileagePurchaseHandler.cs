@@ -48,13 +48,15 @@ public sealed class CreateMileagePurchaseHandler(IApplicationDbContext context) 
             {
                 UserId = request.UserId,
                 ProgramId = request.ProgramId,
-                Balance = request.MilesPurchased
+                Balance = request.MilesPurchased,
+                AllocatedCost = request.AmountPaid
             };
             await _context.ProgramBalances.AddAsync(balance, cancellationToken);
         }
         else
         {
             balance.Balance += request.MilesPurchased;
+            balance.AllocatedCost += request.AmountPaid;
         }
 
         await _context.SaveChangesAsync(cancellationToken);
