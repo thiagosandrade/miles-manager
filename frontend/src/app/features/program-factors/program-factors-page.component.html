@@ -5,9 +5,7 @@
       <p class="eyebrow">
         {{ 'programFactors.page.eyebrow' | translate }}
       </p>
-      <h1>
-        {{ 'programFactors.page.title' | translate }}
-      </h1>
+      <h1>{{ 'programFactors.page.title' | translate }}</h1>
       <p class="subtitle">
         {{ 'programFactors.page.subtitle' | translate }}
       </p>
@@ -59,6 +57,19 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="actions-column"></th>
+          <td mat-cell *matCellDef="let factor" class="actions-column">
+            <button
+              class="icon-button danger"
+              type="button"
+              [attr.aria-label]="'programFactors.actions.delete' | translate"
+              (click)="deleteProgramFactor(factor)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
@@ -86,12 +97,22 @@
         </div>
 
         <div class="factor-value">
-          <span class="factor-label">
-            {{ 'programFactors.table.columns.factor' | translate }}
+          <span>
+            <span class="factor-label">
+              {{ 'programFactors.table.columns.factor' | translate }}
+            </span>
+            <span class="factor-pill">
+              {{ factor.fromAmount }} : {{ factor.toAmount }}
+            </span>
           </span>
-          <span class="factor-pill">
-            {{ factor.fromAmount }} : {{ factor.toAmount }}
-          </span>
+
+          <button
+            class="icon-button danger"
+            type="button"
+            [attr.aria-label]="'programFactors.actions.delete' | translate"
+            (click)="deleteProgramFactor(factor)">
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
       </article>
     </div>
