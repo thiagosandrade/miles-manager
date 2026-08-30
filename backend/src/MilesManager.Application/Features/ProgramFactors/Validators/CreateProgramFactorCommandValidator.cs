@@ -12,8 +12,11 @@ public sealed class CreateProgramFactorCommandValidator : AbstractValidator<Crea
         RuleFor(x => x.OriginProgramId)
             .NotEqual(x => x.DestinationProgramId)
             .WithMessage("Origin and destination programs must be different.");
-        RuleFor(x => x.TransferFactor)
+        RuleFor(x => x.FromAmount)
             .GreaterThan(0)
-            .WithMessage("TransferFactor must be greater than 0.");
+            .WithMessage("FromAmount must be greater than 0.");
+        RuleFor(x => x.ToAmount)
+            .GreaterThan(0)
+            .WithMessage("ToAmount must be greater than 0.");
     }
 }
