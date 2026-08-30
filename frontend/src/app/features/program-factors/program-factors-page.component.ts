@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
@@ -9,12 +10,14 @@ import { AppTableComponent } from '../../shared/components/app-table/app-table.c
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { ProgramFactorsApiService } from './program-factors-api.service';
 import { ProgramFactor } from './models/program-factor.model';
+import { CreateProgramFactorDialogComponent } from './create-program-factor-dialog.component';
 
 @Component({
   selector: 'app-program-factors-page',
   standalone: true,
   imports: [
     CommonModule,
+    MatDialogModule,
     MatIconModule,
     MatTableModule,
     TranslatePipe,
@@ -26,6 +29,7 @@ import { ProgramFactor } from './models/program-factor.model';
 export class ProgramFactorsPageComponent implements OnInit {
   private readonly service = inject(ProgramFactorsApiService);
   private readonly snackbar = inject(SnackbarService);
+  private readonly dialog = inject(MatDialog);
 
   readonly data = signal<ProgramFactor[]>([]);
   readonly pagedData = signal<ProgramFactor[]>([]);
@@ -35,7 +39,8 @@ export class ProgramFactorsPageComponent implements OnInit {
   readonly displayedColumns = [
     'originProgram',
     'destinationProgram',
-    'factor'
+    'factor',
+    'actions'
   ];
 
   private pageIndex = 0;
@@ -66,6 +71,46 @@ export class ProgramFactorsPageComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.updatePagedData();
+  }
+
+  deleteProgramFactor(factor: ProgramFactor): void {
+    const confirmed = window.confirm(
+      `Delete transfer factor ${factor.originProgramName} → ${factor.destinationProgramName}?`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.loading.set(true);
+
+    this.service.delete(factor.id).subscribe({
+      next: () => {
+        this.snackbar.success('Program factor deleted successfully.', 3000);
+        this.loadProgramFactors();
+      },
+      error: () => {
+        this.loading.set(false);
+        this.snackbar.error('Could not delete program factor.', 3000);
+      }
+    });
+  }
+
+  openEditProgramFactorDialog(factor: ProgramFactor): void {
+    const dialogRef = this.dialog.open(CreateProgramFactorDialogComponent, {
+      width: '500px',
+      maxWidth: '95vw',
+      data: {
+        operation: 'update',
+        programFactor: factor
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadProgramFactors();
+      }
+    });
   }
 
   private updatePagedData(): void {
