@@ -3,6 +3,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 import { PageEvent } from '@angular/material/paginator';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -20,6 +21,7 @@ import { CreateProgramFactorDialogComponent } from './create-program-factor-dial
     MatDialogModule,
     MatIconModule,
     MatTableModule,
+    MatButtonModule,
     TranslatePipe,
     AppTableComponent
   ],
@@ -71,6 +73,22 @@ export class ProgramFactorsPageComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.updatePagedData();
+  }
+
+  openCreateProgramFactorDialog(): void {
+    const dialogRef = this.dialog.open(CreateProgramFactorDialogComponent, {
+      width: '500px',
+      maxWidth: '95vw',
+      data: {
+        operation: 'create'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadProgramFactors();
+      }
+    });
   }
 
   deleteProgramFactor(factor: ProgramFactor): void {
