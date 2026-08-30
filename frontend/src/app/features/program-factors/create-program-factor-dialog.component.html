@@ -1,7 +1,8 @@
 <h2 mat-dialog-title>
   {{ (data.operation === 'update'
-    ? 'programFactors.dialog.editTitle'
-    : 'programFactors.dialog.createTitle') | translate }}
+    ? 'common.update'
+    : 'common.create') | translate }}
+  {{ 'sidebar.programFactors' | translate }}
 </h2>
 
 <mat-dialog-content>
@@ -9,20 +10,20 @@
 
     <app-select
       formControlName="originProgramId"
-      [label]="'programFactors.dialog.originProgram' | translate"
+      [label]="('common.origin' | translate) + ' ' + ('common.program' | translate)"
       [options]="programOptions">
     </app-select>
 
     <app-select
       formControlName="destinationProgramId"
-      [label]="'programFactors.dialog.destinationProgram' | translate"
+      [label]="('common.destination' | translate) + ' ' + ('common.program' | translate)"
       [options]="programOptions">
     </app-select>
 
     <div class="factor-inputs">
       <app-number-input
         formControlName="fromAmount"
-        [label]="'programFactors.dialog.fromAmount' | translate"
+        [label]="'common.amount' | translate"
         [step]="'any'"
         [min]="0.0001">
       </app-number-input>
@@ -31,7 +32,7 @@
 
       <app-number-input
         formControlName="toAmount"
-        [label]="'programFactors.dialog.toAmount' | translate"
+        [label]="'common.amount' | translate"
         [step]="'any'"
         [min]="0.0001">
       </app-number-input>
