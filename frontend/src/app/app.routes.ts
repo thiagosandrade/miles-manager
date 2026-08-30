@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { AuthGuard } from './core/guards/auth.guard';
-import { AdminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -13,7 +12,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    loadComponent: () =>      
+    loadComponent: () =>
       import('./layout/layout.component').then(
         (m) => m.LayoutComponent),
     children: [
@@ -46,6 +45,13 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./features/programs/programs.routes').then(
             (m) => m.PROGRAMS_ROUTES
+          ),
+      },
+      {
+        path: 'program-factors',
+        loadChildren: () =>
+          import('./features/program-factors/program-factors.routes').then(
+            (m) => m.PROGRAM_FACTORS_ROUTES
           ),
       },
       {
