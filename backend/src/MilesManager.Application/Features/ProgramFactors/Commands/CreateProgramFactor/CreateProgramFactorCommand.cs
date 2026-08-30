@@ -7,5 +7,6 @@ public sealed class CreateProgramFactorCommand : IRequest<Result<Guid>>
 {
     public Guid OriginProgramId { get; init; }
     public Guid DestinationProgramId { get; init; }
-    public decimal TransferFactor { get; init; }
+    public decimal FromAmount { get; init; }
+    public decimal ToAmount { get; init; }
 }
