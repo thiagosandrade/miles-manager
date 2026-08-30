@@ -11,8 +11,8 @@ internal sealed class TransferRouteConfiguration : IEntityTypeConfiguration<Tran
         builder.ToTable("transfer_routes");
         builder.HasKey(x => x.Id);
         builder.HasIndex(x => new { x.OriginProgramId, x.DestinationProgramId }).IsUnique();
-        builder.Property(x => x.TransferFactor).HasPrecision(10, 4);
-        builder.Property(x => x.IsActive).HasDefaultValue(true);
+        builder.Property(x => x.FromAmount).HasPrecision(18, 4);
+        builder.Property(x => x.ToAmount).HasPrecision(18, 4);
         builder.HasOne(x => x.OriginProgram)
             .WithMany(p => p.OriginTransfers)
             .HasForeignKey(x => x.OriginProgramId)
