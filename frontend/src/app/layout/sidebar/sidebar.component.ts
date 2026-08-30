@@ -75,6 +75,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
       icon: 'assignment'
     },
     {
+      path: '/program-factors',
+      label: 'sidebar.programFactors',
+      icon: 'compare_arrows',
+      adminOnly: true
+    },
+    {
       path: '/program-balances',
       label: 'sidebar.programBalances',
       icon: 'account_balance_wallet'
@@ -108,20 +114,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.breakpointSubscription =
       this.breakpointObserver
         .observe('(max-width: 768px)')
         .subscribe(result => {
-
           this.isMobile = result.matches;
-
-          this.sidenavMode = this.isMobile
-            ? 'over'
-            : 'side';
-
+          this.sidenavMode = this.isMobile ? 'over' : 'side';
         });
-
   }
 
   ngOnDestroy(): void {
