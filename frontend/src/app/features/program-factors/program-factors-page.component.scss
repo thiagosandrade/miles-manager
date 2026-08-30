@@ -1,0 +1,96 @@
+.page {
+  padding: 28px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--mm-primary);
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.page-header h1 {
+  margin: 6px 0 0;
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.factor-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mm-primary) 10%, transparent);
+  color: var(--mm-primary);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mobile-factors {
+  display: none;
+}
+
+.factor-card {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.factor-programs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.factor-programs > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.factor-programs mat-icon {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.factor-label {
+  color: var(--muted);
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.factor-value {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 20px 12px;
+  }
+
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-factors {
+    display: block;
+  }
+}
