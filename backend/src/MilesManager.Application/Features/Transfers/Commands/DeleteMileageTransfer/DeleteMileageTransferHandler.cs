@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MilesManager.Application.Features.Transfers.Commands.DeleteMileageTransfer;
 
-public sealed class DeleteMileageTransferHandler(IApplicationDbContext context) : IRequestHandler<DeleteMileageTransferCommand, Result>
+public sealed class DeleteMileageTransferHandler(
+    IApplicationDbContext context) : IRequestHandler<DeleteMileageTransferCommand, Result>
 {
     private readonly IApplicationDbContext _context = context;
 
@@ -17,12 +18,21 @@ public sealed class DeleteMileageTransferHandler(IApplicationDbContext context) 
             return Result.NotFound();
         }
 
-        var originBalance = await _context.ProgramBalances.FirstOrDefaultAsync(pb => pb.UserId == transfer.UserId && pb.ProgramId == transfer.OriginProgramId, cancellationToken);
-        var destinationBalance = await _context.ProgramBalances.FirstOrDefaultAsync(pb => pb.UserId == transfer.UserId && pb.ProgramId == transfer.DestinationProgramId, cancellationToken);
+        var originBalance = await _context.ProgramBalances.FirstOrDefaultAsync(
+            pb => pb.UserId == transfer.UserId && pb.ProgramId == transfer.OriginProgramId,
+            cancellationToken);
+        var destinationBalance = await _context.ProgramBalances.FirstOrDefaultAsync(
+            pb => pb.UserId == transfer.UserId && pb.ProgramId == transfer.DestinationProgramId,
+            cancellationToken);
 
         if (destinationBalance is null || destinationBalance.Balance < transfer.MilesReceived)
         {
             return Result.ValidationFailed("Destination balance does not have enough miles to reverse transfer.");
+        }
+
+        if (destinationBalance.AllocatedCost < transfer.TransferredCost)
+        {
+            return Result.ValidationFailed("Destination balance does not have enough allocated cost to reverse transfer.");
         }
 
         if (originBalance is null)
@@ -31,16 +41,19 @@ public sealed class DeleteMileageTransferHandler(IApplicationDbContext context) 
             {
                 UserId = transfer.UserId,
                 ProgramId = transfer.OriginProgramId,
-                Balance = transfer.MilesSent
+                Balance = transfer.MilesSent,
+                AllocatedCost = transfer.TransferredCost
             };
             await _context.ProgramBalances.AddAsync(originBalance, cancellationToken);
         }
         else
         {
             originBalance.Balance += transfer.MilesSent;
+            originBalance.AllocatedCost += transfer.TransferredCost;
         }
 
         destinationBalance.Balance -= transfer.MilesReceived;
+        destinationBalance.AllocatedCost -= transfer.TransferredCost;
 
         _context.MileageTransfers.Remove(transfer);
         await _context.SaveChangesAsync(cancellationToken);
