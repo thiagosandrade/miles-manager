@@ -25,7 +25,6 @@ public class GetTransfersHandlerTests
 
         var mapper = CreateMapper();
         var handler = new GetTransfersHandler(context, mapper, new TestCurrentUser(userId));
-
         var result = await handler.Handle(new GetTransfersQuery(), TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
@@ -38,21 +37,20 @@ public class GetTransfersHandlerTests
     {
         var options = new DbContextOptionsBuilder<MilesManagerDbContext>().UseInMemoryDatabase($"GetTransfersEmpty_{Guid.NewGuid()}").Options;
         await using var context = new MilesManagerDbContext(options);
-        var mapper = CreateMapper();
-        var handler = new GetTransfersHandler(context, mapper, new TestCurrentUser(Guid.NewGuid()));
-
+        var handler = new GetTransfersHandler(context, CreateMapper(), new TestCurrentUser(Guid.NewGuid()));
         var result = await handler.Handle(new GetTransfersQuery(), TestContext.Current.CancellationToken);
-
         result.Status.Should().Be(ResultStatus.Success);
         result.Value.Should().BeEmpty();
     }
 
-    private static IMapper CreateMapper() =>
-        new MapperConfiguration(cfg => cfg.AddMaps(typeof(GetTransfersHandler).Assembly)).CreateMapper();
+    private static IMapper CreateMapper() => new MapperConfiguration(cfg => cfg.AddMaps(typeof(GetTransfersHandler).Assembly)).CreateMapper();
 
     private sealed class TestCurrentUser(Guid userId) : ICurrentUser
     {
-        public Guid UserId => userId;
+        public Guid? UserId => userId;
+        public string? Email => "test@example.com";
+        public string? Name => "Test User";
         public bool IsAuthenticated => true;
+        public bool IsInRole(string role) => false;
     }
 }
