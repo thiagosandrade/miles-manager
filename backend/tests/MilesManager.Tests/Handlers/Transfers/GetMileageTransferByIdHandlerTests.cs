@@ -5,7 +5,6 @@ using MilesManager.Application.Context;
 using MilesManager.Application.Features.Transfers.Queries.GetMileageTransferById;
 using MilesManager.Domain.Transfers;
 using MilesManager.Infrastructure.Persistence;
-using Moq;
 using Xunit;
 
 namespace MilesManager.Tests.Handlers.Transfers;
@@ -22,10 +21,9 @@ public class GetMileageTransferByIdHandlerTests
         context.MileageTransfers.Add(new MileageTransfer { Id = transferId, UserId = userId, MilesSent = 4000, MilesReceived = 4000, BonusPercentage = 100, TransferDate = new DateOnly(2026, 8, 30) });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
-        var currentUser = new Mock<ICurrentUser>();
-        currentUser.SetupGet(x => x.UserId).Returns(userId);
+        var currentUser = new TestCurrentUser(userId);
         var mapper = new MapperConfiguration(cfg => cfg.AddMaps(typeof(GetMileageTransferByIdHandler).Assembly)).CreateMapper();
-        var handler = new GetMileageTransferByIdHandler(context, mapper, currentUser.Object);
+        var handler = new GetMileageTransferByIdHandler(context, mapper, currentUser);
 
         var result = await handler.Handle(new GetMileageTransferByIdQuery { Id = transferId }, TestContext.Current.CancellationToken);
 
@@ -43,13 +41,17 @@ public class GetMileageTransferByIdHandlerTests
         context.MileageTransfers.Add(new MileageTransfer { Id = transferId, UserId = Guid.NewGuid(), MilesSent = 1000, MilesReceived = 1000 });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
-        var currentUser = new Mock<ICurrentUser>();
-        currentUser.SetupGet(x => x.UserId).Returns(Guid.NewGuid());
+        var currentUser = new TestCurrentUser(Guid.NewGuid());
         var mapper = new MapperConfiguration(cfg => cfg.AddMaps(typeof(GetMileageTransferByIdHandler).Assembly)).CreateMapper();
-        var handler = new GetMileageTransferByIdHandler(context, mapper, currentUser.Object);
+        var handler = new GetMileageTransferByIdHandler(context, mapper, currentUser);
 
         var result = await handler.Handle(new GetMileageTransferByIdQuery { Id = transferId }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(MilesManager.Application.Common.ResultStatus.NotFound);
+    }
+
+    private sealed class TestCurrentUser(Guid userId) : ICurrentUser
+    {
+        public Guid UserId => userId;
     }
 }
