@@ -53,5 +53,6 @@ public class GetMileageTransferByIdHandlerTests
     private sealed class TestCurrentUser(Guid userId) : ICurrentUser
     {
         public Guid UserId => userId;
+        public bool IsAuthenticated => true;
     }
 }
