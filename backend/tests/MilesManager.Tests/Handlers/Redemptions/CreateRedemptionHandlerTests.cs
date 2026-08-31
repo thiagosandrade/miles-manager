@@ -27,7 +27,7 @@ public class CreateRedemptionHandlerTests
             Balance = 24_000m,
             AllocatedCost = 1_120m
         });
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = new CreateRedemptionHandler(context, new Application.Services.MileageAccountingService());
         var result = await handler.Handle(new CreateRedemptionCommand
@@ -37,13 +37,13 @@ public class CreateRedemptionHandlerTests
             MilesUsed = 12_000m,
             FlightDate = new DateOnly(2026, 8, 30),
             Passengers = 1
-        }, CancellationToken.None);
+        }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
-        var balance = await context.ProgramBalances.SingleAsync();
+        var balance = await context.ProgramBalances.SingleAsync(TestContext.Current.CancellationToken);
         balance.Balance.Should().Be(12_000m);
         balance.AllocatedCost.Should().Be(560m);
-        (await context.FlightRedemptions.CountAsync()).Should().Be(1);
+        (await context.FlightRedemptions.CountAsync(TestContext.Current.CancellationToken)).Should().Be(1);
     }
 
     [Fact]
@@ -63,7 +63,7 @@ public class CreateRedemptionHandlerTests
             Balance = 1_000m,
             AllocatedCost = 50m
         });
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = new CreateRedemptionHandler(context, new Application.Services.MileageAccountingService());
         var result = await handler.Handle(new CreateRedemptionCommand
@@ -73,11 +73,11 @@ public class CreateRedemptionHandlerTests
             MilesUsed = 2_000m,
             FlightDate = new DateOnly(2026, 8, 30),
             Passengers = 1
-        }, CancellationToken.None);
+        }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.ValidationFailed);
-        (await context.FlightRedemptions.CountAsync()).Should().Be(0);
-        var balance = await context.ProgramBalances.SingleAsync();
+        (await context.FlightRedemptions.CountAsync(TestContext.Current.CancellationToken)).Should().Be(0);
+        var balance = await context.ProgramBalances.SingleAsync(TestContext.Current.CancellationToken);
         balance.Balance.Should().Be(1_000m);
         balance.AllocatedCost.Should().Be(50m);
     }
