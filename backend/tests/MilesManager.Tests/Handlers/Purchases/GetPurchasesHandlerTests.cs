@@ -30,9 +30,7 @@ public class GetPurchasesHandlerTests
         var config = new MapperConfiguration(cfg => cfg.CreateMap<MileagePurchase, MileagePurchaseDto>()
             .ForMember(d => d.ProgramName, o => o.MapFrom(s => s.Program.Name))
             .ForMember(d => d.CurrencyCode, o => o.MapFrom(s => s.Program.CurrencyCode)));
-        var mapper = config.CreateMapper();
-        var currentUser = new TestCurrentUser(userId);
-        var handler = new GetPurchasesHandler(context, mapper, currentUser);
+        var handler = new GetPurchasesHandler(context, config.CreateMapper(), new TestCurrentUser(userId));
 
         var result = await handler.Handle(new GetPurchasesQuery(), TestContext.Current.CancellationToken);
 
@@ -63,6 +61,10 @@ public class GetPurchasesHandlerTests
 
     private sealed class TestCurrentUser(Guid userId) : MilesManager.Application.Context.ICurrentUser
     {
-        public Guid UserId { get; } = userId;
+        public Guid? UserId { get; } = userId;
+        public string? Email => null;
+        public string? Name => null;
+        public bool IsAuthenticated => true;
+        public bool IsInRole(string role) => false;
     }
 }
