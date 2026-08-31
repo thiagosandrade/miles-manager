@@ -21,10 +21,7 @@ public class GetMileageTransferByIdHandlerTests
         context.MileageTransfers.Add(new MileageTransfer { Id = transferId, UserId = userId, MilesSent = 4000, MilesReceived = 4000, BonusPercentage = 100, TransferDate = new DateOnly(2026, 8, 30) });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
-        var currentUser = new TestCurrentUser(userId);
-        var mapper = new MapperConfiguration(cfg => cfg.AddMaps(typeof(GetMileageTransferByIdHandler).Assembly)).CreateMapper();
-        var handler = new GetMileageTransferByIdHandler(context, mapper, currentUser);
-
+        var handler = new GetMileageTransferByIdHandler(context, CreateMapper(), new TestCurrentUser(userId));
         var result = await handler.Handle(new GetMileageTransferByIdQuery { Id = transferId }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(MilesManager.Application.Common.ResultStatus.Success);
@@ -41,18 +38,19 @@ public class GetMileageTransferByIdHandlerTests
         context.MileageTransfers.Add(new MileageTransfer { Id = transferId, UserId = Guid.NewGuid(), MilesSent = 1000, MilesReceived = 1000 });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
-        var currentUser = new TestCurrentUser(Guid.NewGuid());
-        var mapper = new MapperConfiguration(cfg => cfg.AddMaps(typeof(GetMileageTransferByIdHandler).Assembly)).CreateMapper();
-        var handler = new GetMileageTransferByIdHandler(context, mapper, currentUser);
-
+        var handler = new GetMileageTransferByIdHandler(context, CreateMapper(), new TestCurrentUser(Guid.NewGuid()));
         var result = await handler.Handle(new GetMileageTransferByIdQuery { Id = transferId }, TestContext.Current.CancellationToken);
-
         result.Status.Should().Be(MilesManager.Application.Common.ResultStatus.NotFound);
     }
 
+    private static IMapper CreateMapper() => new MapperConfiguration(cfg => cfg.AddMaps(typeof(GetMileageTransferByIdHandler).Assembly)).CreateMapper();
+
     private sealed class TestCurrentUser(Guid userId) : ICurrentUser
     {
-        public Guid UserId => userId;
+        public Guid? UserId => userId;
+        public string? Email => "test@example.com";
+        public string? Name => "Test User";
         public bool IsAuthenticated => true;
+        public bool IsInRole(string role) => false;
     }
 }
