@@ -6,7 +6,6 @@ using MilesManager.Application.Context;
 using MilesManager.Application.Features.Transfers.Queries.GetTransfers;
 using MilesManager.Domain.Transfers;
 using MilesManager.Infrastructure.Persistence;
-using Moq;
 using Xunit;
 
 namespace MilesManager.Tests.Handlers.Transfers;
@@ -25,9 +24,7 @@ public class GetTransfersHandlerTests
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var mapper = CreateMapper();
-        var currentUser = new Mock<ICurrentUser>();
-        currentUser.SetupGet(x => x.UserId).Returns(userId);
-        var handler = new GetTransfersHandler(context, mapper, currentUser.Object);
+        var handler = new GetTransfersHandler(context, mapper, new TestCurrentUser(userId));
 
         var result = await handler.Handle(new GetTransfersQuery(), TestContext.Current.CancellationToken);
 
@@ -42,9 +39,7 @@ public class GetTransfersHandlerTests
         var options = new DbContextOptionsBuilder<MilesManagerDbContext>().UseInMemoryDatabase($"GetTransfersEmpty_{Guid.NewGuid()}").Options;
         await using var context = new MilesManagerDbContext(options);
         var mapper = CreateMapper();
-        var currentUser = new Mock<ICurrentUser>();
-        currentUser.SetupGet(x => x.UserId).Returns(Guid.NewGuid());
-        var handler = new GetTransfersHandler(context, mapper, currentUser.Object);
+        var handler = new GetTransfersHandler(context, mapper, new TestCurrentUser(Guid.NewGuid()));
 
         var result = await handler.Handle(new GetTransfersQuery(), TestContext.Current.CancellationToken);
 
@@ -52,9 +47,11 @@ public class GetTransfersHandlerTests
         result.Value.Should().BeEmpty();
     }
 
-    private static IMapper CreateMapper()
+    private static IMapper CreateMapper() =>
+        new MapperConfiguration(cfg => cfg.AddMaps(typeof(GetTransfersHandler).Assembly)).CreateMapper();
+
+    private sealed class TestCurrentUser(Guid userId) : ICurrentUser
     {
-        var configuration = new MapperConfiguration(cfg => cfg.AddMaps(typeof(GetTransfersHandler).Assembly));
-        return configuration.CreateMapper();
+        public Guid UserId => userId;
     }
 }
