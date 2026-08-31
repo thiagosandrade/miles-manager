@@ -38,7 +38,7 @@ public class CreateMileagePurchaseHandlerTests
         var balance = await context.ProgramBalances.SingleAsync(TestContext.Current.CancellationToken);
         balance.Balance.Should().Be(10_000m);
         balance.AllocatedCost.Should().Be(300m);
-        (await context.MileagePurchases.CountAsync()).Should().Be(1);
+        (await context.MileagePurchases.CountAsync(TestContext.Current.CancellationToken)).Should().Be(1);
     }
 
     [Fact]
@@ -68,7 +68,7 @@ public class CreateMileagePurchaseHandlerTests
             AmountPaid = 150m,
             MilesPurchased = 5_000m,
             PurchaseDate = new DateOnly(2026, 8, 30)
-        }, CancellationToken.None);
+        }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
         var balance = await context.ProgramBalances.SingleAsync(TestContext.Current.CancellationToken);
@@ -91,7 +91,7 @@ public class CreateMileagePurchaseHandlerTests
             AmountPaid = 100m,
             MilesPurchased = 1_000m,
             PurchaseDate = new DateOnly(2026, 8, 30)
-        }, CancellationToken.None);
+        }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.NotFound);
     }
