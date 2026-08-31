@@ -38,7 +38,7 @@ public class CreateTransferHandlerTests
             FromAmount = 2m,
             ToAmount = 1m
         });
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = new CreateTransferHandler(context, new Application.Services.MileageAccountingService());
         var result = await handler.Handle(new CreateTransferCommand
@@ -49,16 +49,16 @@ public class CreateTransferHandlerTests
             MilesSent = 4_000m,
             BonusPercentage = 100m,
             TransferDate = new DateOnly(2026, 8, 30)
-        }, CancellationToken.None);
+        }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
-        var balances = await context.ProgramBalances.ToListAsync();
+        var balances = await context.ProgramBalances.ToListAsync(TestContext.Current.CancellationToken);
         balances.Single(x => x.ProgramId == originId).Balance.Should().Be(6_000m);
         balances.Single(x => x.ProgramId == originId).AllocatedCost.Should().Be(180m);
         balances.Single(x => x.ProgramId == destinationId).Balance.Should().Be(4_000m);
         balances.Single(x => x.ProgramId == destinationId).AllocatedCost.Should().Be(120m);
 
-        var transfer = await context.MileageTransfers.SingleAsync();
+        var transfer = await context.MileageTransfers.SingleAsync(TestContext.Current.CancellationToken);
         transfer.MilesReceived.Should().Be(4_000m);
         transfer.TransferredCost.Should().Be(120m);
     }
@@ -83,7 +83,7 @@ public class CreateTransferHandlerTests
             Balance = 10_000m,
             AllocatedCost = 300m
         });
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = new CreateTransferHandler(context, new Application.Services.MileageAccountingService());
         var result = await handler.Handle(new CreateTransferCommand
@@ -94,10 +94,12 @@ public class CreateTransferHandlerTests
             MilesSent = 4_000m,
             BonusPercentage = 0m,
             TransferDate = new DateOnly(2026, 8, 30)
-        }, CancellationToken.None);
+        }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
-        var destination = await context.ProgramBalances.SingleAsync(x => x.ProgramId == destinationId);
+        var destination = await context.ProgramBalances.SingleAsync(
+            x => x.ProgramId == destinationId,
+            TestContext.Current.CancellationToken);
         destination.Balance.Should().Be(4_000m);
         destination.AllocatedCost.Should().Be(120m);
     }
@@ -111,7 +113,7 @@ public class CreateTransferHandlerTests
 
         await using var context = new MilesManagerDbContext(options);
         context.Programs.Add(new LoyaltyProgram { Id = programId, Name = "Program", ProgramCode = "P" });
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = new CreateTransferHandler(context, new Application.Services.MileageAccountingService());
         var result = await handler.Handle(new CreateTransferCommand
@@ -121,7 +123,7 @@ public class CreateTransferHandlerTests
             DestinationProgramId = programId,
             MilesSent = 1_000m,
             TransferDate = new DateOnly(2026, 8, 30)
-        }, CancellationToken.None);
+        }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.ValidationFailed);
     }
