@@ -4,6 +4,7 @@ using MilesManager.Application.Common;
 using MilesManager.Application.Features.Programs.Commands.UpdateProgram;
 using MilesManager.Domain.Common.Enums;
 using MilesManager.Domain.Pricing;
+using MilesManager.Domain.Programs;
 using MilesManager.Infrastructure.Persistence;
 using Xunit;
 
@@ -21,31 +22,20 @@ public class UpdateProgramHandlerTests
         await using var context = new MilesManagerDbContext(options);
         context.Programs.Add(new LoyaltyProgram
         {
-            Id = programId,
-            ProgramCode = "OLD",
-            Name = "Old Name",
-            ProgramType = ProgramType.Airline,
-            CurrencyCode = "BRL",
-            IsActive = true
+            Id = programId, ProgramCode = "OLD", Name = "Old Name", ProgramType = ProgramType.Airline,
+            CurrencyCode = "BRL", IsActive = true
         });
         context.ReferenceMileagePrices.Add(new ReferenceMileagePrice
         {
-            ProgramId = programId,
-            PricePerThousand = 20m,
-            EffectiveDate = new DateOnly(2026, 1, 1)
+            ProgramId = programId, PricePerThousand = 20m, EffectiveDate = new DateOnly(2026, 1, 1)
         });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = new UpdateProgramHandler(context);
         var result = await handler.Handle(new UpdateProgramCommand
         {
-            Id = programId,
-            ProgramCode = " NEW ",
-            Name = " New Name ",
-            ProgramType = ProgramType.Airline,
-            CurrencyCode = "EUR",
-            ReferencePricePerThousand = 30m,
-            IsActive = false
+            Id = programId, ProgramCode = " NEW ", Name = " New Name ", ProgramType = ProgramType.Airline,
+            CurrencyCode = "EUR", ReferencePricePerThousand = 30m, IsActive = false
         }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
@@ -67,11 +57,7 @@ public class UpdateProgramHandlerTests
         var handler = new UpdateProgramHandler(context);
         var result = await handler.Handle(new UpdateProgramCommand
         {
-            Id = Guid.NewGuid(),
-            ProgramCode = "TST",
-            Name = "Test",
-            ReferencePricePerThousand = 10m,
-            CurrencyCode = "BRL"
+            Id = Guid.NewGuid(), ProgramCode = "TST", Name = "Test", ReferencePricePerThousand = 10m, CurrencyCode = "BRL"
         }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.NotFound);
@@ -85,29 +71,17 @@ public class UpdateProgramHandlerTests
         var programId = Guid.NewGuid();
 
         await using var context = new MilesManagerDbContext(options);
-        context.Programs.Add(new LoyaltyProgram
-        {
-            Id = programId,
-            ProgramCode = "TST",
-            Name = "Test",
-            CurrencyCode = "BRL"
-        });
+        context.Programs.Add(new LoyaltyProgram { Id = programId, ProgramCode = "TST", Name = "Test", CurrencyCode = "BRL" });
         context.ReferenceMileagePrices.Add(new ReferenceMileagePrice
         {
-            ProgramId = programId,
-            PricePerThousand = 25m,
-            EffectiveDate = new DateOnly(2026, 1, 1)
+            ProgramId = programId, PricePerThousand = 25m, EffectiveDate = new DateOnly(2026, 1, 1)
         });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = new UpdateProgramHandler(context);
         var result = await handler.Handle(new UpdateProgramCommand
         {
-            Id = programId,
-            ProgramCode = "TST",
-            Name = "Test",
-            ReferencePricePerThousand = 25m,
-            CurrencyCode = "BRL"
+            Id = programId, ProgramCode = "TST", Name = "Test", ReferencePricePerThousand = 25m, CurrencyCode = "BRL"
         }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
