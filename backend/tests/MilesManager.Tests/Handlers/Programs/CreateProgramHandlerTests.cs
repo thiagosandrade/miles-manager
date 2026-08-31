@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using MilesManager.Application.Common;
 using MilesManager.Application.Features.Programs.Commands.CreateProgram;
 using MilesManager.Infrastructure.Persistence;
 using Xunit;
@@ -12,20 +13,43 @@ public class CreateProgramHandlerTests
     public async Task Handle_NewProgram_ReturnsSuccessAndCreatesProgram()
     {
         var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
-            .UseInMemoryDatabase(databaseName: "CreateProgramTests_NewProgram")
+            .UseInMemoryDatabase($"CreateProgram_{Guid.NewGuid()}")
             .Options;
 
         await using var context = new MilesManagerDbContext(options);
-
         var handler = new CreateProgramHandler(context);
 
-        var command = new CreateProgramCommand { ProgramCode = "TST", Name = "Test Program" };
+        var result = await handler.Handle(
+            new CreateProgramCommand { ProgramCode = "TST", Name = "Test Program", ReferencePricePerThousand = 20m },
+            TestContext.Current.CancellationToken);
 
-        var result = await handler.Handle(command, CancellationToken.None);
+        result.Status.Should().Be(ResultStatus.Success);
+        var created = await context.Programs.SingleAsync(p => p.ProgramCode == "TST", TestContext.Current.CancellationToken);
+        created.Name.Should().Be("Test Program");
+        (await context.ReferenceMileagePrices.CountAsync(TestContext.Current.CancellationToken)).Should().Be(1);
+    }
 
-        result.Status.Should().Be(MilesManager.Application.Common.ResultStatus.Success);
-        var created = await context.Programs.FirstOrDefaultAsync(p => p.ProgramCode == "TST", CancellationToken.None);
-        created.Should().NotBeNull();
-        created!.Name.Should().Be("Test Program");
+    [Fact]
+    public async Task Handle_DuplicateProgramCode_ReturnsConflict()
+    {
+        var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
+            .UseInMemoryDatabase($"CreateProgramConflict_{Guid.NewGuid()}")
+            .Options;
+
+        await using var context = new MilesManagerDbContext(options);
+        context.Programs.Add(new MilesManager.Domain.Programs.LoyaltyProgram
+        {
+            ProgramCode = "TST",
+            Name = "Existing"
+        });
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var handler = new CreateProgramHandler(context);
+        var result = await handler.Handle(
+            new CreateProgramCommand { ProgramCode = "TST", Name = "Duplicate", ReferencePricePerThousand = 20m },
+            TestContext.Current.CancellationToken);
+
+        result.Status.Should().Be(ResultStatus.Conflict);
+        (await context.Programs.CountAsync(TestContext.Current.CancellationToken)).Should().Be(1);
     }
 }
