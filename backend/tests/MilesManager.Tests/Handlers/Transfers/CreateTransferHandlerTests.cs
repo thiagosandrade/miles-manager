@@ -105,6 +105,200 @@ public class CreateTransferHandlerTests
     }
 
     [Fact]
+    public async Task Handle_WithThreeToOneFactor_UsesConfiguredFactor()
+    {
+        var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
+            .UseInMemoryDatabase($"CreateTransferThreeToOne_{Guid.NewGuid()}").Options;
+        var userId = Guid.NewGuid();
+        var originId = Guid.NewGuid();
+        var destinationId = Guid.NewGuid();
+
+        await using var context = new MilesManagerDbContext(options);
+        context.Programs.AddRange(
+            new LoyaltyProgram { Id = originId, Name = "A", ProgramCode = "A" },
+            new LoyaltyProgram { Id = destinationId, Name = "B", ProgramCode = "B" });
+        context.ProgramBalances.Add(new ProgramBalance
+        {
+            UserId = userId,
+            ProgramId = originId,
+            Balance = 12_000m,
+            AllocatedCost = 360m
+        });
+        context.TransferRoutes.Add(new ProgramFactor
+        {
+            OriginProgramId = originId,
+            DestinationProgramId = destinationId,
+            FromAmount = 3m,
+            ToAmount = 1m
+        });
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var handler = new CreateTransferHandler(context, new Application.Services.MileageAccountingService());
+        var result = await handler.Handle(new CreateTransferCommand
+        {
+            UserId = userId,
+            OriginProgramId = originId,
+            DestinationProgramId = destinationId,
+            MilesSent = 6_000m,
+            BonusPercentage = 0m,
+            TransferDate = new DateOnly(2026, 8, 30)
+        }, TestContext.Current.CancellationToken);
+
+        result.Status.Should().Be(ResultStatus.Success);
+        var destination = await context.ProgramBalances.SingleAsync(
+            x => x.ProgramId == destinationId,
+            TestContext.Current.CancellationToken);
+        destination.Balance.Should().Be(2_000m);
+        destination.AllocatedCost.Should().Be(180m);
+    }
+
+    [Fact]
+    public async Task Handle_WithExistingDestinationBalance_AccumulatesMilesAndCost()
+    {
+        var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
+            .UseInMemoryDatabase($"CreateTransferExistingDestination_{Guid.NewGuid()}").Options;
+        var userId = Guid.NewGuid();
+        var originId = Guid.NewGuid();
+        var destinationId = Guid.NewGuid();
+
+        await using var context = new MilesManagerDbContext(options);
+        context.Programs.AddRange(
+            new LoyaltyProgram { Id = originId, Name = "Livelo", ProgramCode = "LIVELO" },
+            new LoyaltyProgram { Id = destinationId, Name = "TAP", ProgramCode = "TAP" });
+        context.ProgramBalances.AddRange(
+            new ProgramBalance
+            {
+                UserId = userId,
+                ProgramId = originId,
+                Balance = 10_000m,
+                AllocatedCost = 300m
+            },
+            new ProgramBalance
+            {
+                UserId = userId,
+                ProgramId = destinationId,
+                Balance = 20_000m,
+                AllocatedCost = 1_000m
+            });
+        context.TransferRoutes.Add(new ProgramFactor
+        {
+            OriginProgramId = originId,
+            DestinationProgramId = destinationId,
+            FromAmount = 2m,
+            ToAmount = 1m
+        });
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var handler = new CreateTransferHandler(context, new Application.Services.MileageAccountingService());
+        var result = await handler.Handle(new CreateTransferCommand
+        {
+            UserId = userId,
+            OriginProgramId = originId,
+            DestinationProgramId = destinationId,
+            MilesSent = 4_000m,
+            BonusPercentage = 100m,
+            TransferDate = new DateOnly(2026, 8, 30)
+        }, TestContext.Current.CancellationToken);
+
+        result.Status.Should().Be(ResultStatus.Success);
+        var destination = await context.ProgramBalances.SingleAsync(
+            x => x.ProgramId == destinationId,
+            TestContext.Current.CancellationToken);
+        destination.Balance.Should().Be(24_000m);
+        destination.AllocatedCost.Should().Be(1_120m);
+    }
+
+    [Fact]
+    public async Task Handle_InsufficientOriginBalance_ReturnsValidationFailureWithoutChangingBalances()
+    {
+        var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
+            .UseInMemoryDatabase($"CreateTransferInsufficient_{Guid.NewGuid()}").Options;
+        var userId = Guid.NewGuid();
+        var originId = Guid.NewGuid();
+        var destinationId = Guid.NewGuid();
+
+        await using var context = new MilesManagerDbContext(options);
+        context.Programs.AddRange(
+            new LoyaltyProgram { Id = originId, Name = "A", ProgramCode = "A" },
+            new LoyaltyProgram { Id = destinationId, Name = "B", ProgramCode = "B" });
+        context.ProgramBalances.Add(new ProgramBalance
+        {
+            UserId = userId,
+            ProgramId = originId,
+            Balance = 1_000m,
+            AllocatedCost = 30m
+        });
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var handler = new CreateTransferHandler(context, new Application.Services.MileageAccountingService());
+        var result = await handler.Handle(new CreateTransferCommand
+        {
+            UserId = userId,
+            OriginProgramId = originId,
+            DestinationProgramId = destinationId,
+            MilesSent = 2_000m,
+            BonusPercentage = 0m,
+            TransferDate = new DateOnly(2026, 8, 30)
+        }, TestContext.Current.CancellationToken);
+
+        result.Status.Should().Be(ResultStatus.ValidationFailed);
+        var origin = await context.ProgramBalances.SingleAsync(
+            x => x.ProgramId == originId,
+            TestContext.Current.CancellationToken);
+        origin.Balance.Should().Be(1_000m);
+        origin.AllocatedCost.Should().Be(30m);
+        (await context.MileageTransfers.CountAsync(TestContext.Current.CancellationToken)).Should().Be(0);
+    }
+
+    [Fact]
+    public async Task Handle_FullTransfer_ConsumesAllOriginBalanceAndAllocatedCost()
+    {
+        var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
+            .UseInMemoryDatabase($"CreateTransferFull_{Guid.NewGuid()}").Options;
+        var userId = Guid.NewGuid();
+        var originId = Guid.NewGuid();
+        var destinationId = Guid.NewGuid();
+
+        await using var context = new MilesManagerDbContext(options);
+        context.Programs.AddRange(
+            new LoyaltyProgram { Id = originId, Name = "A", ProgramCode = "A" },
+            new LoyaltyProgram { Id = destinationId, Name = "B", ProgramCode = "B" });
+        context.ProgramBalances.Add(new ProgramBalance
+        {
+            UserId = userId,
+            ProgramId = originId,
+            Balance = 10_000m,
+            AllocatedCost = 300m
+        });
+        context.TransferRoutes.Add(new ProgramFactor
+        {
+            OriginProgramId = originId,
+            DestinationProgramId = destinationId,
+            FromAmount = 2m,
+            ToAmount = 1m
+        });
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var handler = new CreateTransferHandler(context, new Application.Services.MileageAccountingService());
+        var result = await handler.Handle(new CreateTransferCommand
+        {
+            UserId = userId,
+            OriginProgramId = originId,
+            DestinationProgramId = destinationId,
+            MilesSent = 10_000m,
+            BonusPercentage = 0m,
+            TransferDate = new DateOnly(2026, 8, 30)
+        }, TestContext.Current.CancellationToken);
+
+        result.Status.Should().Be(ResultStatus.Success);
+        var balances = await context.ProgramBalances.ToListAsync(TestContext.Current.CancellationToken);
+        balances.Single(x => x.ProgramId == originId).Balance.Should().Be(0m);
+        balances.Single(x => x.ProgramId == originId).AllocatedCost.Should().Be(0m);
+        balances.Single(x => x.ProgramId == destinationId).Balance.Should().Be(5_000m);
+        balances.Single(x => x.ProgramId == destinationId).AllocatedCost.Should().Be(300m);
+    }
+
+    [Fact]
     public async Task Handle_SameProgram_ReturnsValidationFailure()
     {
         var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
