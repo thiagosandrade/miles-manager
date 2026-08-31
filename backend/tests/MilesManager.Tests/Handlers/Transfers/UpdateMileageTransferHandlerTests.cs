@@ -12,6 +12,8 @@ namespace MilesManager.Tests.Handlers.Transfers;
 
 public class UpdateMileageTransferHandlerTests
 {
+    private static MilesManager.Application.Services.MileageAccountingService CreateAccountingService() => new();
+
     [Fact]
     public async Task Handle_WhenTransferExists_ReversesOldAccountingAndAppliesNewTransfer()
     {
@@ -25,7 +27,7 @@ public class UpdateMileageTransferHandlerTests
         context.MileageTransfers.Add(new MileageTransfer { Id = transferId, UserId = userId, OriginProgramId = originId, DestinationProgramId = destinationId, MilesSent = 4000, MilesReceived = 4000, TransferredCost = 120, BonusPercentage = 100, TransferDate = new DateOnly(2026, 8, 30) });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
-        var handler = new UpdateMileageTransferHandler(context, new MileageAccountingService());
+        var handler = new UpdateMileageTransferHandler(context, CreateAccountingService());
         var result = await handler.Handle(new UpdateMileageTransferCommand
         {
             Id = transferId, UserId = userId, OriginProgramId = originId, DestinationProgramId = destinationId,
@@ -50,7 +52,7 @@ public class UpdateMileageTransferHandlerTests
     {
         var options = new DbContextOptionsBuilder<MilesManagerDbContext>().UseInMemoryDatabase($"UpdateTransferNotFound_{Guid.NewGuid()}").Options;
         await using var context = new MilesManagerDbContext(options);
-        var handler = new UpdateMileageTransferHandler(context, new MileageAccountingService());
+        var handler = new UpdateMileageTransferHandler(context, CreateAccountingService());
         var result = await handler.Handle(new UpdateMileageTransferCommand { Id = Guid.NewGuid() }, TestContext.Current.CancellationToken);
         result.Status.Should().Be(ResultStatus.NotFound);
     }
@@ -63,7 +65,7 @@ public class UpdateMileageTransferHandlerTests
         await using var context = new MilesManagerDbContext(options);
         context.MileageTransfers.Add(new MileageTransfer { Id = transferId, UserId = userId, OriginProgramId = originId, DestinationProgramId = destinationId, MilesSent = 1000, MilesReceived = 1000, TransferredCost = 30 });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
-        var handler = new UpdateMileageTransferHandler(context, new MileageAccountingService());
+        var handler = new UpdateMileageTransferHandler(context, CreateAccountingService());
         var result = await handler.Handle(new UpdateMileageTransferCommand { Id = transferId, UserId = userId, OriginProgramId = otherId, DestinationProgramId = destinationId, MilesSent = 1000 }, TestContext.Current.CancellationToken);
         result.Status.Should().Be(ResultStatus.ValidationFailed);
     }
@@ -76,7 +78,7 @@ public class UpdateMileageTransferHandlerTests
         await using var context = new MilesManagerDbContext(options);
         context.MileageTransfers.Add(new MileageTransfer { Id = id, OriginProgramId = Guid.NewGuid(), DestinationProgramId = Guid.NewGuid(), MilesSent = 1000 });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
-        var handler = new UpdateMileageTransferHandler(context, new MileageAccountingService());
+        var handler = new UpdateMileageTransferHandler(context, CreateAccountingService());
         var result = await handler.Handle(new UpdateMileageTransferCommand { Id = id, MilesSent = 0 }, TestContext.Current.CancellationToken);
         result.Status.Should().Be(ResultStatus.ValidationFailed);
     }
