@@ -20,24 +20,11 @@ public class CreateRedemptionHandlerTests
 
         await using var context = new MilesManagerDbContext(options);
         context.Programs.Add(new LoyaltyProgram { Id = programId, Name = "TAP", ProgramCode = "TAP" });
-        context.ProgramBalances.Add(new ProgramBalance
-        {
-            UserId = userId,
-            ProgramId = programId,
-            Balance = 24_000m,
-            AllocatedCost = 1_120m
-        });
+        context.ProgramBalances.Add(new ProgramBalance { UserId = userId, ProgramId = programId, Balance = 24_000m, AllocatedCost = 1_120m });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = new CreateRedemptionHandler(context, new Application.Services.MileageAccountingService());
-        var result = await handler.Handle(new CreateRedemptionCommand
-        {
-            UserId = userId,
-            ProgramId = programId,
-            MilesUsed = 12_000m,
-            FlightDate = new DateOnly(2026, 8, 30),
-            Passengers = 1
-        }, TestContext.Current.CancellationToken);
+        var result = await handler.Handle(new CreateRedemptionCommand { UserId = userId, ProgramId = programId, MilesUsed = 12_000m, FlightDate = new DateOnly(2026, 8, 30), Passengers = 1, Taxes = 250m, CashPrice = 810m }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
         var balance = await context.ProgramBalances.SingleAsync(TestContext.Current.CancellationToken);
@@ -47,33 +34,53 @@ public class CreateRedemptionHandlerTests
     }
 
     [Fact]
-    public async Task Handle_InsufficientBalance_ReturnsValidationFailureAndDoesNotCreateRedemption()
+    public async Task Handle_FullRedemption_ConsumesEntireBalanceAndAllocatedCost()
     {
-        var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
-            .UseInMemoryDatabase($"CreateRedemptionInsufficient_{Guid.NewGuid()}").Options;
+        var options = new DbContextOptionsBuilder<MilesManagerDbContext>().UseInMemoryDatabase($"CreateRedemptionFull_{Guid.NewGuid()}").Options;
         var userId = Guid.NewGuid();
         var programId = Guid.NewGuid();
 
         await using var context = new MilesManagerDbContext(options);
         context.Programs.Add(new LoyaltyProgram { Id = programId, Name = "TAP", ProgramCode = "TAP" });
-        context.ProgramBalances.Add(new ProgramBalance
-        {
-            UserId = userId,
-            ProgramId = programId,
-            Balance = 1_000m,
-            AllocatedCost = 50m
-        });
+        context.ProgramBalances.Add(new ProgramBalance { UserId = userId, ProgramId = programId, Balance = 10_000m, AllocatedCost = 300m });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = new CreateRedemptionHandler(context, new Application.Services.MileageAccountingService());
-        var result = await handler.Handle(new CreateRedemptionCommand
-        {
-            UserId = userId,
-            ProgramId = programId,
-            MilesUsed = 2_000m,
-            FlightDate = new DateOnly(2026, 8, 30),
-            Passengers = 1
-        }, TestContext.Current.CancellationToken);
+        var result = await handler.Handle(new CreateRedemptionCommand { UserId = userId, ProgramId = programId, MilesUsed = 10_000m, FlightDate = new DateOnly(2026, 8, 30), Passengers = 1 }, TestContext.Current.CancellationToken);
+
+        result.Status.Should().Be(ResultStatus.Success);
+        var balance = await context.ProgramBalances.SingleAsync(TestContext.Current.CancellationToken);
+        balance.Balance.Should().Be(0m);
+        balance.AllocatedCost.Should().Be(0m);
+    }
+
+    [Fact]
+    public async Task Handle_MissingBalance_ReturnsNotFound()
+    {
+        var options = new DbContextOptionsBuilder<MilesManagerDbContext>().UseInMemoryDatabase($"CreateRedemptionMissing_{Guid.NewGuid()}").Options;
+        await using var context = new MilesManagerDbContext(options);
+        var handler = new CreateRedemptionHandler(context, new Application.Services.MileageAccountingService());
+
+        var result = await handler.Handle(new CreateRedemptionCommand { UserId = Guid.NewGuid(), ProgramId = Guid.NewGuid(), MilesUsed = 1_000m, FlightDate = new DateOnly(2026, 8, 30), Passengers = 1 }, TestContext.Current.CancellationToken);
+
+        result.Status.Should().Be(ResultStatus.NotFound);
+        (await context.FlightRedemptions.CountAsync(TestContext.Current.CancellationToken)).Should().Be(0);
+    }
+
+    [Fact]
+    public async Task Handle_InsufficientBalance_ReturnsValidationFailureAndDoesNotCreateRedemption()
+    {
+        var options = new DbContextOptionsBuilder<MilesManagerDbContext>().UseInMemoryDatabase($"CreateRedemptionInsufficient_{Guid.NewGuid()}").Options;
+        var userId = Guid.NewGuid();
+        var programId = Guid.NewGuid();
+
+        await using var context = new MilesManagerDbContext(options);
+        context.Programs.Add(new LoyaltyProgram { Id = programId, Name = "TAP", ProgramCode = "TAP" });
+        context.ProgramBalances.Add(new ProgramBalance { UserId = userId, ProgramId = programId, Balance = 1_000m, AllocatedCost = 50m });
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var handler = new CreateRedemptionHandler(context, new Application.Services.MileageAccountingService());
+        var result = await handler.Handle(new CreateRedemptionCommand { UserId = userId, ProgramId = programId, MilesUsed = 2_000m, FlightDate = new DateOnly(2026, 8, 30), Passengers = 1 }, TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.ValidationFailed);
         (await context.FlightRedemptions.CountAsync(TestContext.Current.CancellationToken)).Should().Be(0);
