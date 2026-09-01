@@ -37,7 +37,7 @@ public class CreateProgramHandlerTests
             .Options;
 
         await using var context = new MilesManagerDbContext(options);
-        context.Programs.Add(new MilesManager.Domain.Programs.LoyaltyProgram
+        context.Programs.Add(new Domain.Programs.LoyaltyProgram
         {
             ProgramCode = "TST",
             Name = "Existing"

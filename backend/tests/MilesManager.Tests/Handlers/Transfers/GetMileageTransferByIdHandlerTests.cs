@@ -3,6 +3,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MilesManager.Application.Abstractions;
 using MilesManager.Application.Common;
+using MilesManager.Application.Context;
 using MilesManager.Application.Features.Transfers.Queries.GetMileageTransferById;
 using MilesManager.Domain.Programs;
 using MilesManager.Domain.Transfers;

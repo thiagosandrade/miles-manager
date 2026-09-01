@@ -72,7 +72,7 @@ public class CreateProgramFactorHandlerTests
         context.Programs.AddRange(
             new LoyaltyProgram { Id = originId, Name = "Livelo", ProgramCode = "LIVELO" },
             new LoyaltyProgram { Id = destinationId, Name = "TAP", ProgramCode = "TAP" });
-        context.TransferRoutes.Add(new MilesManager.Domain.Transfers.ProgramFactor
+        context.TransferRoutes.Add(new Domain.Transfers.ProgramFactor
         {
             OriginProgramId = originId,
             DestinationProgramId = destinationId,

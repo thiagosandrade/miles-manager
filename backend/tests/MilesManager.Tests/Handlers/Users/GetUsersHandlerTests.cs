@@ -18,14 +18,14 @@ public class GetUsersHandlerTests
         var options = new DbContextOptionsBuilder<MilesManagerDbContext>().UseInMemoryDatabase($"GetUsersHandlerTests_{Guid.NewGuid()}").Options;
         await using (var context = new MilesManagerDbContext(options))
         {
-            context.Users.AddRange(new Domain.Users.AppUser { Email = "b@test.com", FullName = "B" }, new Domain.Users.AppUser { Email = "a@test.com", FullName = "A" });
+            context.Users.AddRange(new AppUser { Email = "b@test.com", FullName = "B" }, new AppUser { Email = "a@test.com", FullName = "A" });
             await context.SaveChangesAsync(TestContext.Current.CancellationToken);
         }
         await using (var context = new MilesManagerDbContext(options))
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Domain.Users.AppUser, UserDetailsDTO>();
+                cfg.CreateMap<AppUser, UserDetailsDTO>();
                 cfg.CreateMap<UserRole, UserRoleDTO>();
                 cfg.CreateMap<Role, RoleDTO>();
             });

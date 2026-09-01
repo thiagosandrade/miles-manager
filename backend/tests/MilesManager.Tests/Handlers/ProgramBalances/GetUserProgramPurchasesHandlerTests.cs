@@ -2,6 +2,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MilesManager.Application.Common;
 using MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramBalances;
+using MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramPurchases;
 using MilesManager.Domain.Pricing;
 using MilesManager.Domain.Programs;
 using MilesManager.Infrastructure.Persistence;

@@ -11,7 +11,7 @@ namespace MilesManager.Tests.Handlers.Transfers;
 
 public class UpdateMileageTransferHandlerTests
 {
-    private static MilesManager.Application.Services.MileageAccountingService CreateAccountingService() => new();
+    private static Application.Services.MileageAccountingService CreateAccountingService() => new();
 
     [Fact]
     public async Task Handle_WhenTransferExists_ReversesOldAccountingAndAppliesNewTransfer()

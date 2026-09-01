@@ -59,7 +59,7 @@ public class GetPurchasesHandlerTests
         result.Value.Should().NotBeNull().And.BeEmpty();
     }
 
-    private sealed class TestCurrentUser(Guid userId) : MilesManager.Application.Context.ICurrentUser
+    private sealed class TestCurrentUser(Guid userId) : Application.Context.ICurrentUser
     {
         public Guid? UserId { get; } = userId;
         public string? Email => null;

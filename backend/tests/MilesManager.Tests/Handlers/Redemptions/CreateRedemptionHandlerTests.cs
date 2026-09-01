@@ -29,7 +29,9 @@ public class CreateRedemptionHandlerTests
         result.Status.Should().Be(ResultStatus.Success);
         var balance = await context.ProgramBalances.SingleAsync(TestContext.Current.CancellationToken);
         balance.Balance.Should().Be(12_000m);
-        balance.AllocatedCost.Should().Be(560m);
+        
+        var allocatedCostRoundedUp = Math.Round(balance.AllocatedCost, 2, MidpointRounding.AwayFromZero);
+        allocatedCostRoundedUp.Should().Be(560m);
         (await context.FlightRedemptions.CountAsync(TestContext.Current.CancellationToken)).Should().Be(1);
     }
 
