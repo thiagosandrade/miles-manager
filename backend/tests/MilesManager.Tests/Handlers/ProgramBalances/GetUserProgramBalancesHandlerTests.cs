@@ -1,7 +1,6 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MilesManager.Application.Common;
-using MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramPurchases;
 using MilesManager.Domain.Common.Enums;
 using MilesManager.Domain.Pricing;
 using MilesManager.Domain.Programs;
@@ -31,8 +30,10 @@ public class GetUserProgramBalancesHandlerTests
             new MileagePurchase { UserId = otherUserId, ProgramId = programId, MilesPurchased = 99999m, AmountPaid = 1m, PurchaseStatus = PurchaseStatus.Confirmed });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
-        var handler = new GetUserProgramBalancesHandler(context);
-        var result = await handler.Handle(new GetUserProgramBalancesQuery(userId), TestContext.Current.CancellationToken);
+        var handler = new global::MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramBalances.GetUserProgramBalancesHandler(context);
+        var result = await handler.Handle(
+            new global::MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramPurchases.GetUserProgramBalancesQuery(userId),
+            TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
         result.Value.Should().ContainSingle();
@@ -54,8 +55,10 @@ public class GetUserProgramBalancesHandlerTests
         context.ProgramBalances.Add(new ProgramBalance { UserId = userId, ProgramId = programId, Balance = 2000m });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
-        var handler = new GetUserProgramBalancesHandler(context);
-        var result = await handler.Handle(new GetUserProgramBalancesQuery(userId), TestContext.Current.CancellationToken);
+        var handler = new global::MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramBalances.GetUserProgramBalancesHandler(context);
+        var result = await handler.Handle(
+            new global::MilesManager.Application.Features.ProgramBalances.Queries.GetUserProgramPurchases.GetUserProgramBalancesQuery(userId),
+            TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
         result.Value.Should().ContainSingle();
