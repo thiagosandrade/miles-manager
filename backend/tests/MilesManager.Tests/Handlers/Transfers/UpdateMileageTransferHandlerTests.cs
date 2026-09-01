@@ -2,7 +2,6 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MilesManager.Application.Common;
 using MilesManager.Application.Features.Transfers.Commands.UpdateMileageTransfer;
-using MilesManager.Application.Services;
 using MilesManager.Domain.Programs;
 using MilesManager.Domain.Transfers;
 using MilesManager.Infrastructure.Persistence;
