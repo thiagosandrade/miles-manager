@@ -41,7 +41,7 @@ public class GetUserProgramBalancesHandlerTests
         balance.ProgramId.Should().Be(programId);
         balance.ProgramName.Should().Be("Livelo");
         balance.Balance.Should().Be(6000m);
-        balance.CurrentValue.Should().Be(400m / 15m * 1000m);
+        balance.CurrentValue.Should().Be(20m / 1000m * 6000m);
         balance.CurrencyCode.Should().Be("BRL");
     }
 
