@@ -1,9 +1,10 @@
 using AutoMapper;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using MilesManager.Application.Abstractions;
 using MilesManager.Application.Common;
-using MilesManager.Application.Context;
 using MilesManager.Application.Features.Transfers.Queries.GetTransfers;
+using MilesManager.Domain.Programs;
 using MilesManager.Domain.Transfers;
 using MilesManager.Infrastructure.Persistence;
 using Xunit;
@@ -16,15 +17,17 @@ public class GetTransfersHandlerTests
     public async Task Handle_ReturnsOnlyCurrentUsersTransfers()
     {
         var options = new DbContextOptionsBuilder<MilesManagerDbContext>().UseInMemoryDatabase($"GetTransfers_{Guid.NewGuid()}").Options;
-        var userId = Guid.NewGuid();
+        var userId = Guid.NewGuid(); var originId = Guid.NewGuid(); var destinationId = Guid.NewGuid();
         await using var context = new MilesManagerDbContext(options);
+        context.Programs.AddRange(
+            new LoyaltyProgram { Id = originId, Name = "Origin", ProgramCode = "ORG" },
+            new LoyaltyProgram { Id = destinationId, Name = "Destination", ProgramCode = "DST" });
         context.MileageTransfers.AddRange(
-            new MileageTransfer { UserId = userId, MilesSent = 1000, MilesReceived = 500, BonusPercentage = 0 },
-            new MileageTransfer { UserId = Guid.NewGuid(), MilesSent = 2000, MilesReceived = 1000, BonusPercentage = 0 });
+            new MileageTransfer { UserId = userId, OriginProgramId = originId, DestinationProgramId = destinationId, MilesSent = 1000, MilesReceived = 500, BonusPercentage = 0 },
+            new MileageTransfer { UserId = Guid.NewGuid(), OriginProgramId = originId, DestinationProgramId = destinationId, MilesSent = 2000, MilesReceived = 1000, BonusPercentage = 0 });
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
-        var mapper = CreateMapper();
-        var handler = new GetTransfersHandler(context, mapper, new TestCurrentUser(userId));
+        var handler = new GetTransfersHandler(context, CreateMapper(), new TestCurrentUser(userId));
         var result = await handler.Handle(new GetTransfersQuery(), TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
