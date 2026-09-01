@@ -30,11 +30,8 @@ jobs:
       - name: Restore
         run: dotnet restore backend/MilesManager.sln
 
-      - name: Build
-        run: dotnet build backend/MilesManager.sln --no-restore
-
       - name: Test
-        run: dotnet test backend/MilesManager.sln --no-build --verbosity normal
+        run: dotnet test backend/MilesManager.sln --no-restore --verbosity normal
 
   frontend:
     runs-on: ubuntu-latest
