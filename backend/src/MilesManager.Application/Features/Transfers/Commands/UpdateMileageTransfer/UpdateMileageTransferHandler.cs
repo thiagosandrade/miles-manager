@@ -5,9 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MilesManager.Application.Features.Transfers.Commands.UpdateMileageTransfer;
 
-public sealed class UpdateMileageTransferHandler(
-    IApplicationDbContext context,
-    IMileageAccountingService accountingService) : IRequestHandler<UpdateMileageTransferCommand, Result<Guid>>
+public sealed class UpdateMileageTransferHandler(IApplicationDbContext context, IMileageAccountingService accountingService) 
+    : IRequestHandler<UpdateMileageTransferCommand, Result<Guid>>
 {
     private readonly IApplicationDbContext _context = context;
     private readonly IMileageAccountingService _accountingService = accountingService;

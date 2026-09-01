@@ -7,8 +7,6 @@ using MilesManager.Domain.Redemptions;
 using MilesManager.Domain.Pricing;
 using MilesManager.Domain.Lookups;
 using Microsoft.EntityFrameworkCore;
-using MilesManager.Domain.Partners;
-using MilesManager.Domain.Transactions;
 
 namespace MilesManager.Infrastructure.Persistence;
 
@@ -23,12 +21,6 @@ public sealed class MilesManagerDbContext(DbContextOptions<MilesManagerDbContext
     public DbSet<MileagePurchase> MileagePurchases => Set<MileagePurchase>();
     public DbSet<ProgramFactor> TransferRoutes => Set<ProgramFactor>();
     public DbSet<MileageTransfer> MileageTransfers => Set<MileageTransfer>();
-    public DbSet<Partner> Partners => Set<Partner>();
-    public DbSet<Transaction> Transactions => Set<Transaction>();
-    public DbSet<EarnTransaction> EarnTransactions => Set<EarnTransaction>();
-    public DbSet<ExpirationTransaction> ExpirationTransactions => Set<ExpirationTransaction>();
-    public DbSet<RedeemTransaction> RedeemTransactions => Set<RedeemTransaction>();
-    public DbSet<TransferTransaction> TransferTransactions => Set<TransferTransaction>();
     public DbSet<FlightRedemption> FlightRedemptions => Set<FlightRedemption>();
     public DbSet<ReferenceMileagePrice> ReferenceMileagePrices => Set<ReferenceMileagePrice>();
     public DbSet<Airport> Airports => Set<Airport>();

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using MilesManager.Application.Abstractions;
-using MilesManager.Application.Common;
+using MilesManager.Application.Services;
 
 namespace MilesManager.Application;
 

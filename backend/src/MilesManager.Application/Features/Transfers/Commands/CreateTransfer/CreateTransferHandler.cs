@@ -48,6 +48,7 @@ public sealed class CreateTransferHandler(
                 AllocatedCost = transferredCost,
                 UpdatedAtUtc = DateTimeOffset.UtcNow
             };
+
             await _context.ProgramBalances.AddAsync(destinationBalance, cancellationToken);
         }
         else

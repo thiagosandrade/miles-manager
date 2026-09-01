@@ -62,44 +62,6 @@ namespace MilesManager.Infrastructure.Migrations
                     b.ToTable("airports", (string)null);
                 });
 
-            modelBuilder.Entity("MilesManager.Domain.Partners.Partner", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("CreatedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("IataCode")
-                        .HasMaxLength(8)
-                        .HasColumnType("character varying(8)");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTimeOffset?>("UpdatedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("WebsiteUrl")
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("partners", (string)null);
-                });
-
             modelBuilder.Entity("MilesManager.Domain.Pricing.ReferenceMileagePrice", b =>
                 {
                     b.Property<Guid>("Id")
@@ -235,6 +197,10 @@ namespace MilesManager.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<decimal>("AllocatedCost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
                     b.Property<decimal>("Balance")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
@@ -320,56 +286,6 @@ namespace MilesManager.Infrastructure.Migrations
                     b.ToTable("flight_redemptions", (string)null);
                 });
 
-            modelBuilder.Entity("MilesManager.Domain.Transactions.Transaction", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("CreatedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("Miles")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)");
-
-                    b.Property<DateTimeOffset>("OccurredAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("ProgramId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Reference")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<string>("TransactionType")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("character varying(21)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTimeOffset?>("UpdatedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("transactions", (string)null);
-
-                    b.HasDiscriminator<string>("TransactionType").HasValue("Transaction");
-
-                    b.UseTphMappingStrategy();
-                });
-
             modelBuilder.Entity("MilesManager.Domain.Transfers.MileageTransfer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -399,6 +315,10 @@ namespace MilesManager.Infrastructure.Migrations
 
                     b.Property<DateOnly>("TransferDate")
                         .HasColumnType("date");
+
+                    b.Property<decimal>("TransferredCost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<DateTimeOffset?>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
@@ -574,62 +494,6 @@ namespace MilesManager.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_roles", (string)null);
-                });
-
-            modelBuilder.Entity("MilesManager.Domain.Transactions.EarnTransaction", b =>
-                {
-                    b.HasBaseType("MilesManager.Domain.Transactions.Transaction");
-
-                    b.Property<Guid?>("PartnerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("SourceDescription")
-                        .HasColumnType("text");
-
-                    b.HasDiscriminator().HasValue("EarnTransaction");
-                });
-
-            modelBuilder.Entity("MilesManager.Domain.Transactions.ExpirationTransaction", b =>
-                {
-                    b.HasBaseType("MilesManager.Domain.Transactions.Transaction");
-
-                    b.Property<string>("ExpirationRule")
-                        .HasColumnType("text");
-
-                    b.Property<DateOnly>("ExpiredOn")
-                        .HasColumnType("date");
-
-                    b.HasDiscriminator().HasValue("ExpirationTransaction");
-                });
-
-            modelBuilder.Entity("MilesManager.Domain.Transactions.RedeemTransaction", b =>
-                {
-                    b.HasBaseType("MilesManager.Domain.Transactions.Transaction");
-
-                    b.Property<string>("RedemptionChannel")
-                        .HasColumnType("text");
-
-                    b.Property<string>("RewardName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasDiscriminator().HasValue("RedeemTransaction");
-                });
-
-            modelBuilder.Entity("MilesManager.Domain.Transactions.TransferTransaction", b =>
-                {
-                    b.HasBaseType("MilesManager.Domain.Transactions.Transaction");
-
-                    b.Property<Guid>("FromAccountId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ToAccountId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("TransferReason")
-                        .HasColumnType("text");
-
-                    b.HasDiscriminator().HasValue("TransferTransaction");
                 });
 
             modelBuilder.Entity("MilesManager.Domain.Pricing.ReferenceMileagePrice", b =>
