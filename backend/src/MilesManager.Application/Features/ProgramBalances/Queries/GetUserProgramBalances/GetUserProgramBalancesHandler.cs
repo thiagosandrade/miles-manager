@@ -23,10 +23,15 @@ public sealed class GetUserProgramBalancesHandler(IApplicationDbContext context)
                 x.ProgramId,
                 ProgramName = x.Program.Name,
                 x.Balance,
-                x.AllocatedCost,
                 x.Program.CurrencyCode
             })
             .ToListAsync(cancellationToken);
+
+        var latestReferencePrices = await _context.ReferenceMileagePrices
+            .AsNoTracking()
+            .GroupBy(x => x.ProgramId)
+            .Select(g => g.OrderByDescending(x => x.EffectiveDate).Select(x => new { x.ProgramId, x.PricePerThousand }).First())
+            .ToDictionaryAsync(x => x.ProgramId, x => x.PricePerThousand, cancellationToken);
 
         var result = items
             .Select(x => new UserProgramBalancesDto
@@ -34,8 +39,8 @@ public sealed class GetUserProgramBalancesHandler(IApplicationDbContext context)
                 ProgramId = x.ProgramId,
                 ProgramName = x.ProgramName,
                 Balance = x.Balance,
-                CurrentValue = x.Balance > 0m
-                    ? x.AllocatedCost / (x.Balance / 1000m)
+                CurrentValue = latestReferencePrices.TryGetValue(x.ProgramId, out var pricePerThousand)
+                    ? pricePerThousand * (x.Balance / 1000m)
                     : 0m,
                 CurrencyCode = x.CurrencyCode
             })
