@@ -1,0 +1,61 @@
+<div class="signup-page">
+  <mat-card class="signup-card">
+    <div class="signup-header">
+      <img
+        src="assets/logo-icon.png"
+        alt="Miles Manager"
+        class="logo">
+
+      <h1>Sign up</h1>
+      <p>Create your account to start managing your miles and rewards.</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="signup-form">
+      <app-input
+        formControlName="fullName"
+        type="text"
+        label="Full Name"
+        placeholder="John Doe"
+        icon="person"
+        [errors]="{ required: 'Full name is required.' }">
+      </app-input>
+
+      <app-input
+        formControlName="email"
+        type="email"
+        label="Email"
+        placeholder="john.doe@email.com"
+        icon="mail"
+        [errors]="{
+          required: 'Email is required.',
+          email: 'Invalid email.'
+        }">
+      </app-input>
+
+      <app-input
+        formControlName="password"
+        type="password"
+        label="Password"
+        placeholder="Password"
+        icon="lock"
+        [errors]="{
+          required: 'Password is required.',
+          minlength: 'Password must be at least 8 characters long.'
+        }">
+      </app-input>
+
+      <button
+        class="signup-button"
+        type="submit"
+        [disabled]="loading || form.invalid">
+        <span *ngIf="!loading">Create Account</span>
+        <span *ngIf="loading">Creating Account...</span>
+      </button>
+    </form>
+
+    <div class="login-link">
+      Already have an account?
+      <button type="button" (click)="goToLogin()">Sign in</button>
+    </div>
+  </mat-card>
+</div>
