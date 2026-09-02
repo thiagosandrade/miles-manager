@@ -60,4 +60,8 @@ export class AuthManagementComponent {
       });
     }
   }
+
+  goToSignUp(): void {
+    this.router.navigate(['/auth/sign-up']);
+  }
 }
