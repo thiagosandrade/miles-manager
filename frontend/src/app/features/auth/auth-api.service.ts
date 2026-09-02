@@ -2,9 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { finalize, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from './models/authentication.model';
+import { LoginRequest, LoginResponse } from './models/authentication.model';
 import { TokenStorageService } from '../../core/services/token-storage.service';
 import { Router } from '@angular/router';
+
+export interface RegisterRequest {
+  email: string;
+  fullName: string;
+  password: string;
+}
+
+export interface RegisterResponse {
+  id: string;
+  email: string;
+  fullName: string;
+  isActive: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
