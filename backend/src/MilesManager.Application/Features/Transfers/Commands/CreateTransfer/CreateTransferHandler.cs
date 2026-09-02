@@ -20,15 +20,19 @@ public sealed class CreateTransferHandler(
         if (request.OriginProgramId == request.DestinationProgramId) return Result<Guid>.ValidationFailed("Origin and destination programs must be different.");
         if (request.MilesSent <= 0) return Result<Guid>.ValidationFailed("MilesSent must be positive.");
         if (request.BonusPercentage < 0) return Result<Guid>.ValidationFailed("BonusPercentage cannot be negative.");
+        if (request.FactorFrom.HasValue != request.FactorTo.HasValue)
+            return Result<Guid>.ValidationFailed("FactorFrom and FactorTo must be provided together.");
+        if (request.FactorFrom.HasValue && (request.FactorFrom.Value <= 0 || request.FactorTo!.Value <= 0))
+            return Result<Guid>.ValidationFailed("Transfer factor values must be positive.");
 
         var originBalance = await _context.ProgramBalances.FirstOrDefaultAsync(pb => pb.UserId == request.UserId && pb.ProgramId == request.OriginProgramId, cancellationToken);
         if (originBalance is null || originBalance.Balance < request.MilesSent)
             return Result<Guid>.ValidationFailed("Origin program balance does not have enough miles.");
 
         var transferredCost = _accountingService.CalculateProportionalCost(request.MilesSent, originBalance.Balance, originBalance.AllocatedCost);
-        var factor = await _context.TransferRoutes.AsNoTracking().FirstOrDefaultAsync(x => x.OriginProgramId == request.OriginProgramId && x.DestinationProgramId == request.DestinationProgramId, cancellationToken);
-        var fromAmount = factor?.FromAmount ?? 1m;
-        var toAmount = factor?.ToAmount ?? 1m;
+        var configuredFactor = await _context.TransferRoutes.AsNoTracking().FirstOrDefaultAsync(x => x.OriginProgramId == request.OriginProgramId && x.DestinationProgramId == request.DestinationProgramId, cancellationToken);
+        var fromAmount = request.FactorFrom ?? configuredFactor?.FromAmount ?? 1m;
+        var toAmount = request.FactorTo ?? configuredFactor?.ToAmount ?? 1m;
         var baseDestinationPoints = _accountingService.CalculateBaseDestinationPoints(request.MilesSent, fromAmount, toAmount);
         var bonusPoints = _accountingService.CalculateBonusPoints(baseDestinationPoints, request.BonusPercentage);
         var milesReceived = _accountingService.CalculateTotalDestinationPoints(baseDestinationPoints, bonusPoints);
