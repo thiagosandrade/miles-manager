@@ -6,5 +6,11 @@ export const AUTH_ROUTES: Routes = [
     loadComponent: () =>
       import('./auth-management.component')
         .then(c => c.AuthManagementComponent)
+  },
+  {
+    path: 'sign-up',
+    loadComponent: () =>
+      import('./sign-up.component')
+        .then(c => c.SignUpComponent)
   }
 ];
