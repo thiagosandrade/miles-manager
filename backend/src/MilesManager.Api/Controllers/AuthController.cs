@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MilesManager.Api.Common;
-using MilesManager.Application.Features.Users.Commands.CreateUser;
+using MilesManager.Application.Features.Users.Commands.RegisterUser;
 using MilesManager.Application.Features.Auth.Login;
 using MilesManager.Application.Features.Users.DTOs;
 
@@ -23,7 +23,7 @@ public sealed class AuthController(ISender sender) : ApiController(sender)
 
     [HttpPost("register")]
     [AllowAnonymous]
-    public async Task<ActionResult<UserDetailsDTO>> Register([FromBody] CreateUserCommand command)
+    public async Task<ActionResult<UserDetailsDTO>> Register([FromBody] RegisterUserCommand command)
     {
         var result = await Sender.Send(command);
         return Convert(result);
