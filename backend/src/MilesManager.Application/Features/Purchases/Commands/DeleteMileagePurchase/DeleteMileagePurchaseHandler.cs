@@ -1,6 +1,7 @@
 using MediatR;
 using MilesManager.Application.Common;
 using MilesManager.Application.Abstractions;
+using MilesManager.Domain.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace MilesManager.Application.Features.Purchases.Commands.DeleteMileagePurchase;
@@ -17,10 +18,19 @@ public sealed class DeleteMileagePurchaseHandler(IApplicationDbContext context) 
             return Result.NotFound();
         }
 
-        var balance = await _context.ProgramBalances.FirstOrDefaultAsync(pb => pb.UserId == purchase.UserId && pb.ProgramId == purchase.ProgramId, cancellationToken);
-        if (balance is not null)
+        if (purchase.PurchaseStatus == PurchaseStatus.Confirmed)
         {
+            var balance = await _context.ProgramBalances.FirstOrDefaultAsync(
+                pb => pb.UserId == purchase.UserId && pb.ProgramId == purchase.ProgramId,
+                cancellationToken);
+
+            if (balance is null)
+            {
+                return Result.ValidationFailed("Program balance not found for this user and program.");
+            }
+
             balance.Balance -= purchase.MilesPurchased;
+            balance.AllocatedCost -= purchase.AmountPaid;
         }
 
         _context.MileagePurchases.Remove(purchase);
