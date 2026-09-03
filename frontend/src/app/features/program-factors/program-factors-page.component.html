@@ -17,6 +17,24 @@
     </button>
   </header>
 
+  <!-- =====================================================
+       Error
+  ====================================================== -->
+
+  <div
+    class="feedback"
+    *ngIf="isRateLimitReached()">
+
+    <strong>
+      {{ 'common.error' | translate }}
+    </strong>
+
+    <span>
+      {{ 'common.loadError' | translate }}
+    </span>
+
+  </div>
+
   <app-table
     [title]="'programFactors.table.title' | translate"
     [subtitle]="'programFactors.table.subtitle' | translate"
@@ -96,10 +114,5 @@
       </article>
     </div>
   </app-table>
-
-  <div class="feedback" *ngIf="isRateLimitReached()">
-    <strong>{{ 'common.error' | translate }}</strong>
-    <span>{{ 'common.error' | translate }}</span>
-  </div>
 
 </section>

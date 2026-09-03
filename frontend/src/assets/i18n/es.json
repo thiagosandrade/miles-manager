@@ -29,6 +29,7 @@
     "yes": "Sí",
     "no": "No",
     "error": "Error",
+    "loadError": "No se pudieron cargar los datos. Inténtalo de nuevo más tarde.",
     "success": "Éxito",
     "loading": "Cargando...",
     "active": "Activo",

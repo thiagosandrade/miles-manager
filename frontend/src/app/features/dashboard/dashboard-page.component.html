@@ -30,6 +30,23 @@
 
     </header>
 
+    <!-- =====================================================
+         Error
+    ====================================================== -->
+
+    <div
+      class="feedback"
+      *ngIf="isRateLimitReached()">
+
+      <strong>
+        {{ 'common.error' | translate }}
+      </strong>
+
+      <span>
+      {{ 'common.loadError' | translate }}
+    </span>
+
+    </div>
 
     <!-- ===================================================
          Program Summary
@@ -652,25 +669,6 @@
 
     </section>
 
-
-    <!-- =====================================================
-         Error
-    ====================================================== -->
-
-    <div
-      class="feedback"
-      *ngIf="error()">
-
-      <strong>
-        {{ 'common.error' | translate }}
-      </strong>
-
-      <span>
-        {{ error() }}
-      </span>
-
-    </div>
-
-  </ng-container>
+    </ng-container>
 
 </section>

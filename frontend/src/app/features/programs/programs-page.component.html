@@ -121,6 +121,23 @@
 
   </section>
 
+  <!-- =====================================================
+       Error
+  ====================================================== -->
+
+  <div
+    class="feedback"
+    *ngIf="isRateLimitReached()">
+
+    <strong>
+      {{ 'common.error' | translate }}
+    </strong>
+
+    <span>
+      {{ 'common.loadError' | translate }}
+    </span>
+
+  </div>
 
   <!-- =====================================================
        Table Container
@@ -571,24 +588,5 @@
     </div>
 
   </app-table>
-
-
-  <!-- =====================================================
-       Error
-  ====================================================== -->
-
-  <div
-    class="feedback"
-    *ngIf="isRateLimitReached()">
-
-    <strong>
-      {{ 'common.error' | translate }}
-    </strong>
-
-    <span>
-      {{ 'programs.messages.loadError' | translate }}
-    </span>
-
-  </div>
 
 </section>

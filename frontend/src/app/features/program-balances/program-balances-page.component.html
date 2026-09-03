@@ -25,6 +25,24 @@
     </article>
   </section>
 
+   <!-- =====================================================
+       Error
+  ====================================================== -->
+
+  <div
+    class="feedback"
+    *ngIf="isRateLimitReached()">
+
+    <strong>
+      {{ 'common.error' | translate }}
+    </strong>
+
+    <span>
+      {{ 'common.loadError' | translate }}
+    </span>
+
+  </div>
+  
   <app-table
     [title]="'balances.table.title' | translate"
     [subtitle]="'balances.table.subtitle' | translate"
@@ -106,9 +124,4 @@
     </div>
   </app-table>
 
-  <div class="feedback" *ngIf="isRateLimitReached()">
-    <strong>{{ 'common.error' | translate }}</strong>
-    <span>{{ 'common.error' | translate }}</span>
-  </div>
-
-</section>
+ </section>

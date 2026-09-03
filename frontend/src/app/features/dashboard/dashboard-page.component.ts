@@ -50,9 +50,7 @@ export class DashboardPageComponent implements OnInit {
   stats = signal<DashboardDto | null>(null);
 
   loading = signal(false);
-
-  error = signal('');
-
+  isRateLimitReached = signal(false);
 
   ngOnInit(): void {
     this.loadDashboard();
@@ -62,8 +60,7 @@ export class DashboardPageComponent implements OnInit {
   loadDashboard(): void {
 
     this.loading.set(true);
-
-    this.error.set('');
+    this.isRateLimitReached.set(false);
 
     from(this.dashboardApi.getDashboard()).subscribe({
 
@@ -75,12 +72,7 @@ export class DashboardPageComponent implements OnInit {
 
       error: err => {
 
-        this.error.set(
-          err instanceof Error
-            ? err.message
-            : 'Error loading dashboard statistics'
-        );
-
+        this.isRateLimitReached.set(true);
         this.loading.set(false);
 
       },

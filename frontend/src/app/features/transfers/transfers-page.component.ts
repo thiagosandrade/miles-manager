@@ -5,7 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -58,22 +58,19 @@ export class TransfersPageComponent implements OnInit {
     'actions'
   ];
 
-  allData = signal<MileageTransfer[]>([]);
-  data = signal<MileageTransfer[]>([]);
-  loading = signal<boolean>(false);
+  readonly allData = signal<MileageTransfer[]>([]);
+  readonly data = signal<MileageTransfer[]>([]);
+  readonly loading = signal<boolean>(false);
 
   pagedData: MileageTransfer[] = [];
   private pageIndex = 0;
   private pageSize = 10;
-  resultsLength = 0;
-  isRateLimitReached = false;
+  isRateLimitReached = signal(false);
 
   filter: string = '';
   searchChanged = new Subject<string>();
 
   ngOnInit() {
-    this.loadTransfers();
-
     this.searchChanged.pipe(startWith('')).subscribe(() => {
       this.loadTransfers();
     });
@@ -93,7 +90,7 @@ export class TransfersPageComponent implements OnInit {
         catchError(() => {
           this.loading.set(false);
 
-          this.isRateLimitReached = true;
+          this.isRateLimitReached.set(true);
           this.snackbarService.error('Could not load transfers', 3000);
           return of(null);
         })
@@ -103,10 +100,8 @@ export class TransfersPageComponent implements OnInit {
           this.allData.set(result);
           this.data.set(result);
           this.updatePagedData();
-          this.resultsLength = result.length;
           this.loading.set(false);
-          this.isRateLimitReached = false;
-          this.cd.detectChanges();
+          this.isRateLimitReached.set(false);
         }
       });
   }

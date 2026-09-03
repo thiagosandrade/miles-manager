@@ -29,6 +29,7 @@
     "yes": "Ja",
     "no": "Nein",
     "error": "Fehler",
+    "loadError": "Die Daten konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",
     "success": "Erfolg",
     "loading": "Wird geladen...",
     "active": "Aktiv",

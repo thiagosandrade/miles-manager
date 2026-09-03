@@ -11,13 +11,17 @@ public sealed class DeleteProgramHandler(IApplicationDbContext context) : IReque
 
     public async Task<Result> Handle(DeleteProgramCommand request, CancellationToken cancellationToken)
     {
-        var program = await _context.Programs.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
+        var program = await _context
+            .Programs
+            .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
+        
         if (program is null)
         {
             return Result.NotFound();
         }
 
         _context.Programs.Remove(program);
+        
         await _context.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
