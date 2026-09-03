@@ -15,7 +15,7 @@
         formControlName="fullName"
         type="text"
         [label]="'signup.fullName' | translate"
-        placeholder="John Doe"
+        [placeholder]="'signup.fullNamePlaceholder' | translate"
         icon="person"
         [errors]="{ required: 'signup.fullNameRequired' }">
       </app-input>
@@ -24,7 +24,7 @@
         formControlName="email"
         type="email"
         [label]="'signup.email' | translate"
-        placeholder="john.doe@email.com"
+        [placeholder]="'signup.emailPlaceholder' | translate"
         icon="mail"
         [errors]="{
           required: 'signup.emailRequired',
