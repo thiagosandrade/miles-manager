@@ -40,6 +40,7 @@ export class RedemptionsPageComponent implements OnInit {
   private pageIndex = 0;
   private pageSize = 5;
   loading = signal<boolean>(false);
+  isRateLimitReached = signal(false);
   
   displayedColumns = [
     'program',
@@ -63,6 +64,7 @@ export class RedemptionsPageComponent implements OnInit {
   loadRedemptions(): void {
 
     this.loading.set(true);
+    this.isRateLimitReached.set(false);
 
     this.redemptionService.getFlightRedemptions().subscribe({
 
@@ -77,6 +79,7 @@ export class RedemptionsPageComponent implements OnInit {
 
       error: () => {
 
+        this.isRateLimitReached.set(true);
         this.loading.set(false);
 
       }
