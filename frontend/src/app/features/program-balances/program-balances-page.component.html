@@ -2,47 +2,25 @@
 
   <header class="page-header">
     <div>
-      <p class="eyebrow">
-        {{ 'balances.eyebrow' | translate }}
-      </p>
-      <h1>
-        {{ 'balances.title' | translate }}
-      </h1>
-      <p class="subtitle">
-        {{ 'balances.subtitle' | translate }}
-      </p>
+      <p class="eyebrow">{{ 'balances.eyebrow' | translate }}</p>
+      <h1>{{ 'balances.title' | translate }}</h1>
+      <p class="subtitle">{{ 'balances.subtitle' | translate }}</p>
     </div>
   </header>
 
   <section class="metrics">
     <article class="metric-card">
-      <div class="metric-icon">
-        <mat-icon>account_balance_wallet</mat-icon>
-      </div>
+      <div class="metric-icon"><mat-icon>account_balance_wallet</mat-icon></div>
       <div>
-        <span>
-          {{ 'balances.metrics.totalPrograms' | translate }}
-        </span>
-        <strong>
-          {{ data().length }}
-        </strong>
+        <span>{{ 'balances.metrics.totalPrograms' | translate }}</span>
+        <strong>{{ data().length }}</strong>
       </div>
     </article>
-
     <article class="metric-card">
-      <div class="metric-icon">
-        <mat-icon>flight</mat-icon>
-      </div>
+      <div class="metric-icon"><mat-icon>flight</mat-icon></div>
       <div>
-        <span>
-          {{ 'balances.metrics.totalMiles' | translate }}
-        </span>
-        <strong>
-          {{
-            data().reduce((sum, b) => sum + b.balance, 0)
-              | number:'1.0-0'
-          }}
-        </strong>
+        <span>{{ 'balances.metrics.totalMiles' | translate }}</span>
+        <strong>{{ data().reduce((sum, b) => sum + b.balance, 0) | number:'1.0-0' }}</strong>
       </div>
     </article>
   </section>
@@ -61,31 +39,20 @@
     [emptyDescription]="'balances.table.emptyDescription' | translate">
 
     <div table-toolbar>
-      <mat-form-field
-        appearance="outline"
-        class="search-field">
-        <mat-label>
-          {{ 'programs.table.search' | translate }}
-        </mat-label>
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>{{ 'programs.table.search' | translate }}</mat-label>
         <mat-icon matPrefix>search</mat-icon>
-        <input
-          matInput
-          [placeholder]="'programs.table.searchPlaceholder' | translate"
-          (input)="applyFilter($any($event.target).value)">
+        <input matInput [placeholder]="'programs.table.searchPlaceholder' | translate" (input)="applyFilter($any($event.target).value)">
       </mat-form-field>
     </div>
 
     <div class="desktop-table">
       <table mat-table [dataSource]="pagedData()">
         <ng-container matColumnDef="program">
-          <th mat-header-cell *matHeaderCellDef>
-            {{ 'balances.table.columns.program' | translate }}
-          </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'balances.table.columns.program' | translate }}</th>
           <td mat-cell *matCellDef="let balance">
             <div class="user-info">
-              <div class="avatar">
-                {{ balance.programName.charAt(0) | uppercase }}
-              </div>
+              <div class="avatar">{{ balance.programName.charAt(0) | uppercase }}</div>
               <div class="user-details">
                 <strong>{{ balance.programName }}</strong>
                 <span>{{ balance.currencyCode }}</span>
@@ -95,32 +62,18 @@
         </ng-container>
 
         <ng-container matColumnDef="currentValue">
-          <th mat-header-cell *matHeaderCellDef>
-            {{ 'balances.table.columns.currentValue' | translate }}
-          </th>
-          <td mat-cell *matCellDef="let balance">
-            {{ balance.currentValue | currency:balance.currencyCode }}
-          </td>
+          <th mat-header-cell *matHeaderCellDef>{{ 'balances.table.columns.currentValue' | translate }}</th>
+          <td mat-cell *matCellDef="let balance">{{ balance.currentValue | currency:balance.currencyCode }}</td>
         </ng-container>
 
         <ng-container matColumnDef="currencyCode">
-          <th mat-header-cell *matHeaderCellDef>
-            {{ 'balances.table.columns.currency' | translate }}
-          </th>
-          <td mat-cell *matCellDef="let balance">
-            <span class="currency-pill">{{ balance.currencyCode }}</span>
-          </td>
+          <th mat-header-cell *matHeaderCellDef>{{ 'balances.table.columns.currency' | translate }}</th>
+          <td mat-cell *matCellDef="let balance"><span class="currency-pill">{{ balance.currencyCode }}</span></td>
         </ng-container>
 
         <ng-container matColumnDef="balance">
-          <th mat-header-cell *matHeaderCellDef>
-            {{ 'balances.table.columns.balance' | translate }}
-          </th>
-          <td mat-cell *matCellDef="let balance">
-            <strong class="balance-value">
-              {{ balance.balance | number:'1.0-0' }}
-            </strong>
-          </td>
+          <th mat-header-cell *matHeaderCellDef>{{ 'balances.table.columns.balance' | translate }}</th>
+          <td mat-cell *matCellDef="let balance"><strong class="balance-value">{{ balance.balance | number:'1.0-0' }}</strong></td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -129,38 +82,24 @@
     </div>
 
     <div class="mobile-cards">
-      <article
-        class="balance-card"
-        *ngFor="let balance of pagedData()">
+      <article class="balance-card" *ngFor="let balance of pagedData()">
         <div class="balance-card-header">
           <div class="user-info">
-            <div class="avatar">
-              {{ balance.programName.charAt(0) | uppercase }}
-            </div>
+            <div class="avatar">{{ balance.programName.charAt(0) | uppercase }}</div>
             <div class="user-details">
               <strong>{{ balance.programName }}</strong>
               <span>{{ balance.currencyCode }}</span>
             </div>
           </div>
         </div>
-
         <div class="balance-card-values">
           <div class="balance-value-item">
-            <span class="balance-label">
-              {{ 'balances.table.columns.currentValue' | translate }}
-            </span>
-            <strong>
-              {{ balance.currentValue | currency:balance.currencyCode }}
-            </strong>
+            <span class="balance-label">{{ 'balances.table.columns.currentValue' | translate }}</span>
+            <strong>{{ balance.currentValue | currency:balance.currencyCode }}</strong>
           </div>
-
           <div class="balance-value-item balance-total">
-            <span class="balance-label">
-              {{ 'balances.table.columns.balance' | translate }}
-            </span>
-            <strong>
-              {{ balance.balance | number:'1.0-0' }}
-            </strong>
+            <span class="balance-label">{{ 'balances.table.columns.balance' | translate }}</span>
+            <strong>{{ balance.balance | number:'1.0-0' }}</strong>
           </div>
         </div>
       </article>
@@ -169,7 +108,7 @@
 
   <div class="feedback" *ngIf="isRateLimitReached()">
     <strong>{{ 'common.error' | translate }}</strong>
-    <span>{{ 'balances.messages.loadError' | translate }}</span>
+    <span>{{ 'common.error' | translate }}</span>
   </div>
 
 </section>
