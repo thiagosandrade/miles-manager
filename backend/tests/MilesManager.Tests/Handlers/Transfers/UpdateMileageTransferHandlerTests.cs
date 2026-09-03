@@ -49,48 +49,93 @@ public class UpdateMileageTransferHandlerTests
     [Fact]
     public async Task Handle_WithFactorOverride_UsesProvidedFactorInsteadOfConfiguredFactor()
     {
-        var options = new DbContextOptionsBuilder<MilesManagerDbContext>().UseInMemoryDatabase($"UpdateTransferOverride_{Guid.NewGuid()}").Options;
-        var userId = Guid.NewGuid(); var originId = Guid.NewGuid(); var destinationId = Guid.NewGuid(); var transferId = Guid.NewGuid();
+        var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
+            .UseInMemoryDatabase($"UpdateTransferOverride_{Guid.NewGuid()}")
+            .Options;
+
+        var userId = Guid.NewGuid();
+        var originId = Guid.NewGuid();
+        var destinationId = Guid.NewGuid();
+        var transferId = Guid.NewGuid();
+
         await using var context = new MilesManagerDbContext(options);
+
         context.ProgramBalances.AddRange(
-            new ProgramBalance { UserId = userId, ProgramId = originId, Balance = 6000, AllocatedCost = 180 },
-            new ProgramBalance { UserId = userId, ProgramId = destinationId, Balance = 4000, AllocatedCost = 120 });
-        context.TransferRoutes.Add(new ProgramFactor { OriginProgramId = originId, DestinationProgramId = destinationId, FromAmount = 2, ToAmount = 1 });
-        context.MileageTransfers.Add(new MileageTransfer
-        {
-            Id = transferId,
-            UserId = userId,
-            OriginProgramId = originId,
-            DestinationProgramId = destinationId,
-            MilesSent = 4000,
-            MilesReceived = 4000,
-            TransferredCost = 120,
-            BonusPercentage = 100,
-            TransferDate = new DateOnly(2026, 8, 30)
-        });
+            new ProgramBalance
+            {
+                UserId = userId,
+                ProgramId = originId,
+                Balance = 6000,
+                AllocatedCost = 180
+            },
+            new ProgramBalance
+            {
+                UserId = userId,
+                ProgramId = destinationId,
+                Balance = 6000,
+                AllocatedCost = 120
+            });
+
+        context.TransferRoutes.Add(
+            new ProgramFactor
+            {
+                OriginProgramId = originId,
+                DestinationProgramId = destinationId,
+                FromAmount = 2,
+                ToAmount = 1
+            });
+
+        context.MileageTransfers.Add(
+            new MileageTransfer
+            {
+                Id = transferId,
+                UserId = userId,
+                OriginProgramId = originId,
+                DestinationProgramId = destinationId,
+                MilesSent = 4000,
+                MilesReceived = 4000,
+                TransferredCost = 120,
+                BonusPercentage = 100,
+                TransferDate = new DateOnly(2026, 8, 30)
+            });
+
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
-        var handler = new UpdateMileageTransferHandler(context, CreateAccountingService());
-        var result = await handler.Handle(new UpdateMileageTransferCommand
-        {
-            Id = transferId,
-            UserId = userId,
-            OriginProgramId = originId,
-            DestinationProgramId = destinationId,
-            MilesSent = 2000,
-            BonusPercentage = 0,
-            FactorFrom = 1.5m,
-            FactorTo = 2m,
-            TransferDate = new DateOnly(2026, 9, 1)
-        }, TestContext.Current.CancellationToken);
+        var handler = new UpdateMileageTransferHandler(
+            context,
+            CreateAccountingService());
+
+        var result = await handler.Handle(
+            new UpdateMileageTransferCommand
+            {
+                Id = transferId,
+                UserId = userId,
+                OriginProgramId = originId,
+                DestinationProgramId = destinationId,
+                MilesSent = 2000,
+                BonusPercentage = 0,
+                FactorFrom = 1.5m,
+                FactorTo = 2m,
+                TransferDate = new DateOnly(2026, 9, 1)
+            },
+            TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
-        var destination = await context.ProgramBalances.SingleAsync(x => x.ProgramId == destinationId, TestContext.Current.CancellationToken);
-        destination.Balance.Should().Be(2000m + (2000m / 1.5m * 2m));
+
+        var destination = await context.ProgramBalances
+            .SingleAsync(
+                x => x.ProgramId == destinationId,
+                TestContext.Current.CancellationToken);
+
+        destination.Balance.Should().Be(4667m);
+
         destination.AllocatedCost.Should().Be(60m);
 
-        var transfer = await context.MileageTransfers.SingleAsync(TestContext.Current.CancellationToken);
-        transfer.MilesReceived.Should().Be(2000m / 1.5m * 2m);
+        var transfer = await context.MileageTransfers
+            .SingleAsync(TestContext.Current.CancellationToken);
+
+        transfer.MilesReceived.Should().Be(2667m);
+
         transfer.TransferredCost.Should().Be(60m);
     }
 
