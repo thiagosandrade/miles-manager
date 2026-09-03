@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MilesManager.Application.Features.Transfers.Commands.UpdateMileageTransfer;
 
-public sealed class UpdateMileageTransferHandler(IApplicationDbContext context, IMileageAccountingService accountingService) 
+public sealed class UpdateMileageTransferHandler(IApplicationDbContext context, IMileageAccountingService accountingService)
     : IRequestHandler<UpdateMileageTransferCommand, Result<Guid>>
 {
     private readonly IApplicationDbContext _context = context;
@@ -22,12 +22,17 @@ public sealed class UpdateMileageTransferHandler(IApplicationDbContext context, 
         
         if (transfer.OriginProgramId != request.OriginProgramId || transfer.DestinationProgramId != request.DestinationProgramId)
             return Result<Guid>.ValidationFailed("Changing origin or destination is not supported.");
-        
         if (request.MilesSent <= 0) 
             return Result<Guid>.ValidationFailed("MilesSent must be positive.");
         
         if (request.BonusPercentage < 0) 
             return Result<Guid>.ValidationFailed("BonusPercentage cannot be negative.");
+        
+        if (request.FactorFrom.HasValue != request.FactorTo.HasValue)
+            return Result<Guid>.ValidationFailed("FactorFrom and FactorTo must be provided together.");
+        
+        if (request.FactorFrom.HasValue && (request.FactorFrom.Value <= 0 || request.FactorTo!.Value <= 0))
+            return Result<Guid>.ValidationFailed("Transfer factor values must be positive.");
 
         var originBalance = await _context
             .ProgramBalances
@@ -51,14 +56,14 @@ public sealed class UpdateMileageTransferHandler(IApplicationDbContext context, 
         if (originBalance.Balance < request.MilesSent) 
             return Result<Guid>.ValidationFailed("Origin program balance does not have enough miles for the update.");
 
-        var factor = await _context
+        var configuredFactor = await _context
             .TransferRoutes
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.OriginProgramId == request.OriginProgramId && x.DestinationProgramId == request.DestinationProgramId, cancellationToken);
         
-        var fromAmount = factor?.FromAmount ?? 1m;
+        var fromAmount = request.FactorFrom ?? configuredFactor?.FromAmount ?? 1m;
         
-        var toAmount = factor?.ToAmount ?? 1m;
+        var toAmount = request.FactorTo ?? configuredFactor?.ToAmount ?? 1m;
         
         var transferredCost = _accountingService.CalculateProportionalCost(request.MilesSent, originBalance.Balance, originBalance.AllocatedCost);
         

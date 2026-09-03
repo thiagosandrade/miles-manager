@@ -13,5 +13,7 @@ public sealed class UpdateMileageTransferCommand : IRequest<Result<Guid>>
     public decimal MilesSent { get; init; }
     public decimal BonusPercentage { get; init; }
     public decimal MilesReceived { get; init; }
+    public decimal? FactorFrom { get; init; }
+    public decimal? FactorTo { get; init; }
     public DateOnly TransferDate { get; init; }
 }

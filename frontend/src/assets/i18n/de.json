@@ -379,7 +379,9 @@
       "transferDate": "Transferdatum",
       "costPerThousandOrigin": "Kosten pro Tausend (Ursprung)",
       "costPerThousandDestination": "Kosten pro Tausend (Ziel)",
-      "transferFactor": "Transferrate"
+      "transferFactor": "Transferrate",
+      "transferFactorOrigin": "Transferrate (Quelle)",
+      "transferFactorDestination": "Transferrate (Ziel)"
     },
     "actions": {
       "edit": "Transfer bearbeiten",

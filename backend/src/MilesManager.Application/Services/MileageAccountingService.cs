@@ -41,6 +41,6 @@ public sealed class MileageAccountingService : IMileageAccountingService
 
     public decimal CalculateTotalDestinationPoints(decimal baseDestinationPoints, decimal bonusPoints)
     {
-        return Math.Max(0m, baseDestinationPoints) + Math.Max(0m, bonusPoints);
+        return Math.Round(Math.Max(0m, baseDestinationPoints) + Math.Max(0m, bonusPoints), 0, MidpointRounding.AwayFromZero);
     }
 }

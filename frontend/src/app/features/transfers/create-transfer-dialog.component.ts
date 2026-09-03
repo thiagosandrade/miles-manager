@@ -46,6 +46,8 @@ export class CreateTransferDialogComponent implements OnInit {
     id: [''],
     originProgramId: ['', Validators.required],
     destinationProgramId: ['', Validators.required],
+    factorFrom: [1, [Validators.required, Validators.min(0.000001)]],
+    factorTo: [1, [Validators.required, Validators.min(0.000001)]],
     milesSent: [0, [Validators.required, Validators.min(1)]],
     bonusPercentage: [0, [Validators.required, Validators.min(0)]],
     milesReceived: [0, [Validators.required, Validators.min(1)]],
@@ -55,6 +57,8 @@ export class CreateTransferDialogComponent implements OnInit {
   ngOnInit(): void {
     this.form.controls.milesSent.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.updateMilesReceived());
     this.form.controls.bonusPercentage.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.updateMilesReceived());
+    this.form.controls.factorFrom.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.updateMilesReceived());
+    this.form.controls.factorTo.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.updateMilesReceived());
     this.form.controls.originProgramId.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.onProgramSelectionChanged());
     this.form.controls.destinationProgramId.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.onProgramSelectionChanged());
 
@@ -116,15 +120,25 @@ export class CreateTransferDialogComponent implements OnInit {
     this.selectedFactor = originId && destinationId
       ? this.programFactors.find(factor => factor.originProgramId === originId && factor.destinationProgramId === destinationId) ?? null
       : null;
+
+    const fromAmount = this.selectedFactor?.fromAmount ?? 1;
+    const toAmount = this.selectedFactor?.toAmount ?? 1;
+    this.form.patchValue({ factorFrom: fromAmount, factorTo: toAmount }, { emitEvent: false });
   }
 
   private updateMilesReceived(): void {
     const milesSent = Number(this.form.controls.milesSent.value) || 0;
     const bonusPercentage = Number(this.form.controls.bonusPercentage.value) || 0;
+    const factorFrom = Number(this.form.controls.factorFrom.value) || 0;
+    const factorTo = Number(this.form.controls.factorTo.value) || 0;
+
+    if (factorFrom <= 0 || factorTo <= 0) {
+      this.form.controls.milesReceived.setValue(0, { emitEvent: false });
+      return;
+    }
+
     const milesAfterBonus = milesSent * (1 + bonusPercentage / 100);
-    const factor = this.selectedFactor;
-    const conversionFactor = factor ? factor.toAmount / factor.fromAmount : 1;
-    const milesReceived = Math.round(milesAfterBonus * conversionFactor);
+    const milesReceived = Math.round(milesAfterBonus * (factorTo / factorFrom));
     this.form.controls.milesReceived.setValue(milesReceived, { emitEvent: false });
   }
 

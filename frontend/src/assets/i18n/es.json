@@ -379,7 +379,9 @@
       "transferDate": "Fecha de transferencia",
       "costPerThousandOrigin": "Costo por mil (origen)",
       "costPerThousandDestination": "Costo por mil (destino)",
-      "transferFactor": "Tasa de transferencia"
+      "transferFactor": "Tasa de Transferencia",
+      "transferFactorOrigin": "Tasa de Transferencia (Origen)",
+      "transferFactorDestination": "Tasa de Transferencia (Destino)"
     },
     "actions": {
       "edit": "Editar transferencia",
