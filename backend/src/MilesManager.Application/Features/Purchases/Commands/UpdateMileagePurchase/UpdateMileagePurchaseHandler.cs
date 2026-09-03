@@ -1,6 +1,7 @@
 using MediatR;
 using MilesManager.Application.Common;
 using MilesManager.Application.Abstractions;
+using MilesManager.Domain.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace MilesManager.Application.Features.Purchases.Commands.UpdateMileagePurchase;
@@ -27,24 +28,39 @@ public sealed class UpdateMileagePurchaseHandler(IApplicationDbContext context) 
             return Result<Guid>.ValidationFailed("MilesPurchased must be positive.");
         }
 
-        var milesDelta = request.MilesPurchased - purchase.MilesPurchased;
+        var balance = await _context.ProgramBalances.FirstOrDefaultAsync(
+            pb => pb.UserId == purchase.UserId && pb.ProgramId == purchase.ProgramId,
+            cancellationToken);
+
+        var wasConfirmed = purchase.PurchaseStatus == PurchaseStatus.Confirmed;
+        var willBeConfirmed = request.PurchaseStatus == PurchaseStatus.Confirmed;
+
+        if (wasConfirmed || willBeConfirmed)
+        {
+            if (balance is null)
+            {
+                return Result<Guid>.ValidationFailed("Program balance not found for this user and program.");
+            }
+
+            if (wasConfirmed)
+            {
+                balance.Balance -= purchase.MilesPurchased;
+                balance.AllocatedCost -= purchase.AmountPaid;
+            }
+
+            if (willBeConfirmed)
+            {
+                balance.Balance += request.MilesPurchased;
+                balance.AllocatedCost += request.AmountPaid;
+            }
+        }
 
         purchase.Partner = request.Partner;
         purchase.Description = request.Description;
         purchase.AmountPaid = request.AmountPaid;
         purchase.MilesPurchased = request.MilesPurchased;
         purchase.PurchaseDate = request.PurchaseDate;
-
-        if (milesDelta != 0)
-        {
-            var balance = await _context.ProgramBalances.FirstOrDefaultAsync(pb => pb.UserId == purchase.UserId && pb.ProgramId == purchase.ProgramId, cancellationToken);
-            if (balance is null)
-            {
-                return Result<Guid>.ValidationFailed("Program balance not found for this user and program.");
-            }
-
-            balance.Balance += milesDelta;
-        }
+        purchase.PurchaseStatus = request.PurchaseStatus;
 
         await _context.SaveChangesAsync(cancellationToken);
 

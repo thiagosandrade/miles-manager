@@ -153,7 +153,7 @@ import { formatDateOnly } from '../../shared/date-utils';
           description: result.description,
           amountPaid: Number(result.amountPaid),
           milesPurchased: Number(result.milesPurchased),
-          purchaseStatus: PurchaseStatus.Completed,
+          purchaseStatus: result.purchaseStatus,
           purchaseDate: formatDateOnly(result.purchaseDate)
         };
 
@@ -197,7 +197,7 @@ import { formatDateOnly } from '../../shared/date-utils';
           description: result.description,
           amountPaid: Number(result.amountPaid),
           milesPurchased: Number(result.milesPurchased),
-          purchaseStatus: PurchaseStatus.Completed,
+          purchaseStatus: result.purchaseStatus,
           purchaseDate: formatDateOnly(result.purchaseDate)
         };
 
@@ -242,7 +242,7 @@ import { formatDateOnly } from '../../shared/date-utils';
           description: result.description,
           amountPaid: Number(result.amountPaid),
           milesPurchased: Number(result.milesPurchased),
-          purchaseStatus: PurchaseStatus.Completed,
+          purchaseStatus: result.purchaseStatus,
           purchaseDate: formatDateOnly(result.purchaseDate)
         };
 

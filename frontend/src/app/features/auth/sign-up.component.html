@@ -1,0 +1,61 @@
+<div class="signup-page">
+  <mat-card class="signup-card">
+    <div class="signup-header">
+      <img
+        src="assets/logo-icon.png"
+        [attr.alt]="'signup.logoAlt' | translate"
+        class="logo">
+
+      <h1>{{ 'signup.title' | translate }}</h1>
+      <p>{{ 'signup.subtitle' | translate }}</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="signup-form">
+      <app-input
+        formControlName="fullName"
+        type="text"
+        [label]="'signup.fullName' | translate"
+        [placeholder]="'signup.fullNamePlaceholder' | translate"
+        icon="person"
+        [errors]="{ required: 'signup.fullNameRequired' }">
+      </app-input>
+
+      <app-input
+        formControlName="email"
+        type="email"
+        [label]="'signup.email' | translate"
+        [placeholder]="'signup.emailPlaceholder' | translate"
+        icon="mail"
+        [errors]="{
+          required: 'signup.emailRequired',
+          email: 'signup.emailInvalid'
+        }">
+      </app-input>
+
+      <app-input
+        formControlName="password"
+        type="password"
+        [label]="'signup.password' | translate"
+        [placeholder]="'signup.password' | translate"
+        icon="lock"
+        [errors]="{
+          required: 'signup.passwordRequired',
+          minlength: 'signup.passwordMinLength'
+        }">
+      </app-input>
+
+      <button
+        class="signup-button"
+        type="submit"
+        [disabled]="loading || form.invalid">
+        <span *ngIf="!loading">{{ 'signup.createAccount' | translate }}</span>
+        <span *ngIf="loading">{{ 'signup.creatingAccount' | translate }}</span>
+      </button>
+    </form>
+
+    <div class="login-link">
+      {{ 'signup.alreadyHaveAccount' | translate }}
+      <button type="button" (click)="goToLogin()">{{ 'signup.signin' | translate }}</button>
+    </div>
+  </mat-card>
+</div>

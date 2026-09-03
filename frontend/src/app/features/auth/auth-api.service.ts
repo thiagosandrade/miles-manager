@@ -1,10 +1,23 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { finalize, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoginRequest, LoginResponse } from './models/authentication.model';
 import { TokenStorageService } from '../../core/services/token-storage.service';
 import { Router } from '@angular/router';
+
+export interface RegisterRequest {
+  email: string;
+  fullName: string;
+  password: string;
+}
+
+export interface RegisterResponse {
+  id: string;
+  email: string;
+  fullName: string;
+  isActive: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +31,10 @@ export class AuthApiService {
 
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiBaseUrl}/login`, request);
+  }
+
+  register(request: RegisterRequest): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${this.apiBaseUrl}/register`, request);
   }
 
   refresh(): Observable<LoginResponse> {

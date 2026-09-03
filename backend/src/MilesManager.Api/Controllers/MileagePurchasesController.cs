@@ -55,7 +55,8 @@ public sealed class MileagePurchasesController(ISender sender) : ApiController(s
             Description = command.Description,
             AmountPaid = command.AmountPaid,
             MilesPurchased = command.MilesPurchased,
-            PurchaseDate = command.PurchaseDate
+            PurchaseDate = command.PurchaseDate,
+            PurchaseStatus = command.PurchaseStatus
         };
         var result = await Sender.Send(created, cancellationToken);
         return Convert(result);
@@ -77,7 +78,8 @@ public sealed class MileagePurchasesController(ISender sender) : ApiController(s
             Description = command.Description,
             AmountPaid = command.AmountPaid,
             MilesPurchased = command.MilesPurchased,
-            PurchaseDate = command.PurchaseDate
+            PurchaseDate = command.PurchaseDate,
+            PurchaseStatus = command.PurchaseStatus
         };
         var result = await Sender.Send(updated, cancellationToken);
         return Convert(result);

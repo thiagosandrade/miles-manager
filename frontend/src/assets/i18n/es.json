@@ -10,7 +10,12 @@
     "signin": "Iniciar sesión",
     "logging": "Iniciando sesión...",
     "footer": "Miles Manager",
-    "version": "Versión 1.0"
+    "version": "Versión 1.0",
+    "logoAlt": "Miles Manager",
+      "emailPlaceholder": "juan.perez@email.com",
+      "passwordPlaceholder": "Contraseña",
+      "noAccount": "¿No tienes una cuenta?",
+      "signup": "Registrarse"
   },
   "common": {
     "ok": "OK",
@@ -534,5 +539,25 @@
       "title": "Compara tu vuelo",
       "description": "Selecciona un programa de fidelización e introduce los detalles del vuelo para descubrir qué opción ofrece el mejor valor."
     }
+  },
+  "signup": {
+    "logoAlt": "Miles Manager",
+    "title": "Crea tu cuenta",
+    "subtitle": "Regístrate para empezar a gestionar tus programas de aerolíneas, millas y recompensas.",
+    "fullName": "Nombre completo",
+    "fullNamePlaceholder": "Juan Pérez",
+    "fullNameRequired": "El nombre completo es obligatorio.",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "juan.perez@email.com",
+    "emailRequired": "El correo electrónico es obligatorio.",
+    "emailInvalid": "Correo electrónico no válido.",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Contraseña",
+    "passwordRequired": "La contraseña es obligatoria.",
+    "passwordMinLength": "La contraseña debe tener al menos 8 caracteres.",
+    "createAccount": "Crear cuenta",
+    "creatingAccount": "Creando cuenta...",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "signin": "Iniciar sesión"
   }
 }

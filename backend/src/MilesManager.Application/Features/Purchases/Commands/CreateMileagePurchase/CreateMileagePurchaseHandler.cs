@@ -36,27 +36,30 @@ public sealed class CreateMileagePurchaseHandler(IApplicationDbContext context) 
             AmountPaid = request.AmountPaid,
             MilesPurchased = request.MilesPurchased,
             PurchaseDate = request.PurchaseDate,
-            PurchaseStatus = MilesManager.Domain.Common.Enums.PurchaseStatus.Confirmed
+            PurchaseStatus = request.PurchaseStatus
         };
 
         await _context.MileagePurchases.AddAsync(purchase, cancellationToken);
 
-        var balance = await _context.ProgramBalances.FirstOrDefaultAsync(pb => pb.UserId == request.UserId && pb.ProgramId == request.ProgramId, cancellationToken);
-        if (balance is null)
+        if (request.PurchaseStatus == Domain.Common.Enums.PurchaseStatus.Confirmed)
         {
-            balance = new Domain.Programs.ProgramBalance
+            var balance = await _context.ProgramBalances.FirstOrDefaultAsync(pb => pb.UserId == request.UserId && pb.ProgramId == request.ProgramId, cancellationToken);
+            if (balance is null)
             {
-                UserId = request.UserId,
-                ProgramId = request.ProgramId,
-                Balance = request.MilesPurchased,
-                AllocatedCost = request.AmountPaid
-            };
-            await _context.ProgramBalances.AddAsync(balance, cancellationToken);
-        }
-        else
-        {
-            balance.Balance += request.MilesPurchased;
-            balance.AllocatedCost += request.AmountPaid;
+                balance = new Domain.Programs.ProgramBalance
+                {
+                    UserId = request.UserId,
+                    ProgramId = request.ProgramId,
+                    Balance = request.MilesPurchased,
+                    AllocatedCost = request.AmountPaid
+                };
+                await _context.ProgramBalances.AddAsync(balance, cancellationToken);
+            }
+            else
+            {
+                balance.Balance += request.MilesPurchased;
+                balance.AllocatedCost += request.AmountPaid;
+            }
         }
 
         await _context.SaveChangesAsync(cancellationToken);

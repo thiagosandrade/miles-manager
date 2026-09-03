@@ -5,7 +5,7 @@
     <div class="login-header">
       <img
         src="assets/logo-icon.png"
-        alt="Miles Manager"
+        [attr.alt]="'auth.logoAlt' | translate"
         class="logo">
 
       <h1>{{ 'auth.welcome' | translate }}</h1>
@@ -22,11 +22,11 @@
         formControlName="email"
         type="email"
         [label]="'auth.email' | translate"
-        placeholder="john.doe@email.com"
+        [placeholder]="'auth.emailPlaceholder' | translate"
         icon="mail"
         [errors]="{
-          required: 'auth.email-required',
-          email: 'auth.email-invalid'
+          required: 'auth.emailRequired',
+          email: 'auth.emailInvalid'
         }">
       </app-input>
 
@@ -34,10 +34,10 @@
         formControlName="password"
         type="password"
         [label]="'auth.password' | translate"
-        placeholder="Password"
+        [placeholder]="'auth.passwordPlaceholder' | translate"
         icon="lock"
         [errors]="{
-          required: 'auth.password-required'
+          required: 'auth.passwordRequired'
         }">
       </app-input>
 
@@ -57,6 +57,11 @@
       </button>
 
     </form>
+
+    <div class="signup-link">
+      {{ 'auth.noAccount' | translate }}
+      <button type="button" (click)="goToSignUp()">{{ 'auth.signup' | translate }}</button>
+    </div>
 
     <div class="login-footer">
       {{ 'auth.footer' | translate }}

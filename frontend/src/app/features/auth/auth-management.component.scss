@@ -15,155 +15,115 @@
 }
 
 .login-card {
-
   width: 100%;
   max-width: 480px;
-
   padding: 42px;
-
   border-radius: 28px;
-
   background: var(--panel);
-
   box-shadow: var(--shadow);
-
 }
 
 .login-header {
-
   text-align: center;
-
   margin-bottom: 36px;
-
 }
 
 .logo {
-
   width: 74px;
   height: 74px;
-
   margin-bottom: 20px;
-
 }
 
 .login-header h1 {
-
   margin: 0;
-
   font-size: 2rem;
-
   font-weight: 700;
-
   color: var(--ink);
-
 }
 
 .login-header p {
-
   margin-top: 12px;
-
   color: var(--muted);
-
   line-height: 1.6;
-
 }
 
 .login-form {
-
   display: flex;
   flex-direction: column;
-
   gap: 18px;
-
 }
 
 mat-form-field {
-
   width: 100%;
-
 }
 
 .login-button {
-
   margin-top: 12px;
-
   height: 50px;
-
   border: none;
-
   border-radius: 14px;
-
-  background: linear-gradient(
-      135deg,
-      var(--mm-primary),
-      var(--mm-secondary));
-
+  background: linear-gradient(135deg, var(--mm-primary), var(--mm-secondary));
   color: white;
-
   font-size: 15px;
-
   font-weight: 600;
-
   cursor: pointer;
-
   transition: .25s;
-
 }
 
 .login-button:hover:not(:disabled) {
-
   transform: translateY(-2px);
-
   box-shadow: 0 10px 24px rgba(21,101,192,.25);
-
 }
 
 .login-button:disabled {
-
   opacity: .65;
-
   cursor: default;
+}
 
+.signup-link {
+  margin-top: 22px;
+  text-align: center;
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+.signup-link button {
+  margin-left: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--mm-primary);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.signup-link button:hover {
+  text-decoration: underline;
 }
 
 .login-footer {
-
   margin-top: 34px;
-
   text-align: center;
-
   color: var(--muted);
-
   font-size: .82rem;
-
 }
 
 .login-footer span {
-
   margin: 0 10px;
-
 }
 
 @media (max-width: 600px) {
-
   :host {
-
     padding: 20px;
-
   }
 
   .login-card {
-
     padding: 28px;
-
     border-radius: 22px;
-
   }
 
   .login-header h1 {
-
     font-size: 1.7rem;
-
   }
-
 }
