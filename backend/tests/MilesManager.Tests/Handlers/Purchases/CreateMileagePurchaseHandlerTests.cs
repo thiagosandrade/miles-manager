@@ -2,6 +2,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MilesManager.Application.Common;
 using MilesManager.Application.Features.Purchases.Commands.CreateMileagePurchase;
+using MilesManager.Domain.Common.Enums;
 using MilesManager.Infrastructure.Persistence;
 using MilesManager.Domain.Programs;
 using Xunit;
@@ -39,6 +40,45 @@ public class CreateMileagePurchaseHandlerTests
         balance.Balance.Should().Be(10_000m);
         balance.AllocatedCost.Should().Be(300m);
         (await context.MileagePurchases.CountAsync(TestContext.Current.CancellationToken)).Should().Be(1);
+    }
+
+    [Fact]
+    public async Task Handle_PendingPurchase_DoesNotChangeProgramBalance()
+    {
+        var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
+            .UseInMemoryDatabase($"CreatePendingPurchase_{Guid.NewGuid()}").Options;
+        var userId = Guid.NewGuid();
+        var programId = Guid.NewGuid();
+
+        await using var context = new MilesManagerDbContext(options);
+        context.Programs.Add(new LoyaltyProgram { Id = programId, Name = "Livelo", ProgramCode = "LIVELO" });
+        context.ProgramBalances.Add(new ProgramBalance
+        {
+            UserId = userId,
+            ProgramId = programId,
+            Balance = 5_000m,
+            AllocatedCost = 150m
+        });
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var handler = new CreateMileagePurchaseHandler(context);
+        var result = await handler.Handle(new CreateMileagePurchaseCommand
+        {
+            UserId = userId,
+            ProgramId = programId,
+            AmountPaid = 150m,
+            MilesPurchased = 5_000m,
+            PurchaseDate = new DateOnly(2026, 9, 3),
+            PurchaseStatus = PurchaseStatus.Pending
+        }, TestContext.Current.CancellationToken);
+
+        result.Status.Should().Be(ResultStatus.Success);
+        var balance = await context.ProgramBalances.SingleAsync(TestContext.Current.CancellationToken);
+        balance.Balance.Should().Be(5_000m);
+        balance.AllocatedCost.Should().Be(150m);
+
+        var purchase = await context.MileagePurchases.SingleAsync(TestContext.Current.CancellationToken);
+        purchase.PurchaseStatus.Should().Be(PurchaseStatus.Pending);
     }
 
     [Fact]
