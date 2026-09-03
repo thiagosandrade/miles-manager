@@ -16,13 +16,8 @@
       type="button"
       (click)="openCreateProgramFactorDialog()">
       <mat-icon>add</mat-icon>
-  
-      <span>
-        {{ 'common.create' | translate }}
-      </span>
-
+      <span>{{ 'common.create' | translate }}</span>
     </button>
-
   </header>
 
   <app-table
@@ -40,7 +35,6 @@
 
     <div class="desktop-table">
       <table mat-table [dataSource]="pagedData()">
-
         <ng-container matColumnDef="originProgram">
           <th mat-header-cell *matHeaderCellDef>
             {{ 'common.origin' | translate }} {{ 'common.program' | translate }}
@@ -80,11 +74,7 @@
               type="button"
               [attr.aria-label]="'programs.actions.edit' | translate"
               (click)="openEditProgramFactorDialog(factor)">
-
-              <mat-icon>
-                edit
-              </mat-icon>
-
+              <mat-icon>edit</mat-icon>
             </button>
             <button
               class="icon-button danger"
@@ -98,7 +88,6 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
       </table>
     </div>
 
@@ -111,9 +100,7 @@
             </span>
             <strong>{{ factor.originProgramName }}</strong>
           </div>
-
           <mat-icon>arrow_forward</mat-icon>
-
           <div>
             <span class="factor-label">
               {{ 'common.destination' | translate }} {{ 'common.program' | translate }}
@@ -131,7 +118,6 @@
               {{ factor.fromAmount }} : {{ factor.toAmount }}
             </span>
           </span>
-
           <button
             class="icon-button danger"
             type="button"
@@ -145,9 +131,9 @@
 
   </app-table>
 
-  <div class="feedback" *ngIf="hasError()">
+  <div class="feedback" *ngIf="isRateLimitReached()">
     <strong>{{ 'common.error' | translate }}</strong>
-    <span>{{ 'common.error' | translate }}</span>
+    <span>{{ 'programFactors.messages.loadError' | translate }}</span>
   </div>
 
 </section>
