@@ -3,44 +3,44 @@
     <div class="signup-header">
       <img
         src="assets/logo-icon.png"
-        alt="Miles Manager"
+        [attr.alt]="'signup.logoAlt' | translate"
         class="logo">
 
-      <h1>Sign up</h1>
-      <p>Create your account to start managing your miles and rewards.</p>
+      <h1>{{ 'signup.title' | translate }}</h1>
+      <p>{{ 'signup.subtitle' | translate }}</p>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="submit()" class="signup-form">
       <app-input
         formControlName="fullName"
         type="text"
-        label="Full Name"
+        [label]="'signup.fullName' | translate"
         placeholder="John Doe"
         icon="person"
-        [errors]="{ required: 'Full name is required.' }">
+        [errors]="{ required: 'signup.fullNameRequired' }">
       </app-input>
 
       <app-input
         formControlName="email"
         type="email"
-        label="Email"
+        [label]="'signup.email' | translate"
         placeholder="john.doe@email.com"
         icon="mail"
         [errors]="{
-          required: 'Email is required.',
-          email: 'Invalid email.'
+          required: 'signup.emailRequired',
+          email: 'signup.emailInvalid'
         }">
       </app-input>
 
       <app-input
         formControlName="password"
         type="password"
-        label="Password"
-        placeholder="Password"
+        [label]="'signup.password' | translate"
+        [placeholder]="'signup.password' | translate"
         icon="lock"
         [errors]="{
-          required: 'Password is required.',
-          minlength: 'Password must be at least 8 characters long.'
+          required: 'signup.passwordRequired',
+          minlength: 'signup.passwordMinLength'
         }">
       </app-input>
 
@@ -48,14 +48,14 @@
         class="signup-button"
         type="submit"
         [disabled]="loading || form.invalid">
-        <span *ngIf="!loading">Create Account</span>
-        <span *ngIf="loading">Creating Account...</span>
+        <span *ngIf="!loading">{{ 'signup.createAccount' | translate }}</span>
+        <span *ngIf="loading">{{ 'signup.creatingAccount' | translate }}</span>
       </button>
     </form>
 
     <div class="login-link">
-      Already have an account?
-      <button type="button" (click)="goToLogin()">Sign in</button>
+      {{ 'signup.alreadyHaveAccount' | translate }}
+      <button type="button" (click)="goToLogin()">{{ 'signup.signin' | translate }}</button>
     </div>
   </mat-card>
 </div>
