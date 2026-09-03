@@ -10,7 +10,12 @@
     "signin": "Se connecter",
     "logging": "Connexion...",
     "footer": "Miles Manager",
-    "version": "Version 1.0"
+    "version": "Version 1.0",
+    "logoAlt": "Miles Manager",
+    "emailPlaceholder": "jean.dupont@email.com",
+    "passwordPlaceholder": "Mot de passe",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "signup": "S'inscrire"
   },
   "common": {
     "ok": "OK",
@@ -532,5 +537,25 @@
       "title": "Comparez votre vol",
       "description": "Sélectionnez un programme de fidélité et saisissez les détails du vol pour déterminer quelle option offre la meilleure valeur."
     }
+  },
+  "signup": {
+    "logoAlt": "Miles Manager",
+    "title": "Créer votre compte",
+    "subtitle": "Inscrivez-vous pour commencer à gérer vos programmes aériens, vos miles et vos récompenses.",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Jean Dupont",
+    "fullNameRequired": "Le nom complet est obligatoire.",
+    "email": "E-mail",
+    "emailPlaceholder": "jean.dupont@email.com",
+    "emailRequired": "L'e-mail est obligatoire.",
+    "emailInvalid": "E-mail invalide.",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Mot de passe",
+    "passwordRequired": "Le mot de passe est obligatoire.",
+    "passwordMinLength": "Le mot de passe doit contenir au moins 8 caractères.",
+    "createAccount": "Créer un compte",
+    "creatingAccount": "Création du compte...",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "signin": "Se connecter"
   }
 }

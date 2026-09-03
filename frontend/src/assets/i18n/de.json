@@ -10,7 +10,12 @@
     "signin": "Anmelden",
     "logging": "Anmeldung läuft...",
     "footer": "Miles Manager",
-    "version": "Version 1.0"
+    "version": "Version 1.0",
+    "logoAlt": "Miles Manager",
+    "emailPlaceholder": "max.mustermann@email.com",
+    "passwordPlaceholder": "Passwort",
+    "noAccount": "Sie haben noch kein Konto?",
+    "signup": "Registrieren"
   },
   "common": {
     "ok": "OK",
@@ -532,5 +537,25 @@
       "title": "Vergleichen Sie Ihren Flug",
       "description": "Wählen Sie ein Treueprogramm und geben Sie die Flugdaten ein, um zu sehen, welche Option den besseren Wert bietet."
     }
+  },
+  "signup": {
+    "logoAlt": "Miles Manager",
+    "title": "Konto erstellen",
+    "subtitle": "Registrieren Sie sich, um Ihre Airline-Programme, Meilen und Prämien zu verwalten.",
+    "fullName": "Vollständiger Name",
+    "fullNamePlaceholder": "Max Mustermann",
+    "fullNameRequired": "Der vollständige Name ist erforderlich.",
+    "email": "E-Mail",
+    "emailPlaceholder": "max.mustermann@email.com",
+    "emailRequired": "E-Mail ist erforderlich.",
+    "emailInvalid": "Ungültige E-Mail-Adresse.",
+    "password": "Passwort",
+    "passwordPlaceholder": "Passwort",
+    "passwordRequired": "Passwort ist erforderlich.",
+    "passwordMinLength": "Das Passwort muss mindestens 8 Zeichen lang sein.",
+    "createAccount": "Konto erstellen",
+    "creatingAccount": "Konto wird erstellt...",
+    "alreadyHaveAccount": "Sie haben bereits ein Konto?",
+    "signin": "Anmelden"
   }
 }

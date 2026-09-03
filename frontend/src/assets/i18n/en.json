@@ -10,7 +10,12 @@
     "signin": "Sign In",
     "logging": "Signing in...",
     "footer": "Miles Manager",
-    "version": "Version 1.0"
+    "version": "Version 1.0",
+    "logoAlt": "Miles Manager",
+    "emailPlaceholder": "john.doe@email.com",
+    "passwordPlaceholder": "Password",
+    "noAccount": "Don't have an account?",
+    "signup": "Sign Up"
   },
   "common": {
     "ok": "OK",
@@ -546,5 +551,25 @@
       "title": "Compare your flight",
       "description": "Select a loyalty program and enter the flight details to see which option gives you the better value."
     }
+  },
+  "signup": {
+    "logoAlt": "Miles Manager",
+    "title": "Create your account",
+    "subtitle": "Sign up to start managing your airline programs, miles and rewards.",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "John Doe",
+    "fullNameRequired": "Full name is required.",
+    "email": "Email",
+    "emailPlaceholder": "john.doe@email.com",
+    "emailRequired": "Email is required.",
+    "emailInvalid": "Invalid email.",
+    "password": "Password",
+    "passwordPlaceholder": "Password",
+    "passwordRequired": "Password is required.",
+    "passwordMinLength": "Password must be at least 8 characters.",
+    "createAccount": "Create Account",
+    "creatingAccount": "Creating Account...",
+    "alreadyHaveAccount": "Already have an account?",
+    "signin": "Sign In"
   }
 }

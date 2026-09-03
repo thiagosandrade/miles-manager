@@ -26,7 +26,7 @@ public class DeleteMileagePurchaseHandlerTests
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var result = await new DeleteMileagePurchaseHandler(context).Handle(
-            new DeleteMileagePurchaseCommand { Id = purchaseId, UserId = userId },
+            new DeleteMileagePurchaseCommand { Id = purchaseId },
             TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
@@ -51,7 +51,7 @@ public class DeleteMileagePurchaseHandlerTests
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var result = await new DeleteMileagePurchaseHandler(context).Handle(
-            new DeleteMileagePurchaseCommand { Id = purchaseId, UserId = userId },
+            new DeleteMileagePurchaseCommand { Id = purchaseId },
             TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
@@ -76,7 +76,7 @@ public class DeleteMileagePurchaseHandlerTests
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var result = await new DeleteMileagePurchaseHandler(context).Handle(
-            new DeleteMileagePurchaseCommand { Id = purchaseId, UserId = userId },
+            new DeleteMileagePurchaseCommand { Id = purchaseId },
             TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.Success);
@@ -93,7 +93,7 @@ public class DeleteMileagePurchaseHandlerTests
         await using var context = new MilesManagerDbContext(options);
 
         var result = await new DeleteMileagePurchaseHandler(context).Handle(
-            new DeleteMileagePurchaseCommand { Id = Guid.NewGuid(), UserId = Guid.NewGuid() },
+            new DeleteMileagePurchaseCommand { Id = Guid.NewGuid() },
             TestContext.Current.CancellationToken);
 
         result.Status.Should().Be(ResultStatus.NotFound);

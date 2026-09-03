@@ -10,7 +10,12 @@
     "signin": "Iniciar sessão",
     "logging": "A iniciar sessão...",
     "footer": "Miles Manager",
-    "version": "Versão 1.0"
+    "version": "Versão 1.0",
+    "logoAlt": "Miles Manager",
+    "emailPlaceholder": "joao.silva@email.com",
+    "passwordPlaceholder": "Senha",
+    "noAccount": "Ainda não tem uma conta?",
+    "signup": "Criar conta"
   },
   "common": {
     "ok": "OK",
@@ -531,5 +536,25 @@
       "title": "Compare o seu voo",
       "description": "Selecione um programa de fidelização e introduza os detalhes do voo para descobrir qual opção oferece o melhor valor."
     }
+  },
+  "signup": {
+    "logoAlt": "Miles Manager",
+    "title": "Create your account",
+    "subtitle": "Sign up to start managing your airline programs, miles and rewards.",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "John Doe",
+    "fullNameRequired": "Full name is required.",
+    "email": "Email",
+    "emailPlaceholder": "john.doe@email.com",
+    "emailRequired": "Email is required.",
+    "emailInvalid": "Invalid email.",
+    "password": "Password",
+    "passwordPlaceholder": "Password",
+    "passwordRequired": "Password is required.",
+    "passwordMinLength": "Password must be at least 8 characters.",
+    "createAccount": "Create Account",
+    "creatingAccount": "Creating Account...",
+    "alreadyHaveAccount": "Already have an account?",
+    "signin": "Sign In"
   }
 }
