@@ -18,6 +18,8 @@ export interface TransferCreateRequest {
   milesSent: number;
   bonusPercentage: number;
   milesReceived: number;
+  factorFrom: number;
+  factorTo: number;
   transferDate: string;
   originProgram?: Program;
   destinationProgram?: Program;
@@ -31,6 +33,8 @@ export interface TransferUpdateRequest {
   milesSent: number;
   bonusPercentage: number;
   milesReceived: number;
+  factorFrom: number;
+  factorTo: number;
   transferDate: string;
   originProgram?: Program;
   destinationProgram?: Program;

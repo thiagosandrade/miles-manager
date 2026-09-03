@@ -19,10 +19,6 @@ namespace MilesManager.Api.Controllers;
 [Route("api/v{version:apiVersion}/mileage-transfers")]
 public sealed class MileageTransfersController(ISender sender) : ApiController(sender)
 {
-
-    /// <summary>
-    /// Gets mileage transfers.
-    /// </summary>
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<Application.Features.Transfers.DTOs.MileageTransferDto>>> Get(CancellationToken cancellationToken)
     {
@@ -30,9 +26,6 @@ public sealed class MileageTransfersController(ISender sender) : ApiController(s
         return Convert(result);
     }
 
-    /// <summary>
-    /// Gets a mileage transfer by id.
-    /// </summary>
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<Application.Features.Transfers.DTOs.MileageTransferDto>> GetById(Guid id, CancellationToken cancellationToken)
     {
@@ -40,52 +33,45 @@ public sealed class MileageTransfersController(ISender sender) : ApiController(s
         return Convert(result);
     }
 
-    /// <summary>
-    /// Creates a mileage transfer for the authenticated user.
-    /// </summary>
     [HttpPost]
     public async Task<ActionResult<Guid>> Create([FromBody] CreateTransferCommand command, CancellationToken cancellationToken)
     {
-        var userId = GetUserId();
         var created = new CreateTransferCommand
         {
-            UserId = userId,
+            UserId = GetUserId(),
             OriginProgramId = command.OriginProgramId,
             DestinationProgramId = command.DestinationProgramId,
             MilesSent = command.MilesSent,
             BonusPercentage = command.BonusPercentage,
             MilesReceived = command.MilesReceived,
+            FactorFrom = command.FactorFrom,
+            FactorTo = command.FactorTo,
             TransferDate = command.TransferDate
         };
         var result = await Sender.Send(created, cancellationToken);
         return Convert(result);
     }
 
-    /// <summary>
-    /// Updates an existing mileage transfer.
-    /// </summary>
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<Guid>> Update(Guid id, [FromBody] UpdateMileageTransferCommand command, CancellationToken cancellationToken)
     {
-        var userId = GetUserId();
         var updated = new UpdateMileageTransferCommand
         {
             Id = id,
-            UserId = userId,
+            UserId = GetUserId(),
             OriginProgramId = command.OriginProgramId,
             DestinationProgramId = command.DestinationProgramId,
             MilesSent = command.MilesSent,
             BonusPercentage = command.BonusPercentage,
             MilesReceived = command.MilesReceived,
+            FactorFrom = command.FactorFrom,
+            FactorTo = command.FactorTo,
             TransferDate = command.TransferDate
         };
         var result = await Sender.Send(updated, cancellationToken);
         return Convert(result);
     }
 
-    /// <summary>
-    /// Deletes a mileage transfer.
-    /// </summary>
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
