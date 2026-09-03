@@ -35,6 +35,7 @@ export class ProgramBalancesPageComponent implements OnInit {
   private pageIndex = 0;
   private pageSize = 5;
   loading = signal(false);
+  isRateLimitReached = signal(false);
 
   displayedColumns = [
     'program',
@@ -54,6 +55,7 @@ export class ProgramBalancesPageComponent implements OnInit {
   loadBalances(): void {
 
     this.loading.set(true);
+    this.isRateLimitReached.set(false);
 
     this.programBalanceService.getProgramBalances().subscribe({
 
@@ -67,6 +69,7 @@ export class ProgramBalancesPageComponent implements OnInit {
 
       error: () => {
 
+        this.isRateLimitReached.set(true);
         this.loading.set(false);
 
       }
