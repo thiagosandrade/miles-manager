@@ -11,19 +11,29 @@
       </p>
     </div>
 
-    <button
-      class="primary-button"
-      type="button"
-      (click)="openCreateProgramFactorDialog()">
+    <button class="primary-button" type="button" (click)="openCreateProgramFactorDialog()">
       <mat-icon>add</mat-icon>
-  
-      <span>
-        {{ 'common.create' | translate }}
-      </span>
-
+      <span>{{ 'common.create' | translate }}</span>
     </button>
-
   </header>
+
+  <!-- =====================================================
+       Error
+  ====================================================== -->
+
+  <div
+    class="feedback"
+    *ngIf="isRateLimitReached()">
+
+    <strong>
+      {{ 'common.error' | translate }}
+    </strong>
+
+    <span>
+      {{ 'common.loadError' | translate }}
+    </span>
+
+  </div>
 
   <app-table
     [title]="'programFactors.table.title' | translate"
@@ -40,57 +50,34 @@
 
     <div class="desktop-table">
       <table mat-table [dataSource]="pagedData()">
-
         <ng-container matColumnDef="originProgram">
           <th mat-header-cell *matHeaderCellDef>
             {{ 'common.origin' | translate }} {{ 'common.program' | translate }}
           </th>
-          <td mat-cell *matCellDef="let factor">
-            <strong>{{ factor.originProgramName }}</strong>
-          </td>
+          <td mat-cell *matCellDef="let factor"><strong>{{ factor.originProgramName }}</strong></td>
         </ng-container>
 
         <ng-container matColumnDef="destinationProgram">
           <th mat-header-cell *matHeaderCellDef>
             {{ 'common.destination' | translate }} {{ 'common.program' | translate }}
           </th>
-          <td mat-cell *matCellDef="let factor">
-            <strong>{{ factor.destinationProgramName }}</strong>
-          </td>
+          <td mat-cell *matCellDef="let factor"><strong>{{ factor.destinationProgramName }}</strong></td>
         </ng-container>
 
         <ng-container matColumnDef="factor">
-          <th mat-header-cell *matHeaderCellDef>
-            {{ 'sidebar.programFactors' | translate }}
-          </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'sidebar.programFactors' | translate }}</th>
           <td mat-cell *matCellDef="let factor">
-            <span class="factor-pill">
-              {{ factor.fromAmount }} : {{ factor.toAmount }}
-            </span>
+            <span class="factor-pill">{{ factor.fromAmount }} : {{ factor.toAmount }}</span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef class="actions-column">
-            {{ 'common.actions' | translate }}
-          </th>
+          <th mat-header-cell *matHeaderCellDef class="actions-column">{{ 'common.actions' | translate }}</th>
           <td mat-cell *matCellDef="let factor" class="actions-column">
-            <button
-              class="icon-button"
-              type="button"
-              [attr.aria-label]="'programs.actions.edit' | translate"
-              (click)="openEditProgramFactorDialog(factor)">
-
-              <mat-icon>
-                edit
-              </mat-icon>
-
+            <button class="icon-button" type="button" [attr.aria-label]="'programs.actions.edit' | translate" (click)="openEditProgramFactorDialog(factor)">
+              <mat-icon>edit</mat-icon>
             </button>
-            <button
-              class="icon-button danger"
-              type="button"
-              [attr.aria-label]="'common.delete' | translate"
-              (click)="deleteProgramFactor(factor)">
+            <button class="icon-button danger" type="button" [attr.aria-label]="'common.delete' | translate" (click)="deleteProgramFactor(factor)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -98,7 +85,6 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
       </table>
     </div>
 
@@ -106,48 +92,27 @@
       <article class="factor-card" *ngFor="let factor of pagedData()">
         <div class="factor-programs">
           <div>
-            <span class="factor-label">
-              {{ 'common.origin' | translate }} {{ 'common.program' | translate }}
-            </span>
+            <span class="factor-label">{{ 'common.origin' | translate }} {{ 'common.program' | translate }}</span>
             <strong>{{ factor.originProgramName }}</strong>
           </div>
-
           <mat-icon>arrow_forward</mat-icon>
-
           <div>
-            <span class="factor-label">
-              {{ 'common.destination' | translate }} {{ 'common.program' | translate }}
-            </span>
+            <span class="factor-label">{{ 'common.destination' | translate }} {{ 'common.program' | translate }}</span>
             <strong>{{ factor.destinationProgramName }}</strong>
           </div>
         </div>
 
         <div class="factor-value">
           <span>
-            <span class="factor-label">
-              {{ 'sidebar.programFactors' | translate }}
-            </span>
-            <span class="factor-pill">
-              {{ factor.fromAmount }} : {{ factor.toAmount }}
-            </span>
+            <span class="factor-label">{{ 'sidebar.programFactors' | translate }}</span>
+            <span class="factor-pill">{{ factor.fromAmount }} : {{ factor.toAmount }}</span>
           </span>
-
-          <button
-            class="icon-button danger"
-            type="button"
-            [attr.aria-label]="'common.delete' | translate"
-            (click)="deleteProgramFactor(factor)">
+          <button class="icon-button danger" type="button" [attr.aria-label]="'common.delete' | translate" (click)="deleteProgramFactor(factor)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
       </article>
     </div>
-
   </app-table>
-
-  <div class="feedback" *ngIf="hasError()">
-    <strong>{{ 'common.error' | translate }}</strong>
-    <span>{{ 'common.error' | translate }}</span>
-  </div>
 
 </section>

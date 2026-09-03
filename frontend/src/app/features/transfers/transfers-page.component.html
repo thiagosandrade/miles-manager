@@ -97,7 +97,25 @@
 
   </section>
 
-  <!-- Table -->
+  <!-- Error -->
+
+  <div
+    class="feedback"
+    *ngIf="isRateLimitReached()">
+
+    <strong>
+
+      {{ 'common.error' | translate }}
+
+    </strong>
+
+    <span>
+
+      {{ 'common.loadError' | translate }}
+
+    </span>
+
+  </div>
 
   <!-- Table -->
 
@@ -540,25 +558,5 @@
     </div>
 
   </app-table>
-
-  <!-- Error -->
-
-  <div
-    class="feedback"
-    *ngIf="isRateLimitReached">
-
-    <strong>
-
-      {{ 'common.error' | translate }}
-
-    </strong>
-
-    <span>
-
-      {{ 'transfers.messages.loadError' | translate }}
-
-    </span>
-
-  </div>
 
 </section>

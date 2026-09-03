@@ -24,7 +24,7 @@
       class="primary-button"
       type="button"
       (click)="openCreateUserDialog()"
-      [disabled]="isLoadingResults">
+      [disabled]="loading()">
 
       <mat-icon>person_add</mat-icon>
 
@@ -88,6 +88,26 @@
 
   </section>
 
+  <!-- Error -->
+
+  <div
+    class="feedback"
+    *ngIf="isRateLimitReached()">
+
+    <strong>
+
+      {{ 'common.error' | translate }}
+
+    </strong>
+
+    <span>
+
+      {{ 'common.loadError' | translate }}
+
+    </span>
+
+  </div>
+  
   <!-- Table -->
 
   <app-table
@@ -96,11 +116,11 @@
     
     [subtitle]="'users.table.subtitle' | translate"
     
-    [loading]="isLoadingResults"
+    [loading]="loading()"
     
     [dataSource]="pagedData"
     
-    [length]="data.length"
+    [length]="data().length"
     
     (page)="onPageChange($event)"
     
@@ -283,7 +303,7 @@
               type="button"
               [attr.aria-label]="'users.actions.edit' | translate"
               (click)="openEditUserDialog(user)"
-              [disabled]="isLoadingResults">
+              [disabled]="loading()">
 
               <mat-icon>edit</mat-icon>
 
@@ -294,7 +314,7 @@
               type="button"
               [attr.aria-label]="'users.actions.delete' | translate"
               (click)="deleteUser(user)"
-              [disabled]="isLoadingResults">
+              [disabled]="loading()">
 
               <mat-icon>delete</mat-icon>
 
@@ -359,7 +379,7 @@
             type="button"
             [attr.aria-label]="'users.actions.edit' | translate"
             (click)="openEditUserDialog(user)"
-            [disabled]="isLoadingResults">
+            [disabled]="loading()">
 
             <mat-icon>edit</mat-icon>
 
@@ -370,7 +390,7 @@
             type="button"
             [attr.aria-label]="'users.actions.delete' | translate"
             (click)="deleteUser(user)"
-            [disabled]="isLoadingResults">
+            [disabled]="loading()">
 
             <mat-icon>delete</mat-icon>
 
@@ -419,25 +439,5 @@
     </div>
 
   </app-table>
-
-  <!-- Error -->
-
-  <div
-    class="feedback"
-    *ngIf="isRateLimitReached">
-
-    <strong>
-
-      {{ 'common.error' | translate }}
-
-    </strong>
-
-    <span>
-
-      {{ 'users.messages.loadError' | translate }}
-
-    </span>
-
-  </div>
 
 </section>

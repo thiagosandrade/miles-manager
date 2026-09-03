@@ -5,7 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -34,41 +34,60 @@ export class TransfersPageComponent implements OnInit {
   private cd = inject(ChangeDetectorRef);
   private storageService = inject(TokenStorageService);
 
-  displayedColumns = ['originProgram', 'destinationProgram', 'milesSent', 'milesReceived', 'bonusPercentage', 'transferDate', 'actions'];
-  allData = signal<MileageTransfer[]>([]);
-  data = signal<MileageTransfer[]>([]);
-  loading = signal<boolean>(false);
+  displayedColumns = [
+    'originProgram',
+    'destinationProgram',
+    'milesSent',
+    'milesReceived',
+    'bonusPercentage',
+    'transferDate',
+    'actions'
+  ];
+
+  readonly allData = signal<MileageTransfer[]>([]);
+  readonly data = signal<MileageTransfer[]>([]);
+  readonly loading = signal<boolean>(false);
+
   pagedData: MileageTransfer[] = [];
   private pageIndex = 0;
   private pageSize = 10;
-  resultsLength = 0;
-  isRateLimitReached = false;
-  filter = '';
+  isRateLimitReached = signal(false);
+
+  filter: string = '';
   searchChanged = new Subject<string>();
 
   ngOnInit() {
-    this.loadTransfers();
-    this.searchChanged.pipe(startWith('')).subscribe(() => this.loadTransfers());
+    this.searchChanged.pipe(startWith('')).subscribe(() => {
+      this.loadTransfers();
+    });
   }
 
   loadTransfers(pageIndex: number = 0, pageSize: number = 10, sortField: string = '', sortDirection: string = '') {
     this.loading.set(true);
-    this.api.listTransfers({ page: pageIndex + 1, pageSize, sort: sortField ? `${sortDirection === 'asc' ? '' : '-'}${sortField}` : undefined, filter: this.filter })
-      .pipe(catchError(() => {
-        this.loading.set(false);
-        this.isRateLimitReached = true;
-        this.snackbarService.error('Could not load transfers', 3000);
-        return of(null);
-      }))
+
+    this.api
+      .listTransfers({
+        page: pageIndex + 1,
+        pageSize,
+        sort: sortField ? `${sortDirection === 'asc' ? '' : '-'}${sortField}` : undefined,
+        filter: this.filter,
+      })
+      .pipe(
+        catchError(() => {
+          this.loading.set(false);
+
+          this.isRateLimitReached.set(true);
+          this.snackbarService.error('Could not load transfers', 3000);
+          return of(null);
+        })
+      )
       .subscribe((result) => {
         if (result) {
           this.allData.set(result);
           this.data.set(result);
           this.updatePagedData();
-          this.resultsLength = result.length;
           this.loading.set(false);
-          this.isRateLimitReached = false;
-          this.cd.detectChanges();
+          this.isRateLimitReached.set(false);
         }
       });
   }

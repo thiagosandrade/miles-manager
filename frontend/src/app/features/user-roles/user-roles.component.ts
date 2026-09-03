@@ -42,6 +42,7 @@ export class UserRolesComponent implements OnInit {
 
   readonly allData = signal<UserDetails[]>([]);
   readonly data = signal<UserDetails[]>([]);
+  isRateLimitReached = signal(false);
 
   readonly pagedData = signal<UserDetails[]>([]);
   private pageIndex = 0;
@@ -54,8 +55,6 @@ export class UserRolesComponent implements OnInit {
     'actions'
   ];
 
-  isRateLimitReached = false;
-
   ngOnInit(): void {
     this.loadData();
   }
@@ -63,7 +62,7 @@ export class UserRolesComponent implements OnInit {
   loadData(): void {
 
     this.loading.set(true);
-    this.isRateLimitReached = false;
+    this.isRateLimitReached.set(false);
 
     this.userApi.listUsers().subscribe({
 
@@ -81,7 +80,7 @@ export class UserRolesComponent implements OnInit {
 
         this.loading.set(false);
 
-        this.isRateLimitReached = true;
+        this.isRateLimitReached.set(true);
 
         this.snackBar.open(
           'Could not load users.',

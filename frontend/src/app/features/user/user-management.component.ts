@@ -5,7 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PageEvent } from '@angular/material/paginator';
 
 import { of } from 'rxjs';
@@ -56,13 +56,12 @@ export class UserManagementComponent implements OnInit {
 
   readonly allData = signal<UserDetails[]>([]);
   readonly data = signal<UserDetails[]>([]);
+  readonly loading = signal<boolean>(false);
   
   pagedData: UserDetails[] = [];
   private pageIndex = 0;
   private pageSize = 5;
-
-  isLoadingResults = true;
-  isRateLimitReached = false;
+  isRateLimitReached = signal(false);
 
   ngOnInit(): void {
     this.loadUsers();
@@ -78,34 +77,30 @@ export class UserManagementComponent implements OnInit {
 
   loadUsers(): void {
 
-    this.isLoadingResults = true;
+    this.loading.set(true);
 
     this.api
       .listUsers()
       .pipe(
         catchError(() => {
 
-          this.isLoadingResults = false;
-          this.isRateLimitReached = true;
+          this.loading.set(false);
+          this.isRateLimitReached.set(true);
 
           this.snackbarService.error('Could not load users', 3000);
 
-
-          return of([]);
+          return of(null);
 
         })
       )
       .subscribe(users => {
-
-        this.allData.set(users);
-        this.data.set(users);
-        this.updatePagedData();
-
-        this.isLoadingResults = false;
-        this.isRateLimitReached = false;
-
-        this.cd.detectChanges();
-
+        if (users) {
+          this.allData.set(users);
+          this.data.set(users);
+          this.updatePagedData();
+          this.loading.set(false);
+          this.isRateLimitReached.set(false);
+        }
       });
 
   }
