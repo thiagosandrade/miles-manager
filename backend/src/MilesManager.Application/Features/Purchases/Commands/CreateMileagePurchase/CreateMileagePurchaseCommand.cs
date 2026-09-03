@@ -14,5 +14,5 @@ public sealed class CreateMileagePurchaseCommand : IRequest<Result<Guid>>
     public decimal AmountPaid { get; init; }
     public decimal MilesPurchased { get; init; }
     public DateOnly PurchaseDate { get; init; }
-    public PurchaseStatus PurchaseStatus { get; init; } = PurchaseStatus.Pending;
+    public PurchaseStatus PurchaseStatus { get; init; } = PurchaseStatus.Confirmed;
 }
