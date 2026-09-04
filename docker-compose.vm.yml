@@ -49,6 +49,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: http://+:8080
       ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      Email__ApiKey: ${RESEND_API_KEY}
+      Frontend__BaseUrl: ${FRONTEND_BASE_URL}
 
 
   frontend:

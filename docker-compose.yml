@@ -29,7 +29,10 @@ services:
       dockerfile: src/MilesManager.Api/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
       ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=milesmanager;Username=postgres;Password=postgres
+      Email__ApiKey: YOUR_API_KEY
+      Frontend__BaseUrl: http://localhost:4200
     ports:
       - "5080:8080"
     depends_on:
