@@ -1,1 +1,61 @@
-{"redemptions":{"page":{"eyebrow":"Resgates","title":"Resgates","subtitle":"Visualize e gerencie resgates de milhas.","newRedemption":"Novo resgate"},"metrics":{"totalRedemptions":"Total de resgates"},"table":{"title":"Resgates","subtitle":"Histórico","emptyTitle":"Nenhum resgate encontrado","emptyDescription":"Crie seu primeiro resgate.","columns":{"program":"Programa","origin":"Origem","destination":"Destino","flightDate":"Data do voo","cabin":"Cabine","passengers":"Passageiros","milesUsed":"Milhas utilizadas","taxes":"Impostos","cashPrice":"Preço em dinheiro","effectiveCostPerThousand":"Custo / 1.000 milhas"}},"cabin":{"economy":"Econômica","premiumEconomy":"Econômica premium","business":"Executiva","first":"Primeira classe"},"dialog":{"createTitle":"Novo resgate","updateTitle":"Atualizar resgate","program":"Programa","originAirport":"Aeroporto de origem","destinationAirport":"Aeroporto de destino","flightDate":"Data do voo","cabinClass":"Classe da cabine","passengers":"Passageiros","milesUsed":"Milhas utilizadas","taxes":"Impostos","cashPrice":"Preço em dinheiro","effectiveCostPerThousand":"Custo / 1.000 milhas","createButton":"Criar resgate","updateButton":"Atualizar resgate","roundTrip":"Ida e volta"},"actions":{"edit":"Editar resgate","delete":"Excluir resgate"},"messages":{"loadError":"Não foi possível carregar os resgates. Tente novamente mais tarde."}}}
+{
+    "redemptions": {
+        "page": {
+            "eyebrow": "Resgates",
+            "title": "Resgates",
+            "subtitle": "Visualize e gerencie resgates de milhas.",
+            "newRedemption": "Novo resgate"
+        },
+        "metrics": {
+            "totalRedemptions": "Total de resgates"
+        },
+        "table": {
+            "title": "Resgates",
+            "subtitle": "Histórico",
+            "emptyTitle": "Nenhum resgate encontrado",
+            "emptyDescription": "Crie seu primeiro resgate.",
+            "columns": {
+                "program": "Programa",
+                "origin": "Origem",
+                "destination": "Destino",
+                "flightDate": "Data do voo",
+                "cabin": "Cabine",
+                "passengers": "Passageiros",
+                "milesUsed": "Milhas utilizadas",
+                "taxes": "Impostos",
+                "cashPrice": "Preço em dinheiro",
+                "effectiveCostPerThousand": "Custo / 1.000 milhas"
+            }
+        },
+        "cabin": {
+            "economy": "Econômica",
+            "premiumEconomy": "Econômica premium",
+            "business": "Executiva",
+            "first": "Primeira classe"
+        },
+        "dialog": {
+            "createTitle": "Novo resgate",
+            "updateTitle": "Atualizar resgate",
+            "program": "Programa",
+            "originAirport": "Aeroporto de origem",
+            "destinationAirport": "Aeroporto de destino",
+            "flightDate": "Data do voo",
+            "cabinClass": "Classe da cabine",
+            "passengers": "Passageiros",
+            "milesUsed": "Milhas utilizadas",
+            "taxes": "Impostos",
+            "cashPrice": "Preço em dinheiro",
+            "effectiveCostPerThousand": "Custo / 1.000 milhas",
+            "createButton": "Criar resgate",
+            "updateButton": "Atualizar resgate",
+            "roundTrip": "Ida e volta"
+        },
+        "actions": {
+            "edit": "Editar resgate",
+            "delete": "Excluir resgate"
+        },
+        "messages": {
+            "loadError": "Não foi possível carregar os resgates. Tente novamente mais tarde."
+        }
+    }
+}

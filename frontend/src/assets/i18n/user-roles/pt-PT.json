@@ -1,1 +1,34 @@
-{"userRoles":{"page":{"eyebrow":"Administração","title":"Funções de Utilizador","subtitle":"Atribua e gira as funções dos utilizadores da aplicação."},"metrics":{"totalUsers":"Total de Utilizadores"},"table":{"title":"Funções de Utilizador","subtitle":"Atribuições","emptyTitle":"Nenhum utilizador encontrado","emptyDescription":"Os utilizadores aparecerão aqui quando estiverem disponíveis.","columns":{"user":"Utilizador","email":"E-mail","roles":"Funções"}},"actions":{"edit":"Gerir funções"},"messages":{"loadError":"Não foi possível carregar os utilizadores."},"dialog":{"title":"Gerir Funções do Utilizador","subtitle":"Atribua ou remova funções deste utilizador.","roles":"Funções"}}}
+{
+    "userRoles": {
+        "page": {
+            "eyebrow": "Administração",
+            "title": "Funções de Utilizador",
+            "subtitle": "Atribua e gira as funções dos utilizadores da aplicação."
+        },
+        "metrics": {
+            "totalUsers": "Total de Utilizadores"
+        },
+        "table": {
+            "title": "Funções de Utilizador",
+            "subtitle": "Atribuições",
+            "emptyTitle": "Nenhum utilizador encontrado",
+            "emptyDescription": "Os utilizadores aparecerão aqui quando estiverem disponíveis.",
+            "columns": {
+                "user": "Utilizador",
+                "email": "E-mail",
+                "roles": "Funções"
+            }
+        },
+        "actions": {
+            "edit": "Gerir funções"
+        },
+        "messages": {
+            "loadError": "Não foi possível carregar os utilizadores."
+        },
+        "dialog": {
+            "title": "Gerir Funções do Utilizador",
+            "subtitle": "Atribua ou remova funções deste utilizador.",
+            "roles": "Funções"
+        }
+    }
+}

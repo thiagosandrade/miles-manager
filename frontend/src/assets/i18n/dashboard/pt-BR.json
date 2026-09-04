@@ -1,1 +1,33 @@
-{"dashboard":{"eyebrow":"Visão geral","title":"Dashboard","subtitle":"Acompanhe a atividade, o valor e as movimentações recentes dos seus programas de fidelidade.","cards":{"programSummary":"Resumo dos programas","programSummarySubtitle":"Milhas, custo e valor por programa de fidelidade.","programs":"programas","recentPurchases":"Compras recentes","recentTransfers":"Transferências recentes","recentRedemptions":"Emissões recentes"},"programs":{"program":"Programa","miles":"Milhas","milesSent":"Milhas enviadas + bônus","costPerThousand":"Custo / Milheiro","referencePrice":"Valor do Milheiro","profitLoss":"Lucro / Prejuízo","empty":"Nenhum dado de programa disponível."},"activity":{"noPurchases":"Nenhuma compra recente.","noTransfers":"Nenhuma transferência recente.","noRedemptions":"Nenhuma emissão recente."},"redemption-miles":"milhas","transfer":{"to":"para"}}}
+{
+    "dashboard": {
+        "eyebrow": "Visão geral",
+        "title": "Dashboard",
+        "subtitle": "Acompanhe a atividade, o valor e as movimentações recentes dos seus programas de fidelidade.",
+        "cards": {
+            "programSummary": "Resumo dos programas",
+            "programSummarySubtitle": "Milhas, custo e valor por programa de fidelidade.",
+            "programs": "programas",
+            "recentPurchases": "Compras recentes",
+            "recentTransfers": "Transferências recentes",
+            "recentRedemptions": "Emissões recentes"
+        },
+        "programs": {
+            "program": "Programa",
+            "miles": "Milhas",
+            "milesSent": "Milhas enviadas + bônus",
+            "costPerThousand": "Custo / Milheiro",
+            "referencePrice": "Valor do Milheiro",
+            "profitLoss": "Lucro / Prejuízo",
+            "empty": "Nenhum dado de programa disponível."
+        },
+        "activity": {
+            "noPurchases": "Nenhuma compra recente.",
+            "noTransfers": "Nenhuma transferência recente.",
+            "noRedemptions": "Nenhuma emissão recente."
+        },
+        "redemption-miles": "milhas",
+        "transfer": {
+            "to": "para"
+        }
+    }
+}

@@ -1,1 +1,61 @@
-{"calculator":{"page":{"eyebrow":"Calculadora de voos","title":"Comparador de voos","subtitle":"Compare o pagamento em dinheiro com a utilização de milhas para o seu voo."},"form":{"title":"Comparar opções de voo","subtitle":"Introduza as opções em dinheiro e em milhas para o seu voo.","program":"Programa de fidelização","cashPrice":"Preço do bilhete em dinheiro","milesRequired":"Milhas necessárias","taxes":"Taxas","compare":"Comparar","comparing":"A comparar...","reset":"Repor"},"validation":{"programRequired":"Selecione um programa de fidelização.","cashPriceRequired":"O preço em dinheiro é obrigatório.","cashPriceInvalid":"O preço em dinheiro não pode ser negativo.","milesRequired":"As milhas são obrigatórias.","milesInvalid":"As milhas devem ser superiores a zero.","taxesRequired":"As taxas são obrigatórias.","taxesInvalid":"As taxas não podem ser negativas."},"result":{"title":"Resultado da comparação","subtitle":"Compare o valor da utilização de milhas com o preço em dinheiro do voo.","emptyTitle":"Ainda não há comparação","emptyDescription":"Introduza o preço do voo, as milhas necessárias e as taxas para comparar as opções.","milesBetter":"Utilizar milhas é melhor","milesBetterDescription":"A opção com milhas oferece um valor melhor do que pagar em dinheiro.","cashBetter":"Pagar em dinheiro é melhor","cashBetterDescription":"Pagar em dinheiro é mais barato do que utilizar milhas pelo valor de referência atual.","cashOption":"Bilhete em dinheiro","milesOption":"Milhas + Taxas","vs":"VS","savings":"Poupança","miles":"Milhas necessárias","taxes":"Taxas","referencePrice":"Preço de referência","milesValue":"Valor das milhas","effectiveValue":"Valor efetivo da milha","perThousand":"por 1.000 milhas","recommendation":"Recomendação","payCash":"Pagar em dinheiro","program":"Programa de fidelização","cashDescription":"Pague o preço total do bilhete em dinheiro.","milesDescription":"Utilize milhas e pague as taxas aplicáveis.","milesRequired":"Milhas necessárias","extraCost":"Custo adicional","useMiles":"Utilizar milhas"},"empty":{"title":"Compare o seu voo","description":"Selecione um programa de fidelização e introduza os detalhes do voo para ver qual opção oferece o melhor valor."}}}
+{
+    "calculator": {
+        "page": {
+            "eyebrow": "Calculadora de voos",
+            "title": "Comparador de voos",
+            "subtitle": "Compare o pagamento em dinheiro com a utilização de milhas para o seu voo."
+        },
+        "form": {
+            "title": "Comparar opções de voo",
+            "subtitle": "Introduza as opções em dinheiro e em milhas para o seu voo.",
+            "program": "Programa de fidelização",
+            "cashPrice": "Preço do bilhete em dinheiro",
+            "milesRequired": "Milhas necessárias",
+            "taxes": "Taxas",
+            "compare": "Comparar",
+            "comparing": "A comparar...",
+            "reset": "Repor"
+        },
+        "validation": {
+            "programRequired": "Selecione um programa de fidelização.",
+            "cashPriceRequired": "O preço em dinheiro é obrigatório.",
+            "cashPriceInvalid": "O preço em dinheiro não pode ser negativo.",
+            "milesRequired": "As milhas são obrigatórias.",
+            "milesInvalid": "As milhas devem ser superiores a zero.",
+            "taxesRequired": "As taxas são obrigatórias.",
+            "taxesInvalid": "As taxas não podem ser negativas."
+        },
+        "result": {
+            "title": "Resultado da comparação",
+            "subtitle": "Compare o valor da utilização de milhas com o preço em dinheiro do voo.",
+            "emptyTitle": "Ainda não há comparação",
+            "emptyDescription": "Introduza o preço do voo, as milhas necessárias e as taxas para comparar as opções.",
+            "milesBetter": "Utilizar milhas é melhor",
+            "milesBetterDescription": "A opção com milhas oferece um valor melhor do que pagar em dinheiro.",
+            "cashBetter": "Pagar em dinheiro é melhor",
+            "cashBetterDescription": "Pagar em dinheiro é mais barato do que utilizar milhas pelo valor de referência atual.",
+            "cashOption": "Bilhete em dinheiro",
+            "milesOption": "Milhas + Taxas",
+            "vs": "VS",
+            "savings": "Poupança",
+            "miles": "Milhas necessárias",
+            "taxes": "Taxas",
+            "referencePrice": "Preço de referência",
+            "milesValue": "Valor das milhas",
+            "effectiveValue": "Valor efetivo da milha",
+            "perThousand": "por 1.000 milhas",
+            "recommendation": "Recomendação",
+            "payCash": "Pagar em dinheiro",
+            "program": "Programa de fidelização",
+            "cashDescription": "Pague o preço total do bilhete em dinheiro.",
+            "milesDescription": "Utilize milhas e pague as taxas aplicáveis.",
+            "milesRequired": "Milhas necessárias",
+            "extraCost": "Custo adicional",
+            "useMiles": "Utilizar milhas"
+        },
+        "empty": {
+            "title": "Compare o seu voo",
+            "description": "Selecione um programa de fidelização e introduza os detalhes do voo para ver qual opção oferece o melhor valor."
+        }
+    }
+}

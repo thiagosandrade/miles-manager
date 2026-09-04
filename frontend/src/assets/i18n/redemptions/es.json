@@ -1,1 +1,61 @@
-{"redemptions":{"page":{"eyebrow":"Recompensas","title":"Canjes","subtitle":"Consulta y gestiona canjes de millas.","newRedemption":"Nuevo canje"},"metrics":{"totalRedemptions":"Total de canjes"},"table":{"title":"Canjes","subtitle":"Historial","emptyTitle":"No se encontraron canjes","emptyDescription":"Crea tu primer canje.","columns":{"program":"Programa","origin":"Origen","destination":"Destino","flightDate":"Fecha de vuelo","cabin":"Cabina","passengers":"Pasajeros","milesUsed":"Millas utilizadas","taxes":"Impuestos","cashPrice":"Precio en efectivo","effectiveCostPerThousand":"Coste / 1.000 millas"}},"cabin":{"economy":"Económica","premiumEconomy":"Económica premium","business":"Business","first":"Primera"},"dialog":{"createTitle":"Nuevo canje","updateTitle":"Actualizar canje","program":"Programa","originAirport":"Aeropuerto de origen","destinationAirport":"Aeropuerto de destino","flightDate":"Fecha de vuelo","cabinClass":"Clase de cabina","passengers":"Pasajeros","milesUsed":"Millas utilizadas","taxes":"Impuestos","cashPrice":"Precio en efectivo","effectiveCostPerThousand":"Coste / 1.000 millas","createButton":"Crear canje","updateButton":"Actualizar canje","roundTrip":"Ida y vuelta"},"actions":{"edit":"Editar canje","delete":"Eliminar canje"},"messages":{"loadError":"No se pudieron cargar los canjes. Inténtalo de nuevo más tarde."}}}
+{
+    "redemptions": {
+        "page": {
+            "eyebrow": "Recompensas",
+            "title": "Canjes",
+            "subtitle": "Consulta y gestiona canjes de millas.",
+            "newRedemption": "Nuevo canje"
+        },
+        "metrics": {
+            "totalRedemptions": "Total de canjes"
+        },
+        "table": {
+            "title": "Canjes",
+            "subtitle": "Historial",
+            "emptyTitle": "No se encontraron canjes",
+            "emptyDescription": "Crea tu primer canje.",
+            "columns": {
+                "program": "Programa",
+                "origin": "Origen",
+                "destination": "Destino",
+                "flightDate": "Fecha de vuelo",
+                "cabin": "Cabina",
+                "passengers": "Pasajeros",
+                "milesUsed": "Millas utilizadas",
+                "taxes": "Impuestos",
+                "cashPrice": "Precio en efectivo",
+                "effectiveCostPerThousand": "Coste / 1.000 millas"
+            }
+        },
+        "cabin": {
+            "economy": "Económica",
+            "premiumEconomy": "Económica premium",
+            "business": "Business",
+            "first": "Primera"
+        },
+        "dialog": {
+            "createTitle": "Nuevo canje",
+            "updateTitle": "Actualizar canje",
+            "program": "Programa",
+            "originAirport": "Aeropuerto de origen",
+            "destinationAirport": "Aeropuerto de destino",
+            "flightDate": "Fecha de vuelo",
+            "cabinClass": "Clase de cabina",
+            "passengers": "Pasajeros",
+            "milesUsed": "Millas utilizadas",
+            "taxes": "Impuestos",
+            "cashPrice": "Precio en efectivo",
+            "effectiveCostPerThousand": "Coste / 1.000 millas",
+            "createButton": "Crear canje",
+            "updateButton": "Actualizar canje",
+            "roundTrip": "Ida y vuelta"
+        },
+        "actions": {
+            "edit": "Editar canje",
+            "delete": "Eliminar canje"
+        },
+        "messages": {
+            "loadError": "No se pudieron cargar los canjes. Inténtalo de nuevo más tarde."
+        }
+    }
+}

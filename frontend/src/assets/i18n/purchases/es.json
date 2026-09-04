@@ -1,1 +1,54 @@
-{"purchases":{"page":{"eyebrow":"Transacciones","title":"Compras","subtitle":"Consulta y gestiona las compras de millas.","newPurchase":"Nueva compra"},"metrics":{"totalPurchases":"Total de compras","totalAmount":"Importe total","averagePurchase":"Compra media"},"table":{"title":"Compras","subtitle":"Historial","search":"Buscar compras","searchPlaceholder":"Buscar compras...","emptyTitle":"No se encontraron compras","emptyDescription":"Crea tu primera compra de millas.","directPurchase":"Compra directa","columns":{"program":"Programa","amountPaid":"Importe pagado","milesPurchased":"Millas compradas","bonus":"Bono","purchaseDate":"Fecha de compra","status":"Estado"}},"dialog":{"createTitle":"Nueva compra","updateTitle":"Actualizar compra","program":"Programa","partner":"Socio","description":"Descripción","amountPaid":"Importe pagado","milesPurchased":"Millas compradas","bonus":"Bono","purchaseDate":"Fecha de compra","status":"Estado","createButton":"Crear compra","updateButton":"Actualizar compra","purchaseStatus":"Estado de la compra"},"actions":{"edit":"Editar compra","delete":"Eliminar compra"},"messages":{"loadError":"No se pudieron cargar las compras. Inténtalo de nuevo más tarde."}}}
+{
+    "purchases": {
+        "page": {
+            "eyebrow": "Transacciones",
+            "title": "Compras",
+            "subtitle": "Consulta y gestiona las compras de millas.",
+            "newPurchase": "Nueva compra"
+        },
+        "metrics": {
+            "totalPurchases": "Total de compras",
+            "totalAmount": "Importe total",
+            "averagePurchase": "Compra media"
+        },
+        "table": {
+            "title": "Compras",
+            "subtitle": "Historial",
+            "search": "Buscar compras",
+            "searchPlaceholder": "Buscar compras...",
+            "emptyTitle": "No se encontraron compras",
+            "emptyDescription": "Crea tu primera compra de millas.",
+            "directPurchase": "Compra directa",
+            "columns": {
+                "program": "Programa",
+                "amountPaid": "Importe pagado",
+                "milesPurchased": "Millas compradas",
+                "bonus": "Bono",
+                "purchaseDate": "Fecha de compra",
+                "status": "Estado"
+            }
+        },
+        "dialog": {
+            "createTitle": "Nueva compra",
+            "updateTitle": "Actualizar compra",
+            "program": "Programa",
+            "partner": "Socio",
+            "description": "Descripción",
+            "amountPaid": "Importe pagado",
+            "milesPurchased": "Millas compradas",
+            "bonus": "Bono",
+            "purchaseDate": "Fecha de compra",
+            "status": "Estado",
+            "createButton": "Crear compra",
+            "updateButton": "Actualizar compra",
+            "purchaseStatus": "Estado de la compra"
+        },
+        "actions": {
+            "edit": "Editar compra",
+            "delete": "Eliminar compra"
+        },
+        "messages": {
+            "loadError": "No se pudieron cargar las compras. Inténtalo de nuevo más tarde."
+        }
+    }
+}

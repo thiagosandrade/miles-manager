@@ -1,1 +1,54 @@
-{"purchases":{"page":{"eyebrow":"Transactions","title":"Achats","subtitle":"Consultez et gérez vos achats de miles.","newPurchase":"Nouvel achat"},"metrics":{"totalPurchases":"Total des achats","totalAmount":"Montant total","averagePurchase":"Achat moyen"},"table":{"title":"Achats","subtitle":"Historique","search":"Rechercher des achats","searchPlaceholder":"Rechercher des achats...","emptyTitle":"Aucun achat trouvé","emptyDescription":"Créez votre premier achat de miles.","directPurchase":"Achat direct","columns":{"program":"Programme","amountPaid":"Montant payé","milesPurchased":"Miles achetés","bonus":"Bonus","purchaseDate":"Date d’achat","status":"Statut"}},"dialog":{"createTitle":"Nouvel achat","updateTitle":"Modifier l’achat","program":"Programme","partner":"Partenaire","description":"Description","amountPaid":"Montant payé","milesPurchased":"Miles achetés","bonus":"Bonus","purchaseDate":"Date d’achat","status":"Statut","createButton":"Créer l’achat","updateButton":"Modifier l’achat","purchaseStatus":"Statut de l’achat"},"actions":{"edit":"Modifier l’achat","delete":"Supprimer l’achat"},"messages":{"loadError":"Impossible de charger les achats. Veuillez réessayer plus tard."}}}
+{
+    "purchases": {
+        "page": {
+            "eyebrow": "Transactions",
+            "title": "Achats",
+            "subtitle": "Consultez et gérez vos achats de miles.",
+            "newPurchase": "Nouvel achat"
+        },
+        "metrics": {
+            "totalPurchases": "Total des achats",
+            "totalAmount": "Montant total",
+            "averagePurchase": "Achat moyen"
+        },
+        "table": {
+            "title": "Achats",
+            "subtitle": "Historique",
+            "search": "Rechercher des achats",
+            "searchPlaceholder": "Rechercher des achats...",
+            "emptyTitle": "Aucun achat trouvé",
+            "emptyDescription": "Créez votre premier achat de miles.",
+            "directPurchase": "Achat direct",
+            "columns": {
+                "program": "Programme",
+                "amountPaid": "Montant payé",
+                "milesPurchased": "Miles achetés",
+                "bonus": "Bonus",
+                "purchaseDate": "Date d’achat",
+                "status": "Statut"
+            }
+        },
+        "dialog": {
+            "createTitle": "Nouvel achat",
+            "updateTitle": "Modifier l’achat",
+            "program": "Programme",
+            "partner": "Partenaire",
+            "description": "Description",
+            "amountPaid": "Montant payé",
+            "milesPurchased": "Miles achetés",
+            "bonus": "Bonus",
+            "purchaseDate": "Date d’achat",
+            "status": "Statut",
+            "createButton": "Créer l’achat",
+            "updateButton": "Modifier l’achat",
+            "purchaseStatus": "Statut de l’achat"
+        },
+        "actions": {
+            "edit": "Modifier l’achat",
+            "delete": "Supprimer l’achat"
+        },
+        "messages": {
+            "loadError": "Impossible de charger les achats. Veuillez réessayer plus tard."
+        }
+    }
+}

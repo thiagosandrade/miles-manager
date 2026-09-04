@@ -1,1 +1,55 @@
-{"transfers":{"page":{"eyebrow":"Fidelização","title":"Transferências","subtitle":"Gira transferências de milhas entre programas de fidelização.","newTransfer":"Nova transferência"},"metrics":{"totalTransfers":"Total de transferências","totalMilesSent":"Total de milhas enviadas","programs":"Programas"},"table":{"title":"Transferências","subtitle":"Histórico","search":"Pesquisar transferências","searchPlaceholder":"Pesquisar transferências...","emptyTitle":"Não foram encontradas transferências","emptyDescription":"Crie a sua primeira transferência de milhas.","sourceProgram":"Programa de origem","destinationProgram":"Programa de destino","columns":{"origin":"Origem","destination":"Destino","milesSent":"Milhas enviadas","bonusPercentage":"Percentagem de bónus","milesReceived":"Milhas recebidas","transferDate":"Data da transferência"}},"dialog":{"createTitle":"Nova transferência","updateTitle":"Atualizar transferência","originProgram":"Programa de origem","destinationProgram":"Programa de destino","milesSent":"Milhas enviadas","bonusPercentage":"Percentagem de bónus","milesReceived":"Milhas recebidas","transferDate":"Data da transferência","costPerThousandOrigin":"Custo por mil (origem)","costPerThousandDestination":"Custo por mil (destino)","transferFactor":"Taxa de transferência","transferFactorOrigin":"Taxa de transferência (origem)","transferFactorDestination":"Taxa de transferência (destino)"},"actions":{"edit":"Editar transferência","delete":"Eliminar transferência"},"messages":{"loadError":"Não foi possível carregar as transferências. Tente novamente mais tarde."}}}
+{
+    "transfers": {
+        "page": {
+            "eyebrow": "Fidelização",
+            "title": "Transferências",
+            "subtitle": "Gira transferências de milhas entre programas de fidelização.",
+            "newTransfer": "Nova transferência"
+        },
+        "metrics": {
+            "totalTransfers": "Total de transferências",
+            "totalMilesSent": "Total de milhas enviadas",
+            "programs": "Programas"
+        },
+        "table": {
+            "title": "Transferências",
+            "subtitle": "Histórico",
+            "search": "Pesquisar transferências",
+            "searchPlaceholder": "Pesquisar transferências...",
+            "emptyTitle": "Não foram encontradas transferências",
+            "emptyDescription": "Crie a sua primeira transferência de milhas.",
+            "sourceProgram": "Programa de origem",
+            "destinationProgram": "Programa de destino",
+            "columns": {
+                "origin": "Origem",
+                "destination": "Destino",
+                "milesSent": "Milhas enviadas",
+                "bonusPercentage": "Percentagem de bónus",
+                "milesReceived": "Milhas recebidas",
+                "transferDate": "Data da transferência"
+            }
+        },
+        "dialog": {
+            "createTitle": "Nova transferência",
+            "updateTitle": "Atualizar transferência",
+            "originProgram": "Programa de origem",
+            "destinationProgram": "Programa de destino",
+            "milesSent": "Milhas enviadas",
+            "bonusPercentage": "Percentagem de bónus",
+            "milesReceived": "Milhas recebidas",
+            "transferDate": "Data da transferência",
+            "costPerThousandOrigin": "Custo por mil (origem)",
+            "costPerThousandDestination": "Custo por mil (destino)",
+            "transferFactor": "Taxa de transferência",
+            "transferFactorOrigin": "Taxa de transferência (origem)",
+            "transferFactorDestination": "Taxa de transferência (destino)"
+        },
+        "actions": {
+            "edit": "Editar transferência",
+            "delete": "Eliminar transferência"
+        },
+        "messages": {
+            "loadError": "Não foi possível carregar as transferências. Tente novamente mais tarde."
+        }
+    }
+}

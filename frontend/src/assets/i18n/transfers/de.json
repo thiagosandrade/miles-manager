@@ -1,1 +1,55 @@
-{"transfers":{"page":{"eyebrow":"Treue","title":"Transfers","subtitle":"Meilenübertragungen zwischen Treueprogrammen verwalten.","newTransfer":"Neuer Transfer"},"metrics":{"totalTransfers":"Transfers insgesamt","totalMilesSent":"Gesendete Meilen insgesamt","programs":"Programme"},"table":{"title":"Transfers","subtitle":"Verlauf","search":"Transfers suchen","searchPlaceholder":"Transfers suchen...","emptyTitle":"Keine Transfers gefunden","emptyDescription":"Erstelle deinen ersten Meilentransfer.","sourceProgram":"Quellprogramm","destinationProgram":"Zielprogramm","columns":{"origin":"Ursprung","destination":"Ziel","milesSent":"Gesendete Meilen","bonusPercentage":"Bonusprozentsatz","milesReceived":"Empfangene Meilen","transferDate":"Transferdatum"}},"dialog":{"createTitle":"Neuer Transfer","updateTitle":"Transfer aktualisieren","originProgram":"Quellprogramm","destinationProgram":"Zielprogramm","milesSent":"Gesendete Meilen","bonusPercentage":"Bonusprozentsatz","milesReceived":"Empfangene Meilen","transferDate":"Transferdatum","costPerThousandOrigin":"Kosten pro Tausend (Ursprung)","costPerThousandDestination":"Kosten pro Tausend (Ziel)","transferFactor":"Transferrate","transferFactorOrigin":"Transferrate (Ursprung)","transferFactorDestination":"Transferrate (Ziel)"},"actions":{"edit":"Transfer bearbeiten","delete":"Transfer löschen"},"messages":{"loadError":"Transfers konnten nicht geladen werden. Bitte versuche es später erneut."}}}
+{
+    "transfers": {
+        "page": {
+            "eyebrow": "Treue",
+            "title": "Transfers",
+            "subtitle": "Meilenübertragungen zwischen Treueprogrammen verwalten.",
+            "newTransfer": "Neuer Transfer"
+        },
+        "metrics": {
+            "totalTransfers": "Transfers insgesamt",
+            "totalMilesSent": "Gesendete Meilen insgesamt",
+            "programs": "Programme"
+        },
+        "table": {
+            "title": "Transfers",
+            "subtitle": "Verlauf",
+            "search": "Transfers suchen",
+            "searchPlaceholder": "Transfers suchen...",
+            "emptyTitle": "Keine Transfers gefunden",
+            "emptyDescription": "Erstelle deinen ersten Meilentransfer.",
+            "sourceProgram": "Quellprogramm",
+            "destinationProgram": "Zielprogramm",
+            "columns": {
+                "origin": "Ursprung",
+                "destination": "Ziel",
+                "milesSent": "Gesendete Meilen",
+                "bonusPercentage": "Bonusprozentsatz",
+                "milesReceived": "Empfangene Meilen",
+                "transferDate": "Transferdatum"
+            }
+        },
+        "dialog": {
+            "createTitle": "Neuer Transfer",
+            "updateTitle": "Transfer aktualisieren",
+            "originProgram": "Quellprogramm",
+            "destinationProgram": "Zielprogramm",
+            "milesSent": "Gesendete Meilen",
+            "bonusPercentage": "Bonusprozentsatz",
+            "milesReceived": "Empfangene Meilen",
+            "transferDate": "Transferdatum",
+            "costPerThousandOrigin": "Kosten pro Tausend (Ursprung)",
+            "costPerThousandDestination": "Kosten pro Tausend (Ziel)",
+            "transferFactor": "Transferrate",
+            "transferFactorOrigin": "Transferrate (Ursprung)",
+            "transferFactorDestination": "Transferrate (Ziel)"
+        },
+        "actions": {
+            "edit": "Transfer bearbeiten",
+            "delete": "Transfer löschen"
+        },
+        "messages": {
+            "loadError": "Transfers konnten nicht geladen werden. Bitte versuche es später erneut."
+        }
+    }
+}

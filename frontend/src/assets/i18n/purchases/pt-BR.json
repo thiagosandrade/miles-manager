@@ -1,1 +1,54 @@
-{"purchases":{"page":{"eyebrow":"Transações","title":"Compras","subtitle":"Consulte e gerencie compras de milhas.","newPurchase":"Nova compra"},"metrics":{"totalPurchases":"Total de compras","totalAmount":"Valor total","averagePurchase":"Compra média"},"table":{"title":"Compras","subtitle":"Histórico","search":"Buscar compras","searchPlaceholder":"Buscar compras...","emptyTitle":"Nenhuma compra encontrada","emptyDescription":"Crie sua primeira compra de milhas.","directPurchase":"Compra direta","columns":{"program":"Programa","amountPaid":"Valor pago","milesPurchased":"Milhas compradas","bonus":"Bônus","purchaseDate":"Data da compra","status":"Status"}},"dialog":{"createTitle":"Nova compra","updateTitle":"Atualizar compra","program":"Programa","partner":"Parceiro","description":"Descrição","amountPaid":"Valor pago","milesPurchased":"Milhas compradas","bonus":"Bônus","purchaseDate":"Data da compra","status":"Status","createButton":"Criar compra","updateButton":"Atualizar compra","purchaseStatus":"Status da compra"},"actions":{"edit":"Editar compra","delete":"Excluir compra"},"messages":{"loadError":"Não foi possível carregar as compras. Tente novamente mais tarde."}}}
+{
+    "purchases": {
+        "page": {
+            "eyebrow": "Transações",
+            "title": "Compras",
+            "subtitle": "Consulte e gerencie compras de milhas.",
+            "newPurchase": "Nova compra"
+        },
+        "metrics": {
+            "totalPurchases": "Total de compras",
+            "totalAmount": "Valor total",
+            "averagePurchase": "Compra média"
+        },
+        "table": {
+            "title": "Compras",
+            "subtitle": "Histórico",
+            "search": "Buscar compras",
+            "searchPlaceholder": "Buscar compras...",
+            "emptyTitle": "Nenhuma compra encontrada",
+            "emptyDescription": "Crie sua primeira compra de milhas.",
+            "directPurchase": "Compra direta",
+            "columns": {
+                "program": "Programa",
+                "amountPaid": "Valor pago",
+                "milesPurchased": "Milhas compradas",
+                "bonus": "Bônus",
+                "purchaseDate": "Data da compra",
+                "status": "Status"
+            }
+        },
+        "dialog": {
+            "createTitle": "Nova compra",
+            "updateTitle": "Atualizar compra",
+            "program": "Programa",
+            "partner": "Parceiro",
+            "description": "Descrição",
+            "amountPaid": "Valor pago",
+            "milesPurchased": "Milhas compradas",
+            "bonus": "Bônus",
+            "purchaseDate": "Data da compra",
+            "status": "Status",
+            "createButton": "Criar compra",
+            "updateButton": "Atualizar compra",
+            "purchaseStatus": "Status da compra"
+        },
+        "actions": {
+            "edit": "Editar compra",
+            "delete": "Excluir compra"
+        },
+        "messages": {
+            "loadError": "Não foi possível carregar as compras. Tente novamente mais tarde."
+        }
+    }
+}

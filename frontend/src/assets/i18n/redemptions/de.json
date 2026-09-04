@@ -1,1 +1,61 @@
-{"redemptions":{"page":{"eyebrow":"Prämien","title":"Einlösungen","subtitle":"Meileneinlösungen anzeigen und verwalten.","newRedemption":"Neue Einlösung"},"metrics":{"totalRedemptions":"Einlösungen insgesamt"},"table":{"title":"Einlösungen","subtitle":"Verlauf","emptyTitle":"Keine Einlösungen gefunden","emptyDescription":"Erstelle deine erste Einlösung.","columns":{"program":"Programm","origin":"Ursprung","destination":"Ziel","flightDate":"Flugdatum","cabin":"Kabine","passengers":"Passagiere","milesUsed":"Verwendete Meilen","taxes":"Steuern","cashPrice":"Barpreis","effectiveCostPerThousand":"Kosten / 1.000 Meilen"}},"cabin":{"economy":"Economy","premiumEconomy":"Premium Economy","business":"Business","first":"First"},"dialog":{"createTitle":"Neue Einlösung","updateTitle":"Einlösung aktualisieren","program":"Programm","originAirport":"Abflughafen","destinationAirport":"Zielflughafen","flightDate":"Flugdatum","cabinClass":"Kabinenklasse","passengers":"Passagiere","milesUsed":"Verwendete Meilen","taxes":"Steuern","cashPrice":"Barpreis","effectiveCostPerThousand":"Kosten / 1.000 Meilen","createButton":"Einlösung erstellen","updateButton":"Einlösung aktualisieren","roundTrip":"Hin und zurück"},"actions":{"edit":"Einlösung bearbeiten","delete":"Einlösung löschen"},"messages":{"loadError":"Einlösungen konnten nicht geladen werden. Bitte versuche es später erneut."}}}
+{
+    "redemptions": {
+        "page": {
+            "eyebrow": "Prämien",
+            "title": "Einlösungen",
+            "subtitle": "Meileneinlösungen anzeigen und verwalten.",
+            "newRedemption": "Neue Einlösung"
+        },
+        "metrics": {
+            "totalRedemptions": "Einlösungen insgesamt"
+        },
+        "table": {
+            "title": "Einlösungen",
+            "subtitle": "Verlauf",
+            "emptyTitle": "Keine Einlösungen gefunden",
+            "emptyDescription": "Erstelle deine erste Einlösung.",
+            "columns": {
+                "program": "Programm",
+                "origin": "Ursprung",
+                "destination": "Ziel",
+                "flightDate": "Flugdatum",
+                "cabin": "Kabine",
+                "passengers": "Passagiere",
+                "milesUsed": "Verwendete Meilen",
+                "taxes": "Steuern",
+                "cashPrice": "Barpreis",
+                "effectiveCostPerThousand": "Kosten / 1.000 Meilen"
+            }
+        },
+        "cabin": {
+            "economy": "Economy",
+            "premiumEconomy": "Premium Economy",
+            "business": "Business",
+            "first": "First"
+        },
+        "dialog": {
+            "createTitle": "Neue Einlösung",
+            "updateTitle": "Einlösung aktualisieren",
+            "program": "Programm",
+            "originAirport": "Abflughafen",
+            "destinationAirport": "Zielflughafen",
+            "flightDate": "Flugdatum",
+            "cabinClass": "Kabinenklasse",
+            "passengers": "Passagiere",
+            "milesUsed": "Verwendete Meilen",
+            "taxes": "Steuern",
+            "cashPrice": "Barpreis",
+            "effectiveCostPerThousand": "Kosten / 1.000 Meilen",
+            "createButton": "Einlösung erstellen",
+            "updateButton": "Einlösung aktualisieren",
+            "roundTrip": "Hin und zurück"
+        },
+        "actions": {
+            "edit": "Einlösung bearbeiten",
+            "delete": "Einlösung löschen"
+        },
+        "messages": {
+            "loadError": "Einlösungen konnten nicht geladen werden. Bitte versuche es später erneut."
+        }
+    }
+}

@@ -1,1 +1,33 @@
-{"dashboard":{"eyebrow":"Übersicht","title":"Dashboard","subtitle":"Verfolgen Sie Aktivitäten, Wert und aktuelle Bewegungen Ihrer Treueprogramme.","cards":{"programSummary":"Programmübersicht","programSummarySubtitle":"Meilen, Kosten und Wert je Treueprogramm.","programs":"Programme","recentPurchases":"Letzte Käufe","recentTransfers":"Letzte Übertragungen","recentRedemptions":"Letzte Einlösungen"},"programs":{"program":"Programm","miles":"Meilen","milesSent":"Gesendete Meilen + Bonus","costPerThousand":"Kosten / 1.000","referencePrice":"Referenz / 1.000","profitLoss":"Gewinn / Verlust","empty":"Keine Programmdaten verfügbar."},"activity":{"noPurchases":"Keine aktuellen Käufe.","noTransfers":"Keine aktuellen Übertragungen.","noRedemptions":"Keine aktuellen Einlösungen."},"redemption-miles":"Meilen","transfer":{"to":"zu"}}}
+{
+    "dashboard": {
+        "eyebrow": "Übersicht",
+        "title": "Dashboard",
+        "subtitle": "Verfolgen Sie Aktivitäten, Wert und aktuelle Bewegungen Ihrer Treueprogramme.",
+        "cards": {
+            "programSummary": "Programmübersicht",
+            "programSummarySubtitle": "Meilen, Kosten und Wert je Treueprogramm.",
+            "programs": "Programme",
+            "recentPurchases": "Letzte Käufe",
+            "recentTransfers": "Letzte Übertragungen",
+            "recentRedemptions": "Letzte Einlösungen"
+        },
+        "programs": {
+            "program": "Programm",
+            "miles": "Meilen",
+            "milesSent": "Gesendete Meilen + Bonus",
+            "costPerThousand": "Kosten / 1.000",
+            "referencePrice": "Referenz / 1.000",
+            "profitLoss": "Gewinn / Verlust",
+            "empty": "Keine Programmdaten verfügbar."
+        },
+        "activity": {
+            "noPurchases": "Keine aktuellen Käufe.",
+            "noTransfers": "Keine aktuellen Übertragungen.",
+            "noRedemptions": "Keine aktuellen Einlösungen."
+        },
+        "redemption-miles": "Meilen",
+        "transfer": {
+            "to": "zu"
+        }
+    }
+}

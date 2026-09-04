@@ -1,1 +1,15 @@
-{"programFactors":{"page":{"eyebrow":"Tasas de transferencia","title":"Tasas de transferencia entre programas","subtitle":"Añade nuevas tasas de transferencia entre programas"},"table":{"title":"Tasas de transferencia","subtitle":"Directorio","emptyTitle":"Aún no hay tasas de transferencia.","emptyDescription":"Crea tu primera tasa de transferencia entre programas."}}}
+{
+    "programFactors": {
+        "page": {
+            "eyebrow": "Tasas de transferencia",
+            "title": "Tasas de transferencia entre programas",
+            "subtitle": "Añade nuevas tasas de transferencia entre programas"
+        },
+        "table": {
+            "title": "Tasas de transferencia",
+            "subtitle": "Directorio",
+            "emptyTitle": "Aún no hay tasas de transferencia.",
+            "emptyDescription": "Crea tu primera tasa de transferencia entre programas."
+        }
+    }
+}
