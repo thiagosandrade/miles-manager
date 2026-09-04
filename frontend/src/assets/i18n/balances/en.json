@@ -1,0 +1,7 @@
+{
+  "balances": {
+    "eyebrow":"Programs","title":"Program Balances","subtitle":"View balances across all your loyalty programs.",
+    "metrics":{"totalPrograms":"Total Programs","totalMiles":"Total Miles","averageBalance":"Average Balance"},
+    "table":{"title":"Balances","subtitle":"Programs","emptyTitle":"No balances found","emptyDescription":"Your loyalty program balances will appear here.","loyaltyProgram":"Loyalty Program","columns":{"program":"Program","balance":"Balance","referencePrice":"Reference price / 1k","currentValue":"Current value / 1k","currency":"Currency"}}
+  }
+}
