@@ -64,4 +64,8 @@ export class AuthManagementComponent {
   goToSignUp(): void {
     this.router.navigate(['/auth/sign-up']);
   }
+
+  goToForgotPassword(): void {
+    this.router.navigate(['/auth/forgot-password']);
+  }
 }
