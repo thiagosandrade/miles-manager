@@ -1,1 +1,15 @@
-{"programFactors":{"page":{"eyebrow":"Transferraten","title":"Transferraten zwischen Programmen","subtitle":"Neue Transferraten zwischen Programmen hinzufügen"},"table":{"title":"Transferraten","subtitle":"Verzeichnis","emptyTitle":"Noch keine Transferraten.","emptyDescription":"Erstelle deine erste Transferrate zwischen Programmen."}}}
+{
+    "programFactors": {
+        "page": {
+            "eyebrow": "Transferraten",
+            "title": "Transferraten zwischen Programmen",
+            "subtitle": "Neue Transferraten zwischen Programmen hinzufügen"
+        },
+        "table": {
+            "title": "Transferraten",
+            "subtitle": "Verzeichnis",
+            "emptyTitle": "Noch keine Transferraten.",
+            "emptyDescription": "Erstelle deine erste Transferrate zwischen Programmen."
+        }
+    }
+}

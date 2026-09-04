@@ -1,11 +1,61 @@
 {
   "redemptions": {
-    "page":{"eyebrow":"Rewards","title":"Redemptions","subtitle":"View and manage mileage redemptions.","newRedemption":"New Redemption"},
-    "metrics":{"totalRedemptions":"Total Redemptions"},
-    "table":{"title":"Redemptions","subtitle":"History","emptyTitle":"No redemptions found","emptyDescription":"Create your first redemption.","columns":{"program":"Program","origin":"Origin","destination":"Destination","flightDate":"Flight Date","cabin":"Cabin","passengers":"Passengers","milesUsed":"Miles Used","taxes":"Taxes","cashPrice":"Cash Price","effectiveCostPerThousand":"Cost / 1,000 Miles"}},
-    "cabin":{"economy":"Economy","premiumEconomy":"Premium Economy","business":"Business","first":"First"},
-    "dialog":{"createTitle":"New Redemption","updateTitle":"Update Redemption","program":"Program","originAirport":"Origin Airport","destinationAirport":"Destination Airport","flightDate":"Flight Date","cabinClass":"Cabin Class","passengers":"Passengers","milesUsed":"Miles Used","taxes":"Taxes","cashPrice":"Cash Price","effectiveCostPerThousand":"Cost / 1,000 Miles","createButton":"Create Redemption","updateButton":"Update Redemption","roundTrip":"Roundtrip"},
-    "actions":{"edit":"Edit redemption","delete":"Delete redemption"},
-    "messages":{"loadError":"Could not load redemptions. Please try again later."}
+    "page": {
+      "eyebrow": "Rewards",
+      "title": "Redemptions",
+      "subtitle": "View and manage mileage redemptions.",
+      "newRedemption": "New Redemption"
+    },
+    "metrics": {
+      "totalRedemptions": "Total Redemptions"
+    },
+    "table": {
+      "title": "Redemptions",
+      "subtitle": "History",
+      "emptyTitle": "No redemptions found",
+      "emptyDescription": "Create your first redemption.",
+      "columns": {
+        "program": "Program",
+        "origin": "Origin",
+        "destination": "Destination",
+        "flightDate": "Flight Date",
+        "cabin": "Cabin",
+        "passengers": "Passengers",
+        "milesUsed": "Miles Used",
+        "taxes": "Taxes",
+        "cashPrice": "Cash Price",
+        "effectiveCostPerThousand": "Cost / 1,000 Miles"
+      }
+    },
+    "cabin": {
+      "economy": "Economy",
+      "premiumEconomy": "Premium Economy",
+      "business": "Business",
+      "first": "First"
+    },
+    "dialog": {
+      "createTitle": "New Redemption",
+      "updateTitle": "Update Redemption",
+      "program": "Program",
+      "originAirport": "Origin Airport",
+      "destinationAirport": "Destination Airport",
+      "flightDate": "Flight Date",
+      "cabinClass": "Cabin Class",
+      "passengers": "Passengers",
+      "milesUsed": "Miles Used",
+      "taxes": "Taxes",
+      "cashPrice": "Cash Price",
+      "effectiveCostPerThousand": "Cost / 1,000 Miles",
+      "createButton": "Create Redemption",
+      "updateButton": "Update Redemption",
+      "roundTrip": "Roundtrip"
+    },
+    "actions": {
+      "edit": "Edit redemption",
+      "delete": "Delete redemption"
+    },
+    "messages": {
+      "loadError": "Could not load redemptions. Please try again later."
+    }
   }
 }

@@ -1,12 +1,61 @@
 {
   "programs": {
-    "page":{"eyebrow":"Verwaltung","title":"Programme","subtitle":"Verwalte Treueprogramme von Fluggesellschaften und Hotels.","newProgram":"Neues Programm"},
-    "metrics":{"totalPrograms":"Programme gesamt","active":"Aktiv","inactive":"Inaktiv"},
-    "table":{"title":"Programme","subtitle":"Verzeichnis","search":"Programme suchen","searchPlaceholder":"Nach Namen suchen...","emptyTitle":"Keine Programme gefunden","emptyDescription":"Erstelle dein erstes Treueprogramm.","loyaltyProgram":"Treueprogramm","columns":{"program":"Programm","status":"Status","referencePrice":"Referenzpreis / 1.000","currency":"Währung"}},
-    "dialog":{"createTitle":"Neues Programm","updateTitle":"Programm aktualisieren","programCode":"Programmcode","name":"Name","programType":"Programmtyp","website":"Website","logoUrl":"Logo-URL","referencePrice":"Referenzpreis pro 1.000 Meilen","active":"Aktiv","createButton":"Programm erstellen","updateButton":"Programm aktualisieren","currencyCode":"Währungscode"},
-    "types":{"airline":"Fluggesellschaft","hotel":"Hotel","bank":"Bank","creditCard":"Kreditkarte"},
-    "status":{"active":"Aktiv","inactive":"Inaktiv"},
-    "actions":{"edit":"Programm bearbeiten","delete":"Programm löschen"},
-    "messages":{"loadError":"Programme konnten nicht geladen werden. Bitte versuche es später erneut."}
+    "page": {
+      "eyebrow": "Verwaltung",
+      "title": "Programme",
+      "subtitle": "Verwalte Treueprogramme von Fluggesellschaften und Hotels.",
+      "newProgram": "Neues Programm"
+    },
+    "metrics": {
+      "totalPrograms": "Programme gesamt",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "table": {
+      "title": "Programme",
+      "subtitle": "Verzeichnis",
+      "search": "Programme suchen",
+      "searchPlaceholder": "Nach Namen suchen...",
+      "emptyTitle": "Keine Programme gefunden",
+      "emptyDescription": "Erstelle dein erstes Treueprogramm.",
+      "loyaltyProgram": "Treueprogramm",
+      "columns": {
+        "program": "Programm",
+        "status": "Status",
+        "referencePrice": "Referenzpreis / 1.000",
+        "currency": "Währung"
+      }
+    },
+    "dialog": {
+      "createTitle": "Neues Programm",
+      "updateTitle": "Programm aktualisieren",
+      "programCode": "Programmcode",
+      "name": "Name",
+      "programType": "Programmtyp",
+      "website": "Website",
+      "logoUrl": "Logo-URL",
+      "referencePrice": "Referenzpreis pro 1.000 Meilen",
+      "active": "Aktiv",
+      "createButton": "Programm erstellen",
+      "updateButton": "Programm aktualisieren",
+      "currencyCode": "Währungscode"
+    },
+    "types": {
+      "airline": "Fluggesellschaft",
+      "hotel": "Hotel",
+      "bank": "Bank",
+      "creditCard": "Kreditkarte"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "actions": {
+      "edit": "Programm bearbeiten",
+      "delete": "Programm löschen"
+    },
+    "messages": {
+      "loadError": "Programme konnten nicht geladen werden. Bitte versuche es später erneut."
+    }
   }
 }

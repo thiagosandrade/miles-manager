@@ -1,12 +1,61 @@
 {
   "programs": {
-    "page":{"eyebrow":"Administração","title":"Programas","subtitle":"Gerencie programas de fidelidade de companhias aéreas e hotéis.","newProgram":"Novo programa"},
-    "metrics":{"totalPrograms":"Total de programas","active":"Ativos","inactive":"Inativos"},
-    "table":{"title":"Programas","subtitle":"Diretório","search":"Buscar programas","searchPlaceholder":"Buscar por nome...","emptyTitle":"Nenhum programa encontrado","emptyDescription":"Crie seu primeiro programa de fidelidade.","loyaltyProgram":"Programa de fidelidade","columns":{"program":"Programa","status":"Status","referencePrice":"Preço de referência / 1.000","currency":"Moeda"}},
-    "dialog":{"createTitle":"Novo programa","updateTitle":"Atualizar programa","programCode":"Código do programa","name":"Nome","programType":"Tipo de programa","website":"Site","logoUrl":"URL do logotipo","referencePrice":"Preço de referência por 1.000 milhas","active":"Ativo","createButton":"Criar programa","updateButton":"Atualizar programa","currencyCode":"Código da moeda"},
-    "types":{"airline":"Companhia aérea","hotel":"Hotel","bank":"Banco","creditCard":"Cartão de crédito"},
-    "status":{"active":"Ativo","inactive":"Inativo"},
-    "actions":{"edit":"Editar programa","delete":"Excluir programa"},
-    "messages":{"loadError":"Não foi possível carregar os programas. Tente novamente mais tarde."}
+    "page": {
+      "eyebrow": "Administração",
+      "title": "Programas",
+      "subtitle": "Gerencie programas de fidelidade de companhias aéreas e hotéis.",
+      "newProgram": "Novo programa"
+    },
+    "metrics": {
+      "totalPrograms": "Total de programas",
+      "active": "Ativos",
+      "inactive": "Inativos"
+    },
+    "table": {
+      "title": "Programas",
+      "subtitle": "Diretório",
+      "search": "Buscar programas",
+      "searchPlaceholder": "Buscar por nome...",
+      "emptyTitle": "Nenhum programa encontrado",
+      "emptyDescription": "Crie seu primeiro programa de fidelidade.",
+      "loyaltyProgram": "Programa de fidelidade",
+      "columns": {
+        "program": "Programa",
+        "status": "Status",
+        "referencePrice": "Preço de referência / 1.000",
+        "currency": "Moeda"
+      }
+    },
+    "dialog": {
+      "createTitle": "Novo programa",
+      "updateTitle": "Atualizar programa",
+      "programCode": "Código do programa",
+      "name": "Nome",
+      "programType": "Tipo de programa",
+      "website": "Site",
+      "logoUrl": "URL do logotipo",
+      "referencePrice": "Preço de referência por 1.000 milhas",
+      "active": "Ativo",
+      "createButton": "Criar programa",
+      "updateButton": "Atualizar programa",
+      "currencyCode": "Código da moeda"
+    },
+    "types": {
+      "airline": "Companhia aérea",
+      "hotel": "Hotel",
+      "bank": "Banco",
+      "creditCard": "Cartão de crédito"
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "actions": {
+      "edit": "Editar programa",
+      "delete": "Excluir programa"
+    },
+    "messages": {
+      "loadError": "Não foi possível carregar os programas. Tente novamente mais tarde."
+    }
   }
 }

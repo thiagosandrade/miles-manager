@@ -1,13 +1,80 @@
 {
   "users": {
-    "page": {"eyebrow":"Administration","title":"Utilisateurs","subtitle":"Gérez les utilisateurs, les invitations et les autorisations d’accès de l’application.","newUser":"Créer un utilisateur"},
-    "details": {"eyebrow":"Administration","title":"Détails de l’utilisateur","subtitle":"Consultez les informations du compte et l’activité.","status":"Statut","created":"Créé","lastLogin":"Dernière connexion","lastUpdated":"Dernière mise à jour","accountInformation":"Informations du compte","userId":"ID utilisateur"},
-    "metrics": {"totalUsers":"Total des utilisateurs","activeUsers":"Utilisateurs actifs","inactiveUsers":"Utilisateurs inactifs"},
-    "table": {"title":"Utilisateurs","subtitle":"Répertoire","search":"Rechercher des utilisateurs","searchPlaceholder":"Rechercher par nom ou e-mail...","emptyTitle":"Aucun utilisateur trouvé","emptyDescription":"Créez votre premier utilisateur pour commencer.","columns":{"fullName":"Nom complet","email":"E-mail","status":"Statut","createdAt":"Créé le","lastLoginAt":"Dernière connexion","user":"Utilisateur"}},
-    "dialog": {"createTitle":"Créer un utilisateur","updateTitle":"Mettre à jour l’utilisateur","subtitle":"Ajoutez un nouvel utilisateur Miles Manager.","fullName":"Nom complet","fullNamePlaceholder":"Jean Dupont","email":"E-mail","emailPlaceholder":"jean@email.com","password":"Mot de passe","passwordPlaceholder":"Mot de passe","createButton":"Créer l’utilisateur","updateButton":"Mettre à jour l’utilisateur","newPassword":"Nouveau mot de passe","newPasswordPlaceholder":"Laissez vide pour conserver le mot de passe actuel","active":"Actif","accountInformation":"Informations du compte","createdAt":"Créé","updatedAt":"Dernière mise à jour","lastLoginAt":"Dernière connexion"},
-    "validation": {"fullNameRequired":"Le nom complet est obligatoire.","emailRequired":"L’e-mail est obligatoire.","emailInvalid":"E-mail invalide.","passwordRequired":"Le mot de passe est obligatoire."},
-    "status": {"active":"Actif","inactive":"Inactif"},
-    "actions": {"create":"Créer l’utilisateur","edit":"Modifier l’utilisateur","delete":"Supprimer l’utilisateur"},
-    "messages": {"loadError":"Impossible de charger les utilisateurs. Veuillez réessayer plus tard."}
+    "page": {
+      "eyebrow": "Administration",
+      "title": "Utilisateurs",
+      "subtitle": "Gérez les utilisateurs, les invitations et les autorisations d’accès de l’application.",
+      "newUser": "Créer un utilisateur"
+    },
+    "details": {
+      "eyebrow": "Administration",
+      "title": "Détails de l’utilisateur",
+      "subtitle": "Consultez les informations du compte et l’activité.",
+      "status": "Statut",
+      "created": "Créé",
+      "lastLogin": "Dernière connexion",
+      "lastUpdated": "Dernière mise à jour",
+      "accountInformation": "Informations du compte",
+      "userId": "ID utilisateur"
+    },
+    "metrics": {
+      "totalUsers": "Total des utilisateurs",
+      "activeUsers": "Utilisateurs actifs",
+      "inactiveUsers": "Utilisateurs inactifs"
+    },
+    "table": {
+      "title": "Utilisateurs",
+      "subtitle": "Répertoire",
+      "search": "Rechercher des utilisateurs",
+      "searchPlaceholder": "Rechercher par nom ou e-mail...",
+      "emptyTitle": "Aucun utilisateur trouvé",
+      "emptyDescription": "Créez votre premier utilisateur pour commencer.",
+      "columns": {
+        "fullName": "Nom complet",
+        "email": "E-mail",
+        "status": "Statut",
+        "createdAt": "Créé le",
+        "lastLoginAt": "Dernière connexion",
+        "user": "Utilisateur"
+      }
+    },
+    "dialog": {
+      "createTitle": "Créer un utilisateur",
+      "updateTitle": "Mettre à jour l’utilisateur",
+      "subtitle": "Ajoutez un nouvel utilisateur Miles Manager.",
+      "fullName": "Nom complet",
+      "fullNamePlaceholder": "Jean Dupont",
+      "email": "E-mail",
+      "emailPlaceholder": "jean@email.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Mot de passe",
+      "createButton": "Créer l’utilisateur",
+      "updateButton": "Mettre à jour l’utilisateur",
+      "newPassword": "Nouveau mot de passe",
+      "newPasswordPlaceholder": "Laissez vide pour conserver le mot de passe actuel",
+      "active": "Actif",
+      "accountInformation": "Informations du compte",
+      "createdAt": "Créé",
+      "updatedAt": "Dernière mise à jour",
+      "lastLoginAt": "Dernière connexion"
+    },
+    "validation": {
+      "fullNameRequired": "Le nom complet est obligatoire.",
+      "emailRequired": "L’e-mail est obligatoire.",
+      "emailInvalid": "E-mail invalide.",
+      "passwordRequired": "Le mot de passe est obligatoire."
+    },
+    "status": {
+      "active": "Actif",
+      "inactive": "Inactif"
+    },
+    "actions": {
+      "create": "Créer l’utilisateur",
+      "edit": "Modifier l’utilisateur",
+      "delete": "Supprimer l’utilisateur"
+    },
+    "messages": {
+      "loadError": "Impossible de charger les utilisateurs. Veuillez réessayer plus tard."
+    }
   }
 }

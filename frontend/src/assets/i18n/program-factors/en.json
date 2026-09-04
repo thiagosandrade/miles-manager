@@ -1,6 +1,15 @@
 {
   "programFactors": {
-    "page":{"eyebrow":"Transfer Rates","title":"Transfer rates between programs","subtitle":"Add new Transfer rates between programs"},
-    "table":{"title":"Transfer Rates","subtitle":"Directory","emptyTitle":"No transfer rates yet.","emptyDescription":"Create your first transfer rate between program."}
+    "page": {
+      "eyebrow": "Transfer Rates",
+      "title": "Transfer rates between programs",
+      "subtitle": "Add new Transfer rates between programs"
+    },
+    "table": {
+      "title": "Transfer Rates",
+      "subtitle": "Directory",
+      "emptyTitle": "No transfer rates yet.",
+      "emptyDescription": "Create your first transfer rate between program."
+    }
   }
 }

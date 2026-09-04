@@ -1,10 +1,54 @@
 {
   "purchases": {
-    "page":{"eyebrow":"Transactions","title":"Purchases","subtitle":"View and manage mileage purchases.","newPurchase":"New Purchase"},
-    "metrics":{"totalPurchases":"Total Purchases","totalAmount":"Total Amount","averagePurchase":"Average Purchase"},
-    "table":{"title":"Purchases","subtitle":"History","search":"Search Purchases","searchPlaceholder":"Search purchases...","emptyTitle":"No purchases found","emptyDescription":"Create your first mileage purchase.","directPurchase":"Direct Purchase","columns":{"program":"Program","amountPaid":"Amount Paid","milesPurchased":"Miles Purchased","bonus":"Bonus","purchaseDate":"Purchase Date","status":"Status"}},
-    "dialog":{"createTitle":"New Purchase","updateTitle":"Update Purchase","program":"Program","partner":"Partner","description":"Description","amountPaid":"Amount Paid","milesPurchased":"Miles Purchased","bonus":"Bonus","purchaseDate":"Purchase Date","status":"Status","createButton":"Create Purchase","updateButton":"Update Purchase","purchaseStatus":"Purchase Status"},
-    "actions":{"edit":"Edit purchase","delete":"Delete purchase"},
-    "messages":{"loadError":"Could not load purchases. Please try again later."}
+    "page": {
+      "eyebrow": "Transactions",
+      "title": "Purchases",
+      "subtitle": "View and manage mileage purchases.",
+      "newPurchase": "New Purchase"
+    },
+    "metrics": {
+      "totalPurchases": "Total Purchases",
+      "totalAmount": "Total Amount",
+      "averagePurchase": "Average Purchase"
+    },
+    "table": {
+      "title": "Purchases",
+      "subtitle": "History",
+      "search": "Search Purchases",
+      "searchPlaceholder": "Search purchases...",
+      "emptyTitle": "No purchases found",
+      "emptyDescription": "Create your first mileage purchase.",
+      "directPurchase": "Direct Purchase",
+      "columns": {
+        "program": "Program",
+        "amountPaid": "Amount Paid",
+        "milesPurchased": "Miles Purchased",
+        "bonus": "Bonus",
+        "purchaseDate": "Purchase Date",
+        "status": "Status"
+      }
+    },
+    "dialog": {
+      "createTitle": "New Purchase",
+      "updateTitle": "Update Purchase",
+      "program": "Program",
+      "partner": "Partner",
+      "description": "Description",
+      "amountPaid": "Amount Paid",
+      "milesPurchased": "Miles Purchased",
+      "bonus": "Bonus",
+      "purchaseDate": "Purchase Date",
+      "status": "Status",
+      "createButton": "Create Purchase",
+      "updateButton": "Update Purchase",
+      "purchaseStatus": "Purchase Status"
+    },
+    "actions": {
+      "edit": "Edit purchase",
+      "delete": "Delete purchase"
+    },
+    "messages": {
+      "loadError": "Could not load purchases. Please try again later."
+    }
   }
 }

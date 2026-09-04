@@ -1,13 +1,80 @@
 {
   "users": {
-    "page": {"eyebrow":"Administração","title":"Usuários","subtitle":"Gerencie os usuários da aplicação, convites e permissões de acesso.","newUser":"Criar usuário"},
-    "details": {"eyebrow":"Administração","title":"Detalhes do usuário","subtitle":"Revise as informações da conta e a atividade.","status":"Status","created":"Criado","lastLogin":"Último login","lastUpdated":"Última atualização","accountInformation":"Informações da conta","userId":"ID do usuário"},
-    "metrics": {"totalUsers":"Total de usuários","activeUsers":"Usuários ativos","inactiveUsers":"Usuários inativos"},
-    "table": {"title":"Usuários","subtitle":"Diretório","search":"Pesquisar usuários","searchPlaceholder":"Pesquisar por nome ou e-mail...","emptyTitle":"Nenhum usuário encontrado","emptyDescription":"Crie seu primeiro usuário para começar.","columns":{"fullName":"Nome completo","email":"E-mail","status":"Status","createdAt":"Criado em","lastLoginAt":"Último login","user":"Usuário"}},
-    "dialog": {"createTitle":"Criar usuário","updateTitle":"Atualizar usuário","subtitle":"Adicione um novo usuário do Miles Manager.","fullName":"Nome completo","fullNamePlaceholder":"João Silva","email":"E-mail","emailPlaceholder":"joao@email.com","password":"Senha","passwordPlaceholder":"Senha","createButton":"Criar usuário","updateButton":"Atualizar usuário","newPassword":"Nova senha","newPasswordPlaceholder":"Deixe em branco para manter a senha atual","active":"Ativo","accountInformation":"Informações da conta","createdAt":"Criado","updatedAt":"Última atualização","lastLoginAt":"Último login"},
-    "validation": {"fullNameRequired":"O nome completo é obrigatório.","emailRequired":"O e-mail é obrigatório.","emailInvalid":"E-mail inválido.","passwordRequired":"A senha é obrigatória."},
-    "status": {"active":"Ativo","inactive":"Inativo"},
-    "actions": {"create":"Criar usuário","edit":"Editar usuário","delete":"Excluir usuário"},
-    "messages": {"loadError":"Não foi possível carregar os usuários. Tente novamente mais tarde."}
+    "page": {
+      "eyebrow": "Administração",
+      "title": "Usuários",
+      "subtitle": "Gerencie os usuários da aplicação, convites e permissões de acesso.",
+      "newUser": "Criar usuário"
+    },
+    "details": {
+      "eyebrow": "Administração",
+      "title": "Detalhes do usuário",
+      "subtitle": "Revise as informações da conta e a atividade.",
+      "status": "Status",
+      "created": "Criado",
+      "lastLogin": "Último login",
+      "lastUpdated": "Última atualização",
+      "accountInformation": "Informações da conta",
+      "userId": "ID do usuário"
+    },
+    "metrics": {
+      "totalUsers": "Total de usuários",
+      "activeUsers": "Usuários ativos",
+      "inactiveUsers": "Usuários inativos"
+    },
+    "table": {
+      "title": "Usuários",
+      "subtitle": "Diretório",
+      "search": "Pesquisar usuários",
+      "searchPlaceholder": "Pesquisar por nome ou e-mail...",
+      "emptyTitle": "Nenhum usuário encontrado",
+      "emptyDescription": "Crie seu primeiro usuário para começar.",
+      "columns": {
+        "fullName": "Nome completo",
+        "email": "E-mail",
+        "status": "Status",
+        "createdAt": "Criado em",
+        "lastLoginAt": "Último login",
+        "user": "Usuário"
+      }
+    },
+    "dialog": {
+      "createTitle": "Criar usuário",
+      "updateTitle": "Atualizar usuário",
+      "subtitle": "Adicione um novo usuário do Miles Manager.",
+      "fullName": "Nome completo",
+      "fullNamePlaceholder": "João Silva",
+      "email": "E-mail",
+      "emailPlaceholder": "joao@email.com",
+      "password": "Senha",
+      "passwordPlaceholder": "Senha",
+      "createButton": "Criar usuário",
+      "updateButton": "Atualizar usuário",
+      "newPassword": "Nova senha",
+      "newPasswordPlaceholder": "Deixe em branco para manter a senha atual",
+      "active": "Ativo",
+      "accountInformation": "Informações da conta",
+      "createdAt": "Criado",
+      "updatedAt": "Última atualização",
+      "lastLoginAt": "Último login"
+    },
+    "validation": {
+      "fullNameRequired": "O nome completo é obrigatório.",
+      "emailRequired": "O e-mail é obrigatório.",
+      "emailInvalid": "E-mail inválido.",
+      "passwordRequired": "A senha é obrigatória."
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "actions": {
+      "create": "Criar usuário",
+      "edit": "Editar usuário",
+      "delete": "Excluir usuário"
+    },
+    "messages": {
+      "loadError": "Não foi possível carregar os usuários. Tente novamente mais tarde."
+    }
   }
 }

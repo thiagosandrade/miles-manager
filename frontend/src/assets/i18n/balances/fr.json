@@ -1,1 +1,26 @@
-{"balances":{"eyebrow":"Programmes","title":"Soldes des programmes","subtitle":"Consultez les soldes de tous vos programmes de fidélité.","metrics":{"totalPrograms":"Programmes totaux","totalMiles":"Miles totaux","averageBalance":"Solde moyen"},"table":{"title":"Soldes","subtitle":"Programmes","emptyTitle":"Aucun solde trouvé","emptyDescription":"Les soldes de vos programmes de fidélité apparaîtront ici.","loyaltyProgram":"Programme de fidélité","columns":{"program":"Programme","balance":"Solde","referencePrice":"Prix de référence / 1 000","currentValue":"Valeur actuelle / 1 000","currency":"Devise"}}}}
+{
+    "balances": {
+        "eyebrow": "Programmes",
+        "title": "Soldes des programmes",
+        "subtitle": "Consultez les soldes de tous vos programmes de fidélité.",
+        "metrics": {
+            "totalPrograms": "Programmes totaux",
+            "totalMiles": "Miles totaux",
+            "averageBalance": "Solde moyen"
+        },
+        "table": {
+            "title": "Soldes",
+            "subtitle": "Programmes",
+            "emptyTitle": "Aucun solde trouvé",
+            "emptyDescription": "Les soldes de vos programmes de fidélité apparaîtront ici.",
+            "loyaltyProgram": "Programme de fidélité",
+            "columns": {
+                "program": "Programme",
+                "balance": "Solde",
+                "referencePrice": "Prix de référence / 1 000",
+                "currentValue": "Valeur actuelle / 1 000",
+                "currency": "Devise"
+            }
+        }
+    }
+}
