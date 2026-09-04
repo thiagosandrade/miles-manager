@@ -1,13 +1,20 @@
 using AutoMapper;
 using MediatR;
+using MilesManager.Application.Abstractions;
 using MilesManager.Application.Common;
+using MilesManager.Application.Email;
 using MilesManager.Application.Features.Users.Abstractions;
 using MilesManager.Application.Features.Users.DTOs;
 using MilesManager.Domain.Users;
 
 namespace MilesManager.Application.Features.Users.Commands.UpdateUser;
 
-public sealed class UpdateUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IMapper mapper) : IRequestHandler<UpdateUserCommand, Result<UserDetailsDTO>>
+public sealed class UpdateUserCommandHandler(
+    IUserRepository userRepository,
+    IPasswordHasher passwordHasher,
+    IMapper mapper,
+    IEmailService emailService,
+    EmailTemplateService emailTemplateService) : IRequestHandler<UpdateUserCommand, Result<UserDetailsDTO>>
 {
     public async Task<Result<UserDetailsDTO>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
@@ -17,6 +24,7 @@ public sealed class UpdateUserCommandHandler(IUserRepository userRepository, IPa
             return Result<UserDetailsDTO>.NotFound();
         }
 
+        var wasInactive = !user.IsActive;
         var normalizedEmail = request.Email.Trim().ToLowerInvariant();
         var emailChanged = !string.Equals(user.Email, normalizedEmail, StringComparison.OrdinalIgnoreCase);
         if (emailChanged)
@@ -56,6 +64,20 @@ public sealed class UpdateUserCommandHandler(IUserRepository userRepository, IPa
         user.UpdatedAtUtc = DateTimeOffset.UtcNow;
 
         await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+
+        if (wasInactive && user.IsActive)
+        {
+            var body = await emailTemplateService.RenderAsync(
+                "AccountActivated",
+                new Dictionary<string, string> { ["FullName"] = user.FullName },
+                cancellationToken);
+
+            await emailService.SendAsync(
+                user.Email,
+                "Your Miles Manager account is active",
+                body,
+                cancellationToken);
+        }
 
         return Result<UserDetailsDTO>.Success(mapper.Map<AppUser, UserDetailsDTO>(user));
     }
