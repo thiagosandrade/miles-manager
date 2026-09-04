@@ -12,10 +12,8 @@ export const provideTranslation: EnvironmentProviders =
       loader: provideTranslateHttpLoader({
 
         resources: [
-
+          './assets/i18n/auth/',
           './assets/i18n/common/',
-          './assets/i18n/toolbar/',
-          './assets/i18n/sidebar/',
           './assets/i18n/dashboard/',
           './assets/i18n/users/',
           './assets/i18n/programs/',
@@ -25,9 +23,7 @@ export const provideTranslation: EnvironmentProviders =
           './assets/i18n/transfers/',
           './assets/i18n/redemptions/',
           './assets/i18n/user-roles/',
-          './assets/i18n/calculator/',
-          './assets/i18n/auth/'
-
+          './assets/i18n/calculator/'
         ]
 
       }),
