@@ -8,28 +8,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 42px;
   height: 42px;
-
   border-radius: 12px;
-
   background: rgba(21, 101, 192, .08);
   color: var(--mm-primary);
-
   flex-shrink: 0;
 }
 
 .dialog-header h2 {
   margin: 0;
-
   font-size: 1.25rem;
   font-weight: 700;
 }
 
 .dialog-header p {
   margin: 4px 0 0;
-
   color: var(--muted);
   font-size: .85rem;
 }
@@ -40,6 +34,9 @@
 
 mat-dialog-content {
   min-width: 400px;
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+  box-sizing: border-box;
   padding-top: 8px;
 }
 
@@ -54,10 +51,8 @@ mat-dialog-actions {
 .account-info {
   margin-top: 8px;
   padding: 14px 16px;
-
   border: 1px solid var(--border);
   border-radius: 12px;
-
   background: var(--panel);
 }
 
@@ -65,11 +60,8 @@ mat-dialog-actions {
   display: flex;
   align-items: center;
   gap: 8px;
-
   margin-bottom: 12px;
-
   color: var(--ink);
-
   font-size: .85rem;
   font-weight: 700;
 }
@@ -77,9 +69,7 @@ mat-dialog-actions {
 .account-info-title mat-icon {
   width: 18px;
   height: 18px;
-
   font-size: 18px;
-
   color: var(--mm-primary);
 }
 
@@ -87,34 +77,28 @@ mat-dialog-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 16px;
-
   padding: 7px 0;
-
   border-top: 1px solid var(--border);
 }
 
 .account-info-label {
   color: var(--muted);
-
   font-size: .8rem;
 }
 
 .account-info-value {
   color: var(--ink);
-
   font-size: .8rem;
   font-weight: 600;
-
   text-align: right;
 }
 
 @media (max-width: 600px) {
-
   mat-dialog-content {
     min-width: 0;
-    width: auto;
+    width: 100%;
+    max-height: calc(100vh - 150px);
   }
 
   .dialog-header h2 {
@@ -130,5 +114,4 @@ mat-dialog-actions {
   .account-info-value {
     text-align: left;
   }
-
 }
