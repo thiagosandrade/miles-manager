@@ -7,7 +7,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthApiService } from './auth-api.service';
 import { TokenStorageService } from '../../core/services/token-storage.service';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TextInputComponent } from '../../shared/components/form-fields';
 
 @Component({
@@ -31,6 +31,7 @@ export class AuthManagementComponent {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
   private tokenStorage = inject(TokenStorageService);
+  private translate = inject(TranslateService);
   form: FormGroup;
   readonly loading = signal(false);
 
@@ -47,12 +48,16 @@ export class AuthManagementComponent {
       this.authApi.login(this.form.value).subscribe({
         next: (res) => {
           this.tokenStorage.saveToken(res.token);
-          this.snackBar.open('Login successful', 'Close', { duration: 3000 });
+          this.snackBar.open(this.translate.instant('auth.loginSuccess'), this.translate.instant('common.close'), { duration: 3000 });
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           this.loading.set(false);
-          this.snackBar.open('Login failed: ' + (err?.error?.message || err.message), 'Close', { duration: 5000 });
+          this.snackBar.open(
+            this.translate.instant('auth.loginFailed', { message: err?.error?.message || err.message }),
+            this.translate.instant('common.close'),
+            { duration: 5000 }
+          );
         },
         complete: () => {
           this.loading.set(false);
