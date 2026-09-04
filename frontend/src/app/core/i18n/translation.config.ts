@@ -11,9 +11,13 @@ export const provideTranslation: EnvironmentProviders =
 
       loader: provideTranslateHttpLoader({
 
-        prefix: './assets/i18n/',
+        resources: [
 
-        suffix: '.json'
+          './assets/i18n/',
+
+          './assets/i18n/auth/'
+
+        ]
 
       }),
 
