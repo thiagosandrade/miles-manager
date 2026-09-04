@@ -1,0 +1,24 @@
+{
+  "auth": {
+    "forgotPassword": "Mot de passe oublié ?",
+    "loginSuccess": "Connexion réussie",
+    "loginFailed": "Échec de la connexion : {{message}}"
+  },
+  "resetPassword": {
+    "title": "Réinitialiser votre mot de passe",
+    "validating": "Validation de votre lien de réinitialisation...",
+    "subtitle": "Choisissez un nouveau mot de passe pour votre compte.",
+    "invalidLink": "Ce lien de réinitialisation du mot de passe est invalide ou a expiré.",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le nouveau mot de passe",
+    "passwordRequired": "Le mot de passe est obligatoire.",
+    "passwordMinLength": "Le mot de passe doit comporter au moins 8 caractères.",
+    "passwordConfirmationRequired": "La confirmation du mot de passe est obligatoire.",
+    "passwordsMismatch": "Les mots de passe ne correspondent pas.",
+    "updating": "Mise à jour...",
+    "updatePassword": "Mettre à jour le mot de passe",
+    "backToSignIn": "Retour à la connexion",
+    "success": "Votre mot de passe a été mis à jour avec succès.",
+    "updateError": "Impossible de mettre à jour votre mot de passe. Veuillez réessayer."
+  }
+}
