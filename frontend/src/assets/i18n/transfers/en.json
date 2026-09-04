@@ -1,0 +1,10 @@
+{
+  "transfers": {
+    "page":{"eyebrow":"Loyalty","title":"Transfers","subtitle":"Manage mileage transfers between loyalty programs.","newTransfer":"New Transfer"},
+    "metrics":{"totalTransfers":"Total Transfers","totalMilesSent":"Total Miles Sent","programs":"Programs"},
+    "table":{"title":"Transfers","subtitle":"History","search":"Search Transfers","searchPlaceholder":"Search transfers...","emptyTitle":"No transfers found","emptyDescription":"Create your first mileage transfer.","sourceProgram":"Source Program","destinationProgram":"Destination Program","columns":{"origin":"Origin","destination":"Destination","milesSent":"Miles Sent","bonusPercentage":"Bonus Percentage","milesReceived":"Miles Received","transferDate":"Transfer Date"}},
+    "dialog":{"createTitle":"New Transfer","updateTitle":"Update Transfer","originProgram":"Origin Program","destinationProgram":"Destination Program","milesSent":"Miles Sent","bonusPercentage":"Bonus Percentage","milesReceived":"Miles Received","transferDate":"Transfer Date","costPerThousandOrigin":"Cost Per Thousand (Origin)","costPerThousandDestination":"Cost Per Thousand (Destination)","transferFactor":"Transfer Rate","transferFactorOrigin":"Transfer Rate (Origin)","transferFactorDestination":"Transfer Rate (Destination)"},
+    "actions":{"edit":"Edit transfer","delete":"Delete transfer"},
+    "messages":{"loadError":"Could not load transfers. Please try again later."}
+  }
+}
