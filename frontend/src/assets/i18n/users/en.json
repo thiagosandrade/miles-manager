@@ -1,0 +1,13 @@
+{
+  "users": {
+    "page": {"eyebrow":"Administration","title":"Users","subtitle":"Manage application users, invitations and access permissions.","newUser":"Create User"},
+    "details": {"eyebrow":"Administration","title":"User Details","subtitle":"Review account information and activity.","status":"Status","created":"Created","lastLogin":"Last Login","lastUpdated":"Last Updated","accountInformation":"Account Information","userId":"User ID"},
+    "metrics": {"totalUsers":"Total Users","activeUsers":"Active Users","inactiveUsers":"Inactive Users"},
+    "table": {"title":"Users","subtitle":"Directory","search":"Search Users","searchPlaceholder":"Search by name or email...","emptyTitle":"No users found","emptyDescription":"Create your first user to get started.","columns":{"fullName":"Full Name","email":"Email","status":"Status","createdAt":"Created At","lastLoginAt":"Last Login","user":"User"}},
+    "dialog": {"createTitle":"Create User","updateTitle":"Update User","subtitle":"Add a new Miles Manager user.","fullName":"Full Name","fullNamePlaceholder":"John Doe","email":"Email","emailPlaceholder":"john@email.com","password":"Password","passwordPlaceholder":"Password","createButton":"Create User","updateButton":"Update User","newPassword":"New Password","newPasswordPlaceholder":"Leave blank to keep the current password","active":"Active","accountInformation":"Account Information","createdAt":"Created","updatedAt":"Last Updated","lastLoginAt":"Last Login"},
+    "validation": {"fullNameRequired":"Full name is required.","emailRequired":"Email is required.","emailInvalid":"Invalid email.","passwordRequired":"Password is required."},
+    "status": {"active":"Active","inactive":"Inactive"},
+    "actions": {"create":"Create User","edit":"Edit User","delete":"Delete User"},
+    "messages": {"loadError":"Could not load users. Please try again later."}
+  }
+}
