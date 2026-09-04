@@ -8,7 +8,13 @@ public static class EmailServiceExtensions
 {
     public static IServiceCollection AddEmailServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IResend>(_ => new ResendClient(configuration["Email:ApiKey"] ?? string.Empty));
+        services.AddOptions();
+        services.AddHttpClient<ResendClient>();
+        services.Configure<ResendClientOptions>(options =>
+        {
+            options.ApiToken = configuration["Email:ApiKey"] ?? string.Empty;
+        });
+        services.AddTransient<IResend, ResendClient>();
         services.AddScoped<MilesManager.Application.Abstractions.IEmailService, ResendEmailService>();
         services.AddSingleton<EmailTemplateService>();
 
