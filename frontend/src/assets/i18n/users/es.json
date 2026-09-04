@@ -1,0 +1,13 @@
+{
+  "users": {
+    "page": {"eyebrow":"Administración","title":"Usuarios","subtitle":"Gestiona los usuarios de la aplicación, invitaciones y permisos de acceso.","newUser":"Crear usuario"},
+    "details": {"eyebrow":"Administración","title":"Detalles del usuario","subtitle":"Revisa la información de la cuenta y la actividad.","status":"Estado","created":"Creado","lastLogin":"Último inicio de sesión","lastUpdated":"Última actualización","accountInformation":"Información de la cuenta","userId":"ID de usuario"},
+    "metrics": {"totalUsers":"Usuarios totales","activeUsers":"Usuarios activos","inactiveUsers":"Usuarios inactivos"},
+    "table": {"title":"Usuarios","subtitle":"Directorio","search":"Buscar usuarios","searchPlaceholder":"Buscar por nombre o correo electrónico...","emptyTitle":"No se encontraron usuarios","emptyDescription":"Crea tu primer usuario para comenzar.","columns":{"fullName":"Nombre completo","email":"Correo electrónico","status":"Estado","createdAt":"Creado el","lastLoginAt":"Último inicio de sesión","user":"Usuario"}},
+    "dialog": {"createTitle":"Crear usuario","updateTitle":"Actualizar usuario","subtitle":"Agrega un nuevo usuario de Miles Manager.","fullName":"Nombre completo","fullNamePlaceholder":"Juan Pérez","email":"Correo electrónico","emailPlaceholder":"juan@email.com","password":"Contraseña","passwordPlaceholder":"Contraseña","createButton":"Crear usuario","updateButton":"Actualizar usuario","newPassword":"Nueva contraseña","newPasswordPlaceholder":"Déjalo en blanco para mantener la contraseña actual","active":"Activo","accountInformation":"Información de la cuenta","createdAt":"Creado","updatedAt":"Última actualización","lastLoginAt":"Último inicio de sesión"},
+    "validation": {"fullNameRequired":"El nombre completo es obligatorio.","emailRequired":"El correo electrónico es obligatorio.","emailInvalid":"Correo electrónico inválido.","passwordRequired":"La contraseña es obligatoria."},
+    "status": {"active":"Activo","inactive":"Inactivo"},
+    "actions": {"create":"Crear usuario","edit":"Editar usuario","delete":"Eliminar usuario"},
+    "messages": {"loadError":"No se pudieron cargar los usuarios. Inténtalo de nuevo más tarde."}
+  }
+}
