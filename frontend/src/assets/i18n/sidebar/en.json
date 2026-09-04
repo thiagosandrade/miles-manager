@@ -1,0 +1,15 @@
+{
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "user-roles": "User Roles",
+    "programs": "Programs",
+    "programBalances": "Program Balances",
+    "purchases": "Purchases",
+    "transfers": "Transfers",
+    "redemptions": "Redemptions",
+    "settings": "Settings",
+    "calculator": "Flight Calculator",
+    "programFactors": "Transfer Rate"
+  }
+}
