@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -39,10 +39,10 @@ export class ResetPasswordComponent implements OnInit {
 
   form: FormGroup;
   token = '';
-  loading = true;
-  saving = false;
-  validToken = false;
-
+  readonly loading = signal(true);
+  readonly saving = signal(false);
+  readonly validToken = signal(false);
+  
   constructor() {
     this.form = this.fb.group({
       email: [{ value: '', disabled: true }],
@@ -55,45 +55,45 @@ export class ResetPasswordComponent implements OnInit {
     this.route.queryParamMap.subscribe(params => {
       const token = params.get('token') ?? '';
       this.token = token;
-      this.validToken = false;
-      this.loading = true;
+      this.validToken.set(false);
+      this.loading.set(true);
 
       if (!token) {
-        this.loading = false;
+        this.loading.set(false);
         return;
       }
 
       this.authApi.validatePasswordResetToken(token).subscribe({
         next: response => {
           if (response.valid && response.email) {
-            this.validToken = true;
+            this.validToken.set(true);
             this.form.patchValue({ email: response.email });
           }
 
-          this.loading = false;
+          this.loading.set(false);
         },
         error: () => {
-          this.validToken = false;
-          this.loading = false;
+          this.validToken.set(false) ;
+          this.loading.set(false);
         }
       });
     });
   }
 
   submit(): void {
-    if (this.form.invalid || this.saving || !this.validToken) {
+    if (this.form.invalid || this.saving() || !this.validToken()) {
       this.form.markAllAsTouched();
       return;
     }
 
-    this.saving = true;
+    this.saving.set(true);
     this.authApi.resetPassword(this.token, this.form.getRawValue().newPassword).subscribe({
       next: () => {
         this.snackBar.open('Your password has been updated successfully.', 'Close', { duration: 4000 });
         setTimeout(() => this.router.navigate(['/auth']), 1500);
       },
       error: err => {
-        this.saving = false;
+        this.saving.set(false);
         this.snackBar.open(
           err?.status === 401
             ? 'This password reset link is invalid or has expired.'
@@ -103,7 +103,7 @@ export class ResetPasswordComponent implements OnInit {
         );
       },
       complete: () => {
-        this.saving = false;
+        this.saving.set(false);
       }
     });
   }

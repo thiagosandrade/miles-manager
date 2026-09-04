@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,7 +32,7 @@ export class AuthManagementComponent {
   private snackBar = inject(MatSnackBar);
   private tokenStorage = inject(TokenStorageService);
   form: FormGroup;
-  loading = false;
+  readonly loading = signal(false);
 
   constructor() {
     this.form = this.fb.group({
@@ -43,7 +43,7 @@ export class AuthManagementComponent {
 
   submit() {
     if (this.form.valid) {
-      this.loading = true;
+      this.loading.set(true);
       this.authApi.login(this.form.value).subscribe({
         next: (res) => {
           this.tokenStorage.saveToken(res.token);
@@ -51,11 +51,11 @@ export class AuthManagementComponent {
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
-          this.loading = false;
+          this.loading.set(false);
           this.snackBar.open('Login failed: ' + (err?.error?.message || err.message), 'Close', { duration: 5000 });
         },
         complete: () => {
-          this.loading = false;
+          this.loading.set(false);
         }
       });
     }

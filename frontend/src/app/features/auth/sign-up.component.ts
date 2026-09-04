@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,7 +31,7 @@ export class SignUpComponent {
   private snackBar = inject(MatSnackBar);
 
   form: FormGroup;
-  loading = false;
+  readonly loading = signal(false);
 
   constructor() {
     this.form = this.fb.group({
@@ -42,12 +42,12 @@ export class SignUpComponent {
   }
 
   submit(): void {
-    if (this.form.invalid || this.loading) {
+    if (this.form.invalid || this.loading()) {
       this.form.markAllAsTouched();
       return;
     }
 
-    this.loading = true;
+    this.loading.set(true);
     this.authApi.register(this.form.getRawValue()).subscribe({
       next: () => {
         this.snackBar.open(
@@ -59,14 +59,14 @@ export class SignUpComponent {
         setTimeout(() => this.router.navigate(['/auth']), 3000);
       },
       error: (err) => {
-        this.loading = false;
+        this.loading.set(false);
         const message = err?.status === 409
           ? 'An account with this email already exists.'
           : (err?.error?.message || 'Registration failed. Please try again.');
         this.snackBar.open(message, 'Close', { duration: 5000 });
       },
       complete: () => {
-        this.loading = false;
+        this.loading.set(false);
       }
     });
   }

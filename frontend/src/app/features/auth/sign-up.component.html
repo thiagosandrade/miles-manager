@@ -47,9 +47,9 @@
       <button
         class="signup-button"
         type="submit"
-        [disabled]="loading || form.invalid">
-        <span *ngIf="!loading">{{ 'signup.createAccount' | translate }}</span>
-        <span *ngIf="loading">{{ 'signup.creatingAccount' | translate }}</span>
+        [disabled]="( loading() ) || form.invalid">
+        <span *ngIf="!loading()">{{ 'signup.createAccount' | translate }}</span>
+        <span *ngIf="loading()">{{ 'signup.creatingAccount' | translate }}</span>
       </button>
     </form>
 
