@@ -52,25 +52,31 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.token = this.route.snapshot.queryParamMap.get('token') ?? '';
+    this.route.queryParamMap.subscribe(params => {
+      const token = params.get('token') ?? '';
+      this.token = token;
+      this.validToken = false;
+      this.loading = true;
 
-    if (!this.token) {
-      this.loading = false;
-      return;
-    }
-
-    this.authApi.validatePasswordResetToken(this.token).subscribe({
-      next: response => {
-        this.validToken = response.valid;
-        if (response.valid && response.email) {
-          this.form.patchValue({ email: response.email });
-        }
+      if (!token) {
         this.loading = false;
-      },
-      error: () => {
-        this.validToken = false;
-        this.loading = false;
+        return;
       }
+
+      this.authApi.validatePasswordResetToken(token).subscribe({
+        next: response => {
+          if (response.valid && response.email) {
+            this.validToken = true;
+            this.form.patchValue({ email: response.email });
+          }
+
+          this.loading = false;
+        },
+        error: () => {
+          this.validToken = false;
+          this.loading = false;
+        }
+      });
     });
   }
 
