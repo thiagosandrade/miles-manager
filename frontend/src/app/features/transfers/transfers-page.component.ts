@@ -57,7 +57,7 @@ export class TransfersPageComponent implements OnInit {
     const dialogRef = this.dialog.open(CreateTransferDialogComponent, { width: '600px', data });
     dialogRef.afterClosed().subscribe(result => {
       if (!result) return;
-      const request: TransferCreateRequest = { userId: this.storageService.getUser().id, originProgramId: result.originProgramId, destinationProgramId: result.destinationProgramId, milesSent: Number(result.milesSent), bonusPercentage: Number(result.bonusPercentage), milesReceived: Number(result.milesReceived), milesReceived: Number(result.milesReceived), factorFrom: Number(result.factorFrom), factorTo: Number(result.factorTo), transferDate: result.transferDate.toISOString().split('T')[0] };
+      const request: TransferCreateRequest = { userId: this.storageService.getUser().id, originProgramId: result.originProgramId, destinationProgramId: result.destinationProgramId, milesSent: Number(result.milesSent), bonusPercentage: Number(result.bonusPercentage), milesReceived: Number(result.milesReceived), factorFrom: Number(result.factorFrom), factorTo: Number(result.factorTo), transferDate: result.transferDate.toISOString().split('T')[0] };
       this.api.createTransfer(request).subscribe({ next: () => { this.snackbarService.success('Transfer created succesfully.', 3000); this.loadTransfers(this.pageIndex, this.pageSize); this.loading.set(false); }, error: (ex) => { this.snackbarService.error(`Could not create transfer. ${ex.error.title}`, 3000); this.loading.set(false); } });
     });
   }
