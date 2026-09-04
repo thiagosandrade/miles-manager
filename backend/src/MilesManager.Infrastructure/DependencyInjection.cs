@@ -25,6 +25,7 @@ public static class DependencyInjection
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<MilesManagerDbContext>());
         services.AddScoped<IPasswordHasher, Pbkdf2PasswordHasher>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IPasswordResetTokenService, PasswordResetTokenService>();
         services.AddScoped<IMileageAccountingService, MileageAccountingService>();
 
         return services;
