@@ -1,0 +1,12 @@
+{
+  "programs": {
+    "page":{"eyebrow":"Administration","title":"Programmes","subtitle":"Gérez les programmes de fidélité des compagnies aériennes et des hôtels.","newProgram":"Nouveau programme"},
+    "metrics":{"totalPrograms":"Programmes au total","active":"Actifs","inactive":"Inactifs"},
+    "table":{"title":"Programmes","subtitle":"Répertoire","search":"Rechercher des programmes","searchPlaceholder":"Rechercher par nom...","emptyTitle":"Aucun programme trouvé","emptyDescription":"Créez votre premier programme de fidélité.","loyaltyProgram":"Programme de fidélité","columns":{"program":"Programme","status":"Statut","referencePrice":"Prix de référence / 1 000","currency":"Devise"}},
+    "dialog":{"createTitle":"Nouveau programme","updateTitle":"Mettre à jour le programme","programCode":"Code du programme","name":"Nom","programType":"Type de programme","website":"Site web","logoUrl":"URL du logo","referencePrice":"Prix de référence pour 1 000 miles","active":"Actif","createButton":"Créer le programme","updateButton":"Mettre à jour le programme","currencyCode":"Code devise"},
+    "types":{"airline":"Compagnie aérienne","hotel":"Hôtel","bank":"Banque","creditCard":"Carte de crédit"},
+    "status":{"active":"Actif","inactive":"Inactif"},
+    "actions":{"edit":"Modifier le programme","delete":"Supprimer le programme"},
+    "messages":{"loadError":"Impossible de charger les programmes. Veuillez réessayer plus tard."}
+  }
+}
