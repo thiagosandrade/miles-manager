@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TextInputComponent } from '../../shared/components/form-fields';
 import { AuthApiService } from './auth-api.service';
 
@@ -19,7 +20,8 @@ import { AuthApiService } from './auth-api.service';
     MatButtonModule,
     MatCardModule,
     MatSnackBarModule,
-    TextInputComponent
+    TextInputComponent,
+    TranslatePipe
   ]
 })
 export class ForgotPasswordComponent {
@@ -27,6 +29,7 @@ export class ForgotPasswordComponent {
   private authApi = inject(AuthApiService);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
+  private translate = inject(TranslateService);
 
   form: FormGroup;
   loading = false;
@@ -47,15 +50,15 @@ export class ForgotPasswordComponent {
     this.authApi.forgotPassword(this.form.getRawValue().email).subscribe({
       next: () => {
         this.snackBar.open(
-          'If your user exists and is active, you should receive an email.',
-          'Close',
+          this.translate.instant('forgotPassword.requestMessage'),
+          this.translate.instant('common.close'),
           { duration: 5000 }
         );
       },
       error: () => {
         this.snackBar.open(
-          'If your user exists and is active, you should receive an email.',
-          'Close',
+          this.translate.instant('forgotPassword.requestMessage'),
+          this.translate.instant('common.close'),
           { duration: 5000 }
         );
       },
