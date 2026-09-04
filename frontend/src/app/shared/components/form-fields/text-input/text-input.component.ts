@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
         [placeholder]="placeholder"
         [value]="value"
         [disabled]="disabled"
+        [readonly]="readonly"
         (input)="onInput($event)"
         (blur)="onBlur()">
       <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
@@ -34,6 +35,7 @@ export class TextInputComponent implements ControlValueAccessor {
   @Input() type = 'text';
   @Input() placeholder = '';
   @Input() icon = '';
+  @Input() readonly = false;
   @Input() errors: Record<string, string> = {};
 
   value = '';
