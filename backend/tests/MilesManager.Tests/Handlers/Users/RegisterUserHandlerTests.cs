@@ -41,6 +41,31 @@ public class RegisterUserHandlerTests
     }
 
     [Fact]
+    public async Task Handle_NewUser_HasNoLoginOrUpdateTimestamps()
+    {
+        var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
+            .UseInMemoryDatabase($"RegisterUserHandlerTests_{Guid.NewGuid()}")
+            .Options;
+
+        await using var context = new MilesManagerDbContext(options);
+        var mapper = new MapperConfiguration(cfg => cfg.CreateMap<AppUser, UserDetailsDTO>()).CreateMapper();
+        var handler = new RegisterUserHandler(
+            new Infrastructure.Persistence.Repositories.UserRepository(context),
+            new TestPasswordHasher(),
+            mapper);
+
+        var result = await handler.Handle(
+            new RegisterUserCommand("newuser@test.com", "New User", "password123"),
+            TestContext.Current.CancellationToken);
+
+        result.Status.Should().Be(MilesManager.Application.Common.ResultStatus.Success);
+
+        var created = await context.Users.SingleAsync(TestContext.Current.CancellationToken);
+        created.LastLoginAtUtc.Should().BeNull();
+        created.UpdatedAtUtc.Should().BeNull();
+    }
+
+    [Fact]
     public async Task Handle_ReturnsConflict_WhenEmailAlreadyExists()
     {
         var options = new DbContextOptionsBuilder<MilesManagerDbContext>()
