@@ -19,6 +19,15 @@ export interface RegisterResponse {
   isActive: boolean;
 }
 
+export interface ForgotPasswordResponse {
+  message?: string;
+}
+
+export interface PasswordResetTokenValidation {
+  valid: boolean;
+  email: string | null;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,6 +44,24 @@ export class AuthApiService {
 
   register(request: RegisterRequest): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(`${this.apiBaseUrl}/register`, request);
+  }
+
+  forgotPassword(email: string): Observable<void> {
+    return this.http.post<void>(`${this.apiBaseUrl}/forgot-password`, { email });
+  }
+
+  validatePasswordResetToken(token: string): Observable<PasswordResetTokenValidation> {
+    return this.http.get<PasswordResetTokenValidation>(
+      `${this.apiBaseUrl}/reset-password/validate`,
+      { params: { token } }
+    );
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<void> {
+    return this.http.post<void>(`${this.apiBaseUrl}/reset-password`, {
+      token,
+      newPassword
+    });
   }
 
   refresh(): Observable<LoginResponse> {
