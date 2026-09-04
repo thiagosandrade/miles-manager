@@ -1,0 +1,13 @@
+{
+  "users": {
+    "page": {"eyebrow":"Administration","title":"Benutzer","subtitle":"Verwalten Sie Anwendungsbenutzer, Einladungen und Zugriffsberechtigungen.","newUser":"Benutzer erstellen"},
+    "details": {"eyebrow":"Administration","title":"Benutzerdetails","subtitle":"Kontoinformationen und Aktivitäten prüfen.","status":"Status","created":"Erstellt","lastLogin":"Letzte Anmeldung","lastUpdated":"Zuletzt aktualisiert","accountInformation":"Kontoinformationen","userId":"Benutzer-ID"},
+    "metrics": {"totalUsers":"Benutzer gesamt","activeUsers":"Aktive Benutzer","inactiveUsers":"Inaktive Benutzer"},
+    "table": {"title":"Benutzer","subtitle":"Verzeichnis","search":"Benutzer suchen","searchPlaceholder":"Nach Name oder E-Mail suchen...","emptyTitle":"Keine Benutzer gefunden","emptyDescription":"Erstellen Sie Ihren ersten Benutzer, um zu beginnen.","columns":{"fullName":"Vollständiger Name","email":"E-Mail","status":"Status","createdAt":"Erstellt am","lastLoginAt":"Letzte Anmeldung","user":"Benutzer"}},
+    "dialog": {"createTitle":"Benutzer erstellen","updateTitle":"Benutzer aktualisieren","subtitle":"Einen neuen Miles Manager-Benutzer hinzufügen.","fullName":"Vollständiger Name","fullNamePlaceholder":"Max Mustermann","email":"E-Mail","emailPlaceholder":"max@email.com","password":"Passwort","passwordPlaceholder":"Passwort","createButton":"Benutzer erstellen","updateButton":"Benutzer aktualisieren","newPassword":"Neues Passwort","newPasswordPlaceholder":"Leer lassen, um das aktuelle Passwort beizubehalten","active":"Aktiv","accountInformation":"Kontoinformationen","createdAt":"Erstellt","updatedAt":"Zuletzt aktualisiert","lastLoginAt":"Letzte Anmeldung"},
+    "validation": {"fullNameRequired":"Der vollständige Name ist erforderlich.","emailRequired":"Die E-Mail ist erforderlich.","emailInvalid":"Ungültige E-Mail.","passwordRequired":"Das Passwort ist erforderlich."},
+    "status": {"active":"Aktiv","inactive":"Inaktiv"},
+    "actions": {"create":"Benutzer erstellen","edit":"Benutzer bearbeiten","delete":"Benutzer löschen"},
+    "messages": {"loadError":"Benutzer konnten nicht geladen werden. Bitte versuchen Sie es später erneut."}
+  }
+}
