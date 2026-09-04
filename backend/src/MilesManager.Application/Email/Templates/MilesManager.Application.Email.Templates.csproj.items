@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildProjectDirectory)/Email/Templates/*.html" />
+  </ItemGroup>
+</Project>
