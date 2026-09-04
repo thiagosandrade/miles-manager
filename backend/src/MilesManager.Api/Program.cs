@@ -13,7 +13,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplication();
+builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddPresentation();
 
@@ -36,7 +36,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = signingKey,
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero,
-
             RoleClaimType = ClaimTypes.Role
         };
     });
@@ -51,28 +50,22 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-
 app.UseSwagger();
 app.UseSwaggerUI();
-
 app.UseCors("frontend");
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<MilesManagerDbContext>();
-
     await dbContext.Database.MigrateAsync();
 }
 
