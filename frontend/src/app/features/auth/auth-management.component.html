@@ -61,6 +61,8 @@
     <div class="signup-link">
       {{ 'auth.noAccount' | translate }}
       <button type="button" (click)="goToSignUp()">{{ 'auth.signup' | translate }}</button>
+      <span class="link-separator">•</span>
+      <button type="button" (click)="goToForgotPassword()">Forgot password?</button>
     </div>
 
     <div class="login-footer">
