@@ -1,0 +1,31 @@
+{
+  "dashboard": {
+    "eyebrow": "Overview",
+    "title": "Dashboard",
+    "subtitle": "Track mileage activity, value and recent movement across your loyalty programs.",
+    "cards": {
+      "programSummary": "Program Summary",
+      "programSummarySubtitle": "Mileage, cost and value by loyalty program.",
+      "programs": "programs",
+      "recentPurchases": "Recent Purchases",
+      "recentTransfers": "Recent Transfers",
+      "recentRedemptions": "Recent Redemptions"
+    },
+    "programs": {
+      "program": "Program",
+      "miles": "Miles",
+      "milesSent": "Miles Sent + Bonus",
+      "costPerThousand": "Cost / 1,000",
+      "referencePrice": "Reference / 1,000",
+      "profitLoss": "Profit / Loss",
+      "empty": "No program data available."
+    },
+    "activity": {
+      "noPurchases": "No recent purchases.",
+      "noTransfers": "No recent transfers.",
+      "noRedemptions": "No recent redemptions."
+    },
+    "redemption-miles": "miles",
+    "transfer": { "to": "to" }
+  }
+}
