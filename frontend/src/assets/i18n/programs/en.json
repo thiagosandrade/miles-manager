@@ -1,0 +1,12 @@
+{
+  "programs": {
+    "page":{"eyebrow":"Administration","title":"Programs","subtitle":"Manage airline and hotel loyalty programs.","newProgram":"New Program"},
+    "metrics":{"totalPrograms":"Total Programs","active":"Active","inactive":"Inactive"},
+    "table":{"title":"Programs","subtitle":"Directory","search":"Search Programs","searchPlaceholder":"Search by name...","emptyTitle":"No programs found","emptyDescription":"Create your first loyalty program.","loyaltyProgram":"Loyalty Program","columns":{"program":"Program","status":"Status","referencePrice":"Reference price / 1k","currency":"Currency"}},
+    "dialog":{"createTitle":"New Program","updateTitle":"Update Program","programCode":"Program Code","name":"Name","programType":"Program Type","website":"Website","logoUrl":"Logo URL","referencePrice":"Reference Price per 1,000 Miles","active":"Active","createButton":"Create Program","updateButton":"Update Program","currencyCode":"Currency Code"},
+    "types":{"airline":"Airline","hotel":"Hotel","bank":"Bank","creditCard":"Credit Card"},
+    "status":{"active":"Active","inactive":"Inactive"},
+    "actions":{"edit":"Edit program","delete":"Delete program"},
+    "messages":{"loadError":"Could not load programs. Please try again later."}
+  }
+}
