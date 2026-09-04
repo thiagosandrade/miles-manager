@@ -8,6 +8,18 @@ export const AUTH_ROUTES: Routes = [
         .then(c => c.SignUpComponent)
   },
   {
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./forgot-password.component')
+        .then(c => c.ForgotPasswordComponent)
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('./reset-password.component')
+        .then(c => c.ResetPasswordComponent)
+  },
+  {
     path: '',
     pathMatch: 'full',
     loadComponent: () =>
