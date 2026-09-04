@@ -84,7 +84,7 @@ public sealed class PasswordResetTokenService(IConfiguration configuration) : IP
             data = new PasswordResetTokenData(userId, tokenVersion, expiresAt);
             return true;
         }
-        catch (Exception) when (Exception is FormatException or JsonException or KeyNotFoundException)
+        catch (Exception)
         {
             return false;
         }
