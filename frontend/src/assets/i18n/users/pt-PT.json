@@ -1,0 +1,13 @@
+{
+  "users": {
+    "page": {"eyebrow":"Administração","title":"Utilizadores","subtitle":"Gira os utilizadores da aplicação, convites e permissões de acesso.","newUser":"Criar utilizador"},
+    "details": {"eyebrow":"Administração","title":"Detalhes do utilizador","subtitle":"Consulte as informações da conta e a atividade.","status":"Estado","created":"Criado","lastLogin":"Último início de sessão","lastUpdated":"Última atualização","accountInformation":"Informações da conta","userId":"ID do utilizador"},
+    "metrics": {"totalUsers":"Total de utilizadores","activeUsers":"Utilizadores ativos","inactiveUsers":"Utilizadores inativos"},
+    "table": {"title":"Utilizadores","subtitle":"Diretório","search":"Pesquisar utilizadores","searchPlaceholder":"Pesquisar por nome ou e-mail...","emptyTitle":"Nenhum utilizador encontrado","emptyDescription":"Crie o seu primeiro utilizador para começar.","columns":{"fullName":"Nome completo","email":"E-mail","status":"Estado","createdAt":"Criado em","lastLoginAt":"Último início de sessão","user":"Utilizador"}},
+    "dialog": {"createTitle":"Criar utilizador","updateTitle":"Atualizar utilizador","subtitle":"Adicione um novo utilizador do Miles Manager.","fullName":"Nome completo","fullNamePlaceholder":"João Silva","email":"E-mail","emailPlaceholder":"joao@email.com","password":"Palavra-passe","passwordPlaceholder":"Palavra-passe","createButton":"Criar utilizador","updateButton":"Atualizar utilizador","newPassword":"Nova palavra-passe","newPasswordPlaceholder":"Deixe em branco para manter a palavra-passe atual","active":"Ativo","accountInformation":"Informações da conta","createdAt":"Criado","updatedAt":"Última atualização","lastLoginAt":"Último acesso"},
+    "validation": {"fullNameRequired":"O nome completo é obrigatório.","emailRequired":"O e-mail é obrigatório.","emailInvalid":"E-mail inválido.","passwordRequired":"A palavra-passe é obrigatória."},
+    "status": {"active":"Ativo","inactive":"Inativo"},
+    "actions": {"create":"Criar utilizador","edit":"Editar utilizador","delete":"Eliminar utilizador"},
+    "messages": {"loadError":"Não foi possível carregar os utilizadores. Tente novamente mais tarde."}
+  }
+}
