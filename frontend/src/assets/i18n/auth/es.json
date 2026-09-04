@@ -1,0 +1,24 @@
+{
+  "auth": {
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "loginSuccess": "Inicio de sesión correcto",
+    "loginFailed": "Error al iniciar sesión: {{message}}"
+  },
+  "resetPassword": {
+    "title": "Restablece tu contraseña",
+    "validating": "Validando tu enlace para restablecer la contraseña...",
+    "subtitle": "Elige una nueva contraseña para tu cuenta.",
+    "invalidLink": "Este enlace para restablecer la contraseña no es válido o ha caducado.",
+    "newPassword": "Nueva contraseña",
+    "confirmPassword": "Confirmar nueva contraseña",
+    "passwordRequired": "La contraseña es obligatoria.",
+    "passwordMinLength": "La contraseña debe tener al menos 8 caracteres.",
+    "passwordConfirmationRequired": "La confirmación de la contraseña es obligatoria.",
+    "passwordsMismatch": "Las contraseñas no coinciden.",
+    "updating": "Actualizando...",
+    "updatePassword": "Actualizar contraseña",
+    "backToSignIn": "Volver a iniciar sesión",
+    "success": "Tu contraseña se ha actualizado correctamente.",
+    "updateError": "No se pudo actualizar la contraseña. Inténtalo de nuevo."
+  }
+}
