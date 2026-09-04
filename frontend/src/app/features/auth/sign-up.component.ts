@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TextInputComponent } from '../../shared/components/form-fields';
 import { AuthApiService } from './auth-api.service';
 
@@ -29,7 +29,6 @@ export class SignUpComponent {
   private authApi = inject(AuthApiService);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
-  private translate = inject(TranslateService);
 
   form: FormGroup;
   readonly loading = signal(false);
@@ -52,8 +51,8 @@ export class SignUpComponent {
     this.authApi.register(this.form.getRawValue()).subscribe({
       next: () => {
         this.snackBar.open(
-          this.translate.instant('signup.pendingApproval'),
-          this.translate.instant('common.close'),
+          'Your account will be soon approved by an admin',
+          'Close',
           { duration: 3000 }
         );
 
@@ -62,9 +61,9 @@ export class SignUpComponent {
       error: (err) => {
         this.loading.set(false);
         const message = err?.status === 409
-          ? this.translate.instant('signup.emailExists')
-          : (err?.error?.message || this.translate.instant('signup.registrationFailed'));
-        this.snackBar.open(message, this.translate.instant('common.close'), { duration: 5000 });
+          ? 'An account with this email already exists.'
+          : (err?.error?.message || 'Registration failed. Please try again.');
+        this.snackBar.open(message, 'Close', { duration: 5000 });
       },
       complete: () => {
         this.loading.set(false);
