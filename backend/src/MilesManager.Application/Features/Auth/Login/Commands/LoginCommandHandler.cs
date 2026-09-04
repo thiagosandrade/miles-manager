@@ -4,7 +4,7 @@ using MilesManager.Application.Common;
 using MilesManager.Application.Features.Users.Abstractions;
 using MilesManager.Application.Features.Users.DTOs;
 
-namespace MilesManager.Application.Features.Auth.Login;
+namespace MilesManager.Application.Features.Auth.Login.Commands;
 
 public sealed class LoginCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IJwtTokenService tokenService) : IRequestHandler<LoginCommand, Result<AuthSession>>
 {

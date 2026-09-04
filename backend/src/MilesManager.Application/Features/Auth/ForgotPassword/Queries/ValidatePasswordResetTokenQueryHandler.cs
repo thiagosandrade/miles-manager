@@ -3,7 +3,7 @@ using MilesManager.Application.Abstractions;
 using MilesManager.Application.Common;
 using MilesManager.Application.Features.Users.Abstractions;
 
-namespace MilesManager.Application.Features.Auth.ForgotPassword;
+namespace MilesManager.Application.Features.Auth.ForgotPassword.Queries;
 
 public sealed class ValidatePasswordResetTokenQueryHandler(
     IUserRepository userRepository,

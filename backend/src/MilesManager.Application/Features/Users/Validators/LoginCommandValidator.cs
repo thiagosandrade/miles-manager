@@ -1,5 +1,5 @@
 using FluentValidation;
-using MilesManager.Application.Features.Auth.Login;
+using MilesManager.Application.Features.Auth.Login.Commands;
 
 namespace MilesManager.Application.Features.Users.Validators;
 

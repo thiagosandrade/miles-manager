@@ -5,7 +5,7 @@ using MilesManager.Application.Features.Users.Abstractions;
 using MilesManager.Application.Features.Users.DTOs;
 using MilesManager.Domain.Users;
 
-namespace MilesManager.Application.Features.Auth.RefreshToken;
+namespace MilesManager.Application.Features.Auth.RefreshToken.Commands;
 
 internal sealed class RefreshTokenHandler(IUserRepository userRepository, IJwtTokenService tokenService) : IRequestHandler<RefreshTokenCommand, Result<AuthSession>>
 {

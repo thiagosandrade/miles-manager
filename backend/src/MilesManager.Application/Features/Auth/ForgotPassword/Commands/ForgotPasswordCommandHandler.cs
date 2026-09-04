@@ -5,7 +5,7 @@ using MilesManager.Application.Common;
 using MilesManager.Application.Email;
 using MilesManager.Application.Features.Users.Abstractions;
 
-namespace MilesManager.Application.Features.Auth.ForgotPassword;
+namespace MilesManager.Application.Features.Auth.ForgotPassword.Commands;
 
 public sealed class ForgotPasswordCommandHandler(
     IUserRepository userRepository,

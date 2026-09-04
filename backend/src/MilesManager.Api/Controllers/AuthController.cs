@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MilesManager.Api.Common;
 using MilesManager.Application.Features.Users.Commands.RegisterUser;
-using MilesManager.Application.Features.Auth.Login;
-using MilesManager.Application.Features.Auth.ForgotPassword;
 using MilesManager.Application.Features.Users.DTOs;
+using MilesManager.Application.Features.Auth.ForgotPassword.Queries;
+using MilesManager.Application.Features.Auth.ForgotPassword.Commands;
+using MilesManager.Application.Features.Auth.Login.Commands;
+using MilesManager.Application.Features.Auth.RefreshToken.Commands;
 
 namespace MilesManager.Api.Controllers;
 
@@ -60,7 +62,7 @@ public sealed class AuthController(ISender sender) : ApiController(sender)
         var userId = GetUserId();
         if (userId == Guid.Empty) return Unauthorized();
 
-        var result = await Sender.Send(new Application.Features.Auth.RefreshToken.RefreshTokenCommand(userId));
+        var result = await Sender.Send(new RefreshTokenCommand(userId));
         return Convert(result);
     }
 }

@@ -1,7 +1,7 @@
 using MediatR;
 using MilesManager.Application.Common;
 
-namespace MilesManager.Application.Features.Auth.ForgotPassword;
+namespace MilesManager.Application.Features.Auth.ForgotPassword.Queries;
 
 public sealed record ValidatePasswordResetTokenQuery(string Token) : IRequest<Result<PasswordResetTokenValidation>>;
 
