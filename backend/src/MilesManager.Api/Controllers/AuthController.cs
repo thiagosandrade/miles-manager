@@ -43,7 +43,9 @@ public sealed class AuthController(ISender sender) : ApiController(sender)
     public async Task<ActionResult<PasswordResetTokenValidation>> ValidateResetPasswordToken([FromQuery] string token)
     {
         var result = await Sender.Send(new ValidatePasswordResetTokenQuery(token));
-        return Convert(result);
+        return result.Status == Application.Common.ResultStatus.Success && result.Value is not null
+            ? Ok(result.Value)
+            : Convert(result);
     }
 
     [HttpPost("reset-password")]
