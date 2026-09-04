@@ -1,0 +1,10 @@
+{
+  "userRoles": {
+    "page":{"eyebrow":"Administration","title":"User Roles","subtitle":"Assign and manage roles for application users."},
+    "metrics":{"totalUsers":"Total Users"},
+    "table":{"title":"User Roles","subtitle":"Assignments","emptyTitle":"No users found","emptyDescription":"Users will appear here when available.","columns":{"user":"User","email":"Email","roles":"Roles"}},
+    "actions":{"edit":"Manage roles"},
+    "messages":{"loadError":"Could not load users."},
+    "dialog":{"title":"Manage User Roles","subtitle":"Assign or remove roles for this user.","roles":"Roles"}
+  }
+}
