@@ -15,7 +15,10 @@
     "emailPlaceholder": "john.doe@email.com",
     "passwordPlaceholder": "Password",
     "noAccount": "Don't have an account?",
-    "signup": "Sign Up"
+    "signup": "Sign Up",
+    "forgotPassword": "Forgot password?",
+    "loginSuccess": "Login successful",
+    "loginFailed": "Login failed: {{message}}"
   },
   "common": {
     "ok": "OK",
@@ -262,19 +265,18 @@
       "loadError": "Could not load programs. Please try again later."
     }
   },
-  "programFactors":{
-    "page":{
-      "eyebrow":"Transfer Rates",
-      "title":"Transfer rates between programs",
-      "subtitle":"Add new Transfer rates between programs"
+  "programFactors": {
+    "page": {
+      "eyebrow": "Transfer Rates",
+      "title": "Transfer rates between programs",
+      "subtitle": "Add new Transfer rates between programs"
     },
-    "table":{
-      "title":"Transfer Rates",
-      "subtitle":"Directory",
-      "emptyTitle":"No transfer rates yet.",
-      "emptyDescription":"Create your first transfer rate between program."
+    "table": {
+      "title": "Transfer Rates",
+      "subtitle": "Directory",
+      "emptyTitle": "No transfer rates yet.",
+      "emptyDescription": "Create your first transfer rate between program."
     }
-
   },
   "balances": {
     "eyebrow": "Programs",
@@ -574,5 +576,30 @@
     "creatingAccount": "Creating Account...",
     "alreadyHaveAccount": "Already have an account?",
     "signin": "Sign In"
+  },
+  "forgotPassword": {
+    "title": "Forgot password?",
+    "subtitle": "Enter your email address and we will send you a link to reset your password.",
+    "sending": "Sending...",
+    "sendResetLink": "Send reset link",
+    "rememberPassword": "Remember your password?",
+    "requestMessage": "If your user exists and is active, you should receive an email."
+  },
+  "resetPassword": {
+    "title": "Reset your password",
+    "validating": "Validating your reset link...",
+    "subtitle": "Choose a new password for your account.",
+    "invalidLink": "This password reset link is invalid or has expired.",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "passwordRequired": "Password is required.",
+    "passwordMinLength": "Password must be at least 8 characters.",
+    "passwordConfirmationRequired": "Password confirmation is required.",
+    "passwordsMismatch": "Passwords do not match.",
+    "updating": "Updating...",
+    "updatePassword": "Update password",
+    "backToSignIn": "Back to Sign In",
+    "success": "Your password has been updated successfully.",
+    "updateError": "Could not update your password. Please try again."
   }
 }
