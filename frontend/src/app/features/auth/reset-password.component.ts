@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TextInputComponent } from '../../shared/components/form-fields';
 import { AuthApiService } from './auth-api.service';
 
@@ -27,7 +28,8 @@ function passwordsMatch(control: AbstractControl): ValidationErrors | null {
     MatButtonModule,
     MatCardModule,
     MatSnackBarModule,
-    TextInputComponent
+    TextInputComponent,
+    TranslatePipe
   ]
 })
 export class ResetPasswordComponent implements OnInit {
@@ -36,6 +38,7 @@ export class ResetPasswordComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
+  private translate = inject(TranslateService);
 
   form: FormGroup;
   token = '';
@@ -73,7 +76,7 @@ export class ResetPasswordComponent implements OnInit {
           this.loading.set(false);
         },
         error: () => {
-          this.validToken.set(false) ;
+          this.validToken.set(false);
           this.loading.set(false);
         }
       });
@@ -89,16 +92,20 @@ export class ResetPasswordComponent implements OnInit {
     this.saving.set(true);
     this.authApi.resetPassword(this.token, this.form.getRawValue().newPassword).subscribe({
       next: () => {
-        this.snackBar.open('Your password has been updated successfully.', 'Close', { duration: 4000 });
+        this.snackBar.open(
+          this.translate.instant('resetPassword.success'),
+          this.translate.instant('common.close'),
+          { duration: 4000 }
+        );
         setTimeout(() => this.router.navigate(['/auth']), 1500);
       },
       error: err => {
         this.saving.set(false);
         this.snackBar.open(
           err?.status === 401
-            ? 'This password reset link is invalid or has expired.'
-            : 'Could not update your password. Please try again.',
-          'Close',
+            ? this.translate.instant('resetPassword.invalidLink')
+            : this.translate.instant('resetPassword.updateError'),
+          this.translate.instant('common.close'),
           { duration: 5000 }
         );
       },
