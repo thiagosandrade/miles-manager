@@ -1,0 +1,24 @@
+{
+  "auth": {
+    "forgotPassword": "Forgot password?",
+    "loginSuccess": "Login successful",
+    "loginFailed": "Login failed: {{message}}"
+  },
+  "resetPassword": {
+    "title": "Reset your password",
+    "validating": "Validating your reset link...",
+    "subtitle": "Choose a new password for your account.",
+    "invalidLink": "This password reset link is invalid or has expired.",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "passwordRequired": "Password is required.",
+    "passwordMinLength": "Password must be at least 8 characters.",
+    "passwordConfirmationRequired": "Password confirmation is required.",
+    "passwordsMismatch": "Passwords do not match.",
+    "updating": "Updating...",
+    "updatePassword": "Update password",
+    "backToSignIn": "Back to Sign In",
+    "success": "Your password has been updated successfully.",
+    "updateError": "Could not update your password. Please try again."
+  }
+}
