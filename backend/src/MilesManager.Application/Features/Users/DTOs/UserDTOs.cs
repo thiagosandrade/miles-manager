@@ -25,10 +25,10 @@ public sealed class UserDetailsDTO
     public string FullName { get; set; } = string.Empty;
     public bool IsActive { get; set; }
     public DateTimeOffset CreatedAtUtc { get; set; }
-    public DateTimeOffset UpdatedAtUtc { get; set; }
-    public DateTimeOffset LastLoginAtUtc { get; set; }
+    public DateTimeOffset? UpdatedAtUtc { get; set; }
+    public DateTimeOffset? LastLoginAtUtc { get; set; }
 
-    public ICollection<UserRoleDTO>? Roles {  get; set; } = [];
+    public ICollection<UserRoleDTO>? Roles { get; set; } = [];
 }
 
 public sealed record IssuedToken(string AccessToken, DateTimeOffset ExpiresAtUtc);
