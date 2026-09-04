@@ -13,8 +13,19 @@ export const provideTranslation: EnvironmentProviders =
 
         resources: [
 
-          './assets/i18n/',
-
+          './assets/i18n/common/',
+          './assets/i18n/toolbar/',
+          './assets/i18n/sidebar/',
+          './assets/i18n/dashboard/',
+          './assets/i18n/users/',
+          './assets/i18n/programs/',
+          './assets/i18n/program-factors/',
+          './assets/i18n/balances/',
+          './assets/i18n/purchases/',
+          './assets/i18n/transfers/',
+          './assets/i18n/redemptions/',
+          './assets/i18n/user-roles/',
+          './assets/i18n/calculator/',
           './assets/i18n/auth/'
 
         ]
@@ -22,7 +33,6 @@ export const provideTranslation: EnvironmentProviders =
       }),
 
       fallbackLang: 'en',
-
       lang: 'en'
 
     })
