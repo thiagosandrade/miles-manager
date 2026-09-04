@@ -42,6 +42,7 @@ import { formatDateOnly } from '../../shared/date-utils';
     pagedData = signal<MileagePurchase[]>([]);
     private pageIndex = 0;
     private pageSize = 5;
+    private currentFilter = '';
     loading = signal(false);
     isRateLimitReached = signal(false);
     dialog = inject(MatDialog);
@@ -76,8 +77,7 @@ import { formatDateOnly } from '../../shared/date-utils';
 
         next: purchases => {
           this.allData.set(purchases);
-          this.data.set(purchases);
-          this.updatePagedData();
+          this.applyFilter(this.currentFilter);
           this.loading.set(false);
         },
 
@@ -114,6 +114,7 @@ import { formatDateOnly } from '../../shared/date-utils';
 
     applyFilter(filter: string): void {
 
+      this.currentFilter = filter;
       const normalizedFilter = filter.trim().toLowerCase();
 
       const filtered = this.allData().filter(item =>

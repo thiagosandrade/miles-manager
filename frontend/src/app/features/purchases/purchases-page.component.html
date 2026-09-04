@@ -1,526 +1,153 @@
 <section class="page">
 
-  <!-- Header -->
-
   <header class="page-header">
-
     <div>
-
-      <p class="eyebrow">
-        {{ 'purchases.page.eyebrow' | translate }}
-      </p>
-
-      <h1>
-        {{ 'purchases.page.title' | translate }}
-      </h1>
-
-      <p class="subtitle">
-        {{ 'purchases.page.subtitle' | translate }}
-      </p>
-
+      <p class="eyebrow">{{ 'purchases.page.eyebrow' | translate }}</p>
+      <h1>{{ 'purchases.page.title' | translate }}</h1>
+      <p class="subtitle">{{ 'purchases.page.subtitle' | translate }}</p>
     </div>
-
-    <button
-      class="primary-button"
-      type="button"
-      (click)="openCreatePurchaseDialog()">
-
+    <button class="primary-button" type="button" (click)="openCreatePurchaseDialog()">
       <mat-icon>add</mat-icon>
-
-      <span>
-        {{ 'purchases.page.newPurchase' | translate }}
-      </span>
-
+      <span>{{ 'purchases.page.newPurchase' | translate }}</span>
     </button>
-
   </header>
 
-  <!-- Metrics -->
-
   <section class="metrics">
-
     <article class="metric-card">
-
-      <div class="metric-icon">
-
-        <mat-icon>shopping_cart</mat-icon>
-
-      </div>
-
-      <div>
-
-        <span>
-          {{ 'purchases.metrics.totalPurchases' | translate }}
-        </span>
-
-        <strong>{{ data().length }}</strong>
-
-      </div>
-
+      <div class="metric-icon"><mat-icon>shopping_cart</mat-icon></div>
+      <div><span>{{ 'purchases.metrics.totalPurchases' | translate }}</span><strong>{{ data().length }}</strong></div>
     </article>
-
     <article class="metric-card">
-
-      <div class="metric-icon success">
-
-        <mat-icon>payments</mat-icon>
-
-      </div>
-
-      <div>
-
-        <span>
-          {{ 'purchases.metrics.totalAmount' | translate }}
-        </span>
-
-        <strong>
-
-          {{ data().reduce((sum, p) => sum + p.amountPaid, 0) | number:'1.2-2' }}
-
-        </strong>
-
-      </div>
-
+      <div class="metric-icon success"><mat-icon>payments</mat-icon></div>
+      <div><span>{{ 'purchases.metrics.totalAmount' | translate }}</span><strong>{{ data().reduce((sum, p) => sum + p.amountPaid, 0) | number:'1.2-2' }}</strong></div>
     </article>
-
     <article class="metric-card">
-
-      <div class="metric-icon">
-
-        <mat-icon>analytics</mat-icon>
-
-      </div>
-
-      <div>
-
-        <span>
-          {{ 'purchases.metrics.averagePurchase' | translate }}
-        </span>
-
-        <strong>{{ averagePurchase | number:'1.2-2' }}</strong>
-
-      </div>
-
+      <div class="metric-icon"><mat-icon>analytics</mat-icon></div>
+      <div><span>{{ 'purchases.metrics.averagePurchase' | translate }}</span><strong>{{ averagePurchase | number:'1.2-2' }}</strong></div>
     </article>
-
   </section>
 
-  <!-- Error -->
-
-  <div
-    class="feedback"
-    *ngIf="isRateLimitReached()">
-
-    <strong>
-      {{ 'common.error' | translate }}
-    </strong>
-
-    <span>
-
-      {{ 'common.loadError' | translate }}
-
-    </span>
-
+  <div class="feedback" *ngIf="isRateLimitReached()">
+    <strong>{{ 'common.error' | translate }}</strong>
+    <span>{{ 'common.loadError' | translate }}</span>
   </div>
-  
-  <!-- Table -->
 
-    <app-table
-      
-      [title]="'purchases.table.title' | translate"
-      
-      [subtitle]="'purchases.table.subtitle' | translate"
-
-      [loading]="loading()"
-
-      [dataSource]="pagedData()"
-
-      [length]="data().length"
-      (page)="onPageChange($event)"
-
-      [showPaginator]="true"
-
-      [showToolbar]="true"
-
-      emptyIcon="shopping_cart"
-
-      [emptyTitle]="'purchases.table.emptyTitle' | translate"
-
-      [emptyDescription]="'purchases.table.emptyDescription' | translate">
-
-
-      <!-- ========================================================
-          Toolbar
-      ========================================================= -->
-
-      <div table-toolbar>
-
-        <mat-form-field 
-          appearance="outline"
-          class="search-field">
-
-          <mat-label>
-            {{ 'purchases.table.search' | translate }}
-          </mat-label>
-
-          <mat-icon matPrefix>
-            search
-          </mat-icon>
-          
-          <input
-            matInput
-            [placeholder]="'purchases.table.searchPlaceholder' | translate"
-            (input)="applyFilter($any($event.target).value)">
-
-        </mat-form-field>
-
-      </div>
-
-
-      <!-- ========================================================
-          Empty State
-      ========================================================= -->
-
-      <button
-        empty-action
-        class="primary-button"
-        type="button"
-        (click)="openCreatePurchaseDialog()">
-
-        <mat-icon>add</mat-icon>
-
-        <span>
-          {{ 'purchases.page.newPurchase' | translate }}
-        </span>
-
-      </button>
-
-
-      <!-- ========================================================
-          Desktop Table
-      ========================================================= -->
-
-      <div class="desktop-table">
-
-        <table
-          mat-table
-          [dataSource]="pagedData()">
-
-
-          <!-- Program -->
-
-          <ng-container matColumnDef="programName">
-
-            <th mat-header-cell *matHeaderCellDef>
-              {{ 'purchases.table.columns.program' | translate }}
-            </th>
-
-            <td mat-cell *matCellDef="let purchase">
-
-              <div class="user-info">
-
-                <div class="avatar">
-                  {{ purchase.programName.charAt(0) | uppercase }}
-                </div>
-
-                <div class="user-details">
-
-                  <strong>
-                    {{ purchase.programName }}
-                  </strong>
-
-                  <span>
-                    {{ purchase.partner || ('purchases.table.directPurchase' | translate) }}
-                  </span>
-
-                </div>
-
-              </div>
-
-            </td>
-
-          </ng-container>
-
-
-          <!-- Amount Paid -->
-
-          <ng-container matColumnDef="amountPaid">
-
-            <th mat-header-cell *matHeaderCellDef>
-              {{ 'purchases.table.columns.amountPaid' | translate }}
-            </th>
-
-            <td mat-cell *matCellDef="let purchase">
-              {{ purchase.amountPaid | currency:purchase.currencyCode }}
-            </td>
-
-          </ng-container>
-
-
-          <!-- Miles Purchased -->
-
-          <ng-container matColumnDef="milesPurchased">
-
-            <th mat-header-cell *matHeaderCellDef>
-              {{ 'purchases.table.columns.milesPurchased' | translate }}
-            </th>
-
-            <td mat-cell *matCellDef="let purchase">
-              {{ purchase.milesPurchased | number }}
-            </td>
-
-          </ng-container>
-
-          <!-- Purchase Date -->
-
-          <ng-container matColumnDef="purchaseDate">
-
-            <th mat-header-cell *matHeaderCellDef>
-              {{ 'purchases.table.columns.purchaseDate' | translate }}
-            </th>
-
-            <td mat-cell *matCellDef="let purchase">
-              {{ purchase.purchaseDate | date:'mediumDate' }}
-            </td>
-
-          </ng-container>
-
-          <!-- Status -->
-
-          <ng-container matColumnDef="purchaseStatus">
-
-            <th mat-header-cell *matHeaderCellDef>
-              {{ 'purchases.table.columns.status' | translate }}
-            </th>
-
-            <td mat-cell *matCellDef="let purchase">
-
-              <span
-                class="status-pill"
-                [class.inactive]="purchase.purchaseStatus !== PurchaseStatus.Completed">
-
-                <span class="status-dot"></span>
-
-                {{
-                  ('common.' + getPurchaseStatus(purchase.purchaseStatus).toLowerCase())
-                    | translate
-                }}
-
-              </span>
-
-            </td>
-
-          </ng-container>
-
-          <!-- Actions -->
-
-          <ng-container matColumnDef="actions">
-
-            <th
-              mat-header-cell
-              *matHeaderCellDef
-              class="actions-column">
-            </th>
-
-            <td
-              mat-cell
-              *matCellDef="let purchase"
-              class="actions-column">
-
-              <button
-                class="icon-button"
-                [attr.aria-label]="'purchases.actions.edit' | translate"
-                (click)="openEditPurchaseDialog(purchase)">
-
-                <mat-icon>
-                  edit
-                </mat-icon>
-
-              </button>
-
-              <button
-                class="icon-button"
-                [attr.aria-label]="'purchases.actions.clone' | translate"
-                (click)="clonePurchase(purchase)">
-
-                <mat-icon>content_copy</mat-icon>
-
-              </button>
-
-              <button
-                class="icon-button danger"
-                [attr.aria-label]="'purchases.actions.delete' | translate"
-                (click)="deletePurchase(purchase)">
-
-                <mat-icon>
-                  delete
-                </mat-icon>
-
-              </button>
-
-            </td>
-
-          </ng-container>
-
-          <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumns">
-          </tr>
-
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumns;">
-          </tr>
-
-        </table>
-
-      </div>
-
-
-      <!-- ========================================================
-          Mobile Cards
-      ========================================================= -->
-
-      <div class="mobile-purchases">
-
-        <article
-          class="purchase-card"
-          *ngFor="let purchase of pagedData()">
-
-
-          <!-- Header -->
-
-          <div class="purchase-header">
-
+  <app-table
+    [title]="'purchases.table.title' | translate"
+    [subtitle]="'purchases.table.subtitle' | translate"
+    [loading]="loading()"
+    [dataSource]="pagedData()"
+    [length]="data().length"
+    (page)="onPageChange($event)"
+    [showPaginator]="true"
+    [showToolbar]="true"
+    emptyIcon="shopping_cart"
+    [emptyTitle]="'purchases.table.emptyTitle' | translate"
+    [emptyDescription]="'purchases.table.emptyDescription' | translate">
+
+    <div table-toolbar>
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>{{ 'purchases.table.search' | translate }}</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput [placeholder]="'purchases.table.searchPlaceholder' | translate" (input)="applyFilter($any($event.target).value)">
+      </mat-form-field>
+    </div>
+
+    <button empty-action class="primary-button" type="button" (click)="openCreatePurchaseDialog()">
+      <mat-icon>add</mat-icon>
+      <span>{{ 'purchases.page.newPurchase' | translate }}</span>
+    </button>
+
+    <div class="desktop-table">
+      <table mat-table [dataSource]="pagedData()">
+        <ng-container matColumnDef="programName">
+          <th mat-header-cell *matHeaderCellDef>{{ 'purchases.table.columns.program' | translate }}</th>
+          <td mat-cell *matCellDef="let purchase">
             <div class="user-info">
-
-              <div class="avatar">
-                {{ purchase.programName.charAt(0) | uppercase }}
-              </div>
-
+              <div class="avatar">{{ purchase.programName.charAt(0) | uppercase }}</div>
               <div class="user-details">
-
-                <strong>
-                  {{ purchase.programName }}
-                </strong>
-
-                <span>
-                  {{ purchase.partner || ('purchases.table.directPurchase' | translate) }}
-                </span>
-
+                <strong>{{ purchase.programName }}</strong>
+                <span>{{ purchase.partner || ('purchases.table.directPurchase' | translate) }}</span>
               </div>
-
             </div>
+          </td>
+        </ng-container>
 
+        <ng-container matColumnDef="amountPaid">
+          <th mat-header-cell *matHeaderCellDef>{{ 'purchases.table.columns.amountPaid' | translate }}</th>
+          <td mat-cell *matCellDef="let purchase">{{ purchase.amountPaid | currency:purchase.currencyCode }}</td>
+        </ng-container>
 
-            <div class="purchase-actions">
+        <ng-container matColumnDef="milesPurchased">
+          <th mat-header-cell *matHeaderCellDef>{{ 'purchases.table.columns.milesPurchased' | translate }}</th>
+          <td mat-cell *matCellDef="let purchase">{{ purchase.milesPurchased | number }}</td>
+        </ng-container>
 
-              <button
-                class="icon-button"
-                [attr.aria-label]="'purchases.actions.edit' | translate"
-                (click)="openEditPurchaseDialog(purchase)">
+        <ng-container matColumnDef="purchaseDate">
+          <th mat-header-cell *matHeaderCellDef>{{ 'purchases.table.columns.purchaseDate' | translate }}</th>
+          <td mat-cell *matCellDef="let purchase">{{ purchase.purchaseDate | date:'mediumDate' }}</td>
+        </ng-container>
 
-                <mat-icon>
-                  edit
-                </mat-icon>
-
-              </button>
-
-              <button
-                class="icon-button"
-                [attr.aria-label]="'purchases.actions.clone' | translate"
-                (click)="clonePurchase(purchase)">
-
-                <mat-icon>content_copy</mat-icon>
-
-              </button>
-              
-              <button
-                class="icon-button danger"
-                [attr.aria-label]="'purchases.actions.delete' | translate"
-                (click)="deletePurchase(purchase)">
-
-                <mat-icon>
-                  delete
-                </mat-icon>
-
-              </button>
-
-            </div>
-
-          </div>
-
-
-          <!-- Status -->
-
-          <div class="purchase-status">
-
-            <span
-              class="status-pill"
-              [class.inactive]="purchase.purchaseStatus !== PurchaseStatus.Completed">
-
+        <ng-container matColumnDef="purchaseStatus">
+          <th mat-header-cell *matHeaderCellDef>{{ 'purchases.table.columns.status' | translate }}</th>
+          <td mat-cell *matCellDef="let purchase">
+            <span class="status-pill"
+                  [class.inactive]="purchase.purchaseStatus !== PurchaseStatus.Completed"
+                  [class.pending]="purchase.purchaseStatus === PurchaseStatus.Pending"
+                  [class.canceled]="purchase.purchaseStatus === PurchaseStatus.Canceled">
               <span class="status-dot"></span>
-
-              {{
-                ('common.' + getPurchaseStatus(purchase.purchaseStatus).toLowerCase())
-                  | translate
-              }}
-
+              {{ ('common.' + getPurchaseStatus(purchase.purchaseStatus).toLowerCase()) | translate }}
             </span>
+          </td>
+        </ng-container>
 
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="actions-column"></th>
+          <td mat-cell *matCellDef="let purchase" class="actions-column">
+            <button class="icon-button" [attr.aria-label]="'purchases.actions.edit' | translate" (click)="openEditPurchaseDialog(purchase)"><mat-icon>edit</mat-icon></button>
+            <button class="icon-button" [attr.aria-label]="'purchases.actions.clone' | translate" (click)="clonePurchase(purchase)"><mat-icon>content_copy</mat-icon></button>
+            <button class="icon-button danger" [attr.aria-label]="'purchases.actions.delete' | translate" (click)="deletePurchase(purchase)"><mat-icon>delete</mat-icon></button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <div class="mobile-purchases">
+      <article class="purchase-card" *ngFor="let purchase of pagedData()">
+        <div class="purchase-header">
+          <div class="user-info">
+            <div class="avatar">{{ purchase.programName.charAt(0) | uppercase }}</div>
+            <div class="user-details">
+              <strong>{{ purchase.programName }}</strong>
+              <span>{{ purchase.partner || ('purchases.table.directPurchase' | translate) }}</span>
+            </div>
           </div>
-
-
-          <!-- Details -->
-
-          <div class="purchase-details">
-
-            <div class="purchase-detail">
-
-              <span class="field-label">
-                {{ 'purchases.table.columns.amountPaid' | translate }}
-              </span>
-
-              <strong>
-                {{ purchase.amountPaid | currency:purchase.currencyCode  }}
-              </strong>
-
-            </div>
-
-
-            <div class="purchase-detail">
-
-              <span class="field-label">
-                {{ 'purchases.table.columns.milesPurchased' | translate }}
-              </span>
-
-              <strong>
-                {{ purchase.milesPurchased | number }}
-              </strong>
-
-            </div>
-
-
-            <div class="purchase-detail">
-
-              <span class="field-label">
-                {{ 'purchases.table.columns.purchaseDate' | translate }}
-              </span>
-
-              <strong>
-                {{ purchase.purchaseDate | date:'mediumDate' }}
-              </strong>
-
-            </div>
-
+          <div class="purchase-actions">
+            <button class="icon-button" [attr.aria-label]="'purchases.actions.edit' | translate" (click)="openEditPurchaseDialog(purchase)"><mat-icon>edit</mat-icon></button>
+            <button class="icon-button" [attr.aria-label]="'purchases.actions.clone' | translate" (click)="clonePurchase(purchase)"><mat-icon>content_copy</mat-icon></button>
+            <button class="icon-button danger" [attr.aria-label]="'purchases.actions.delete' | translate" (click)="deletePurchase(purchase)"><mat-icon>delete</mat-icon></button>
           </div>
+        </div>
 
-        </article>
+        <div class="purchase-status">
+          <span class="status-pill"
+                [class.inactive]="purchase.purchaseStatus !== PurchaseStatus.Completed"
+                [class.pending]="purchase.purchaseStatus === PurchaseStatus.Pending"
+                [class.canceled]="purchase.purchaseStatus === PurchaseStatus.Canceled">
+            <span class="status-dot"></span>
+            {{ ('common.' + getPurchaseStatus(purchase.purchaseStatus).toLowerCase()) | translate }}
+          </span>
+        </div>
 
-      </div>
-
-    </app-table>
-
-  
-
+        <div class="purchase-details">
+          <div class="purchase-detail"><span class="field-label">{{ 'purchases.table.columns.amountPaid' | translate }}</span><strong>{{ purchase.amountPaid | currency:purchase.currencyCode }}</strong></div>
+          <div class="purchase-detail"><span class="field-label">{{ 'purchases.table.columns.milesPurchased' | translate }}</span><strong>{{ purchase.milesPurchased | number }}</strong></div>
+          <div class="purchase-detail"><span class="field-label">{{ 'purchases.table.columns.purchaseDate' | translate }}</span><strong>{{ purchase.purchaseDate | date:'mediumDate' }}</strong></div>
+        </div>
+      </article>
+    </div>
+  </app-table>
 </section>
