@@ -4,16 +4,10 @@ using Resend;
 
 namespace MilesManager.Application.Email;
 
-public sealed class ResendEmailService : IEmailService
+public sealed class ResendEmailService(IResend resend, IConfiguration configuration) : IEmailService
 {
-    private readonly IResend _resend;
-    private readonly string _from;
-
-    public ResendEmailService(IResend resend, IConfiguration configuration)
-    {
-        _resend = resend;
-        _from = configuration["Email:From"] ?? "Miles Manager <onboarding@resend.dev>";
-    }
+    private readonly IResend _resend = resend;
+    private readonly string _from = configuration["Email:From"] ?? "Miles Manager <onboarding@resend.dev>";
 
     public async Task SendAsync(
         string recipient,
