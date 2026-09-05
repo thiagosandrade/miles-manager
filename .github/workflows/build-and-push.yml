@@ -137,6 +137,7 @@ jobs:
           key: ${{ secrets.GCP_VM_SSH_KEY }}
           script: |
             cd ${{ env.VM_APP_DIR }}
+            git pull --ff-only origin main
             docker compose -f docker-compose.vm.yml pull
             docker compose -f docker-compose.vm.yml up -d --force-recreate --remove-orphans
             docker compose -f docker-compose.vm.yml ps
