@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { LayoutComponent } from './layout/layout.component';
 import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -48,6 +47,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'program-details',
+        loadChildren: () =>
+          import('./features/program-details/program-details.routes').then(
+            (m) => m.PROGRAM_DETAILS_ROUTES
+          ),
+      },
+      {
         path: 'program-factors',
         loadChildren: () =>
           import('./features/program-factors/program-factors.routes').then(
@@ -86,7 +92,8 @@ export const routes: Routes = [
         path: 'calculator',
         loadChildren: () =>
           import('./features/calculator/calculator.routes').then(
-            (m) => m.CALCULATOR_ROUTES)
+            (m) => m.CALCULATOR_ROUTES
+          )
       }
     ],
   },

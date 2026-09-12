@@ -81,6 +81,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
       adminOnly: true
     },
     {
+      path: '/program-details',
+      label: 'sidebar.programInformation',
+      icon: 'info'
+    },
+    {
       path: '/program-balances',
       label: 'sidebar.programBalances',
       icon: 'account_balance_wallet'

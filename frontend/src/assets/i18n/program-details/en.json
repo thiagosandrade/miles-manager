@@ -1,0 +1,20 @@
+{
+  "programDetails": {
+    "title": "Program Details",
+    "subtitle": "View your activity and redemptions for each loyalty program",
+    "selectProgram": "Select Program",
+    "activity": "Activity",
+    "redemptions": "Redemptions",
+    "recentActivity": "Recent Activity",
+    "activitySubtitle": "Your latest transactions for this program",
+    "redemptionHistory": "Redemption History",
+    "redemptionSubtitle": "Your flight redemptions for this program",
+    "type": "Type",
+    "route": "Route",
+    "milesUsed": "Miles Used",
+    "earned": "Earned",
+    "redeemed": "Redeemed",
+    "noActivity": "No activity found",
+    "noRedemptions": "No redemptions found"
+  }
+}

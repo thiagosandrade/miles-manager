@@ -52,7 +52,15 @@
     "fullName": "Nome completo",
     "canceled": "Cancelado",
     "completed": "Concluído",
-    "pending": "Pendente"
+    "pending": "Pendente",
+    "pagination": {
+      "itemsPerPage": "Itens por página",
+      "nextPage": "Página seguinte",
+      "previousPage": "Página anterior",
+      "firstPage": "Primeira página",
+      "lastPage": "Última página",
+      "of": "de"
+    }
   },
   "toolbar": {
     "title": "Miles Manager",
@@ -68,6 +76,7 @@
     "users": "Utilizadores",
     "user-roles": "Funções de utilizador",
     "programs": "Programas",
+    "programInformation": "Histórico dos programas",
     "programBalances": "Saldos dos programas",
     "purchases": "Compras",
     "transfers": "Transferências",

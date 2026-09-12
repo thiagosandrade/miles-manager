@@ -1,0 +1,20 @@
+{
+  "programDetails": {
+    "title": "Programmdetails",
+    "subtitle": "Aktivitäten und Einlösungen für jedes Treueprogramm anzeigen",
+    "selectProgram": "Programm auswählen",
+    "activity": "Aktivität",
+    "redemptions": "Einlösungen",
+    "recentActivity": "Letzte Aktivitäten",
+    "activitySubtitle": "Deine neuesten Transaktionen für dieses Programm",
+    "redemptionHistory": "Einlösungshistorie",
+    "redemptionSubtitle": "Deine Prämienflüge für dieses Programm",
+    "type": "Typ",
+    "route": "Route",
+    "milesUsed": "Eingelöste Meilen",
+    "earned": "Gutgeschrieben",
+    "redeemed": "Eingelöst",
+    "noActivity": "Keine Aktivitäten gefunden",
+    "noRedemptions": "Keine Einlösungen gefunden"
+  }
+}

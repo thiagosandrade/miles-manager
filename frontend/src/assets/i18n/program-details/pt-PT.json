@@ -1,0 +1,20 @@
+{
+  "programDetails": {
+    "title": "Detalhes do programa",
+    "subtitle": "Consulte a sua atividade e os seus resgates de cada programa de fidelização",
+    "selectProgram": "Selecionar programa",
+    "activity": "Atividade",
+    "redemptions": "Resgates",
+    "recentActivity": "Atividade recente",
+    "activitySubtitle": "As suas últimas transações deste programa",
+    "redemptionHistory": "Histórico de resgates",
+    "redemptionSubtitle": "Os seus voos resgatados neste programa",
+    "type": "Tipo",
+    "route": "Rota",
+    "milesUsed": "Milhas utilizadas",
+    "earned": "Ganhos",
+    "redeemed": "Resgatados",
+    "noActivity": "Nenhuma atividade encontrada",
+    "noRedemptions": "Nenhum resgate encontrado"
+  }
+}

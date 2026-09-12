@@ -1,0 +1,166 @@
+@use '../../../styles/pages';
+
+/* ==========================================================
+   Layout
+========================================================== */
+
+:host {
+  display: block;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.15;
+}
+
+.page-header p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.selector-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 520px;
+}
+
+.selector-section label {
+  font-weight: 600;
+}
+
+.selector-section mat-form-field {
+  width: 100%;
+}
+
+.program-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.program-option img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.content-panel {
+  overflow: hidden;
+}
+
+.tab-content {
+  padding-top: 16px;
+}
+
+.tab-content app-table {
+  display: block;
+}
+
+.activity-table,
+.redemption-table {
+  width: 100%;
+}
+
+/* ==========================================================
+   Table Columns
+========================================================== */
+
+.mat-column-date,
+.mat-column-flightDate {
+  min-width: 120px;
+  white-space: nowrap;
+}
+
+.mat-column-description {
+  min-width: 220px;
+}
+
+.mat-column-type {
+  min-width: 110px;
+  white-space: nowrap;
+}
+
+.mat-column-miles,
+.mat-column-milesUsed {
+  min-width: 120px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.mat-column-balance {
+  min-width: 130px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.mat-column-route {
+  min-width: 180px;
+  white-space: nowrap;
+}
+
+.mat-column-passengers {
+  min-width: 100px;
+  white-space: nowrap;
+}
+
+.numeric {
+  white-space: nowrap;
+}
+
+.positive {
+  color: var(--mm-primary);
+}
+
+.negative {
+  color: #c93b3b;
+}
+
+.type-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+}
+
+.type-pill.earned {
+  color: var(--mm-primary);
+  background: rgba(21, 101, 192, .08);
+}
+
+.type-pill.redeemed {
+  color: #c93b3b;
+  background: #fdeaea;
+}
+
+.error-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #c93b3b;
+}
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 28px;
+  }
+
+  .activity-table,
+  .redemption-table {
+    min-width: 680px;
+  }
+}

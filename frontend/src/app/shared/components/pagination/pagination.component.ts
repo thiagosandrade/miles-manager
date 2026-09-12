@@ -1,11 +1,22 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+import { Component, Output, Input, EventEmitter, inject, Injectable, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
+import { PaginationIntl } from './pagination-translation.service';
 
 @Component({
   standalone: true,
   selector: 'app-pagination',
   imports: [CommonModule, MatPaginatorModule],
+  providers: [
+    {
+      provide: MatPaginatorIntl,
+      useClass: PaginationIntl
+    }
+  ],
   templateUrl: './pagination.component.html'
 })
 export class PaginationComponent {
