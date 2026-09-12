@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter, inject, OnDestroy } from '@angular/core';
+import { Component, Output, Input, EventEmitter, inject, Injectable, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatPaginatorIntl,
@@ -8,6 +8,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 
+@Injectable()
 class PaginationIntl extends MatPaginatorIntl implements OnDestroy {
   private readonly translate = inject(TranslateService);
   private readonly destroy$ = new Subject<void>();
