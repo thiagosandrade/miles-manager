@@ -1,0 +1,20 @@
+{
+  "programDetails": {
+    "title": "Detalles del programa",
+    "subtitle": "Consulta tu actividad y canjes de cada programa de fidelidad.",
+    "selectProgram": "Seleccionar programa",
+    "activity": "Actividad",
+    "redemptions": "Canjes",
+    "recentActivity": "Actividad reciente",
+    "activitySubtitle": "Tus últimas transacciones de este programa.",
+    "redemptionHistory": "Historial de canjes",
+    "redemptionSubtitle": "Tus vuelos canjeados en este programa.",
+    "type": "Tipo",
+    "route": "Ruta",
+    "milesUsed": "Millas utilizadas",
+    "earned": "Ganadas",
+    "redeemed": "Canjeadas",
+    "noActivity": "No se encontraron actividades",
+    "noRedemptions": "No se encontraron canjes"
+  }
+}

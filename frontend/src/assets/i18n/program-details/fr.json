@@ -1,0 +1,20 @@
+{
+  "programDetails": {
+    "title": "Détails du programme",
+    "subtitle": "Consultez votre activité et vos échanges pour chaque programme de fidélité.",
+    "selectProgram": "Sélectionner un programme",
+    "activity": "Activité",
+    "redemptions": "Échanges",
+    "recentActivity": "Activité récente",
+    "activitySubtitle": "Vos dernières transactions pour ce programme.",
+    "redemptionHistory": "Historique des échanges",
+    "redemptionSubtitle": "Vos vols réservés avec des miles pour ce programme.",
+    "type": "Type",
+    "route": "Itinéraire",
+    "milesUsed": "Miles utilisés",
+    "earned": "Gagnés",
+    "redeemed": "Échangés",
+    "noActivity": "Aucune activité trouvée",
+    "noRedemptions": "Aucun échange trouvé"
+  }
+}
