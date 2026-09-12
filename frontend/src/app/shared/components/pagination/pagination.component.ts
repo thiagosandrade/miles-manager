@@ -6,7 +6,7 @@ import {
   PageEvent
 } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 class PaginationIntl extends MatPaginatorIntl implements OnDestroy {
   private readonly translate = inject(TranslateService);
@@ -16,9 +16,9 @@ class PaginationIntl extends MatPaginatorIntl implements OnDestroy {
     super();
     this.updateLabels();
 
-    this.translate.onLangChange.subscribe(() => {
-      this.updateLabels();
-    });
+    this.translate.onLangChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.updateLabels());
   }
 
   private updateLabels(): void {
