@@ -1,11 +1,63 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+import { Component, Output, Input, EventEmitter, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
+import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
+
+class PaginationIntl extends MatPaginatorIntl implements OnDestroy {
+  private readonly translate = inject(TranslateService);
+  private readonly destroy$ = new Subject<void>();
+
+  constructor() {
+    super();
+    this.updateLabels();
+
+    this.translate.onLangChange.subscribe(() => {
+      this.updateLabels();
+    });
+  }
+
+  private updateLabels(): void {
+    this.itemsPerPageLabel = this.translate.instant('common.pagination.itemsPerPage');
+    this.nextPageLabel = this.translate.instant('common.pagination.nextPage');
+    this.previousPageLabel = this.translate.instant('common.pagination.previousPage');
+    this.firstPageLabel = this.translate.instant('common.pagination.firstPage');
+    this.lastPageLabel = this.translate.instant('common.pagination.lastPage');
+
+    this.getRangeLabel = (page: number, pageSize: number, length: number) => {
+      if (length === 0 || pageSize === 0) {
+        return `0 ${this.translate.instant('common.pagination.of')} 0`;
+      }
+
+      const startIndex = page * pageSize;
+      const endIndex = Math.min(startIndex + pageSize, length);
+
+      return `${startIndex + 1} – ${endIndex} ${this.translate.instant('common.pagination.of')} ${length}`;
+    };
+
+    this.changes.next();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+}
 
 @Component({
   standalone: true,
   selector: 'app-pagination',
   imports: [CommonModule, MatPaginatorModule],
+  providers: [
+    {
+      provide: MatPaginatorIntl,
+      useClass: PaginationIntl
+    }
+  ],
   templateUrl: './pagination.component.html'
 })
 export class PaginationComponent {
