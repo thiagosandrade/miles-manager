@@ -48,10 +48,10 @@ export class ProgramDetailsPageComponent implements OnInit {
   readonly redemptionData = signal<ProgramRedemption[]>([]);
   readonly pagedRedemptions = signal<ProgramRedemption[]>([]);
 
-  private activityPageIndex = 0;
-  private activityPageSize = 5;
-  private redemptionPageIndex = 0;
-  private redemptionPageSize = 5;
+  activityPageIndex = 0;
+  activityPageSize = 5;
+  redemptionPageIndex = 0;
+  redemptionPageSize = 5;
 
   readonly activityColumns = ['date', 'description', 'type', 'miles', 'balance'];
   readonly redemptionColumns = ['flightDate', 'route', 'passengers', 'milesUsed'];

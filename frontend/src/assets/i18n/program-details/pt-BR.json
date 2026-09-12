@@ -1,14 +1,14 @@
 {
   "programDetails": {
     "title": "Detalhes do programa",
-    "subtitle": "Veja suas atividades e resgates de cada programa de fidelidade.",
+    "subtitle": "Veja suas atividades e resgates de cada programa de fidelidade",
     "selectProgram": "Selecionar programa",
     "activity": "Atividade",
     "redemptions": "Resgates",
     "recentActivity": "Atividade recente",
-    "activitySubtitle": "Suas últimas transações deste programa.",
+    "activitySubtitle": "Suas últimas transações deste programa",
     "redemptionHistory": "Histórico de resgates",
-    "redemptionSubtitle": "Seus voos resgatados neste programa.",
+    "redemptionSubtitle": "Seus voos resgatados neste programa",
     "type": "Tipo",
     "route": "Rota",
     "milesUsed": "Milhas utilizadas",

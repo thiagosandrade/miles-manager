@@ -75,15 +75,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
       icon: 'assignment'
     },
     {
-      path: '/program-details',
-      label: 'sidebar.programInformation',
-      icon: 'info'
-    },
-    {
       path: '/program-factors',
       label: 'sidebar.programFactors',
       icon: 'compare_arrows',
       adminOnly: true
+    },
+    {
+      path: '/program-details',
+      label: 'sidebar.programInformation',
+      icon: 'info'
     },
     {
       path: '/program-balances',
