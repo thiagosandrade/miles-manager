@@ -27,6 +27,10 @@ public static class DependencyInjection
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IPasswordResetTokenService, PasswordResetTokenService>();
 
+        services.AddScoped<IAlertExtractionStrategy, PontosPraVoarAlertExtractionStrategy>();
+        services.AddScoped<IAlertExtractionStrategy, ThePointsGuyAlertExtractionStrategy>();
+        services.AddScoped<IAlertExtractionStrategy, DefaultAlertExtractionStrategy>();
+
         services.AddHttpClient<AlertIngestionService>(client =>
         {
             client.Timeout = TimeSpan.FromSeconds(30);
