@@ -6,7 +6,9 @@ using MilesManager.Domain.Alerts;
 
 namespace MilesManager.Application.Features.AlertSources.Commands.CreateAlertSource;
 
-public sealed class CreateAlertSourceHandler(IApplicationDbContext context)
+public sealed class CreateAlertSourceHandler(
+    IApplicationDbContext context,
+    IAlertIngestionService ingestionService)
     : IRequestHandler<CreateAlertSourceCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(
@@ -45,6 +47,8 @@ public sealed class CreateAlertSourceHandler(IApplicationDbContext context)
 
         await context.AlertSources.AddAsync(source, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
+
+        await ingestionService.IngestSourceAsync(source.Id, cancellationToken);
 
         return Result<Guid>.Success(source.Id);
     }
