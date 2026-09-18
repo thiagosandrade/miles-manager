@@ -66,7 +66,16 @@ public sealed class AlertIngestionService(
                 return 0;
             }
 
-            var html = await httpClient.GetStringAsync(sourceUri, cancellationToken);
+            using var request = new HttpRequestMessage(HttpMethod.Get, sourceUri);
+            request.Headers.UserAgent.ParseAdd(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36");
+            request.Headers.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+            request.Headers.AcceptLanguage.ParseAdd("en-US,en;q=0.9");
+
+            using var response = await httpClient.SendAsync(request, cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            var html = await response.Content.ReadAsStringAsync(cancellationToken);
             var document = await BrowsingContext.New(Configuration.Default).OpenAsync(
                 request => request.Content(html).Address(sourceUri),
                 cancellationToken);
