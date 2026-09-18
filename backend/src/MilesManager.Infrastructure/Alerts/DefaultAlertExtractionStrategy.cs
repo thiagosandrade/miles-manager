@@ -68,13 +68,40 @@ internal static class AlertExtractionHelpers
             ?? element.QuerySelector("[itemprop='datePublished']")?.GetAttribute("content")
             ?? element.QuerySelector("meta[property='article:published_time']")?.GetAttribute("content");
 
-        return DateTimeOffset.TryParse(
+        if (DateTimeOffset.TryParse(
             dateValue,
             CultureInfo.InvariantCulture,
             DateTimeStyles.AssumeUniversal,
-            out var date)
-            ? date.ToUniversalTime()
-            : null;
+            out var date))
+        {
+            return date.ToUniversalTime();
+        }
+
+        var visibleText = CleanText(element.TextContent);
+        var match = Regex.Match(
+            visibleText,
+            @"(?:(?:Published|Atualizado|Updated)\s+)?(?:on\s+)?(\d{1,2})\.\s+([A-Za-zÄÖÜäöüß]+)\s+(\d{4})",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
+        if (!match.Success)
+        {
+            match = Regex.Match(
+                visibleText,
+                @"(?:(?:Published|Atualizado|Updated)\s+)?([A-Za-z]{3,9})\.?\s+(\d{1,2}),\s+(\d{4})",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        }
+
+        if (match.Success)
+        {
+            var text = match.Value;
+            if (DateTime.TryParse(text, CultureInfo.GetCultureInfo("de-DE"), DateTimeStyles.AllowWhiteSpaces, out var germanDate)
+                || DateTime.TryParse(text, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AllowWhiteSpaces, out germanDate))
+            {
+                return new DateTimeOffset(DateTime.SpecifyKind(germanDate.Date, DateTimeKind.Utc));
+            }
+        }
+
+        return null;
     }
 
     public static string? ExtractChips(IElement element, string itemUrl)
