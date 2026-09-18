@@ -55,8 +55,8 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
 
             if (title.Length < 12)
             {
-                var heading = anchor.Closest("h1, h2, h3, h4, h5, h6");
-                title = AlertExtractionHelpers.CleanText(heading?.TextContent);
+                var titleHeading = anchor.Closest("h1, h2, h3, h4, h5, h6");
+                title = AlertExtractionHelpers.CleanText(titleHeading?.TextContent);
             }
 
             if (title.Length < 12 || AlertExtractionHelpers.IsNonArticleHeading(title))
