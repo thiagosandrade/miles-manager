@@ -27,11 +27,6 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
                     continue;
                 }
 
-                if (activeSectionLevel is not null && level <= activeSectionLevel.Value)
-                {
-                    activeSectionLevel = null;
-                }
-
                 continue;
             }
 
