@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 using MilesManager.Domain.Alerts;
 
@@ -19,8 +18,7 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
         {
             var externalUrl = AlertExtractionHelpers.ResolveUrl(anchor.GetAttribute("href"), sourceUri);
 
-            if (!IsArticleUrl(externalUrl, sourceUri)
-                || !seenUrls.Add(AlertExtractionHelpers.NormalizeUrl(externalUrl!)))
+            if (!IsArticleUrl(externalUrl, sourceUri))
             {
                 continue;
             }
@@ -32,7 +30,7 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
                 title = AlertExtractionHelpers.CleanText(heading?.TextContent);
             }
 
-            if (title.Length < 12)
+            if (title.Length < 12 || AlertExtractionHelpers.IsNonArticleHeading(title))
             {
                 continue;
             }
@@ -46,15 +44,25 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
                 continue;
             }
 
-            var publishedDate = AlertExtractionHelpers.ExtractPublishedDate(card)
-                ?? ExtractVisibleDate(card);
+            var publishedDate = AlertExtractionHelpers.ExtractPublishedDate(card);
+            if (publishedDate is null)
+            {
+                continue;
+            }
+
+            var normalizedUrl = AlertExtractionHelpers.NormalizeUrl(externalUrl!);
+            if (!seenUrls.Add(normalizedUrl))
+            {
+                continue;
+            }
 
             yield return new AlertItem
             {
                 Title = title,
                 ExternalUrl = externalUrl!,
                 PublishedDate = publishedDate,
-                Chips = "Credit Cards"
+                Chips = AlertExtractionHelpers.ExtractChips(card, externalUrl!)
+                    ?? "Credit Cards"
             };
         }
     }
@@ -73,28 +81,22 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
             return false;
         }
 
-        var path = uri.AbsolutePath.Trim('/');
-        return path.StartsWith("news/", StringComparison.OrdinalIgnoreCase)
-            && !path.Equals("news/credit-cards", StringComparison.OrdinalIgnoreCase)
-            && !path.StartsWith("news/credit-cards/page/", StringComparison.OrdinalIgnoreCase);
-    }
+        var path = uri.AbsolutePath.TrimEnd('/');
+        if (string.IsNullOrWhiteSpace(path)
+            || path.Equals(sourceUri.AbsolutePath.TrimEnd('/'), StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
 
-    private static DateTimeOffset? ExtractVisibleDate(IElement card)
-    {
-        var text = AlertExtractionHelpers.CleanText(card.TextContent);
-
-        var match = Regex.Match(
-            text,
-            @"\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2},\s+\d{4}\b",
-            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-
-        return match.Success
-            && DateTimeOffset.TryParse(
-                match.Value,
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.AssumeUniversal,
-                out var date)
-            ? date.ToUniversalTime()
-            : null;
+        return !path.StartsWith("/author/", StringComparison.OrdinalIgnoreCase)
+            && !path.StartsWith("/category/", StringComparison.OrdinalIgnoreCase)
+            && !path.StartsWith("/tag/", StringComparison.OrdinalIgnoreCase)
+            && !path.StartsWith("/search/", StringComparison.OrdinalIgnoreCase)
+            && !path.StartsWith("/page/", StringComparison.OrdinalIgnoreCase)
+            && !path.StartsWith("/about", StringComparison.OrdinalIgnoreCase)
+            && !path.StartsWith("/contact", StringComparison.OrdinalIgnoreCase)
+            && !path.StartsWith("/privacy", StringComparison.OrdinalIgnoreCase)
+            && !path.StartsWith("/terms", StringComparison.OrdinalIgnoreCase)
+            && !path.StartsWith("/newsletter", StringComparison.OrdinalIgnoreCase);
     }
 }
