@@ -81,6 +81,13 @@ public sealed class AlertIngestionService(
 
             foreach (var item in strategy.ExtractItems(document, sourceUri))
             {
+                if (!IsUsableAlertUrl(item.ExternalUrl))
+                {
+                    continue;
+                }
+
+                item.Country = source.Country.Trim();
+
                 var key = AlertExtractionHelpers.NormalizeUrl(item.ExternalUrl);
                 if (existingByUrl.TryGetValue(key, out var existing))
                 {
@@ -101,6 +108,12 @@ public sealed class AlertIngestionService(
                     if (!string.Equals(existing.Chips, item.Chips, StringComparison.Ordinal))
                     {
                         existing.Chips = item.Chips;
+                        changed = true;
+                    }
+
+                    if (!string.Equals(existing.Country, item.Country, StringComparison.Ordinal))
+                    {
+                        existing.Country = item.Country;
                         changed = true;
                     }
 
@@ -128,5 +141,11 @@ public sealed class AlertIngestionService(
         {
             return 0;
         }
+    }
+
+    private static bool IsUsableAlertUrl(string url)
+    {
+        return Uri.TryCreate(url, UriKind.Absolute, out var uri)
+            && string.IsNullOrWhiteSpace(uri.Fragment);
     }
 }
