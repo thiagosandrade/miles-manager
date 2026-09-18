@@ -12,72 +12,85 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
     public IEnumerable<AlertItem> ExtractItems(IDocument document, Uri sourceUri)
     {
         var seenUrls = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var activeSectionLevel = (int?)null;
 
-        foreach (var sectionHeading in document.QuerySelectorAll("h1, h2, h3")
-                     .Where(IsCreditCardNewsSection))
+        foreach (var element in document.All)
         {
-            var headingLevel = GetHeadingLevel(sectionHeading);
-
-            foreach (var element in document.All.SkipWhile(x => !ReferenceEquals(x, sectionHeading)))
+            if (element is IElement heading && IsHeading(heading))
             {
-                if (ReferenceEquals(element, sectionHeading))
+                var level = GetHeadingLevel(heading);
+                var text = AlertExtractionHelpers.CleanText(heading.TextContent);
+
+                if (IsCreditCardNewsSection(text))
                 {
+                    activeSectionLevel = level;
                     continue;
                 }
 
-                if (element is IElement current
-                    && IsHeadingAtOrAboveLevel(current, headingLevel))
+                if (activeSectionLevel is not null && level <= activeSectionLevel.Value)
                 {
-                    break;
+                    activeSectionLevel = null;
                 }
 
-                if (element is not IElement anchor
-                    || !anchor.TagName.Equals("A", StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                var externalUrl = AlertExtractionHelpers.ResolveUrl(
-                    anchor.GetAttribute("href"),
-                    sourceUri);
-
-                if (!IsArticleUrl(externalUrl, sourceUri))
-                {
-                    continue;
-                }
-
-                var title = AlertExtractionHelpers.CleanText(anchor.TextContent);
-                if (title.Length < 12 || AlertExtractionHelpers.IsNonArticleHeading(title))
-                {
-                    continue;
-                }
-
-                var normalizedUrl = AlertExtractionHelpers.NormalizeUrl(externalUrl!);
-                if (!seenUrls.Add(normalizedUrl))
-                {
-                    continue;
-                }
-
-                var publishedDate = FindPublishedDate(anchor);
-
-                yield return new AlertItem
-                {
-                    Title = title,
-                    ExternalUrl = externalUrl!,
-                    PublishedDate = publishedDate,
-                    Chips = "Credit Cards"
-                };
+                continue;
             }
+
+            if (activeSectionLevel is null
+                || element is not IElement anchor
+                || !anchor.TagName.Equals("A", StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            var externalUrl = AlertExtractionHelpers.ResolveUrl(
+                anchor.GetAttribute("href"),
+                sourceUri);
+
+            if (!IsArticleUrl(externalUrl, sourceUri))
+            {
+                continue;
+            }
+
+            var title = AlertExtractionHelpers.CleanText(anchor.TextContent);
+
+            if (title.Length < 12)
+            {
+                var heading = anchor.Closest("h1, h2, h3, h4, h5, h6");
+                title = AlertExtractionHelpers.CleanText(heading?.TextContent);
+            }
+
+            if (title.Length < 12 || AlertExtractionHelpers.IsNonArticleHeading(title))
+            {
+                continue;
+            }
+
+            var normalizedUrl = AlertExtractionHelpers.NormalizeUrl(externalUrl!);
+            if (!seenUrls.Add(normalizedUrl))
+            {
+                continue;
+            }
+
+            yield return new AlertItem
+            {
+                Title = title,
+                ExternalUrl = externalUrl!,
+                PublishedDate = FindPublishedDate(anchor),
+                Chips = "Credit Cards"
+            };
         }
     }
 
-    private static bool IsCreditCardNewsSection(IElement element)
-    {
-        var text = AlertExtractionHelpers.CleanText(element.TextContent);
+    private static bool IsCreditCardNewsSection(string text) =>
+        text.Equals("Latest credit card news", StringComparison.OrdinalIgnoreCase)
+        || text.Equals("More credit card news", StringComparison.OrdinalIgnoreCase);
 
-        return text.Equals("Latest credit card news", StringComparison.OrdinalIgnoreCase)
-            || text.Equals("More credit card news", StringComparison.OrdinalIgnoreCase);
-    }
+    private static bool IsHeading(IElement element) =>
+        element.TagName.Length == 2
+        && element.TagName[0] == 'H'
+        && char.IsDigit(element.TagName[1]);
+
+    private static int GetHeadingLevel(IElement heading) =>
+        int.TryParse(heading.TagName[1..], out var level) ? level : 6;
 
     private static DateTimeOffset? FindPublishedDate(IElement anchor)
     {
@@ -94,20 +107,6 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
 
         return null;
     }
-
-    private static bool IsHeadingAtOrAboveLevel(IElement element, int level)
-    {
-        if (!element.TagName.StartsWith("H", StringComparison.OrdinalIgnoreCase)
-            || !int.TryParse(element.TagName[1..], out var elementLevel))
-        {
-            return false;
-        }
-
-        return elementLevel <= level;
-    }
-
-    private static int GetHeadingLevel(IElement heading) =>
-        int.TryParse(heading.TagName[1..], out var level) ? level : 2;
 
     private static bool IsArticleUrl(string? url, Uri sourceUri)
     {
