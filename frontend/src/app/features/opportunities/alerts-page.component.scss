@@ -1,0 +1,133 @@
+@use '../../../styles/pages';
+
+.filters-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: var(--shadow-sm);
+}
+
+.filters-card label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.filters-card select {
+  min-width: 220px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+}
+
+.sortable-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.sortable-header mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+.alert-title {
+  display: block;
+  max-width: 520px;
+  line-height: 1.4;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(21, 101, 192, .08);
+  color: var(--mm-primary);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.external-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--mm-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.external-link mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+.mobile-alerts {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .filters-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .filters-card select {
+    width: 100%;
+  }
+
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-alerts {
+    display: grid;
+    gap: 12px;
+  }
+
+  .alert-card {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .alert-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .alert-card-header strong {
+    line-height: 1.4;
+  }
+
+  .alert-card-header span {
+    flex: 0 0 auto;
+    color: var(--muted);
+    font-size: 12px;
+  }
+}

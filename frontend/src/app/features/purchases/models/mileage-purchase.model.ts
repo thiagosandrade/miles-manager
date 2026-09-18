@@ -1,3 +1,5 @@
+import { PurchaseStatus } from '../../../core/enums/purchase-status.enum';
+
 export interface MileagePurchase {
   id: string;
   programName: string;
@@ -6,8 +8,8 @@ export interface MileagePurchase {
   amountPaid: number;
   currencyCode: string;
   milesPurchased: number;
-  purchaseDate: string; 
-  purchaseStatus: number;
+  purchaseDate: string;
+  purchaseStatus: PurchaseStatus;
 }
 
 export interface PurchaseCreateRequest {
@@ -17,8 +19,8 @@ export interface PurchaseCreateRequest {
   description?: string;
   amountPaid: number;
   milesPurchased: number;
-  purchaseDate: string; 
-  purchaseStatus: number;
+  purchaseDate: string;
+  purchaseStatus: PurchaseStatus;
 }
 
 export interface PurchaseUpdateRequest {
@@ -29,8 +31,8 @@ export interface PurchaseUpdateRequest {
   description?: string;
   amountPaid: number;
   milesPurchased: number;
-  purchaseDate: string; 
-  purchaseStatus: number;
+  purchaseDate: string;
+  purchaseStatus: PurchaseStatus;
 }
 
 export interface PurchaseListResponse {

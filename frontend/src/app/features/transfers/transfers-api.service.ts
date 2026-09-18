@@ -4,22 +4,18 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { MileageTransfer, TransferCreateRequest, TransferUpdateRequest } from './models/mileage-transfer.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class TransfersApiService {
-
   private apiBaseUrl = `${environment.apiBaseUrl}/mileage-transfers`;
 
   constructor(private http: HttpClient) {}
 
-  listTransfers(params?: { page?: number; pageSize?: number; sort?: string; filter?: string }): Observable<MileageTransfer[]> {
-    let httpParams = new HttpParams();
-    if (params?.page !== undefined) httpParams = httpParams.set('page', params.page.toString());
-    if (params?.pageSize !== undefined) httpParams = httpParams.set('pageSize', params.pageSize.toString());
-    if (params?.sort) httpParams = httpParams.set('sort', params.sort);
-    if (params?.filter) httpParams = httpParams.set('filter', params.filter);
-    return this.http.get<MileageTransfer[]>(`${this.apiBaseUrl}`, { params: httpParams });
+  listTransfers(): Observable<MileageTransfer[]> {
+    const params = new HttpParams()
+      .set('page', '1')
+      .set('pageSize', '10000');
+
+    return this.http.get<MileageTransfer[]>(this.apiBaseUrl, { params });
   }
 
   getTransfer(id: string): Observable<MileageTransfer> {
@@ -27,7 +23,7 @@ export class TransfersApiService {
   }
 
   createTransfer(request: TransferCreateRequest): Observable<MileageTransfer> {
-    return this.http.post<MileageTransfer>(`${this.apiBaseUrl}`, request);
+    return this.http.post<MileageTransfer>(this.apiBaseUrl, request);
   }
 
   updateTransfer(id: string, request: TransferUpdateRequest): Observable<MileageTransfer> {

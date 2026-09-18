@@ -4,15 +4,13 @@ import { environment } from '../../../environments/environment';
 import { ApiService } from '../../core/services/api.service';
 import { FlightRedemption, FlightRedemptionCreateRequest, FlightRedemptionUpdateRequest } from './models/flight-redemption.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class FlightRedemptionService {
   private api = inject(ApiService);
   private apiBaseUrl = `${environment.apiBaseUrl}/flight-redemptions`;
 
   getFlightRedemptions(): Observable<FlightRedemption[]> {
-    return this.api.get<FlightRedemption[]>(`${this.apiBaseUrl}`);
+    return this.api.get<FlightRedemption[]>(this.apiBaseUrl);
   }
 
   getFlightRedemption(id: string): Observable<FlightRedemption> {
@@ -20,7 +18,7 @@ export class FlightRedemptionService {
   }
 
   createFlightRedemption(redemption: FlightRedemptionCreateRequest): Observable<FlightRedemption> {
-    return this.api.post<FlightRedemption>(`${this.apiBaseUrl}`, redemption);
+    return this.api.post<FlightRedemption>(this.apiBaseUrl, redemption);
   }
 
   updateFlightRedemption(redemption: FlightRedemptionUpdateRequest): Observable<FlightRedemption> {

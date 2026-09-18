@@ -33,9 +33,10 @@ public sealed class UsersController(ISender sender) : ApiController(sender)
 
     [HttpGet]
     [Authorize(Roles = "Administrator")]
-    public async Task<ActionResult<IReadOnlyList<UserDetailsDTO>>> GetUsers()
+    public async Task<ActionResult<IReadOnlyList<UserDetailsDTO>>> GetUsers(
+        CancellationToken cancellationToken)
     {
-        var result = await Sender.Send(new GetUsersQuery());
+        var result = await Sender.Send(new GetUsersQuery(), cancellationToken);
         return Ok(result);
     }
 

@@ -1,5 +1,4 @@
 <section class="page">
-
   <header class="page-header">
     <div>
       <p class="eyebrow">{{ 'balances.eyebrow' | translate }}</p>
@@ -25,24 +24,11 @@
     </article>
   </section>
 
-   <!-- =====================================================
-       Error
-  ====================================================== -->
-
-  <div
-    class="feedback"
-    *ngIf="isRateLimitReached()">
-
-    <strong>
-      {{ 'common.error' | translate }}
-    </strong>
-
-    <span>
-      {{ 'common.loadError' | translate }}
-    </span>
-
+  <div class="feedback" *ngIf="isRateLimitReached()">
+    <strong>{{ 'common.error' | translate }}</strong>
+    <span>{{ 'common.loadError' | translate }}</span>
   </div>
-  
+
   <app-table
     [title]="'balances.table.title' | translate"
     [subtitle]="'balances.table.subtitle' | translate"
@@ -50,6 +36,7 @@
     [dataSource]="pagedData()"
     [length]="data().length"
     (page)="onPageChange($event)"
+    (sortChange)="onSortChange($event)"
     [showPaginator]="true"
     [showToolbar]="true"
     emptyIcon="account_balance_wallet"
@@ -123,5 +110,4 @@
       </article>
     </div>
   </app-table>
-
- </section>
+</section>

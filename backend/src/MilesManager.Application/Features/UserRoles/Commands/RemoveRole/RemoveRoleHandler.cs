@@ -40,11 +40,7 @@ public sealed class RemoveRoleHandler(IUserRepository userRepository, IApplicati
             return OperationStatus.NotFound;
         }
 
-        var userRole = new UserRole
-        {
-            UserId = command.UserId,
-            RoleId = command.RoleId
-        };
+        var userRole = user.UserRoles.First(x => x.RoleId == command.RoleId);
 
         context.UserRoles.Remove(userRole);
 

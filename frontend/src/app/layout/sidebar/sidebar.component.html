@@ -8,22 +8,30 @@
 
     <mat-nav-list>
 
-      <a
-        mat-list-item
-        *ngFor="let item of visibleNavigation"
-        [routerLink]="item.path"
-        routerLinkActive="active-link"
-        (click)="onNavigationClick()">
+      <ng-container *ngFor="let item of visibleNavigation; let i = index">
+        <div
+          *ngIf="isAdministrator && item.adminOnly &&
+            (i === 0 || !visibleNavigation[i - 1].adminOnly)"
+          class="navigation-divider">
+        </div>
 
-        <mat-icon matListItemIcon>
-          {{ item.icon }}
-        </mat-icon>
+        <a
+          mat-list-item
+          [routerLink]="item.path"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="onNavigationClick()">
 
-        <span matListItemTitle>
-          {{ item.label | translate }}
-        </span>
+          <mat-icon matListItemIcon>
+            {{ item.icon }}
+          </mat-icon>
 
-      </a>
+          <span matListItemTitle>
+            {{ item.label | translate }}
+          </span>
+
+        </a>
+      </ng-container>
 
     </mat-nav-list>
 

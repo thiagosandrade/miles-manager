@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MilesManager.Application.Abstractions;
-using MilesManager.Application.Services;
+using MilesManager.Infrastructure.Alerts;
 
 namespace MilesManager.Infrastructure;
 
@@ -27,6 +27,16 @@ public static class DependencyInjection
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IPasswordResetTokenService, PasswordResetTokenService>();
         services.AddScoped<IMileageAccountingService, MileageAccountingService>();
+
+        services.AddHttpClient<AlertIngestionService>(client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(30);
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("MilesManager/1.0");
+        });
+        services.AddScoped<IAlertIngestionService>(sp =>
+            sp.GetRequiredService<AlertIngestionService>());
+
+        services.AddHostedService<AlertIngestionHostedService>();
 
         return services;
     }

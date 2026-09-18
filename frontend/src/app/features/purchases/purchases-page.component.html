@@ -39,6 +39,7 @@
     [dataSource]="pagedData()"
     [length]="data().length"
     (page)="onPageChange($event)"
+    (sortChange)="onSortChange($event)"
     [showPaginator]="true"
     [showToolbar]="true"
     emptyIcon="shopping_cart"

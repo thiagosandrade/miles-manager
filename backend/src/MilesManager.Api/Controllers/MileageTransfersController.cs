@@ -9,18 +9,13 @@ using MilesManager.Application.Features.Transfers.Queries.GetMileageTransferById
 
 namespace MilesManager.Api.Controllers;
 
-/// <summary>
-/// Controller for mileage transfers.
-/// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="MileageTransfersController"/> class.
-/// </remarks>
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/mileage-transfers")]
 public sealed class MileageTransfersController(ISender sender) : ApiController(sender)
 {
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Application.Features.Transfers.DTOs.MileageTransferDto>>> Get(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<Application.Features.Transfers.DTOs.MileageTransferDto>>> Get(
+        CancellationToken cancellationToken)
     {
         var result = await Sender.Send(new GetTransfersQuery(), cancellationToken);
         return Convert(result);
@@ -38,15 +33,9 @@ public sealed class MileageTransfersController(ISender sender) : ApiController(s
     {
         var created = new CreateTransferCommand
         {
-            UserId = GetUserId(),
-            OriginProgramId = command.OriginProgramId,
-            DestinationProgramId = command.DestinationProgramId,
-            MilesSent = command.MilesSent,
-            BonusPercentage = command.BonusPercentage,
-            MilesReceived = command.MilesReceived,
-            FactorFrom = command.FactorFrom,
-            FactorTo = command.FactorTo,
-            TransferDate = command.TransferDate
+            UserId = GetUserId(), OriginProgramId = command.OriginProgramId, DestinationProgramId = command.DestinationProgramId,
+            MilesSent = command.MilesSent, BonusPercentage = command.BonusPercentage, MilesReceived = command.MilesReceived,
+            FactorFrom = command.FactorFrom, FactorTo = command.FactorTo, TransferDate = command.TransferDate
         };
         var result = await Sender.Send(created, cancellationToken);
         return Convert(result);
@@ -57,16 +46,9 @@ public sealed class MileageTransfersController(ISender sender) : ApiController(s
     {
         var updated = new UpdateMileageTransferCommand
         {
-            Id = id,
-            UserId = GetUserId(),
-            OriginProgramId = command.OriginProgramId,
-            DestinationProgramId = command.DestinationProgramId,
-            MilesSent = command.MilesSent,
-            BonusPercentage = command.BonusPercentage,
-            MilesReceived = command.MilesReceived,
-            FactorFrom = command.FactorFrom,
-            FactorTo = command.FactorTo,
-            TransferDate = command.TransferDate
+            Id = id, UserId = GetUserId(), OriginProgramId = command.OriginProgramId, DestinationProgramId = command.DestinationProgramId,
+            MilesSent = command.MilesSent, BonusPercentage = command.BonusPercentage, MilesReceived = command.MilesReceived,
+            FactorFrom = command.FactorFrom, FactorTo = command.FactorTo, TransferDate = command.TransferDate
         };
         var result = await Sender.Send(updated, cancellationToken);
         return Convert(result);

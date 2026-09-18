@@ -53,6 +53,8 @@
     "canceled": "Cancelado",
     "completed": "Completado",
     "pending": "Pendiente",
+    "refresh": "Actualizar",
+    "tryAgain": "Intentar de nuevo",
     "pagination": {
       "itemsPerPage": "Elementos por página",
       "nextPage": "Página siguiente",
@@ -78,11 +80,66 @@
     "programs": "Programas",
     "programInformation": "Histórico de los programas",
     "programBalances": "Saldos de programas",
+    "alerts": "Alertas",
+    "blogSources": "Fuentes de blogs",
+    "alertSources": "Fuentes de alertas",
     "purchases": "Compras",
     "transfers": "Transferencias",
     "redemptions": "Canjes",
     "settings": "Configuración",
     "calculator": "Calculadora de vuelos",
     "programFactors": "Tasa de transferencia"
+  },
+  "opportunities": {
+    "eyebrow": "Alertas",
+    "title": "Alertas",
+    "subtitle": "Mantente al día con las últimas publicaciones de tus blogs supervisados.",
+    "errorDescription": "No pudimos cargar las alertas disponibles. Inténtalo de nuevo.",
+    "emptyTitle": "No hay alertas disponibles",
+    "emptyDescription": "No hay alertas de blogs disponibles en este momento.",
+    "table": {
+      "title": "Alertas",
+      "subtitle": "Publicaciones recientes recopiladas de tus fuentes de blogs.",
+      "columns": {
+        "title": "Título",
+        "chips": "Categorías",
+        "publishedDate": "Fecha de publicación",
+        "url": "URL",
+        "source": "Fuente de alertas"
+      },
+      "open": "Abrir artículo"
+    },
+    "filters": {
+      "country": "País",
+      "allCountries": "Todos los países"
+    },
+    "sources": {
+      "eyebrow": "Fuentes de alertas",
+      "title": "Fuentes de alertas",
+      "subtitle": "Gestiona las fuentes utilizadas para recopilar alertas automáticamente.",
+      "addTitle": "Añadir fuente de alerta",
+      "addDescription": "Añade una categoría o página de publicaciones y el servicio recopilará sus artículos automáticamente.",
+      "fields": {
+        "title": "Título",
+        "url": "URL",
+        "country": "País"
+      },
+      "actions": {
+        "add": "Añadir fuente",
+        "remove": "Eliminar fuente"
+      },
+      "table": {
+        "title": "Fuentes de alertas configuradas",
+        "subtitle": "Páginas supervisadas por el servicio de alertas.",
+        "columns": {
+          "title": "Título",
+          "country": "País",
+          "url": "URL",
+          "created": "Creada"
+        }
+      },
+      "emptyTitle": "No hay fuentes de alertas",
+      "emptyDescription": "Añade una fuente de alertas para empezar a recopilar alertas."
+    }
   }
 }

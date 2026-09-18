@@ -10,9 +10,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-
   padding: 28px;
-
   border-bottom: 1px solid rgba(0, 0, 0, .06);
 }
 
@@ -20,15 +18,11 @@
   margin: 4px 0 0;
 }
 
-
 .eyebrow {
   margin: 0;
-
   color: var(--mm-primary);
-
   text-transform: uppercase;
   letter-spacing: .15em;
-
   font-size: .72rem;
   font-weight: 700;
 }
@@ -42,28 +36,45 @@
   overflow-x: auto;
 }
 
+:host ::ng-deep .table-wrap th[mat-header-cell] {
+  cursor: pointer;
+}
+
+:host ::ng-deep .table-wrap .mat-sort-header-arrow {
+  display: none;
+}
+
+:host ::ng-deep .table-wrap th[mat-header-cell]:not(:has(.sortable-header)).sort-asc::after,
+:host ::ng-deep .table-wrap th[mat-header-cell]:not(:has(.sortable-header)).sort-desc::after {
+  margin-left: 6px;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+:host ::ng-deep .table-wrap th[mat-header-cell]:not(:has(.sortable-header)).sort-asc::after {
+  content: '↑';
+}
+
+:host ::ng-deep .table-wrap th[mat-header-cell]:not(:has(.sortable-header)).sort-desc::after {
+  content: '↓';
+}
+
 .empty-state {
   padding: 72px 32px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
   text-align: center;
 }
 
 .empty-icon {
   width: 72px;
   height: 72px;
-
   border-radius: 50%;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   background: rgba(21, 101, 192, .08);
-
   margin-bottom: 20px;
 }
 
@@ -71,7 +82,6 @@
   font-size: 38px;
   width: 38px;
   height: 38px;
-
   color: var(--mm-primary);
 }
 
@@ -81,9 +91,7 @@
 
 .empty-state p {
   margin: 0 0 24px;
-
   color: var(--muted);
-
   max-width: 420px;
 }
 
@@ -113,4 +121,3 @@ mat-paginator {
     margin: 0 8px;
   }
 }
-

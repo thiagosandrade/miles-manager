@@ -5,6 +5,5 @@ using MilesManager.Application.Features.Redemptions.DTOs;
 
 namespace MilesManager.Application.Features.Redemptions.Queries.GetRedemptions;
 
-public sealed class GetRedemptionsQuery : IRequest<Result<IReadOnlyList<FlightRedemptionDto>>>
-{
-}
+public sealed record GetRedemptionsQuery()
+    : IRequest<Result<IReadOnlyList<FlightRedemptionDto>>>;
