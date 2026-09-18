@@ -53,6 +53,8 @@
     "canceled": "Storniert",
     "completed": "Abgeschlossen",
     "pending": "Ausstehend",
+    "refresh": "Aktualisieren",
+    "tryAgain": "Erneut versuchen",
     "pagination": {
       "itemsPerPage": "Elemente pro Seite",
       "nextPage": "Nächste Seite",
@@ -78,11 +80,66 @@
     "programs": "Programme",
     "programInformation": "Programmhistorie",
     "programBalances": "Programmguthaben",
+    "alerts": "Warnungen",
+    "blogSources": "Blogquellen",
+    "alertSources": "Alarmquellen",
     "purchases": "Käufe",
     "transfers": "Übertragungen",
     "redemptions": "Einlösungen",
     "settings": "Einstellungen",
     "calculator": "Flugrechner",
     "programFactors": "Übertragungsrate"
+  },
+  "alerts": {
+    "eyebrow": "Warnungen",
+    "title": "Warnungen",
+    "subtitle": "Bleiben Sie über die neuesten Veröffentlichungen Ihrer überwachten Blogs informiert.",
+    "errorDescription": "Die verfügbaren Warnungen konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+    "emptyTitle": "Keine Warnungen verfügbar",
+    "emptyDescription": "Derzeit sind keine Blog-Warnungen verfügbar.",
+    "table": {
+      "title": "Warnungen",
+      "subtitle": "Aktuelle Veröffentlichungen aus Ihren Blogquellen.",
+      "columns": {
+        "title": "Titel",
+        "chips": "Kategorien",
+        "publishedDate": "Veröffentlichungsdatum",
+        "url": "URL",
+        "source": "Alarmquelle"
+      },
+      "open": "Artikel öffnen"
+    },
+    "filters": {
+      "country": "Land",
+      "allCountries": "Alle Länder"
+    },
+    "sources": {
+      "eyebrow": "Alarmquellen",
+      "title": "Alarmquellen",
+      "subtitle": "Verwalten Sie die Quellen, aus denen automatisch Warnungen gesammelt werden.",
+      "addTitle": "Alarmquelle hinzufügen",
+      "addDescription": "Fügen Sie eine Kategorie oder Veröffentlichungsseite hinzu. Der Hintergrunddienst sammelt ihre Artikel automatisch.",
+      "fields": {
+        "title": "Titel",
+        "url": "URL",
+        "country": "Land"
+      },
+      "actions": {
+        "add": "Quelle hinzufügen",
+        "remove": "Quelle entfernen"
+      },
+      "table": {
+        "title": "Konfigurierte Alarmquellen",
+        "subtitle": "Vom Warnungsdienst überwachte Seiten.",
+        "columns": {
+          "title": "Titel",
+          "country": "Land",
+          "url": "URL",
+          "created": "Erstellt"
+        }
+      },
+      "emptyTitle": "Keine Alarmquellen",
+      "emptyDescription": "Fügen Sie eine Alarmquelle hinzu, um Warnungen zu sammeln."
+    }
   }
 }

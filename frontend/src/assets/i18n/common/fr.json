@@ -53,6 +53,8 @@
     "canceled": "Annulé",
     "completed": "Terminé",
     "pending": "En attente",
+    "refresh": "Actualiser",
+    "tryAgain": "Réessayer",
     "pagination": {
       "itemsPerPage": "Éléments par page",
       "nextPage": "Page suivante",
@@ -78,11 +80,66 @@
     "programs": "Programmes",
     "programInformation": "Historique des programmes",
     "programBalances": "Soldes des programmes",
+    "alerts": "Alertes",
+    "blogSources": "Sources de blogs",
+    "alertSources": "Sources d’alertes",
     "purchases": "Achats",
     "transfers": "Transferts",
     "redemptions": "Utilisations",
     "settings": "Paramètres",
     "calculator": "Calculateur de vols",
     "programFactors": "Taux de transfert"
+  },
+  "alerts": {
+    "eyebrow": "Alertes",
+    "title": "Alertes",
+    "subtitle": "Restez informé des dernières publications de vos blogs surveillés.",
+    "errorDescription": "Impossible de charger les alertes disponibles. Veuillez réessayer.",
+    "emptyTitle": "Aucune alerte disponible",
+    "emptyDescription": "Aucune alerte de blog n’est disponible pour le moment.",
+    "table": {
+      "title": "Alertes",
+      "subtitle": "Publications récentes collectées depuis vos sources de blogs.",
+      "columns": {
+        "title": "Titre",
+        "chips": "Catégories",
+        "publishedDate": "Date de publication",
+        "url": "URL",
+        "source": "Source d’alerte"
+      },
+      "open": "Ouvrir l’article"
+    },
+    "filters": {
+      "country": "Pays",
+      "allCountries": "Tous les pays"
+    },
+    "sources": {
+      "eyebrow": "Sources d’alertes",
+      "title": "Sources d’alertes",
+      "subtitle": "Gérez les sources utilisées pour collecter automatiquement les alertes.",
+      "addTitle": "Ajouter une source d’alerte",
+      "addDescription": "Ajoutez une catégorie ou une page de publications et le service collectera automatiquement ses articles.",
+      "fields": {
+        "title": "Titre",
+        "url": "URL",
+        "country": "Pays"
+      },
+      "actions": {
+        "add": "Ajouter la source",
+        "remove": "Supprimer la source"
+      },
+      "table": {
+        "title": "Sources d’alertes configurées",
+        "subtitle": "Pages surveillées par le service d’alertes.",
+        "columns": {
+          "title": "Titre",
+          "country": "Pays",
+          "url": "URL",
+          "created": "Créée"
+        }
+      },
+      "emptyTitle": "Aucune source d’alerte",
+      "emptyDescription": "Ajoutez une source d’alerte pour commencer à collecter des alertes."
+    }
   }
 }

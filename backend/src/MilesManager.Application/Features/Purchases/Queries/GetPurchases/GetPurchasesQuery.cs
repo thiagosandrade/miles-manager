@@ -5,6 +5,5 @@ using MilesManager.Application.Features.Purchases.DTOs;
 
 namespace MilesManager.Application.Features.Purchases.Queries.GetPurchases;
 
-public sealed class GetPurchasesQuery : IRequest<Result<IReadOnlyList<MileagePurchaseDto>>>
-{
-}
+public sealed record GetPurchasesQuery()
+    : IRequest<Result<IReadOnlyList<MileagePurchaseDto>>>;

@@ -11,11 +11,10 @@ public sealed class GetRolesQueryHandler(IApplicationDbContext applicationDbCont
 {
     public async Task<IReadOnlyList<RoleDTO>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
     {
-        var roles = await applicationDbContext
-            .Roles
+        var roles = await applicationDbContext.Roles
             .AsNoTracking()
             .ProjectTo<RoleDTO>(mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken: cancellationToken);
+            .ToListAsync(cancellationToken);
 
         return roles;
     }

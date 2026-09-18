@@ -16,9 +16,10 @@ namespace MilesManager.Api.Controllers;
 public sealed class UserRolesController(ISender sender) : ApiController(sender)
 {
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<RoleDTO>>> GetRoles()
+    public async Task<ActionResult<IReadOnlyList<RoleDTO>>> GetRoles(
+        CancellationToken cancellationToken)
     {
-        var result = await Sender.Send(new GetRolesQuery());
+        var result = await Sender.Send(new GetRolesQuery(), cancellationToken);
         return Ok(result);
     }
 
@@ -26,7 +27,6 @@ public sealed class UserRolesController(ISender sender) : ApiController(sender)
     public async Task<IActionResult> AssignRole([FromBody] AssignRoleCommand command)
     {
         var result = await Sender.Send(command);
-
         return result == OperationStatus.Success ? NoContent() : NotFound();
     }
 
@@ -34,7 +34,6 @@ public sealed class UserRolesController(ISender sender) : ApiController(sender)
     public async Task<IActionResult> RemoveRole([FromBody] RemoveRoleCommand command)
     {
         var result = await Sender.Send(command);
-
         return result == OperationStatus.Success ? NoContent() : NotFound();
     }
 }

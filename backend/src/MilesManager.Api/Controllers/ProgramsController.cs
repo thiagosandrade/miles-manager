@@ -19,12 +19,12 @@ namespace MilesManager.Api.Controllers;
 [Route("api/v{version:apiVersion}/programs")]
 public sealed class ProgramsController(ISender sender) : ApiController(sender)
 {
-
     /// <summary>
     /// Gets all programs.
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Application.Features.Programs.DTOs.ProgramDto>>> Get(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<Application.Features.Programs.DTOs.ProgramDto>>> Get(
+        CancellationToken cancellationToken)
     {
         var result = await Sender.Send(new GetProgramsQuery(), cancellationToken);
         return Convert(result);

@@ -5,7 +5,5 @@ using MilesManager.Application.Features.Programs.DTOs;
 
 namespace MilesManager.Application.Features.Programs.Queries.GetPrograms;
 
-public sealed class GetProgramsQuery : IRequest<Result<IReadOnlyList<ProgramDto>>>
-{
-}
-
+public sealed record GetProgramsQuery()
+    : IRequest<Result<IReadOnlyList<ProgramDto>>>;

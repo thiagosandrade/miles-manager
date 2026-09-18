@@ -6,6 +6,7 @@ using MilesManager.Domain.Transfers;
 using MilesManager.Domain.Redemptions;
 using MilesManager.Domain.Pricing;
 using MilesManager.Domain.Lookups;
+using MilesManager.Domain.Alerts;
 
 namespace MilesManager.Application.Abstractions;
 
@@ -23,6 +24,8 @@ public interface IApplicationDbContext
     DbSet<FlightRedemption> FlightRedemptions { get; }
     DbSet<ReferenceMileagePrice> ReferenceMileagePrices { get; }
     DbSet<Airport> Airports { get; }
+    DbSet<AlertSource> AlertSources { get; }
+    DbSet<AlertItem> AlertItems { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

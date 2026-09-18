@@ -1,6 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ProgramListResponse, Program, ProgramCreateRequest, ProgramUpdateRequest } from './models/program.model';
 
@@ -14,8 +14,10 @@ export class ProgramsApiService {
   constructor(private http: HttpClient) {}
 
   async getPrograms(): Promise<ProgramListResponse> {
+    const list = await firstValueFrom(
+      this.http.get<Program[]>(this.apiBaseUrl),
+    );
 
-    const list = await firstValueFrom(this.http.get<Program[]>(`${this.apiBaseUrl}`));
     return { programs: list, totalCount: list.length };
   }
 

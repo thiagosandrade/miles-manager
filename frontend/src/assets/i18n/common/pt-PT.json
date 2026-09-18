@@ -53,6 +53,8 @@
     "canceled": "Cancelado",
     "completed": "Concluído",
     "pending": "Pendente",
+    "refresh": "Atualizar",
+    "tryAgain": "Tente novamente",
     "pagination": {
       "itemsPerPage": "Itens por página",
       "nextPage": "Página seguinte",
@@ -78,11 +80,66 @@
     "programs": "Programas",
     "programInformation": "Histórico dos programas",
     "programBalances": "Saldos dos programas",
+    "alerts": "Alertas",
+    "blogSources": "Fontes de blogs",
+    "alertSources": "Fontes de alertas",
     "purchases": "Compras",
     "transfers": "Transferências",
     "redemptions": "Resgates",
     "settings": "Definições",
     "calculator": "Calculadora de voos",
     "programFactors": "Taxa de transferência"
+  },
+  "alerts": {
+    "eyebrow": "Alertas",
+    "title": "Alertas",
+    "subtitle": "Acompanhe as publicações mais recentes dos seus blogs monitorizados.",
+    "errorDescription": "Não foi possível carregar os alertas disponíveis. Tente novamente.",
+    "emptyTitle": "Nenhum alerta disponível",
+    "emptyDescription": "Não existem alertas de blogs disponíveis neste momento.",
+    "table": {
+      "title": "Alertas",
+      "subtitle": "Publicações recentes recolhidas das suas fontes de blogs.",
+      "columns": {
+        "title": "Título",
+        "chips": "Categorias",
+        "publishedDate": "Data de publicação",
+        "url": "URL",
+        "source": "Fonte de alerta"
+      },
+      "open": "Abrir artigo"
+    },
+    "filters": {
+      "country": "País",
+      "allCountries": "Todos os países"
+    },
+    "sources": {
+      "eyebrow": "Fontes de alertas",
+      "title": "Fontes de alertas",
+      "subtitle": "Gira as fontes usadas para recolher alertas automaticamente.",
+      "addTitle": "Adicionar fonte de alerta",
+      "addDescription": "Adicione uma categoria ou página de publicações e o serviço recolherá os seus artigos automaticamente.",
+      "fields": {
+        "title": "Título",
+        "url": "URL",
+        "country": "País"
+      },
+      "actions": {
+        "add": "Adicionar fonte",
+        "remove": "Remover fonte"
+      },
+      "table": {
+        "title": "Fontes de alertas configuradas",
+        "subtitle": "Páginas monitorizadas pelo serviço de alertas.",
+        "columns": {
+          "title": "Título",
+          "country": "País",
+          "url": "URL",
+          "created": "Criada"
+        }
+      },
+      "emptyTitle": "Nenhuma fonte de alerta",
+      "emptyDescription": "Adicione uma fonte de alerta para começar a recolher alertas."
+    }
   }
 }

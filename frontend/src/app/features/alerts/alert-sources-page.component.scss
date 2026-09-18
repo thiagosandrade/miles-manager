@@ -1,0 +1,83 @@
+@use '../../../styles/pages';
+
+.source-form {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 24px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: var(--shadow-sm);
+}
+
+.source-form-heading h2 {
+  margin: 0 0 4px;
+}
+
+.source-form-heading p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.source-form form {
+  display: grid;
+  grid-template-columns: minmax(180px, .65fr) minmax(280px, 1.15fr) minmax(160px, .55fr) auto;
+  align-items: start;
+  gap: 14px;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.external-link {
+  color: var(--mm-primary);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.actions-column {
+  width: 60px;
+  text-align: right;
+}
+
+.mobile-sources {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .source-form form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .source-form form {
+    grid-template-columns: 1fr;
+  }
+
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-sources {
+    display: grid;
+  }
+
+  .source-card {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .source-card > div {
+    display: grid;
+    gap: 6px;
+  }
+}

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -15,7 +16,11 @@ public static class DependencyInjection
     /// </summary>
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
-        services.AddControllers();
+        services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
 
         // Enable FluentValidation automatic model validation and register validators from the Application assembly
         services.AddFluentValidationAutoValidation();

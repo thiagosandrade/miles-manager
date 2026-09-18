@@ -44,6 +44,11 @@
   color: var(--muted);
 }
 
+.mat-mdc-list-item [matListItemTitle] {
+  white-space: normal;
+  line-height: 1.25;
+}
+
 .active-link {
   background: rgba(21, 101, 192, .12);
   color: var(--mm-primary);
@@ -52,6 +57,12 @@
 
 .active-link mat-icon {
   color: var(--mm-primary);
+}
+
+.navigation-divider {
+  height: 1px;
+  margin: 10px 12px 12px;
+  background: var(--border);
 }
 
 

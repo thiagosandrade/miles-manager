@@ -5,6 +5,5 @@ using MilesManager.Application.Features.Transfers.DTOs;
 
 namespace MilesManager.Application.Features.Transfers.Queries.GetTransfers;
 
-public sealed class GetTransfersQuery : IRequest<Result<IReadOnlyList<MileageTransferDto>>>
-{
-}
+public sealed record GetTransfersQuery()
+    : IRequest<Result<IReadOnlyList<MileageTransferDto>>>;
