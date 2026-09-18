@@ -14,16 +14,18 @@ public sealed class MeilenOptimierenAlertExtractionStrategy : IAlertExtractionSt
     public IEnumerable<AlertItem> ExtractItems(IDocument document, Uri sourceUri)
     {
         var sectionHeading = document
-            .QuerySelectorAll("h1, h2, h3")
-            .FirstOrDefault(x => IsOffersHeading(AlertExtractionHelpers.CleanText(x.TextContent)));
+            .QuerySelectorAll("h2, h3")
+            .FirstOrDefault(x =>
+                AlertExtractionHelpers.CleanText(x.TextContent)
+                    .Equals("Alle Artikel zum Meilen sammeln", StringComparison.OrdinalIgnoreCase));
 
         if (sectionHeading is null)
         {
             yield break;
         }
 
-        var headingLevel = GetHeadingLevel(sectionHeading);
         var seenUrls = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var headingLevel = GetHeadingLevel(sectionHeading);
 
         foreach (var element in document.All.SkipWhile(x => !ReferenceEquals(x, sectionHeading)))
         {
@@ -32,135 +34,125 @@ public sealed class MeilenOptimierenAlertExtractionStrategy : IAlertExtractionSt
                 continue;
             }
 
-            if (element.TagName.Equals($"H{headingLevel}", StringComparison.OrdinalIgnoreCase)
-                || element.TagName.Equals($"H{Math.Max(1, headingLevel - 1)}", StringComparison.OrdinalIgnoreCase))
+            if (IsHeadingAtOrAboveLevel(element, headingLevel))
             {
                 break;
             }
 
-            // Offer cards on Meilenoptimieren are rendered as h3 entries.
-            // Restrict extraction to that level to avoid navigation, ticker,
-            // comments and unrelated nested headings.
-            if (!element.TagName.Equals("H3", StringComparison.OrdinalIgnoreCase))
+            if (element is not IElement current
+                || !current.TagName.Equals("A", StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }
 
-            var title = AlertExtractionHelpers.CleanText(element.TextContent);
-            if (title.Length < 8 || AlertExtractionHelpers.IsNonArticleHeading(title))
+            var externalUrl = AlertExtractionHelpers.ResolveUrl(
+                current.GetAttribute("href"),
+                sourceUri);
+
+            if (!IsArticleUrl(externalUrl, sourceUri))
             {
                 continue;
             }
 
-            var link = FindArticleLink(element, sourceUri);
-            var externalUrl = AlertExtractionHelpers.ResolveUrl(link?.GetAttribute("href"), sourceUri);
-
-            if (!IsArticleUrl(externalUrl, sourceUri)
-                || !seenUrls.Add(AlertExtractionHelpers.NormalizeUrl(externalUrl!)))
+            var title = AlertExtractionHelpers.CleanText(current.TextContent);
+            if (title.Length < 20
+                || title.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length < 4
+                || AlertExtractionHelpers.IsNonArticleHeading(title))
             {
                 continue;
             }
 
-            var card = element.Closest("article")
-                ?? element.Closest("li")
-                ?? element.ParentElement;
+            var normalizedUrl = AlertExtractionHelpers.NormalizeUrl(externalUrl!);
+            if (!seenUrls.Add(normalizedUrl))
+            {
+                continue;
+            }
+
+            var card = current.Closest("article")
+                ?? current.Closest("li")
+                ?? current.ParentElement;
 
             if (card is null)
             {
                 continue;
             }
 
+            var publishedDate = AlertExtractionHelpers.ExtractPublishedDate(card)
+                ?? ExtractVisibleDate(card);
+
             yield return new AlertItem
             {
                 Title = title,
                 ExternalUrl = externalUrl!,
-                PublishedDate = AlertExtractionHelpers.ExtractPublishedDate(card)
-                    ?? ExtractVisibleDate(card),
+                PublishedDate = publishedDate,
                 Chips = AlertExtractionHelpers.ExtractChips(card, externalUrl!)
             };
         }
-    }
-
-    private static IElement? FindArticleLink(IElement heading, Uri sourceUri)
-    {
-        var directLink = heading.Closest("a[href]");
-        if (directLink is not null && IsArticleUrl(
-            AlertExtractionHelpers.ResolveUrl(directLink.GetAttribute("href"), sourceUri),
-            sourceUri))
-        {
-            return directLink;
-        }
-
-        var card = heading.Closest("article")
-            ?? heading.Closest("li")
-            ?? heading.ParentElement;
-
-        if (card is null)
-        {
-            return null;
-        }
-
-        return card
-            .QuerySelectorAll("a[href]")
-            .FirstOrDefault(anchor =>
-            {
-                var href = AlertExtractionHelpers.ResolveUrl(anchor.GetAttribute("href"), sourceUri);
-                if (!IsArticleUrl(href, sourceUri))
-                {
-                    return false;
-                }
-
-                var text = AlertExtractionHelpers.CleanText(anchor.TextContent);
-                return string.Equals(text, AlertExtractionHelpers.CleanText(heading.TextContent), StringComparison.OrdinalIgnoreCase)
-                    || anchor.QuerySelector("img") is not null;
-            });
     }
 
     private static DateTimeOffset? ExtractVisibleDate(IElement element)
     {
         var text = AlertExtractionHelpers.CleanText(element.TextContent);
 
-        var match = Regex.Match(
+        var numericMatch = Regex.Match(
+            text,
+            @"(?<!\d)(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})(?!\d)",
+            RegexOptions.CultureInvariant);
+
+        if (numericMatch.Success
+            && DateTime.TryParseExact(
+                numericMatch.Value,
+                new[] { "dd.MM.yyyy", "d.M.yyyy" },
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.None,
+                out var numericDate))
+        {
+            return new DateTimeOffset(DateTime.SpecifyKind(numericDate.Date, DateTimeKind.Utc));
+        }
+
+        var germanMatch = Regex.Match(
             text,
             @"(?<!\d)(\d{1,2})\.\s+([A-Za-zÄÖÜäöüß]+)\s+(\d{4})(?!\d)",
             RegexOptions.CultureInvariant);
 
-        if (!match.Success)
+        if (germanMatch.Success
+            && DateTime.TryParse(
+                germanMatch.Value,
+                CultureInfo.GetCultureInfo("de-DE"),
+                DateTimeStyles.AllowWhiteSpaces,
+                out var germanDate))
         {
-            match = Regex.Match(
-                text,
-                @"(?<!\d)([A-Za-z]+)\s+(\d{1,2}),\s+(\d{4})(?!\d)",
-                RegexOptions.CultureInvariant);
+            return new DateTimeOffset(DateTime.SpecifyKind(germanDate.Date, DateTimeKind.Utc));
         }
 
-        if (!match.Success)
-        {
-            return null;
-        }
+        var englishMatch = Regex.Match(
+            text,
+            @"(?<!\d)([A-Za-z]+)\.?\s+(\d{1,2}),\s+(\d{4})(?!\d)",
+            RegexOptions.CultureInvariant);
 
-        var dateText = match.Groups[0].Value;
-
-        if (DateTime.TryParse(
-            dateText,
-            CultureInfo.GetCultureInfo("de-DE"),
-            DateTimeStyles.AllowWhiteSpaces,
-            out var germanDate)
-            || DateTime.TryParse(
-                dateText,
+        if (englishMatch.Success
+            && DateTime.TryParse(
+                englishMatch.Value,
                 CultureInfo.GetCultureInfo("en-US"),
                 DateTimeStyles.AllowWhiteSpaces,
-                out germanDate))
+                out var englishDate))
         {
-            return new DateTimeOffset(
-                DateTime.SpecifyKind(germanDate.Date, DateTimeKind.Utc));
+            return new DateTimeOffset(DateTime.SpecifyKind(englishDate.Date, DateTimeKind.Utc));
         }
 
         return null;
     }
 
-    private static bool IsOffersHeading(string title) =>
-        title.Equals("Aktuelle Angebote", StringComparison.OrdinalIgnoreCase)
-        || title.Equals("Weitere aktuelle Angebote", StringComparison.OrdinalIgnoreCase);
+    private static bool IsHeadingAtOrAboveLevel(IElement element, int level)
+    {
+        if (!element.TagName.StartsWith("H", StringComparison.OrdinalIgnoreCase)
+            || !int.TryParse(element.TagName[1..], out var elementLevel))
+        {
+            return false;
+        }
+
+        return elementLevel <= level;
+    }
 
     private static int GetHeadingLevel(IElement heading) =>
         int.TryParse(heading.TagName[1..], out var level) ? level : 2;
@@ -185,6 +177,8 @@ public sealed class MeilenOptimierenAlertExtractionStrategy : IAlertExtractionSt
             && !path.StartsWith("/category/", StringComparison.OrdinalIgnoreCase)
             && !path.StartsWith("/tag/", StringComparison.OrdinalIgnoreCase)
             && !path.StartsWith("/author/", StringComparison.OrdinalIgnoreCase)
-            && !path.StartsWith("/page/", StringComparison.OrdinalIgnoreCase);
+            && !path.StartsWith("/page/", StringComparison.OrdinalIgnoreCase)
+            && !path.StartsWith("/comments/", StringComparison.OrdinalIgnoreCase)
+            && !uri.Fragment.Contains("comments", StringComparison.OrdinalIgnoreCase);
     }
 }
