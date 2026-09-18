@@ -7,6 +7,7 @@ import { Sort } from '@angular/material/sort';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AppTableComponent } from '../../shared/components/app-table/app-table.component';
 import { SnackbarService } from '../../core/services/snackbar.service';
+import { TokenStorageService } from '../../core/services/token-storage.service';
 import { Alert } from './models/alert.model';
 import { AlertSource } from './models/alert-source.model';
 import { AlertsApiService } from './alerts-api.service';
@@ -21,6 +22,9 @@ import { AlertsApiService } from './alerts-api.service';
 export class AlertsPageComponent implements OnInit {
   private readonly api = inject(AlertsApiService);
   private readonly snackbar = inject(SnackbarService);
+  private readonly storage = inject(TokenStorageService);
+
+  readonly isAdministrator = this.storage.isAdministrator();
 
   readonly allData = signal<Alert[]>([]);
   readonly data = signal<Alert[]>([]);
@@ -35,6 +39,10 @@ export class AlertsPageComponent implements OnInit {
   );
 
   readonly displayedColumns = ['source', 'title', 'chips', 'publishedDate', 'url'];
+
+  get tableColumns(): string[] {
+    return this.isAdministrator ? [...this.displayedColumns, 'actions'] : this.displayedColumns;
+  }
 
   sortActive = 'publishedDate';
   sortDirection: 'asc' | 'desc' | '' = 'desc';
@@ -87,6 +95,17 @@ export class AlertsPageComponent implements OnInit {
     this.sortDirection = event.direction;
     this.pageIndex = 0;
     this.applySort();
+  }
+
+  deleteAlert(alert: Alert): void {
+    this.api.deleteAlert(alert.id).subscribe({
+      next: () => {
+        this.allData.update(alerts => alerts.filter(item => item.id !== alert.id));
+        this.applySort();
+        this.snackbar.success('Alert removed.', 3000);
+      },
+      error: () => this.snackbar.error('Could not remove alert.', 3000),
+    });
   }
 
   onPageChange(event: PageEvent): void {
