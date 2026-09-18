@@ -1,3 +1,5 @@
+using System.Globalization;
+using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 using MilesManager.Domain.Alerts;
 
@@ -69,10 +71,53 @@ public sealed class MeilenOptimierenAlertExtractionStrategy : IAlertExtractionSt
             {
                 Title = title,
                 ExternalUrl = externalUrl!,
-                PublishedDate = AlertExtractionHelpers.ExtractPublishedDate(card),
+                PublishedDate = AlertExtractionHelpers.ExtractPublishedDate(card)
+                    ?? ExtractVisibleDate(card),
                 Chips = AlertExtractionHelpers.ExtractChips(card, externalUrl!)
             };
         }
+    }
+
+    private static DateTimeOffset? ExtractVisibleDate(IElement element)
+    {
+        var text = AlertExtractionHelpers.CleanText(element.TextContent);
+
+        var match = Regex.Match(
+            text,
+            @"(?<!\d)(\d{1,2})\.\s+([A-Za-zÄÖÜäöüß]+)\s+(\d{4})(?!\d)",
+            RegexOptions.CultureInvariant);
+
+        if (!match.Success)
+        {
+            match = Regex.Match(
+                text,
+                @"(?<!\d)([A-Za-z]+)\s+(\d{1,2}),\s+(\d{4})(?!\d)",
+                RegexOptions.CultureInvariant);
+        }
+
+        if (!match.Success)
+        {
+            return null;
+        }
+
+        var dateText = match.Groups[0].Value;
+
+        if (DateTime.TryParse(
+            dateText,
+            CultureInfo.GetCultureInfo("de-DE"),
+            DateTimeStyles.AllowWhiteSpaces,
+            out var germanDate)
+            || DateTime.TryParse(
+                dateText,
+                CultureInfo.GetCultureInfo("en-US"),
+                DateTimeStyles.AllowWhiteSpaces,
+                out germanDate))
+        {
+            return new DateTimeOffset(
+                DateTime.SpecifyKind(germanDate.Date, DateTimeKind.Utc));
+        }
+
+        return null;
     }
 
     private static bool IsOffersHeading(string title) =>
