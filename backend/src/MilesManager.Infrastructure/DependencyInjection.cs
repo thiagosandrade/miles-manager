@@ -27,6 +27,7 @@ public static class DependencyInjection
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IPasswordResetTokenService, PasswordResetTokenService>();
 
+        services.AddScoped<IAlertExtractionStrategy, MeilenOptimierenAlertExtractionStrategy>();
         services.AddScoped<IAlertExtractionStrategy, PontosPraVoarAlertExtractionStrategy>();
         services.AddScoped<IAlertExtractionStrategy, ThePointsGuyAlertExtractionStrategy>();
         services.AddScoped<IAlertExtractionStrategy, DefaultAlertExtractionStrategy>();
