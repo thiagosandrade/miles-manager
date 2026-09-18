@@ -1,31 +1,31 @@
 <section class="page">
   <header class="page-header">
     <div>
-      <p class="eyebrow">{{ 'opportunities.eyebrow' | translate }}</p>
-      <h1>{{ 'opportunities.title' | translate }}</h1>
-      <p class="subtitle">{{ 'opportunities.subtitle' | translate }}</p>
+      <p class="eyebrow">{{ 'alerts.eyebrow' | translate }}</p>
+      <h1>{{ 'alerts.title' | translate }}</h1>
+      <p class="subtitle">{{ 'alerts.subtitle' | translate }}</p>
     </div>
   </header>
 
   <div class="feedback" *ngIf="hasError()">
     <strong>{{ 'common.error' | translate }}</strong>
-    <span>{{ 'opportunities.errorDescription' | translate }}</span>
+    <span>{{ 'alerts.errorDescription' | translate }}</span>
   </div>
 
   <section class="filters-card">
-    <label for="alert-country-filter">{{ 'opportunities.filters.country' | translate }}</label>
+    <label for="alert-country-filter">{{ 'alerts.filters.country' | translate }}</label>
     <select
       id="alert-country-filter"
       [value]="selectedCountry()"
       (change)="onCountryChange($any($event.target).value)">
-      <option value="">{{ 'opportunities.filters.allCountries' | translate }}</option>
+      <option value="">{{ 'alerts.filters.allCountries' | translate }}</option>
       <option *ngFor="let country of countries()" [value]="country">{{ country }}</option>
     </select>
   </section>
 
   <app-table
-    [title]="'opportunities.table.title' | translate"
-    [subtitle]="'opportunities.table.subtitle' | translate"
+    [title]="'alerts.table.title' | translate"
+    [subtitle]="'alerts.table.subtitle' | translate"
     [loading]="loading()"
     [dataSource]="pagedData()"
     [length]="data().length"
@@ -34,15 +34,15 @@
     (sortChange)="onSortChange($event)"
     [showPaginator]="true"
     emptyIcon="notifications_active"
-    [emptyTitle]="'opportunities.emptyTitle' | translate"
-    [emptyDescription]="'opportunities.emptyDescription' | translate">
+    [emptyTitle]="'alerts.emptyTitle' | translate"
+    [emptyDescription]="'alerts.emptyDescription' | translate">
 
     <div class="desktop-table">
       <table mat-table [dataSource]="pagedData()">
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef>
             <span class="sortable-header">
-              {{ 'opportunities.table.columns.title' | translate }}
+              {{ 'alerts.table.columns.title' | translate }}
               @if (sortActive === 'title') {
                 <mat-icon>
                   {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
@@ -58,7 +58,7 @@
         <ng-container matColumnDef="source">
           <th mat-header-cell *matHeaderCellDef>
             <span class="sortable-header">
-              {{ 'opportunities.table.columns.source' | translate }}
+              {{ 'alerts.table.columns.source' | translate }}
               @if (sortActive === 'source') {
                 <mat-icon>
                   {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
@@ -74,7 +74,7 @@
         <ng-container matColumnDef="chips">
           <th mat-header-cell *matHeaderCellDef>
             <span class="sortable-header">
-              {{ 'opportunities.table.columns.chips' | translate }}
+              {{ 'alerts.table.columns.chips' | translate }}
               @if (sortActive === 'chips') {
                 <mat-icon>
                   {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
@@ -93,7 +93,7 @@
         <ng-container matColumnDef="publishedDate">
           <th mat-header-cell *matHeaderCellDef>
             <span class="sortable-header">
-              {{ 'opportunities.table.columns.publishedDate' | translate }}
+              {{ 'alerts.table.columns.publishedDate' | translate }}
               @if (sortActive === 'publishedDate') {
                 <mat-icon>
                   {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
@@ -108,7 +108,7 @@
 
         <ng-container matColumnDef="url">
           <th mat-header-cell *matHeaderCellDef>
-            {{ 'opportunities.table.columns.url' | translate }}
+            {{ 'alerts.table.columns.url' | translate }}
           </th>
           <td mat-cell *matCellDef="let alert">
             <a
@@ -117,7 +117,7 @@
               target="_blank"
               rel="noopener noreferrer">
               <mat-icon>open_in_new</mat-icon>
-              {{ 'opportunities.table.open' | translate }}
+              {{ 'alerts.table.open' | translate }}
             </a>
           </td>
         </ng-container>
@@ -136,7 +136,7 @@
           </span>
         </div>
 
-        <div class="source-title">{{ 'opportunities.table.columns.source' | translate }}: {{ sourceTitle(alert) }}</div>
+        <div class="source-title">{{ 'alerts.table.columns.source' | translate }}: {{ sourceTitle(alert) }}</div>
 
         <div class="chips">
           <span class="chip" *ngFor="let chip of chips(alert)">{{ chip }}</span>
@@ -148,7 +148,7 @@
           target="_blank"
           rel="noopener noreferrer">
           <mat-icon>open_in_new</mat-icon>
-          {{ 'opportunities.table.open' | translate }}
+          {{ 'alerts.table.open' | translate }}
         </a>
       </article>
     </div>
