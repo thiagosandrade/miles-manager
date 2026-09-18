@@ -13,14 +13,24 @@
   </div>
 
   <section class="filters-card">
-    <label for="alert-country-filter">{{ 'alerts.filters.country' | translate }}</label>
-    <select
-      id="alert-country-filter"
-      [value]="selectedCountry()"
-      (change)="onCountryChange($any($event.target).value)">
-      <option value="">{{ 'alerts.filters.allCountries' | translate }}</option>
-      <option *ngFor="let country of countries()" [value]="country">{{ country }}</option>
-    </select>
+    <span class="filter-label">{{ 'alerts.filters.country' | translate }}</span>
+    <div class="country-chips" role="group" [attr.aria-label]="'alerts.filters.country' | translate">
+      <button
+        type="button"
+        class="country-chip"
+        [class.selected]="!selectedCountry()"
+        (click)="onCountryChange('')">
+        {{ 'alerts.filters.allCountries' | translate }}
+      </button>
+      <button
+        type="button"
+        class="country-chip"
+        *ngFor="let country of countries()"
+        [class.selected]="selectedCountry() === country"
+        (click)="onCountryChange(country)">
+        {{ country }}
+      </button>
+    </div>
   </section>
 
   <app-table
@@ -111,11 +121,7 @@
             {{ 'alerts.table.columns.url' | translate }}
           </th>
           <td mat-cell *matCellDef="let alert">
-            <a
-              class="external-link"
-              [href]="alert.externalUrl"
-              target="_blank"
-              rel="noopener noreferrer">
+            <a class="external-link" [href]="alert.externalUrl" target="_blank" rel="noopener noreferrer">
               <mat-icon>open_in_new</mat-icon>
               {{ 'alerts.table.open' | translate }}
             </a>
@@ -131,22 +137,13 @@
       <article class="alert-card" *ngFor="let alert of pagedData(); trackBy: trackById">
         <div class="alert-card-header">
           <strong>{{ alert.title }}</strong>
-          <span>
-            {{ alert.publishedDate ? (alert.publishedDate | date: 'mediumDate') : '—' }}
-          </span>
+          <span>{{ alert.publishedDate ? (alert.publishedDate | date: 'mediumDate') : '—' }}</span>
         </div>
-
         <div class="source-title">{{ 'alerts.table.columns.source' | translate }}: {{ sourceTitle(alert) }}</div>
-
         <div class="chips">
           <span class="chip" *ngFor="let chip of chips(alert)">{{ chip }}</span>
         </div>
-
-        <a
-          class="external-link"
-          [href]="alert.externalUrl"
-          target="_blank"
-          rel="noopener noreferrer">
+        <a class="external-link" [href]="alert.externalUrl" target="_blank" rel="noopener noreferrer">
           <mat-icon>open_in_new</mat-icon>
           {{ 'alerts.table.open' | translate }}
         </a>
