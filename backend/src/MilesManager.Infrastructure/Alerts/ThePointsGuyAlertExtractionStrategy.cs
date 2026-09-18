@@ -60,9 +60,7 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
         }
 
         var path = uri.AbsolutePath.Trim('/');
-        return path.Length > 0
-            && !uri.AbsolutePath.Equals(sourceUri.AbsolutePath, StringComparison.OrdinalIgnoreCase)
-            && !path.Equals("news", StringComparison.OrdinalIgnoreCase)
+        return path.StartsWith("news/", StringComparison.OrdinalIgnoreCase)
             && !path.Equals("news/credit-cards", StringComparison.OrdinalIgnoreCase)
             && !path.StartsWith("news/credit-cards/page/", StringComparison.OrdinalIgnoreCase);
     }
