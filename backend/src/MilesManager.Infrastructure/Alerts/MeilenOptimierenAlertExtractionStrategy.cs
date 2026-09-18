@@ -49,7 +49,7 @@ public sealed class MeilenOptimierenAlertExtractionStrategy : IAlertExtractionSt
                 continue;
             }
 
-            var link = element.QuerySelector("a[href]") ?? element.Closest("a[href]");
+            var link = FindArticleLink(element, sourceUri);
             var externalUrl = AlertExtractionHelpers.ResolveUrl(link?.GetAttribute("href"), sourceUri);
 
             if (!IsArticleUrl(externalUrl, sourceUri)
@@ -76,6 +76,41 @@ public sealed class MeilenOptimierenAlertExtractionStrategy : IAlertExtractionSt
                 Chips = AlertExtractionHelpers.ExtractChips(card, externalUrl!)
             };
         }
+    }
+
+    private static IElement? FindArticleLink(IElement heading, Uri sourceUri)
+    {
+        var directLink = heading.Closest("a[href]");
+        if (directLink is not null && IsArticleUrl(
+            AlertExtractionHelpers.ResolveUrl(directLink.GetAttribute("href"), sourceUri),
+            sourceUri))
+        {
+            return directLink;
+        }
+
+        var card = heading.Closest("article")
+            ?? heading.Closest("li")
+            ?? heading.ParentElement;
+
+        if (card is null)
+        {
+            return null;
+        }
+
+        return card
+            .QuerySelectorAll("a[href]")
+            .FirstOrDefault(anchor =>
+            {
+                var href = AlertExtractionHelpers.ResolveUrl(anchor.GetAttribute("href"), sourceUri);
+                if (!IsArticleUrl(href, sourceUri))
+                {
+                    return false;
+                }
+
+                var text = AlertExtractionHelpers.CleanText(anchor.TextContent);
+                return string.Equals(text, AlertExtractionHelpers.CleanText(heading.TextContent), StringComparison.OrdinalIgnoreCase)
+                    || anchor.QuerySelector("img") is not null;
+            });
     }
 
     private static DateTimeOffset? ExtractVisibleDate(IElement element)
