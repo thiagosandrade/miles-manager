@@ -15,6 +15,10 @@ export class AlertsApiService {
     return this.http.get<Alert[]>(this.alertsUrl);
   }
 
+  deleteAlert(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.alertsUrl}/${id}`);
+  }
+
   getAlertSources(): Observable<AlertSource[]> {
     return this.http.get<AlertSource[]>(this.alertSourcesUrl);
   }
