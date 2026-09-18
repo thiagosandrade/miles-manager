@@ -73,7 +73,7 @@ internal static class AlertExtractionHelpers
             CultureInfo.InvariantCulture,
             DateTimeStyles.AssumeUniversal,
             out var date)
-            ? date
+            ? date.ToUniversalTime()
             : null;
     }
 
