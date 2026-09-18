@@ -35,7 +35,8 @@ public sealed class AlertIngestionServiceTests
 
         var service = new AlertIngestionService(
             context,
-            new HttpClient(new StubHttpMessageHandler(html)));
+            new HttpClient(new StubHttpMessageHandler(html)),
+            [new DefaultAlertExtractionStrategy()]);
 
         var discovered = await service.IngestAllAsync(CancellationToken.None);
 
