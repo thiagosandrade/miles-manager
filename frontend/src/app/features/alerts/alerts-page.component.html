@@ -39,22 +39,6 @@
 
     <div class="desktop-table">
       <table mat-table [dataSource]="pagedData()">
-        <ng-container matColumnDef="title">
-          <th mat-header-cell *matHeaderCellDef>
-            <span class="sortable-header">
-              {{ 'alerts.table.columns.title' | translate }}
-              @if (sortActive === 'title') {
-                <mat-icon>
-                  {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </mat-icon>
-              }
-            </span>
-          </th>
-          <td mat-cell *matCellDef="let alert">
-            <strong class="alert-title">{{ alert.title }}</strong>
-          </td>
-        </ng-container>
-
         <ng-container matColumnDef="source">
           <th mat-header-cell *matHeaderCellDef>
             <span class="sortable-header">
@@ -68,6 +52,22 @@
           </th>
           <td mat-cell *matCellDef="let alert">
             <span class="source-title">{{ sourceTitle(alert) }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>
+            <span class="sortable-header">
+              {{ 'alerts.table.columns.title' | translate }}
+              @if (sortActive === 'title') {
+                <mat-icon>
+                  {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </mat-icon>
+              }
+            </span>
+          </th>
+          <td mat-cell *matCellDef="let alert">
+            <strong class="alert-title">{{ alert.title }}</strong>
           </td>
         </ng-container>
 
