@@ -7,6 +7,7 @@ $ErrorActionPreference = "Stop"
 $Project = "impactful-shard-137923"
 $Zone = "us-central1-a"
 $Instance = "instance-milesmanager"
+$user = "thiagosoares_andrade"
 
 $Registry = "us-central1-docker.pkg.dev"
 $Repository = "miles-manager-containers"
@@ -103,10 +104,10 @@ Run-Step "Pushing frontend image to Artifact Registry" {
 # ---------------------------------------------------------
 
 Run-Step "Updating Google Cloud VM" {
-    gcloud compute ssh $Instance `
+    gcloud compute ssh $user@$Instance `
         --zone $Zone `
         --project $Project `
-        --command "cd $AppDir && git pull --ff-only origin main && docker compose -f docker-compose.vm.yml pull && docker compose -f docker-compose.vm.yml up -d --force-recreate --remove-orphans && docker compose -f docker-compose.vm.yml ps"
+        --command "cd $AppDir && git pull --ff-only origin main && docker compose -f docker-compose.vm.yml pull backend frontend && docker compose -f docker-compose.vm.yml up -d --force-recreate backend frontend && docker compose -f docker-compose.vm.yml ps"
 }
 
 # ---------------------------------------------------------
