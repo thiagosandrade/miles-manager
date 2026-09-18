@@ -40,7 +40,7 @@ public sealed class AlertIngestionServiceTests
         var discovered = await service.IngestAllAsync(CancellationToken.None);
 
         discovered.Should().Be(1);
-        var item = await context.AlertItems.SingleAsync();
+        var item = await context.AlertItems.SingleAsync(cancellationToken: TestContext.Current.CancellationToken);
         item.Title.Should().Be("Azul oferece até 110% de bônus");
         item.ExternalUrl.Should().Be("https://passageirodeprimeira.com/article-1");
         item.PublishedDate.Should().NotBeNull();
@@ -81,7 +81,7 @@ public sealed class AlertIngestionServiceTests
         var discovered = await service.IngestAllAsync(CancellationToken.None);
 
         discovered.Should().Be(0);
-        (await context.AlertItems.CountAsync()).Should().Be(1);
+        (await context.AlertItems.CountAsync(cancellationToken: TestContext.Current.CancellationToken)).Should().Be(1);
     }
 
     private static MilesManagerDbContext CreateContext()
