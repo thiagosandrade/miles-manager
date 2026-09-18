@@ -21,6 +21,12 @@
   background: var(--panel);
 }
 
+.app-sidenav .mat-drawer-inner-container {
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
 
 /* ==========================================================
    Navigation Items
