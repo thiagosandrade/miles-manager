@@ -140,6 +140,9 @@
       },
       "emptyTitle": "No alert sources",
       "emptyDescription": "Add an alert source to start collecting alerts."
+    },
+    "actions": {
+      "delete": "Remove alert"
     }
   }
 }

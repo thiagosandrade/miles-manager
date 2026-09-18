@@ -140,6 +140,9 @@
       },
       "emptyTitle": "Keine Alarmquellen",
       "emptyDescription": "Fügen Sie eine Alarmquelle hinzu, um Warnungen zu sammeln."
+    },
+    "actions": {
+      "delete": "Alarm entfernen"
     }
   }
 }
