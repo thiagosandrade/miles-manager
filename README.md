@@ -35,6 +35,16 @@ MilesManager/
 
 Angular workspace files live under `frontend/`.
 
+## Local Build and Deploy
+
+From the repository root, run the PowerShell deployment script:
+
+```powershell
+.\local-build-and-push.ps1
+```
+
+The script builds and pushes the backend and frontend images to Google Artifact Registry, then updates the Google Cloud VM.
+
 ## Run with Docker
 
 ```bash
