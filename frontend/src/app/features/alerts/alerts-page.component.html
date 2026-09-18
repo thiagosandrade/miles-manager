@@ -128,8 +128,21 @@
           </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <ng-container matColumnDef="actions" *ngIf="isAdministrator">
+          <th mat-header-cell *matHeaderCellDef class="actions-column"></th>
+          <td mat-cell *matCellDef="let alert" class="actions-column">
+            <button
+              class="icon-button danger"
+              type="button"
+              [attr.aria-label]="'alerts.actions.delete' | translate"
+              (click)="deleteAlert(alert)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: tableColumns"></tr>
       </table>
     </div>
 
@@ -143,10 +156,20 @@
         <div class="chips">
           <span class="chip" *ngFor="let chip of chips(alert)">{{ chip }}</span>
         </div>
-        <a class="external-link" [href]="alert.externalUrl" target="_blank" rel="noopener noreferrer">
-          <mat-icon>open_in_new</mat-icon>
-          {{ 'alerts.table.open' | translate }}
-        </a>
+        <div class="mobile-alert-actions">
+          <a class="external-link" [href]="alert.externalUrl" target="_blank" rel="noopener noreferrer">
+            <mat-icon>open_in_new</mat-icon>
+            {{ 'alerts.table.open' | translate }}
+          </a>
+          <button
+            *ngIf="isAdministrator"
+            class="icon-button danger"
+            type="button"
+            [attr.aria-label]="'alerts.actions.delete' | translate"
+            (click)="deleteAlert(alert)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </article>
     </div>
   </app-table>
