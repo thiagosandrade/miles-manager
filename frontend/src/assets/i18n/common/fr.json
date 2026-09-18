@@ -140,6 +140,9 @@
       },
       "emptyTitle": "Aucune source d’alerte",
       "emptyDescription": "Ajoutez une source d’alerte pour commencer à collecter des alertes."
+    },
+    "actions": {
+      "delete": "Supprimer l’alerte"
     }
   }
 }
