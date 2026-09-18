@@ -23,7 +23,7 @@ export const routes: Routes = [
       { path: 'transfers', loadChildren: () => import('./features/transfers/transfers.routes').then(m => m.TRANSFERS_ROUTES) },
       { path: 'redemptions', loadChildren: () => import('./features/redemptions/redemptions.routes').then(m => m.REDEMPTIONS_ROUTES) },
       { path: 'calculator', loadChildren: () => import('./features/calculator/calculator.routes').then(m => m.CALCULATOR_ROUTES) },
-      { path: 'alerts', loadChildren: () => import('./features/opportunities/opportunities.routes').then(m => m.OPPORTUNITIES_ROUTES) }
+      { path: 'alerts', loadChildren: () => import('./features/alerts/alerts.routes').then(m => m.ALERTS_ROUTES) }
     ],
   },
   { path: '**', redirectTo: '' },

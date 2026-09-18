@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { AdminGuard } from '../../core/guards/admin.guard';
 import { AuthGuard } from '../../core/guards/auth.guard';
 
-export const OPPORTUNITIES_ROUTES: Routes = [
+export const ALERTS_ROUTES: Routes = [
   {
     path: 'alert-sources',
     canActivate: [AuthGuard, AdminGuard],
