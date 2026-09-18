@@ -26,7 +26,6 @@ public static class DependencyInjection
         services.AddScoped<IPasswordHasher, Pbkdf2PasswordHasher>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IPasswordResetTokenService, PasswordResetTokenService>();
-        services.AddScoped<IMileageAccountingService, MileageAccountingService>();
 
         services.AddHttpClient<AlertIngestionService>(client =>
         {
