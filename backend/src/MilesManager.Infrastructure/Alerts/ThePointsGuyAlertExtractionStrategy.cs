@@ -1,4 +1,3 @@
-using System.Globalization;
 using AngleSharp.Dom;
 using MilesManager.Domain.Alerts;
 
@@ -14,7 +13,7 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
     {
         var seenUrls = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var anchor in document.QuerySelectorAll("a[href]"))
+        foreach (var anchor in document.QuerySelectorAll("main a[href]"))
         {
             var externalUrl = AlertExtractionHelpers.ResolveUrl(anchor.GetAttribute("href"), sourceUri);
 
@@ -35,36 +34,38 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
                 continue;
             }
 
-            var card = anchor.Closest("article")
-                ?? anchor.Closest("li")
-                ?? anchor.ParentElement;
-
-            if (card is null)
-            {
-                continue;
-            }
-
-            var publishedDate = AlertExtractionHelpers.ExtractPublishedDate(card);
-            if (publishedDate is null)
-            {
-                continue;
-            }
-
             var normalizedUrl = AlertExtractionHelpers.NormalizeUrl(externalUrl!);
             if (!seenUrls.Add(normalizedUrl))
             {
                 continue;
             }
 
+            var publishedDate = FindPublishedDate(anchor);
+
             yield return new AlertItem
             {
                 Title = title,
                 ExternalUrl = externalUrl!,
                 PublishedDate = publishedDate,
-                Chips = AlertExtractionHelpers.ExtractChips(card, externalUrl!)
-                    ?? "Credit Cards"
+                Chips = "Credit Cards"
             };
         }
+    }
+
+    private static DateTimeOffset? FindPublishedDate(IElement anchor)
+    {
+        var current = anchor;
+
+        for (var level = 0; level < 6 && current is not null; level++, current = current.ParentElement)
+        {
+            var date = AlertExtractionHelpers.ExtractPublishedDate(current);
+            if (date is not null)
+            {
+                return date;
+            }
+        }
+
+        return null;
     }
 
     private static bool IsArticleUrl(string? url, Uri sourceUri)
@@ -82,21 +83,8 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
         }
 
         var path = uri.AbsolutePath.TrimEnd('/');
-        if (string.IsNullOrWhiteSpace(path)
-            || path.Equals(sourceUri.AbsolutePath.TrimEnd('/'), StringComparison.OrdinalIgnoreCase))
-        {
-            return false;
-        }
 
-        return !path.StartsWith("/author/", StringComparison.OrdinalIgnoreCase)
-            && !path.StartsWith("/category/", StringComparison.OrdinalIgnoreCase)
-            && !path.StartsWith("/tag/", StringComparison.OrdinalIgnoreCase)
-            && !path.StartsWith("/search/", StringComparison.OrdinalIgnoreCase)
-            && !path.StartsWith("/page/", StringComparison.OrdinalIgnoreCase)
-            && !path.StartsWith("/about", StringComparison.OrdinalIgnoreCase)
-            && !path.StartsWith("/contact", StringComparison.OrdinalIgnoreCase)
-            && !path.StartsWith("/privacy", StringComparison.OrdinalIgnoreCase)
-            && !path.StartsWith("/terms", StringComparison.OrdinalIgnoreCase)
-            && !path.StartsWith("/newsletter", StringComparison.OrdinalIgnoreCase);
+        return path.StartsWith("/news/credit-cards/", StringComparison.OrdinalIgnoreCase)
+            && !path.Equals("/news/credit-cards", StringComparison.OrdinalIgnoreCase);
     }
 }
