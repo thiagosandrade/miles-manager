@@ -140,6 +140,9 @@
       },
       "emptyTitle": "Nenhuma fonte de alerta",
       "emptyDescription": "Adicione uma fonte de alerta para começar a coletar alertas."
+    },
+    "actions": {
+      "delete": "Remover alerta"
     }
   }
 }
