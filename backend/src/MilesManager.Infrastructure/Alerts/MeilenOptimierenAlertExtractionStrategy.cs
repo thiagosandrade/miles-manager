@@ -38,7 +38,10 @@ public sealed class MeilenOptimierenAlertExtractionStrategy : IAlertExtractionSt
                 break;
             }
 
-            if (!element.TagName.StartsWith("H", StringComparison.OrdinalIgnoreCase))
+            // Offer cards on Meilenoptimieren are rendered as h3 entries.
+            // Restrict extraction to that level to avoid navigation, ticker,
+            // comments and unrelated nested headings.
+            if (!element.TagName.Equals("H3", StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }

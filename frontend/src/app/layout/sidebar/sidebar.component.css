@@ -21,10 +21,26 @@
   background: var(--panel);
 }
 
-.app-sidenav .mat-drawer-inner-container {
+.app-sidenav {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden !important;
+}
+
+:host ::ng-deep .app-sidenav .mat-drawer-inner-container {
+  height: 100% !important;
+  max-height: 100% !important;
   overflow-y: auto !important;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   -webkit-overflow-scrolling: touch;
+}
+
+:host ::ng-deep .app-sidenav .mat-drawer-content {
+  overflow: hidden;
+}
+
+:host ::ng-deep .app-sidenav mat-nav-list {
+  min-height: max-content;
 }
 
 
