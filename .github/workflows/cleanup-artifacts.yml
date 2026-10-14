@@ -1,0 +1,76 @@
+name: Cleanup Old Workflow Runs
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview deletions without deleting anything"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  cleanup:
+    name: Keep Latest Successful Run
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Preview or delete workflow runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Repository: $REPOSITORY"
+          echo "Dry run: $DRY_RUN"
+
+          RUNS="$(gh api \
+            --paginate \
+            "repos/$REPOSITORY/actions/runs?per_page=100" \
+            --jq '.workflow_runs[] | [.id, .workflow_id, .name, .status, .conclusion, .created_at] | @tsv')"
+
+          if [[ -z "$RUNS" ]]; then
+            echo "No workflow runs found."
+            exit 0
+          fi
+
+          # Record the newest successful run for each workflow.
+          KEEP_IDS="$(printf '%s\n' "$RUNS" |
+            awk -F '\t' '$4 == "completed" && $5 == "success" {
+              if (!($2 in kept)) {
+                kept[$2] = $1
+                print $1
+              }
+            }')"
+
+          COUNT=0
+          DELETED=0
+
+          while IFS=$'\t' read -r RUN_ID WORKFLOW_ID WORKFLOW_NAME STATUS CONCLUSION CREATED_AT; do
+            [[ -z "$RUN_ID" ]] && continue
+            COUNT=$((COUNT + 1))
+
+            if printf '%s\n' "$KEEP_IDS" | grep -Fxq "$RUN_ID"; then
+              echo "KEEP: $WORKFLOW_NAME — successful run $RUN_ID ($CREATED_AT)"
+              continue
+            fi
+
+            if [[ "$DRY_RUN" == "true" ]]; then
+              echo "[DRY RUN] Would delete: $WORKFLOW_NAME — run $RUN_ID ($STATUS / ${CONCLUSION:-none}, $CREATED_AT)"
+            else
+              echo "Deleting: $WORKFLOW_NAME — run $RUN_ID"
+              gh run delete "$RUN_ID" --repo "$REPOSITORY"
+              DELETED=$((DELETED + 1))
+            fi
+          done <<< "$RUNS"
+
+          echo "Runs examined: $COUNT"
+          echo "Runs deleted: $DELETED"
+          echo "Successful runs retained: $(printf '%s\n' "$KEEP_IDS" | grep -c . || true)"
