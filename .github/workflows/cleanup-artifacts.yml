@@ -9,6 +9,8 @@ on:
         default: true
         type: boolean
 
+# The token must be granted Actions write permission by this workflow and
+# repository Actions settings. This permits deleting workflow runs/artifacts.
 permissions:
   actions: write
   contents: read
@@ -24,12 +26,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
           DRY_RUN: ${{ inputs.dry_run }}
+          CURRENT_RUN_ID: ${{ github.run_id }}
         shell: bash
         run: |
           set -euo pipefail
 
           echo "Repository: $REPOSITORY"
           echo "Dry run: $DRY_RUN"
+          echo "Current cleanup run: $CURRENT_RUN_ID"
 
           RUNS="$(gh api \
             --paginate \
@@ -41,7 +45,7 @@ jobs:
             exit 0
           fi
 
-          # Record the newest successful run for each workflow.
+          # Choose the newest successful run for each workflow.
           KEEP_IDS="$(printf '%s\n' "$RUNS" |
             awk -F '\t' '$4 == "completed" && $5 == "success" {
               if (!($2 in kept)) {
@@ -52,13 +56,21 @@ jobs:
 
           COUNT=0
           DELETED=0
+          SKIPPED=0
 
           while IFS=$'\t' read -r RUN_ID WORKFLOW_ID WORKFLOW_NAME STATUS CONCLUSION CREATED_AT; do
             [[ -z "$RUN_ID" ]] && continue
             COUNT=$((COUNT + 1))
 
+            # Never attempt to delete the workflow currently executing.
+            if [[ "$RUN_ID" == "$CURRENT_RUN_ID" ]]; then
+              echo "SKIP current cleanup run: $RUN_ID"
+              SKIPPED=$((SKIPPED + 1))
+              continue
+            fi
+
             if printf '%s\n' "$KEEP_IDS" | grep -Fxq "$RUN_ID"; then
-              echo "KEEP: $WORKFLOW_NAME — successful run $RUN_ID ($CREATED_AT)"
+              echo "KEEP: $WORKFLOW_NAME — latest successful run $RUN_ID ($CREATED_AT)"
               continue
             fi
 
@@ -66,11 +78,16 @@ jobs:
               echo "[DRY RUN] Would delete: $WORKFLOW_NAME — run $RUN_ID ($STATUS / ${CONCLUSION:-none}, $CREATED_AT)"
             else
               echo "Deleting: $WORKFLOW_NAME — run $RUN_ID"
-              gh run delete "$RUN_ID" --repo "$REPOSITORY"
-              DELETED=$((DELETED + 1))
+              if gh run delete "$RUN_ID" --repo "$REPOSITORY"; then
+                DELETED=$((DELETED + 1))
+              else
+                echo "::error::Could not delete run $RUN_ID. Check repository Actions write permissions and the GITHUB_TOKEN policy."
+                exit 1
+              fi
             fi
           done <<< "$RUNS"
 
           echo "Runs examined: $COUNT"
           echo "Runs deleted: $DELETED"
+          echo "Current cleanup run skipped: $SKIPPED"
           echo "Successful runs retained: $(printf '%s\n' "$KEEP_IDS" | grep -c . || true)"
