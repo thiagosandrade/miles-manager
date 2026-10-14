@@ -170,11 +170,13 @@ export class TransfersPageComponent implements OnInit {
   }
 
   openCloneTransferDialog(transfer: MileageTransfer): void {
-    this.openCreateTransferDialog({ operation: 'clone', transferId: transfer.id, transfer });
+    this.openCreateTransferDialog(
+      { operation: 'clone', transferId: transfer.id, transfer }
+    );
   }
 
   openCreateTransferDialog(data: TransferDialogData = { operation: 'create' }): void {
-    const dialogRef = this.dialog.open(CreateTransferDialogComponent, { width: '600px', data });
+    const dialogRef = this.dialog.open(CreateTransferDialogComponent, { width: '600px', data: data });
     dialogRef.afterClosed().subscribe(result => {
       if (!result) return;
       const request: TransferCreateRequest = {
