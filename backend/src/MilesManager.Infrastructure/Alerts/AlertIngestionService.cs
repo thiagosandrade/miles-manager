@@ -1,5 +1,6 @@
 using AngleSharp;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MilesManager.Application.Abstractions;
 using MilesManager.Domain.Alerts;
 
@@ -8,7 +9,8 @@ namespace MilesManager.Infrastructure.Alerts;
 public sealed class AlertIngestionService(
     IApplicationDbContext context,
     HttpClient httpClient,
-    IEnumerable<IAlertExtractionStrategy> extractionStrategies) : IAlertIngestionService
+    IEnumerable<IAlertExtractionStrategy> extractionStrategies,
+    ILogger<AlertIngestionService> logger) : IAlertIngestionService
 {
     public async Task<int> IngestAllAsync(CancellationToken cancellationToken)
     {
@@ -63,6 +65,10 @@ public sealed class AlertIngestionService(
         {
             if (!Uri.TryCreate(source.ExternalUrl, UriKind.Absolute, out var sourceUri))
             {
+                logger.LogWarning(
+                    "Skipping alert source {SourceTitle} because its URL is invalid: {SourceUrl}",
+                    source.Title,
+                    source.ExternalUrl);
                 return 0;
             }
 
@@ -83,6 +89,10 @@ public sealed class AlertIngestionService(
             var strategy = extractionStrategies.FirstOrDefault(x => x.CanHandle(sourceUri));
             if (strategy is null)
             {
+                logger.LogWarning(
+                    "No alert extraction strategy is registered for source {SourceTitle} at {SourceUrl}",
+                    source.Title,
+                    source.ExternalUrl);
                 return 0;
             }
 
@@ -92,6 +102,10 @@ public sealed class AlertIngestionService(
             {
                 if (!IsUsableAlertUrl(item.ExternalUrl))
                 {
+                    logger.LogWarning(
+                        "Ignoring extracted alert with an unusable URL from source {SourceTitle}: {AlertUrl}",
+                        source.Title,
+                        item.ExternalUrl);
                     continue;
                 }
 
@@ -140,14 +154,26 @@ public sealed class AlertIngestionService(
             }
 
             await context.SaveChangesAsync(cancellationToken);
+
+            logger.LogInformation(
+                "Alert ingestion completed for source {SourceTitle} at {SourceUrl}: {DiscoveredCount} new alert(s)",
+                source.Title,
+                source.ExternalUrl,
+                discovered);
+
             return discovered;
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
             throw;
         }
-        catch
+        catch (Exception exception)
         {
+            logger.LogError(
+                exception,
+                "Alert ingestion failed for source {SourceTitle} at {SourceUrl}",
+                source.Title,
+                source.ExternalUrl);
             return 0;
         }
     }
