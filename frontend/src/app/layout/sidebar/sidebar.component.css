@@ -5,6 +5,7 @@
 .sidenav-container {
   height: 100%;
   background: transparent;
+  position: relative;
 }
 
 
@@ -91,6 +92,26 @@
     margin-top: 56px;
     height: calc(100dvh - 56px);
     max-height: calc(100dvh - 56px);
+    z-index: 1002;
+  }
+
+  /*
+   * Explicitly keep the modal drawer and backdrop above routed content.
+   * This protects navigation from wide, horizontally scrollable data tables.
+   */
+  :host ::ng-deep .sidenav-container .mat-drawer-backdrop {
+    z-index: 1000;
+  }
+
+  :host ::ng-deep .sidenav-container .mat-drawer {
+    z-index: 1001;
+  }
+
+  :host ::ng-deep .sidenav-container .mat-drawer-content {
+    position: relative;
+    z-index: 0;
+    min-width: 0;
+    overflow: hidden;
   }
 
   :host ::ng-deep .app-sidenav .mat-drawer-inner-container {
