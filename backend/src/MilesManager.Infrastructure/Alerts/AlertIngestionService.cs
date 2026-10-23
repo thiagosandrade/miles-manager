@@ -63,6 +63,11 @@ public sealed class AlertIngestionService(
     {
         try
         {
+            logger.LogInformation(
+                "Starting alert ingestion for source {SourceTitle} at {SourceUrl}",
+                source.Title,
+                source.ExternalUrl);
+
             if (!Uri.TryCreate(source.ExternalUrl, UriKind.Absolute, out var sourceUri))
             {
                 logger.LogWarning(
@@ -79,9 +84,20 @@ public sealed class AlertIngestionService(
             request.Headers.AcceptLanguage.ParseAdd("en-US,en;q=0.9");
 
             using var response = await httpClient.SendAsync(request, cancellationToken);
+            logger.LogInformation(
+                "Received HTTP {StatusCode} for alert source {SourceTitle} at {SourceUrl}; content type {ContentType}",
+                (int)response.StatusCode,
+                source.Title,
+                source.ExternalUrl,
+                response.Content.Headers.ContentType?.ToString() ?? "(unknown)");
             response.EnsureSuccessStatusCode();
 
             var html = await response.Content.ReadAsStringAsync(cancellationToken);
+            logger.LogInformation(
+                "Downloaded {HtmlLength} characters for alert source {SourceTitle} at {SourceUrl}",
+                html.Length,
+                source.Title,
+                source.ExternalUrl);
             var document = await BrowsingContext.New(Configuration.Default).OpenAsync(
                 request => request.Content(html).Address(sourceUri),
                 cancellationToken);
@@ -96,9 +112,19 @@ public sealed class AlertIngestionService(
                 return 0;
             }
 
+            var extractedItems = strategy.ExtractItems(document, sourceUri).ToList();
             var discovered = 0;
+            var duplicateCount = 0;
+            var unusableCount = 0;
 
-            foreach (var item in strategy.ExtractItems(document, sourceUri))
+            logger.LogInformation(
+                "Alert extraction strategy {StrategyName} found {ExtractedCount} candidate item(s) for source {SourceTitle} at {SourceUrl}",
+                strategy.GetType().Name,
+                extractedItems.Count,
+                source.Title,
+                source.ExternalUrl);
+
+            foreach (var item in extractedItems)
             {
                 if (!IsUsableAlertUrl(item.ExternalUrl))
                 {
@@ -106,6 +132,7 @@ public sealed class AlertIngestionService(
                         "Ignoring extracted alert with an unusable URL from source {SourceTitle}: {AlertUrl}",
                         source.Title,
                         item.ExternalUrl);
+                    unusableCount++;
                     continue;
                 }
 
@@ -145,6 +172,7 @@ public sealed class AlertIngestionService(
                         existing.UpdatedAtUtc = DateTimeOffset.UtcNow;
                     }
 
+                    duplicateCount++;
                     continue;
                 }
 
@@ -156,9 +184,12 @@ public sealed class AlertIngestionService(
             await context.SaveChangesAsync(cancellationToken);
 
             logger.LogInformation(
-                "Alert ingestion completed for source {SourceTitle} at {SourceUrl}: {DiscoveredCount} new alert(s)",
+                "Alert ingestion completed for source {SourceTitle} at {SourceUrl}: {ExtractedCount} candidate(s), {DuplicateCount} existing URL(s), {UnusableCount} unusable URL(s), {DiscoveredCount} new alert(s)",
                 source.Title,
                 source.ExternalUrl,
+                extractedItems.Count,
+                duplicateCount,
+                unusableCount,
                 discovered);
 
             return discovered;
