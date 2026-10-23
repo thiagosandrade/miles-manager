@@ -6,6 +6,8 @@
 
 :host {
   display: block;
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
 }
 
@@ -13,6 +15,8 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
 }
 
@@ -31,6 +35,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 100%;
   max-width: 520px;
   min-width: 0;
 }
@@ -59,24 +64,49 @@
 }
 
 .content-panel {
-  min-width: 0;
+  display: block;
+  width: 100%;
   max-width: 100%;
+  min-width: 0;
   overflow: hidden;
+  position: relative;
 }
 
 .tab-content {
   padding-top: 16px;
-  min-width: 0;
+  width: 100%;
   max-width: 100%;
+  min-width: 0;
 }
 
-.tab-content app-table {
+/*
+ * The tables are projected into app-table, so the scrolling wrapper belongs
+ * to the child component. Target it explicitly; setting overflow on app-table
+ * itself does not constrain the actual table element.
+ */
+:host ::ng-deep .content-panel app-table {
   display: block;
-  min-width: 0;
+  width: 100%;
   max-width: 100%;
+  min-width: 0;
+}
+
+:host ::ng-deep .content-panel app-table .panel {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+:host ::ng-deep .content-panel app-table .table-wrap {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
+  position: relative;
 }
 
 .activity-table,
@@ -181,7 +211,6 @@
   }
 
   .selector-section {
-    width: 100%;
     max-width: 100%;
   }
 
@@ -194,17 +223,22 @@
     min-width: 680px;
   }
 
-  .tab-content app-table {
-    width: 100%;
+  :host ::ng-deep .content-panel app-table .table-wrap table {
+    min-width: 680px;
+  }
+
+  /*
+   * Keep horizontal scrolling inside the table viewport so it cannot widen
+   * the routed page or draw over the mobile navigation drawer.
+   */
+  :host ::ng-deep .content-panel app-table .table-wrap {
+    touch-action: pan-x pan-y;
+    isolation: isolate;
   }
 }
 
 @media (max-width: 400px) {
   .page-header h1 {
     font-size: 25px;
-  }
-
-  .content-panel {
-    margin-inline: -4px;
   }
 }
