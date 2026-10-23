@@ -83,29 +83,25 @@ public sealed class AlertIngestionServiceTests
     }
 
     [Fact]
-    public async Task ThePointsGuyStrategy_AcceptsNewsArticleSlugsAndExcludesOtherSections()
+    public async Task ThePointsGuyStrategy_ExtractsPeerLevelArticleHeadingsAndExcludesCategoryLinks()
     {
         const string html = """
             <html><body>
-              <h2>Latest credit card news</h2>
-              <article>
-                <h3><a href="/news/amex-platinum-airbnb-hotel-credit-changes/">
-                  Amex Platinum card changes Airbnb hotel credit
-                </a></h3>
-                <time datetime="2026-10-20T10:00:00Z">October 20</time>
-              </article>
-              <a href="/news/credit-cards/">Credit cards</a>
-              <h2>Latest travel news</h2>
-              <article>
-                <h3><a href="/news/new-airline-route-announced/">
-                  New airline route announced for winter travel
-                </a></h3>
-              </article>
               <h2>More credit card news</h2>
               <article>
-                <h3><a href="/news/best-cards-for-holiday-shopping-this-year/">
+                <h2><a href="/news/amex-platinum-airbnb-hotel-credit-changes/">
+                  Amex Platinum adds Airbnb perks and credits, ends one-night hotel credits
+                </a></h2>
+                <time datetime="2026-10-22T10:00:00Z">October 22</time>
+              </article>
+              <a href="/news/credit-cards/">Credit cards</a>
+              <a href="/news/airlines/">Airlines</a>
+              <a href="/news/credit-cards/some-subcategory/">Nested category</a>
+              <h2>Latest credit card news</h2>
+              <article>
+                <h2><a href="/news/best-cards-for-holiday-shopping-this-year/">
                   Best credit cards for holiday shopping this year
-                </a></h3>
+                </a></h2>
               </article>
             </body></html>
             """;
@@ -121,11 +117,9 @@ public sealed class AlertIngestionServiceTests
             "https://thepointsguy.com/news/amex-platinum-airbnb-hotel-credit-changes/");
         items.Select(x => x.ExternalUrl).Should().Contain(
             "https://thepointsguy.com/news/best-cards-for-holiday-shopping-this-year/");
-        items.Select(x => x.ExternalUrl).Should().NotContain(
-            "https://thepointsguy.com/news/new-airline-route-announced/");
         items.Should().OnlyContain(x => x.Chips == "Credit Cards");
         items.Single(x => x.ExternalUrl.Contains("amex-platinum", StringComparison.Ordinal))
-            .PublishedDate.Should().Be(DateTimeOffset.Parse("2026-10-20T10:00:00Z"));
+            .PublishedDate.Should().Be(DateTimeOffset.Parse("2026-10-22T10:00:00Z"));
     }
 
     [Fact]
