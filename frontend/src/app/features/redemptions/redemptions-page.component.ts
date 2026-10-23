@@ -142,7 +142,7 @@ export class RedemptionsPageComponent implements OnInit {
         originAirportCode: result.originAirportCode,
         destinationAirportCode: result.destinationAirportCode,
         flightDate: formatDateOnly(result.flightDate),
-        cabinClass: Number(result.cabinClass),
+        cabinClass: result.cabinClass,
         passengers: Number(result.passengers),
         isRoundTrip: result.isRoundTrip,
         milesUsed: Number(result.milesUsed),
@@ -174,7 +174,7 @@ export class RedemptionsPageComponent implements OnInit {
         originAirportCode: result.originAirportCode,
         destinationAirportCode: result.destinationAirportCode,
         flightDate: formatDateOnly(result.flightDate),
-        cabinClass: Number(result.cabinClass),
+        cabinClass: result.cabinClass,
         passengers: Number(result.passengers),
         isRoundTrip: result.isRoundTrip,
         milesUsed: Number(result.milesUsed),
@@ -197,12 +197,12 @@ export class RedemptionsPageComponent implements OnInit {
     });
   }
 
-  getCabinClass(value: number): string {
+  getCabinClass(value: string): string {
     switch (value) {
-      case 0: return 'Economy';
-      case 1: return 'Premium Economy';
-      case 2: return 'Business';
-      case 3: return 'First';
+      case 'Economy': return 'Economy';
+      case 'PremiumEconomy': return 'Premium Economy';
+      case 'Business': return 'Business';
+      case 'First': return 'First';
       default: return 'Unknown';
     }
   }

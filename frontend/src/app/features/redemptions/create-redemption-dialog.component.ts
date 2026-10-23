@@ -64,11 +64,11 @@ export class CreateRedemptionDialogComponent {
 
   programs: Program[] = [];
   programOptions: SelectOption<string>[] = [];
-  readonly cabinClassOptions: SelectOption<number>[] = [
-    { value: 0, label: 'redemptions.cabin.economy' },
-    { value: 1, label: 'redemptions.cabin.premiumEconomy' },
-    { value: 2, label: 'redemptions.cabin.business' },
-    { value: 3, label: 'redemptions.cabin.first' }
+  readonly cabinClassOptions: SelectOption<string>[] = [
+    { value: 'Economy', label: 'redemptions.cabin.economy' },
+    { value: 'PremiumEconomy', label: 'redemptions.cabin.premiumEconomy' },
+    { value: 'Business', label: 'redemptions.cabin.business' },
+    { value: 'First', label: 'redemptions.cabin.first' }
   ];
 
   readonly form = this.fb.group({
@@ -77,7 +77,7 @@ export class CreateRedemptionDialogComponent {
     originAirportCode: ['', Validators.required],
     destinationAirportCode: ['', Validators.required],
     flightDate: [new Date(), Validators.required],
-    cabinClass: [0, Validators.required],
+    cabinClass: ['Economy', Validators.required],
     passengers: [1, [Validators.required, Validators.min(1)]],
     isRoundTrip: false,
     milesUsed: [0, [Validators.required, Validators.min(1)]],
@@ -117,6 +117,8 @@ export class CreateRedemptionDialogComponent {
   }
 
   private patchRedemption(redemption: FlightRedemption): void {
+    console.log('Patching redemption:', redemption);
+
     this.form.patchValue({
       id: this.data.operation === 'clone' ? '' : redemption.id,
       programId: this.programs.find(p => p.name === redemption.program)?.id,
@@ -133,7 +135,7 @@ export class CreateRedemptionDialogComponent {
   }
 
   save(): void {
-
+    console.log('Cabin class:', this.form.get('cabinClass')?.value);
     if (this.form.invalid) {
 
       this.form.markAllAsTouched();

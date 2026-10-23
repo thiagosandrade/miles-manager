@@ -6,7 +6,7 @@ export interface FlightRedemption {
   originAirportCode: string;
   destinationAirportCode: string;
   flightDate: string;
-  cabinClass: number;
+  cabinClass: string;
   passengers: number;
   isRoundTrip: boolean;
   milesUsed: number;
