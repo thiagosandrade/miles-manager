@@ -5,6 +5,16 @@ namespace MilesManager.Infrastructure.Alerts;
 
 public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrategy
 {
+    private static readonly HashSet<string> NewsSectionSlugs = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "airlines",
+        "aviation",
+        "credit-cards",
+        "cruises",
+        "deals",
+        "hotels"
+    };
+
     public bool CanHandle(Uri sourceUri) =>
         sourceUri.Host.Equals("thepointsguy.com", StringComparison.OrdinalIgnoreCase)
         || sourceUri.Host.Equals("www.thepointsguy.com", StringComparison.OrdinalIgnoreCase);
@@ -12,38 +22,13 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
     public IEnumerable<AlertItem> ExtractItems(IDocument document, Uri sourceUri)
     {
         var seenUrls = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var activeSectionLevel = (int?)null;
 
-        foreach (var element in document.All)
+        // The category page can render article titles as peer-level headings, and
+        // its sections can appear in either order. Don't depend on heading levels
+        // to determine whether a link belongs to a section; classify the actual
+        // article URL instead.
+        foreach (var anchor in document.QuerySelectorAll("a[href]"))
         {
-            if (element is IElement heading && IsHeading(heading))
-            {
-                var level = GetHeadingLevel(heading);
-                var text = AlertExtractionHelpers.CleanText(heading.TextContent);
-
-                if (IsCreditCardNewsSection(text))
-                {
-                    activeSectionLevel = level;
-                    continue;
-                }
-
-                // Stop collecting when a new peer or ancestor section begins.
-                // Article headings are normally nested below the section heading.
-                if (activeSectionLevel is not null && level <= activeSectionLevel.Value)
-                {
-                    activeSectionLevel = null;
-                }
-
-                continue;
-            }
-
-            if (activeSectionLevel is null
-                || element is not IElement anchor
-                || !anchor.TagName.Equals("A", StringComparison.OrdinalIgnoreCase))
-            {
-                continue;
-            }
-
             var externalUrl = AlertExtractionHelpers.ResolveUrl(
                 anchor.GetAttribute("href"),
                 sourceUri);
@@ -82,18 +67,6 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
         }
     }
 
-    private static bool IsCreditCardNewsSection(string text) =>
-        text.Equals("Latest credit card news", StringComparison.OrdinalIgnoreCase)
-        || text.Equals("More credit card news", StringComparison.OrdinalIgnoreCase);
-
-    private static bool IsHeading(IElement element) =>
-        element.TagName.Length == 2
-        && element.TagName[0] == 'H'
-        && char.IsDigit(element.TagName[1]);
-
-    private static int GetHeadingLevel(IElement heading) =>
-        int.TryParse(heading.TagName[1..], out var level) ? level : 6;
-
     private static DateTimeOffset? FindPublishedDate(IElement anchor)
     {
         var current = anchor;
@@ -123,11 +96,13 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
             return false;
         }
 
-        var path = uri.AbsolutePath.TrimEnd('/');
+        var segments = uri.AbsolutePath
+            .Split('/', StringSplitOptions.RemoveEmptyEntries);
 
-        // ThePointsguy article URLs use /news/{article-slug}/. The
-        // credit-card page is a category landing page, not an article.
-        return path.StartsWith("/news/", StringComparison.OrdinalIgnoreCase)
-            && !path.Equals("/news/credit-cards", StringComparison.OrdinalIgnoreCase);
+        // Article URLs have the form /news/{article-slug}/. Category links
+        // such as /news/credit-cards/ and nested category URLs are not articles.
+        return segments.Length == 2
+            && segments[0].Equals("news", StringComparison.OrdinalIgnoreCase)
+            && !NewsSectionSlugs.Contains(segments[1]);
     }
 }
