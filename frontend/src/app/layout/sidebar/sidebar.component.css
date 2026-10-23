@@ -14,23 +14,18 @@
 
 .app-sidenav {
   width: 250px;
-
   margin-top: 64px;
   height: calc(100vh - 64px);
-
   background: var(--panel);
 }
 
-.app-sidenav {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden !important;
-}
-
 :host ::ng-deep .app-sidenav .mat-drawer-inner-container {
-  height: 100% !important;
-  max-height: 100% !important;
-  overflow: hidden !important;
+  height: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }
 
 :host ::ng-deep .app-sidenav .mat-drawer-content {
@@ -38,7 +33,7 @@
 }
 
 :host ::ng-deep .app-sidenav mat-nav-list {
-  min-height: max-content;
+  min-height: 0;
 }
 
 
@@ -91,18 +86,18 @@
 ========================================================== */
 
 @media (max-width: 768px) {
-
   .app-sidenav {
     width: 280px;
-
     margin-top: 56px;
-    height: calc(100vh - 56px);
+    height: calc(100dvh - 56px);
+    max-height: calc(100dvh - 56px);
   }
 
   :host ::ng-deep .app-sidenav .mat-drawer-inner-container {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
+    overflow-x: hidden;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
   }
 
   .mat-mdc-nav-list {
@@ -112,7 +107,6 @@
   .mat-mdc-list-item {
     margin-bottom: 4px;
   }
-
 }
 
 
@@ -121,10 +115,8 @@
 ========================================================== */
 
 @media (max-width: 400px) {
-
   .app-sidenav {
     width: 85vw;
     max-width: 280px;
   }
-
 }
