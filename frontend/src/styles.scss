@@ -519,12 +519,33 @@ select {
    ========================================================================== */
 
 app-table {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: block;
+
+  .panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .table-wrap {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    isolation: isolate;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
   }
 
   .table-wrap table {
     width: 100%;
+    max-width: none;
   }
 
   .table-wrap .actions-column {
@@ -539,5 +560,36 @@ app-table {
     justify-content: center;
     vertical-align: middle;
     margin-left: 4px;
+  }
+}
+
+/* Prevent wide projected tables from expanding Angular Material tab layouts. */
+.mat-mdc-tab-group,
+.mat-mdc-tab-body-wrapper,
+.mat-mdc-tab-body,
+.mat-mdc-tab-body-content {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  /* Keep the modal mobile drawer above all routed content and table scroll areas. */
+  app-sidebar .mat-drawer-container {
+    position: relative;
+    isolation: isolate;
+  }
+
+  app-sidebar .mat-drawer-content {
+    position: relative !important;
+    z-index: 0 !important;
+    min-width: 0;
+  }
+
+  app-sidebar .mat-drawer-backdrop {
+    z-index: 3 !important;
+  }
+
+  app-sidebar .mat-drawer {
+    z-index: 4 !important;
   }
 }
