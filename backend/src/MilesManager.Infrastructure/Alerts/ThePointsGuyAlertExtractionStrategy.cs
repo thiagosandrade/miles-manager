@@ -27,6 +27,13 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
                     continue;
                 }
 
+                // Stop collecting when a new peer or ancestor section begins.
+                // Article headings are normally nested below the section heading.
+                if (activeSectionLevel is not null && level <= activeSectionLevel.Value)
+                {
+                    activeSectionLevel = null;
+                }
+
                 continue;
             }
 
@@ -41,7 +48,7 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
                 anchor.GetAttribute("href"),
                 sourceUri);
 
-            if (!IsArticleUrl(externalUrl, sourceUri))
+            if (!IsArticleUrl(externalUrl))
             {
                 continue;
             }
@@ -103,15 +110,14 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
         return null;
     }
 
-    private static bool IsArticleUrl(string? url, Uri sourceUri)
+    private static bool IsArticleUrl(string? url)
     {
         if (url is null || !Uri.TryCreate(url, UriKind.Absolute, out var uri))
         {
             return false;
         }
 
-        if (!uri.Host.Equals(sourceUri.Host, StringComparison.OrdinalIgnoreCase)
-            && !uri.Host.Equals("thepointsguy.com", StringComparison.OrdinalIgnoreCase)
+        if (!uri.Host.Equals("thepointsguy.com", StringComparison.OrdinalIgnoreCase)
             && !uri.Host.Equals("www.thepointsguy.com", StringComparison.OrdinalIgnoreCase))
         {
             return false;
@@ -119,7 +125,9 @@ public sealed class ThePointsGuyAlertExtractionStrategy : IAlertExtractionStrate
 
         var path = uri.AbsolutePath.TrimEnd('/');
 
-        return path.StartsWith("/news/credit-cards/", StringComparison.OrdinalIgnoreCase)
+        // ThePointsguy article URLs use /news/{article-slug}/. The
+        // credit-card page is a category landing page, not an article.
+        return path.StartsWith("/news/", StringComparison.OrdinalIgnoreCase)
             && !path.Equals("/news/credit-cards", StringComparison.OrdinalIgnoreCase);
     }
 }
