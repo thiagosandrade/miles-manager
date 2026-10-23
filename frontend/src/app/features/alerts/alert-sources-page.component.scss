@@ -1,5 +1,10 @@
 @use '../../../styles/pages';
 
+:host {
+  display: block;
+  min-width: 0;
+}
+
 .source-form {
   display: grid;
   gap: 18px;
@@ -9,6 +14,7 @@
   border-radius: 16px;
   background: var(--panel);
   box-shadow: var(--shadow-sm);
+  min-width: 0;
 }
 
 .source-form-heading h2 {
@@ -25,6 +31,12 @@
   grid-template-columns: minmax(180px, .65fr) minmax(280px, 1.15fr) minmax(160px, .55fr) auto;
   align-items: start;
   gap: 14px;
+  min-width: 0;
+}
+
+.source-form mat-form-field {
+  width: 100%;
+  min-width: 0;
 }
 
 .form-actions {
@@ -36,12 +48,15 @@
 .external-link {
   color: var(--mm-primary);
   text-decoration: none;
-  word-break: break-all;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .actions-column {
   width: 60px;
+  flex: 0 0 auto;
   text-align: right;
+  white-space: nowrap;
 }
 
 .mobile-sources {
@@ -50,13 +65,13 @@
 
 @media (max-width: 1100px) {
   .source-form form {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
 @media (max-width: 900px) {
   .source-form form {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .desktop-table {
@@ -65,19 +80,58 @@
 
   .mobile-sources {
     display: grid;
+    min-width: 0;
   }
 
   .source-card {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
+    min-width: 0;
     padding: 16px;
     border-bottom: 1px solid var(--border);
   }
 
-  .source-card > div {
+  .source-card > div:first-child {
     display: grid;
     gap: 6px;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .source-card strong,
+  .source-card span {
+    overflow-wrap: anywhere;
+  }
+
+  .source-card .external-link {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .source-form {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .source-card {
+    padding: 14px 12px;
+    gap: 8px;
+  }
+
+  .source-card .actions-column {
+    width: auto;
+  }
+
+  .source-card .icon-button {
+    min-width: 36px;
+    padding: 0 4px;
+  }
+
+  .form-actions button {
+    width: 100%;
   }
 }
