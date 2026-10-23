@@ -50,7 +50,7 @@
             (page)="onActivityPageChange($event)"
             emptyIcon="history"
             [emptyTitle]="'programDetails.noActivity' | translate">
-            <table mat-table [dataSource]="pagedActivity()" class="activity-table">
+            <table mat-table [dataSource]="pagedActivity()" class="activity-table desktop-history-table">
               <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef>{{ 'common.date' | translate }}</th>
                 <td mat-cell *matCellDef="let item">{{ item.date | date:'mediumDate' }}</td>
@@ -85,6 +85,23 @@
               <tr mat-header-row *matHeaderRowDef="activityColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: activityColumns"></tr>
             </table>
+            <div class="mobile-history">
+              @for (item of pagedActivity(); track $index) {
+                <article class="history-card">
+                  <div class="history-card-header">
+                    <strong>{{ item.description }}</strong>
+                    <span class="type-pill" [class.earned]="item.type === 'earned'" [class.redeemed]="item.type === 'redeemed'">
+                      {{ ('programDetails.' + item.type) | translate }}
+                    </span>
+                  </div>
+                  <div class="history-card-grid">
+                    <div><span>{{ 'common.date' | translate }}</span><strong>{{ item.date | date:'mediumDate' }}</strong></div>
+                    <div><span>{{ 'common.miles' | translate }}</span><strong class="numeric" [class.positive]="item.miles > 0" [class.negative]="item.miles < 0">{{ item.miles > 0 ? '+' : '' }}{{ item.miles | number:'1.0-2' }}</strong></div>
+                    <div class="history-card-balance"><span>{{ 'common.balance' | translate }}</span><strong>{{ item.balance | number:'1.0-2' }}</strong></div>
+                  </div>
+                </article>
+              }
+            </div>
           </app-table>
         </div>
       </mat-tab>
@@ -102,7 +119,7 @@
             (page)="onRedemptionPageChange($event)"
             emptyIcon="flight_takeoff"
             [emptyTitle]="'programDetails.noRedemptions' | translate">
-            <table mat-table [dataSource]="pagedRedemptions()" class="redemption-table">
+            <table mat-table [dataSource]="pagedRedemptions()" class="redemption-table desktop-history-table">
               <ng-container matColumnDef="flightDate">
                 <th mat-header-cell *matHeaderCellDef>{{ 'common.flightDate' | translate }}</th>
                 <td mat-cell *matCellDef="let item">{{ item.flightDate | date:'mediumDate' }}</td>
@@ -126,6 +143,20 @@
               <tr mat-header-row *matHeaderRowDef="redemptionColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: redemptionColumns"></tr>
             </table>
+            <div class="mobile-history">
+              @for (item of pagedRedemptions(); track $index) {
+                <article class="history-card">
+                  <div class="history-card-header">
+                    <strong>{{ item.originAirportCode }} → {{ item.destinationAirportCode }}</strong>
+                  </div>
+                  <div class="history-card-grid">
+                    <div><span>{{ 'common.flightDate' | translate }}</span><strong>{{ item.flightDate | date:'mediumDate' }}</strong></div>
+                    <div><span>{{ 'common.passengers' | translate }}</span><strong>{{ item.passengers }}</strong></div>
+                    <div class="history-card-balance"><span>{{ 'programDetails.milesUsed' | translate }}</span><strong>{{ item.milesUsed | number:'1.0-2' }}</strong></div>
+                  </div>
+                </article>
+              }
+            </div>
           </app-table>
         </div>
       </mat-tab>
