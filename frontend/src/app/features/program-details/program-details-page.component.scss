@@ -256,3 +256,80 @@
     font-size: 25px;
   }
 }
+
+
+/* Match the responsive card pattern used by the other history pages. */
+.mobile-history {
+  display: none;
+}
+
+.history-card {
+  width: 100%;
+  min-width: 0;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.history-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.history-card-header > strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+.history-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 12px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.history-card-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.history-card-grid span {
+  color: var(--muted);
+  font-size: .72rem;
+}
+
+.history-card-grid strong {
+  overflow-wrap: anywhere;
+  font-size: .9rem;
+}
+
+.history-card-balance {
+  grid-column: 1 / -1;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  :host ::ng-deep .content-panel .desktop-history-table {
+    display: none;
+  }
+
+  .mobile-history {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+  }
+
+  :host ::ng-deep .content-panel app-table .table-wrap {
+    overflow-x: hidden;
+  }
+}
