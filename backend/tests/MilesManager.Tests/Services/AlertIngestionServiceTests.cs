@@ -103,7 +103,7 @@ public sealed class AlertIngestionServiceTests
               </article>
               <h2>More credit card news</h2>
               <article>
-                <h3><a href="/news/best-cards-for-holiday-shopping/">
+                <h3><a href="/news/best-cards-for-holiday-shopping-this-year/">
                   Best credit cards for holiday shopping this year
                 </a></h3>
               </article>
