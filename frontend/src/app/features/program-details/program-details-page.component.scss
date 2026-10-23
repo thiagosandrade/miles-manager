@@ -74,9 +74,20 @@
 
 .tab-content {
   padding-top: 16px;
+  display: block;
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  overflow: hidden;
+}
+
+:host ::ng-deep .content-panel .mat-mdc-tab-body-wrapper,
+:host ::ng-deep .content-panel .mat-mdc-tab-body,
+:host ::ng-deep .content-panel .mat-mdc-tab-body-content {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 /*
@@ -232,6 +243,9 @@
    * the routed page or draw over the mobile navigation drawer.
    */
   :host ::ng-deep .content-panel app-table .table-wrap {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     touch-action: pan-x pan-y;
     isolation: isolate;
   }
