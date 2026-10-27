@@ -4,9 +4,18 @@
 
 .layout-container {
   display: flex;
-
-  height: calc(100vh - 64px);
   width: 100%;
+  height: calc(100vh - 64px);
+  min-width: 0;
+}
+
+/* app-sidebar now owns the sidenav container and the projected page content. */
+.layout-container > app-sidebar {
+  display: block;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
 }
 
 
